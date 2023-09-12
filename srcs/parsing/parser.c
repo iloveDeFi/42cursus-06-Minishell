@@ -1,39 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 17:02:10 by bat               #+#    #+#             */
-/*   Updated: 2023/09/12 14:37:06 by bat              ###   ########.fr       */
+/*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
+/*   Updated: 2023/09/12 13:44:28 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-#include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
-# define TEST 49213
-
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
-typedef struct s_EnvVar
-{
-    char *name;
-    char *value;
-    struct s_EnvVar *next;
-} t_EnvVar;    
-
-typedef struct EnvList 
-{
-    struct EnvVar *head;
-}   t_EnvList;
-
-#endif

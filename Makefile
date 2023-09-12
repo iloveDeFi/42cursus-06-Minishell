@@ -16,8 +16,10 @@ CC = gcc
 
 CFLAGES = -Wall -Wextra -Werror -O3 -g -Iincludes
 
-SRCS = parsing.c \
-		minishell.c \
+SRCS = 	parsing.c \
+		main.c \
+		executor.c \
+		
 
 OBJS = $(SRCS:%.c=%.o)
 
