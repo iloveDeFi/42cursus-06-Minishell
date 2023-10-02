@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 17:02:10 by bat               #+#    #+#             */
-/*   Updated: 2023/09/12 14:37:06 by bat              ###   ########.fr       */
+/*   Updated: 2023/09/28 16:13:14 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,36 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-typedef struct s_EnvVar
+
+typedef enum
 {
-    char *name;
-    char *value;
-    struct s_EnvVar *next;
-} t_EnvVar;    
+    FALSE,
+    TRUE
+}   Bool;
+
+// Built-ins
+
+// Excecution  
 
 typedef struct EnvList 
 {
     struct EnvVar *head;
 }   t_EnvList;
+
+// libft
+
+
+// Linked Lists
+typedef struct s_Env
+{
+    char *name;
+    char *value;
+    struct s_EnvVar *next;
+    struct s_EnvVar *prev;
+}   t_env;  
+
+// Parsing
+
+// Signals
 
 #endif

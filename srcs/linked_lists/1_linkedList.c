@@ -26,13 +26,3 @@ t_env	*get_in_list(char *var, t_env **env_list)
 {
     
 }
-
-t_env	*duplicate_list(t_env **env_list)
-{
-
-}
-
-int	count_list(t_env **list)
-{
-    
-}

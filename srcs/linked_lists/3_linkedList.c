@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_linkedList.c                                  :+:      :+:    :+:   */
+/*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/09/28 01:21:58 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/02 15:28:57 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 t_env   *create_node(char *var_array)
 {
-
+    t_env   *newNode = malloc(sizeof(t_env));
+    if (newNode == NULL)
+    {
+        printf("Error creating a new node. Memory allocation failed.\n");
+        exit(1);
+    }
+    newNode->name = name
+    newNode->next = 
+    newNode->prev = 
 }
 
 t_env	*dup_node(char *name, char *value)
