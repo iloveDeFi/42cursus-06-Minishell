@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 17:02:10 by bat               #+#    #+#             */
-/*   Updated: 2023/09/28 16:13:14 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/16 16:21:28 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 
 # define TEST 49213
 
