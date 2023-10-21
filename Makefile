@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/21 15:38:53 by bat              ###   ########.fr        #
+#    Updated: 2023/10/21 17:46:00 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,18 @@
 NAME = minishell
 
 # DIRECTORIES
-MINISHELL_FOLDER = minishell
-PARSING_FOLDER = parsing
-BUILT_FOLDER = builtins
-EXECUTING_FOLDER = execution
-SIGNALS_FOLDER = signals
-LINKED_LISTS_FOLDER = linked_lists
-LIBFT_FOLDER = libft
+MINISHELL_FOLDER =		minishell
+PARSING_FOLDER = 		parsing
+BUILT_FOLDER = 			builtins
+EXECUTING_FOLDER = 		execution
+SIGNALS_FOLDER = 		signals
+LINKED_LISTS_FOLDER = 	linked_lists
+LIBFT_FOLDER =			$(SRCS_DIRECTORY)/libft
+LIBFT_HEADER = 			$(SRCS_DIRECTORY)/libft/libft.h
+HEADER_DIRECTORY := 	./includes
+SRCS_DIRECTORY := 		./srcs
 
-# FILES
+# ALL FILES.C
 MAIN_FILE = main.c
 
 MINISHELL_FILES = 		minishell.c \
@@ -53,16 +56,16 @@ MAKE = make -C
 OBJS = $(SRCS:%.c=%.o)
 RM = rm -f
 
-all: $(NAME)
-
 %.o: %.c
 	${CC} ${CFLAGS} 
+
+all: $(NAME)
 
 $(NAME): $(OBJS) libft/libft.a
 	$(CC) $(CFLAGS) $^ $(NAME)
 	
 libft/libft.a:
-	@make -C libft
+	@make -C $(LIBFT_FOLDER)
 
 clean:
 	${RM} $(OBJS)
