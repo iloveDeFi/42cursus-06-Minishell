@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 17:02:10 by bat               #+#    #+#             */
-/*   Updated: 2023/10/18 14:26:28 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/18 15:25:07 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-# define TEST 49213
+# define  MAX_INPUT_SIZE 1024
 
 # define STDIN 0
 # define STDOUT 1

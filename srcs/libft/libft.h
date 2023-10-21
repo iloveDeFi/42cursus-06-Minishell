@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:20:57 by bbessard          #+#    #+#             */
-/*   Updated: 2023/08/23 14:34:42 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 13:28:52 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
+char            *ft_stringPointerBreak(const char *str1, const char *str2);
+char            *ft_strtok(char *str, const char *delim);
 
 /* mem_*/
 void			*ft_memset(void *s, int c, size_t n);
