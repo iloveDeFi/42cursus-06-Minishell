@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pgcd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:58:55 by bbessard          #+#    #+#             */
-/*   Updated: 2023/05/08 10:58:59 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:08:18 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 **  Plus Grand Common Divider = PGCD
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "libft.h"
 
-int	main(int ac, char **av)
+unsigned int ft_pgcd(unsigned int a, unsigned int b)
 {
-	int	a;
-	int	b;
-	int	tmp;
-
-	a = atoi(av[1]);
-	b = atoi(av[2]);
+	unsigned int	tmp;
+	
 	if (a <= 0 || b <= 0)
 	{
 		printf("\n");
@@ -36,5 +31,5 @@ int	main(int ac, char **av)
 		b = a % b;
 		a = tmp;
 	}
-	printf("%d\n", a);
+	return a;
 }

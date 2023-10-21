@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hidenp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 13:07:35 by bbessard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:07:37 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 14:17:54 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-/*
- * Program hidenp : Is s1 in s2 ? display 1 if yes, if not 0
- *
-*/
+#include "libft.h"
+
+// Program hidenp : Is s1 in s2 ? display 1 if yes, if not 0
+
 int	main(int ac, char **av)
 {
 	int	i;

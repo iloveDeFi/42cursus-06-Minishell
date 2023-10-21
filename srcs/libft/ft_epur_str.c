@@ -3,40 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_epur_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 13:07:27 by bbessard          #+#    #+#             */
-/*   Updated: 2023/04/28 13:07:31 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:10:17 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int	main(int ac, char **av)
+char *ft_epur_str(const char *str)
 {
 	int	i;
 	int	flag;
 
-	if (ac == 2)
+	i = 0;
+	flag = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	while (str[i] != '\0')
 	{
-		while (av[1][i] == ' ' || av[1][i] == '\t')
-			i++;
-		i = 0;
-		while (av[1][i])
-		{
-			if (av[1][i] == ' ' || av[1][i] == '\t')
+		if (str[i] == ' ' || str[i] == '\t')
 				flag = 1;
-			if (!(av[1][i] == ' ' || av[1][i] == '\t'))
+		else 
+		{
+			if (flag == 1)
 			{
-				if (flag == 1)
-				{
-					write (1, " ", 1);
-					flag = 0;
-				}
-				write (1, &av[1][i], 1);
+				write (1, " ", 1);
+				flag = 0;
 			}
-			i++;
+			write (1, &str[i], 1);
 		}
+		i++;
 	}
-	write (1, "\n", 1);
+	return NULL;
 }
