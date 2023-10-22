@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/28 01:11:52 by bat               #+#    #+#             */
-/*   Updated: 2023/10/21 13:41:40 by bat              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 // TO DO : gestion des quotes, caractères spéciaux etc
@@ -24,7 +12,7 @@ int main(int ac, char **av, char **env)
         fgets(input, sizeof(input), stdin); // lire l'entrée utilisateur
         char *token = strtok(input, " \n");
         int i = 0;
-        while(toekn != NULL) {
+        while(token != NULL) {
             args[i] = token;
             token = strtok(NULL, " \n");
             i++;
