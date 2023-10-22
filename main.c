@@ -14,7 +14,7 @@ int main(int ac, char **av, char **env)
         fgets(input, sizeof(input), stdin); // lire l'entrée utilisateur
         char *token = strtok(input, " \n");
         int i = 0;
-        while(toekn != NULL) {
+        while(token != NULL) {
             args[i] = token;
             token = strtok(NULL, " \n");
             i++;
