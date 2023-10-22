@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pgcd.c                                          :+:      :+:    :+:   */
+/*   ft_stringPointerBreak.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 10:58:55 by bbessard          #+#    #+#             */
-/*   Updated: 2023/10/21 15:08:18 by bat              ###   ########.fr       */
+/*   Created: 2023/10/21 13:16:41 by bat               #+#    #+#             */
+/*   Updated: 2023/10/21 13:39:36 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-**  Plus Grand Common Divider = PGCD
-*/
-
 #include "libft.h"
 
-unsigned int ft_pgcd(unsigned int a, unsigned int b)
-{
-	unsigned int	tmp;
-	
-	if (a <= 0 || b <= 0)
-	{
-		printf("\n");
-		return (0);
-	}
-	while (b != 0)
-	{
-		tmp = b;
-		b = a % b;
-		a = tmp;
-	}
-	return a;
+char *stringPointerBreak(const char *str1, const char *str2) {
+
+    const char *search = str2;
+    
+    while (*str1 != '\0') {
+        while (*search != '\0') {
+            if (*str1 == *search) {
+                return (char *)str1;
+            }
+            search++;
+        }
+        str1++;
+    }
+    return NULL;
 }

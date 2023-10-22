@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_repeat_alpha.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:00:21 by bbessard          #+#    #+#             */
-/*   Updated: 2023/05/10 18:19:12 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:09:05 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int	alpha_index(char c)
+int	ft_repeat_alpha(char c)
 {
 	int		index;
 	char	*str;
@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 	{
 		while (av[1][i])
 		{
-			index = alpha_index(av[1][i]);
+			index = ft_repeat_alpha(av[1][i]);
 			while (index >= 0)
 			{
 				write(1, &av[1][i], 1);

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 17:02:10 by bat               #+#    #+#             */
-/*   Updated: 2023/10/19 17:49:33 by julien           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -21,12 +10,11 @@
 #include <errno.h>
 #include <limits.h>
 
-# define TEST 49213
+# define  MAX_INPUT_SIZE 1024
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-
 typedef enum
 {
     FALSE,

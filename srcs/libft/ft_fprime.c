@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fprime.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:10:09 by bbessard          #+#    #+#             */
-/*   Updated: 2023/05/03 18:22:33 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/10/21 14:16:55 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
 int	main(int ac, char **av)
 {

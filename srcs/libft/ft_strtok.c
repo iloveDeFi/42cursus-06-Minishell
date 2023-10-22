@@ -6,59 +6,28 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:57:04 by bat               #+#    #+#             */
-/*   Updated: 2023/09/12 16:57:19 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/21 13:40:57 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *my_strtok(char *str, const char *delim) 
+char *ft_strtok(char *str, const char *delim) 
 {
-    static char *lastToken = NULL;
-    if (str != NULL) 
-    {
-        lastToken = str;
+    static char *token = NULL;
+    if (str != NULL) {
+        token = str;
     } 
-    else 
-    {
-        if (lastToken == NULL) 
-        {
-            return NULL;
-        }
-    }
-    
-    char *tokenStart = lastToken;
-    char *tokenEnd;
-
-    // Ignore leading delimiters
-    while (*lastToken != '\0' && strchr(delim, *lastToken) != NULL)
-    {
-        lastToken++;
-    }
-    
-    if (*lastToken == '\0')
-    {
-        lastToken = NULL; // No more tokens
+    else if (token == NULL) {
         return NULL;
     }
-    
-    tokenEnd = lastToken;
-
-    // Find the end of the token
-    while (*tokenEnd != '\0' && strchr(delim, *tokenEnd) == NULL)
-    {
-        tokenEnd++;
+    char *start = token;
+    char *end = ft_stringPointerBreak(token, delim);
+    if (end != NULL) {
+        *end = '\0';
+        token = end + 1;
+    } else {
+        token = NULL;
     }
-
-    if (*tokenEnd != '\0') 
-    {
-        *tokenEnd = '\0'; // Null-terminate the token
-        lastToken = tokenEnd + 1;
-    }
-    else 
-    {
-        lastToken = NULL; // No more tokens after this one
-    }
-    
-    return tokenStart;
+    return start;
 }
