@@ -4,14 +4,16 @@
 
 // TO DO : gestion des quotes, caractères spéciaux etc
 
-int main(int ac, char **av, char **env)
-{
+int main(int ac, char **av, char **env) {
     if (ac > 1)
-        return (str_error("CHAOS, there are too many arguments", 0));
-    while (1)
-    {
-        printf("Minis_Hell> ");
-        fgets(input, sizeof(input), stdin); // lire l'entrée utilisateur
+        return (ft_str_error("CHAOS, there are too many arguments", 0));
+        
+    while (1) {
+        char *input = readline("Minis_Hell> "); // Lire l'entrée utilisateur
+        
+        // Ajouter l'entrée à l'historique
+        add_history(input);
+
         char *token = strtok(input, " \n");
         int i = 0;
         while(token != NULL) {
@@ -37,5 +39,8 @@ int main(int ac, char **av, char **env)
             // Dans le processus parent, attendez que le fils se termine
             wait(NULL);
         }
+        
+        // Libérer la mémoire utilisée par readline
+        free(input);
     }
 }

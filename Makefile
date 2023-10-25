@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/25 14:31:26 by bat              ###   ########.fr        #
+#    Updated: 2023/10/25 15:21:34 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ MAIN_FILE = main.c
 
 MINISHELL_FILES = 		minishell.c
 
-PARSING_FILES = 		parser.c
+PARSING_FILES = 		parser.c \
+						error.c
 
 EXECUTING_FILES = 		bin.c \
 						builtins.c \
