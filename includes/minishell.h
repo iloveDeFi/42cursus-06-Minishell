@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft.h"
+#include "../srcs/libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

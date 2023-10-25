@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/25 13:55:09 by bat              ###   ########.fr        #
+#    Updated: 2023/10/25 14:31:26 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,40 +27,43 @@ LIBFT_HEADER = 			$(SRCS_DIRECTORY)/libft/libft.h
 LIBFT_ARCHIVES = 		$(SRCS_DIRECTORY)/libft/libft.a
 
 # ALL FILES.C
-MAIN_FILE = main.c \
+MAIN_FILE = main.c
 
-MINISHELL_FILES = 		minishell.c \
+MINISHELL_FILES = 		minishell.c
 
-PARSING_FILES = 		parser.c \
+PARSING_FILES = 		parser.c
 
 EXECUTING_FILES = 		bin.c \
 						builtins.c \
-						executor.c \
+						executor.c
 
 BULITINS_FILES = 		cd.c \
 						echo.c \
 						exit.c \
 						export.c \
 						pwd.c \
-						unset.c \
+						unset.c
 
 SIGNALS_FILES = 		signals.c \
 
 LINKED_LISTS_FILES = 	1_linkedList.c \
 						2_linkedList.c \
-						3_linkedList.c \
+						3_linkedList.c
 						
-INCLUDES_FILES = 		minishell.h \
+INCLUDES_FILES = 		minishell.h
 
 # GLOBAL VARIABLES
+MAKE = make -C
 CC = gcc -g3 -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -O3 -g -Iincludes
-MAKE = make -C
+SRCS = $(MAIN_FILE) \
+$(addprefix $(SRCS_DIRECTORY)/builtins/, $(BUILTINS_FILES)) \
+$(addprefix $(SRCS_DIRECTORY)/minishell/, $(MINISHELL_FILES)) \
+$(addprefix $(SRCS_DIRECTORY)/parsing/, $(PARSING_FILES)) \
+$(addprefix $(SRCS_DIRECTORY)/execution/, $(EXECUTING_FILES)) \
+$(addprefix $(SRCS_DIRECTORY)/linked_lists/, $(LINKED_LISTS_FILES)) \
+$(addprefix $(SRCS_DIRECTORY)/signals/, $(SIGNALS_FILES))
 OBJS = $(SRCS:.c=.o)
-INC = $(HEADER_DIRECTORY)/, $(INCLUDES_FILES) \
-SRCS = $(addprefix $(SRCS_DIRECTORY)/, $(MINISHELL_FILES) \
-$(PARSING_FILES) $(EXECUTING_FILES) $(BULITINS_FILES) $(SIGNALS_FILES) \
-$(LINKED_LISTS_FILES)) $(MAIN_FILE) \
 RM = rm -f
 
 %.o: %.c
@@ -73,11 +76,8 @@ $(NAME): $(OBJS) libft/libft.a
 libft/libft.a:
 	@make -C $(LIBFT_FOLDER)
 
-$(OBJS): $(SRCS)
-
-	$(CC) $(CFLAGS) -c $< -o $@  # Compile fichiers sources en fichiers objets
-	
-	$(CC) $(CFLAGS) $^ -o $@  # Compile fichiers objets en l'exécutable
+$(SRCS_DIRECTORY)/%.o: $(SRCS_DIRECTORY)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
