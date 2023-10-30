@@ -23,6 +23,9 @@ typedef enum
 }   Bool;
 
 // Built-ins
+/*int cd(t_command *command, t_envList *envList);
+int echo(int ac, char **av);
+void	pwd(void);*/
 
 // Excecution  
 
@@ -55,6 +58,7 @@ typedef struct s_command
     struct s_command *head;
     struct s_command *tail;// Un tableau de chaînes pour les arguments
 }   t_command;
+
 typedef struct s_commandList
 {
     int commandListLength;

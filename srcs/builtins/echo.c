@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:11:47 by bat               #+#    #+#             */
-/*   Updated: 2023/10/20 19:53:32 by julien           ###   ########.fr       */
+/*   Updated: 2023/10/30 10:28:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ int echo(int ac, char **av)
     write(STDOUT_FILENO, "\n", 1);
     exit(EXIT_SUCCESS);
     }
+    return 0;
 }
