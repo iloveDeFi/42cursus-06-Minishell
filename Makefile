@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
+#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/31 10:30:45 by julien           ###   ########.fr        #
+#    Updated: 2023/10/31 17:29:13 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ LIBFT_ARCHIVES = 		$(SRCS_DIRECTORY)/libft/libft.a
 
 
 # ALL FILES.C
-MAIN_FILE = main.C
+MAIN_FILE = main.c
 
 MINISHELL_FILES = 		minishell.c
 

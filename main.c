@@ -28,7 +28,7 @@ int main(int ac, char **av)
             perror("fork");
             exit(EXIT_FAILURE);
         } 
-        else if (pid == 0) 
+        else if (pid == 0)
         {
             // Dans le processus fils, exécutez la commande
             execvp(args[0], args);
