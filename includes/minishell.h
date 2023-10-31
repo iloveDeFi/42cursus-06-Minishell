@@ -35,15 +35,22 @@ typedef enum
 // Parsing
 int	ft_str_error(char *str, int number);
 
+// Structures
+typedef struct s_node 
+{
+    void *data;
+    struct s_node *next;
+    struct s_node *prev;
+} t_node;
 typedef struct s_arg
 {
     char *name;
     struct s_arg *next;
     struct s_arg *prev;
-}   t_arg;
+} t_arg;
 typedef struct s_argList
 {
-    int listLength;
+    int arglistLength;
     struct t_arg *head;
     struct t_arg *tail;
 } t_argList;
@@ -54,14 +61,14 @@ typedef struct s_command
     char **arguments;
     struct s_command *head;
     struct s_command *tail;// Un tableau de chaînes pour les arguments
-}   t_command;
+} t_command;
 typedef struct s_commandList
 {
     int commandListLength;
     char *name;
     struct t_command *head;
     struct t_command *tail;
-}   t_commandList;
+} t_commandList;
 
 typedef struct s_envVar
 {
@@ -69,13 +76,13 @@ typedef struct s_envVar
     char *value;
     struct s_envVar *next;
     struct s_envVar *prev;
-}   t_env;  
+} t_envVar;  
 typedef struct s_envVarList 
 {
     int envVarListLength;
     struct t_envVar *head;
     struct t_envVar *tail;
-}   t_envList;
+} t_envVarList;
 
 typedef struct s_redir
 {
@@ -83,8 +90,29 @@ typedef struct s_redir
     int redirection_type;
     struct s_redir *next;
     struct s_redir *prev;
-}   t_redir;
+} t_redir;
 
+typedef struct s_redirList
+{
+    int redirListLength;
+    struct t_redir *head;
+    struct t_redir *tail;
+} t_redirList;
+
+typedef struct s_pipes
+{
+    int pfd[2];
+    int pid;
+} t_pipes;
+
+typedef struct s_global
+{
+    t_argList *arguments;
+    t_envVarList *envVars;
+    t_commandList *commands;
+    t_redirList *redirections;
+    t_pipes *pipes;
+} t_global;
 
 // Signals
 
