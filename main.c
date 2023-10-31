@@ -42,7 +42,7 @@ int main(int ac, char **av)
             wait(NULL);
         }
         
-        // Libérer la mémoire utilisée par readline
+        // Libérer la mémoire utilisée avec readline
         free(input);
     }
     return 0;
