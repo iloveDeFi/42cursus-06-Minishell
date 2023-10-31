@@ -31,6 +31,24 @@ typedef enum
 
 
 // Linked Lists
+// File 1
+void appendToList(t_node **head, void *data);
+void    *getLastElement(t_node *head);
+int isListEmpty(t_node *head);
+void	print_list(t_node *head, void (*printFunction)(void *data));
+void printGeneric(void *data);
+// File 2
+void iterateList(t_node *head, void (*callback)(void *data));
+void freeList(t_node *head);
+void freeNode(t_node *node);
+int compareString(void *data, void *target);
+t_node *findNode(t_node *head, void *target);
+// File 3
+t_node *getPreviousNode(t_node *head, t_node *node)
+int getListSize(t_node *head);
+void removeNode(t_node **head, t_node *node);
+
+
 
 
 // Parsing
