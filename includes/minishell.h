@@ -23,9 +23,7 @@ typedef enum
 }   Bool;
 
 // Built-ins
-/*int cd(t_command *command, t_envList *envList);
-int echo(int ac, char **av);
-void	pwd(void);*/
+
 
 // Excecution  
 
@@ -88,7 +86,9 @@ typedef struct s_redir
     struct s_redir *prev;
 }   t_redir;
 
-
+int cd(t_command *command);
+int echo(int ac, char **av);
+void	pwd(void);
 // Signals
 
 #endif
