@@ -22,38 +22,6 @@ typedef enum
     TRUE
 }   Bool;
 
-// Built-ins
-
-
-// Excecution  
-
-// libft
-
-
-// Linked Lists
-// File 1
-void appendToList(t_node **head, void *data);
-void    *getLastElement(t_node *head);
-int isListEmpty(t_node *head);
-void	print_list(t_node *head, void (*printFunction)(void *data));
-void printGeneric(void *data);
-// File 2
-void iterateList(t_node *head, void (*callback)(void *data));
-void freeList(t_node *head);
-void freeNode(t_node *node);
-int compareString(void *data, void *target);
-t_node *findNode(t_node *head, void *target);
-// File 3
-t_node *getPreviousNode(t_node *head, t_node *node)
-int getListSize(t_node *head);
-void removeNode(t_node **head, t_node *node);
-
-
-
-
-// Parsing
-int	ft_str_error(char *str, int number);
-
 // Structures
 typedef struct s_node 
 {
@@ -134,5 +102,32 @@ typedef struct s_global
 } t_global;
 
 // Signals
+
+// Linked Lists
+// File 1
+void appendToList(t_node **head, void *data);
+void    *getLastElement(t_node *head);
+int isListEmpty(t_node *head);
+void	print_list(t_node *head, void (*printFunction)(void *data));
+void printGeneric(void *data);
+// File 2
+void iterateList(t_node *head, void (*callback)(void *data));
+void freeList(t_node *head);
+void freeNode(t_node *node);
+int compareString(void *data, void *target);
+t_node *findNode(t_node *head, void *target);
+// File 3
+t_node *getPreviousNode(t_node *head, t_node *node);
+int getListSize(t_node *head);
+void removeNode(t_node **head, t_node *node);
+
+// Built-ins
+
+// Execution  
+
+// libft
+
+// Parsing
+int	ft_str_error(char *str, int number);
 
 #endif
