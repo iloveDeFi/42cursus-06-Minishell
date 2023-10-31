@@ -6,13 +6,13 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:11:44 by bat               #+#    #+#             */
-/*   Updated: 2023/10/30 10:27:15 by julien           ###   ########.fr       */
+/*   Updated: 2023/10/31 10:19:58 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int	change_directory(const char *path)
+int	change_directory(const char *path)
 {
 	char	*pwd;
 
@@ -30,7 +30,7 @@
 	}
 }
 
-int cd(t_command *command, t_envList *envList)
+int cd(t_command *command)
 {
 	char	*home_directory;
 
@@ -51,4 +51,4 @@ int cd(t_command *command, t_envList *envList)
 	{
 		return (change_directory(command->arguments[1]));
 	}
-}*/
+}
