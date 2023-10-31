@@ -6,7 +6,7 @@
 #    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/31 10:12:28 by julien           ###   ########.fr        #
+#    Updated: 2023/10/31 10:30:45 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ LIBFT_FOLDER =			$(SRCS_DIRECTORY)/libft
 LIBFT_HEADER = 			$(SRCS_DIRECTORY)/libft/libft.h
 LIBFT_ARCHIVES = 		$(SRCS_DIRECTORY)/libft/libft.a
 
+
 # ALL FILES.C
-MAIN_FILE = main.c
+MAIN_FILE = main.C
 
 MINISHELL_FILES = 		minishell.c
 
