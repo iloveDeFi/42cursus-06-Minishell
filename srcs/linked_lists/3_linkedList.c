@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/10/31 14:29:06 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/31 16:35:46 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ t_node *getPreviousNode(t_node *head, t_node *node)
     t_node *previous = NULL;
     while (current != NULL)
     {
-        if (current = node)
+        if(current == node)
             return previous;
         previous = current;
         current = current->next;
     }
+    return NULL; // TO CHECK
 }
 
 int getListSize(t_node *head)

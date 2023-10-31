@@ -20,7 +20,7 @@ void iterateList(t_node *head, void (*callback)(void *data))
     while (current != NULL)
     {
         callback(current->data);
-        current = current->next;
+    current = current->next;
     }
 }
 
@@ -50,6 +50,13 @@ void freeNode(t_node *node)
     }
 }
 
+int compareString(void *data, void *target)
+{
+    char *str = (char *)data;
+    char *key = (char *)target;
+    return ft_strcmp(str, key);
+}
+
 t_node *findNode(t_node *head, void *target)
 {
     t_node *current = head;
@@ -60,11 +67,4 @@ t_node *findNode(t_node *head, void *target)
         current = current->next;
     }
     return NULL;
-}
-
-int compareString(void *data, void *target)
-{
-    char *str = (char *)data;
-    char *key = (char *)target;
-    return ft_strcmp(str, key);
 }
