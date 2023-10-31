@@ -23,6 +23,9 @@ typedef enum
 }   Bool;
 
 // Built-ins
+/*int cd(t_command *command, t_envList *envList);
+int echo(int ac, char **av);
+void	pwd(void);*/
 
 // Excecution  
 

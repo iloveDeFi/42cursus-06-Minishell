@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/10/02 15:28:57 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/30 10:35:22 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env   *create_node(char *var_array)
+/*t_env   *create_node(char *var_array)
 {
     t_env   *newNode = malloc(sizeof(t_env));
     if (newNode == NULL)
@@ -38,4 +38,4 @@ void    swap_node(t_env *tmp)
 void    free_node(t_env *tmp)
 {
    
-}
+}*/

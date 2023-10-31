@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/25 15:21:34 by bat              ###   ########.fr        #
+#    Updated: 2023/10/31 10:12:28 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ PARSING_FILES = 		parser.c \
 						error.c
 
 EXECUTING_FILES = 		bin.c \
-						builtins.c \
+						builtin.c \
 						executor.c
 
-BULITINS_FILES = 		cd.c \
+BUILTINS_FILES = 		cd.c \
 						echo.c \
 						exit.c \
 						export.c \
