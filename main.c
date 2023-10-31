@@ -53,16 +53,14 @@ int main(int ac, char **av) {
     }
 
     while (1) {
-        char *input = readline("Minis_Hell> "); // Lire l'entrée utilisateur
+        char *input = readline("Minis_Hell> ");
 
-        // Vérifiez si l'utilisateur a saisi une commande
         if (input == NULL) 
         {
             fprintf(stderr, "Exiting...\n");
             break; // Sortir de la boucle si l'utilisateur a saisi Ctrl+D
         }
 
-        // Ajouter l'entrée à l'historique
         add_history(input);
 
         char *token = ft_strtok(input, " \n");
@@ -93,10 +91,7 @@ int main(int ac, char **av) {
             // Dans le processus parent, attendez que le fils se termine
             wait(NULL);
         }
-
-        // Libérer la mémoire utilisée par readline
         free(input);
     }
-
     return 0;
 }
