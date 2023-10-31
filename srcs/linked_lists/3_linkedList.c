@@ -3,39 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/10/30 10:35:22 by julien           ###   ########.fr       */
+/*   Updated: 2023/10/31 14:29:06 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*t_env   *create_node(char *var_array)
+t_node *getPreviousNode(t_node *head, t_node *node)
 {
-    t_env   *newNode = malloc(sizeof(t_env));
-    if (newNode == NULL)
+    t_node *current = head;
+    t_node *previous = NULL;
+    while (current != NULL)
     {
-        printf("Error creating a new node. Memory allocation failed.\n");
-        exit(1);
+        if (current = node)
+            return previous;
+        previous = current;
+        current = current->next;
     }
-    newNode->name = name
-    newNode->next = 
-    newNode->prev = 
 }
 
-t_env	*dup_node(char *name, char *value)
+int getListSize(t_node *head)
 {
-
+    int size = 0;
+    t_node *current = head;
+    while (current != NULL)
+    {
+        size++;
+        current = current->next;
+    }
+    return size;
 }
 
-void    swap_node(t_env *tmp)
+void removeNode(t_node **head, t_node *node)
 {
-
+    if (*head == NULL || node == NULL)
+        return;
+    if (*head == node)
+        *head = node->next;
+    if (node->next != NULL)
+        node->next->prev = node->prev;
+    if (node->prev != NULL)
+        node->prev->next = node->next;
+    free(node);
 }
-
-void    free_node(t_env *tmp)
-{
-   
-}*/
