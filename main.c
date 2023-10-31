@@ -65,12 +65,12 @@ int main(int ac, char **av) {
         // Ajouter l'entrée à l'historique
         add_history(input);
 
-        char *token = strtok(input, " \n");
+        char *token = ft_strtok(input, " \n");
         int i = 0;
         while (token != NULL) 
         {
             av[i] = token;
-            token = strtok(NULL, " \n");
+            token = ft_strtok(NULL, " \n");
             i++;
         }
         av[i] = NULL; // La dernière entrée doit être NULL pour indiquer la fin des arguments
