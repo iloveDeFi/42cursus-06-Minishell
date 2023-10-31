@@ -6,13 +6,14 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:20:57 by bbessard          #+#    #+#             */
-/*   Updated: 2023/10/31 13:17:09 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/31 23:24:02 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # define BUFFER_SIZE 1
+#define NULL 0
 
 # include <unistd.h>
 # include <stdio.h>

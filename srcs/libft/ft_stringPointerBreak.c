@@ -6,14 +6,14 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:16:41 by bat               #+#    #+#             */
-/*   Updated: 2023/10/21 13:39:36 by bat              ###   ########.fr       */
+/*   Updated: 2023/10/31 23:42:11 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *stringPointerBreak(const char *str1, const char *str2) {
-
+char *stringPointerBreak(const char *str1, const char *str2) 
+{
     const char *search = str2;
     
     while (*str1 != '\0') {

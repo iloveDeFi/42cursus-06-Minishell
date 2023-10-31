@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/10/31 18:18:29 by bat              ###   ########.fr        #
+#    Updated: 2023/10/31 23:55:48 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_FOLDER) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./srcs/libft -lft -lreadline 
 	
 libft/libft.a:
 	@make -C $(LIBFT_FOLDER)
