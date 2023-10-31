@@ -48,7 +48,8 @@
 
 
 int main(int ac, char **av) {
-    if (ac > 1) {
+    if (ac > 1) 
+    {
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
@@ -57,7 +58,8 @@ int main(int ac, char **av) {
         char *input = readline("Minis_Hell> "); // Lire l'entrée utilisateur
 
         // Vérifiez si l'utilisateur a saisi une commande
-        if (input == NULL) {
+        if (input == NULL) 
+        {
             fprintf(stderr, "Exiting...\n");
             break; // Sortir de la boucle si l'utilisateur a saisi Ctrl+D
         }
@@ -67,7 +69,8 @@ int main(int ac, char **av) {
 
         char *token = strtok(input, " \n");
         int i = 0;
-        while (token != NULL) {
+        while (token != NULL) 
+        {
             av[i] = token;
             token = strtok(NULL, " \n");
             i++;
@@ -77,7 +80,8 @@ int main(int ac, char **av) {
         // Créer un nouveau processus
         pid_t pid = fork();
 
-        if (pid == -1) {
+        if (pid == -1) 
+        {
             perror("fork");
             exit(EXIT_FAILURE);
         } else if (pid == 0) {
@@ -86,7 +90,8 @@ int main(int ac, char **av) {
             // Si execvp retourne, il y a eu une erreur
             perror("minishell");
             exit(EXIT_FAILURE);
-        } else {
+        } else 
+        {
             // Dans le processus parent, attendez que le fils se termine
             wait(NULL);
         }
