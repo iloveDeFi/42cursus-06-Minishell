@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 17:04:37 by bbessard          #+#    #+#              #
-#    Updated: 2023/11/01 00:07:22 by bat              ###   ########.fr        #
+#    Updated: 2023/11/01 19:24:58 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ AR = ar rc
 
 HEADER = libft.h
 
-SRC = $(wildcard ft_stringPointerBreak.c) $(wildcard ft_strtok.c) \
+SRC = $(wildcard ft_strtok.c) \
 $(wildcard *.c)
 
 OBJ = $(SRC:.c=.o)
