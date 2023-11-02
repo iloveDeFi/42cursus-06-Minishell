@@ -6,9 +6,16 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:03:24 by bat               #+#    #+#             */
-/*   Updated: 2023/10/21 13:50:15 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/01 22:11:50 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void handle_signal(int signal_num) {
+    if (signal_num == SIGINT)
+    {
+        printf("\nSignal SIGINT received. Stopping the current process.\n");
+        exit(EXIT_SUCCESS);    
+    }
+}
