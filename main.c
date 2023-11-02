@@ -2,7 +2,7 @@
 
 int main(int ac, char **av) {
 
-    signal(SIGINT, handle_signal);
+    //signal(SIGINT, handle_signal);
 
     if (ac > 1) 
     {
@@ -31,7 +31,7 @@ int main(int ac, char **av) {
         }
         av[i] = NULL; // La dernière entrée doit être NULL pour indiquer la fin des arguments
 
-        // Créer un nouveau processus
+        // Créer nouveau processus
         pid_t pid = fork();
 
         if (pid == -1) 
