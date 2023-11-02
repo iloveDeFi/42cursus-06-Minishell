@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/02 13:16:53 by julienbelda      ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2023/11/02 13:40:28 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 # FINAL EXECUTABLE NAME
 NAME = minishell
@@ -28,6 +29,7 @@ LIBFT_ARCHIVES = 		$(SRCS_DIRECTORY)/libft/libft.a
 
 
 # ALL FILES.C
+MAIN_FILE = main.C
 MAIN_FILE = main.C
 
 MINISHELL_FILES = 		minishell.c

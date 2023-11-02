@@ -38,13 +38,16 @@ int main(int ac, char **av) {
         {
             perror("fork");
             exit(EXIT_FAILURE);
-        } else if (pid == 0) {
+        } 
+        else if (pid == 0) 
+        {
             // Dans le processus fils, exécutez la commande
-            execvp(av[0], av);
+            execvp(args[0], args);
             // Si execvp retourne, il y a eu une erreur
             perror("minishell");
             exit(EXIT_FAILURE);
-        } else 
+        } 
+        else 
         {
             // Dans le processus parent, attendez que le fils se termine
             wait(NULL);
