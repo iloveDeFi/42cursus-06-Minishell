@@ -6,11 +6,9 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:14 by bat               #+#    #+#             */
-/*   Updated: 2023/11/04 10:19:14 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/06 15:47:51 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 #include "minishell.h"
 
