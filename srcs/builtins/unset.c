@@ -6,13 +6,13 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:29 by bat               #+#    #+#             */
-/*   Updated: 2023/11/06 10:22:35 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/06 15:57:56 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int unset(t_global *global, char *arg) 
+/*int unset(t_global *global, char *arg) 
 {
     int exit_code = 0;
     t_envVar *tmp = global->envVars->head;
@@ -57,4 +57,4 @@ int is_valid_identifier(const char *name)
         i++;
     }
     return TRUE;
-}
+}*/

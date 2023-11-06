@@ -6,14 +6,14 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:14 by bat               #+#    #+#             */
-/*   Updated: 2023/11/06 15:47:51 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/06 15:56:01 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Fonction pour gérer la commande "exit"
-void exit(t_command *command) 
+/*void exit(t_command *command) 
 {
     int exit_code;
     
@@ -30,4 +30,4 @@ void exit(t_command *command)
     } 
     else 
         exit(0);
-}
+}*/
