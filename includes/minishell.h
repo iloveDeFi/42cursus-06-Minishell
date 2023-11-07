@@ -25,6 +25,21 @@
 # define PWD "pwd"
 # define UNSET "unset"
 
+typedef enum e_token
+{
+	PIPE,     // |
+	HEREDOC,  // <<
+	LPR,      // (
+	RPR,      // )
+	AND,      // &&
+	OR,       // ||
+	APPEND,   // >>
+	OUT,      // >
+	IN,       // <
+	NOT,      // string
+	END       // end of cmd
+}t_token;
+
 typedef enum
 {
     FALSE,
