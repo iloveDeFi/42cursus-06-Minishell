@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <limits.h>
+#include <termios.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -16,6 +17,14 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+# define CD "cd"
+# define ECHO "echo"
+# define ENV "env"
+# define EXIT "exit"
+# define EXPORT "export"
+# define PWD "pwd"
+# define UNSET "unset"
+
 typedef enum
 {
 	FALSE,
@@ -30,6 +39,12 @@ typedef struct s_node
 	struct s_node *prev;
 } t_node;
 
+typedef struct s_nodeList
+{
+    int nodeListLength;
+    struct t_node *head;
+    struct t_node *tail;
+} t_nodeList;
 typedef struct s_arg
 {
 	char *name;
@@ -96,6 +111,13 @@ typedef struct s_pipes
 	int pid;
 } t_pipes;
 
+typedef struct s_pipesList
+{
+    int pipeslistLength;
+    struct t_pipes *head;
+    struct t_pipes *tail;
+} t_pipesList;
+
 typedef struct s_global
 {
 	t_argList *arguments;
@@ -105,43 +127,55 @@ typedef struct s_global
 	t_pipes *pipes;
 } t_global;
 
-// Signals
+// Global
+extern int		g_exit_code;
+
+// Main
+int main(int ac, char **av);
+
+// Minishell
 
 // Linked Lists
-// File 1
-void	appendToList(t_node **head, void *data);
+    // File 1
+void appendToList(t_node **head, void *data);
 void    *getLastElement(t_node *head);
 int		isListEmpty(t_node *head);
 void	print_list(t_node *head, void (*printFunction)(void *data));
-void	printGeneric(void *data);
-// File 2
-void	iterateList(t_node *head, void (*callback)(void *data));
-void	freeList(t_node *head);
-void	freeNode(t_node *node);
-int		compareString(void *data, void *target);
-t_node	*findNode(t_node *head, void *target);
-// File 3
-t_node	*getPreviousNode(t_node *head, t_node *node);
-int		getListSize(t_node *head);
-void	removeNode(t_node **head, t_node *node);
+void printGeneric(void *data);
+    // File 2
+void iterateList(t_node *head, void (*callback)(void *data));
+void freeList(t_node *head);
+void freeNode(t_node *node);
+int compareString(void *data, void *target);
+t_node *findNode(t_node *head, void *target);
+    // File 3
+t_node *getPreviousNode(t_node *head, t_node *node);
+int getListSize(t_node *head);
+void removeNode(t_node **head, t_node *node);
 
-// Built-ins
-int		cd(t_command *command);
-int		change_directory(const char *path);
-int		echo(int ac, char **av);
-int 	unset(t_global *global, char *arg);
-int 	is_valid_identifier(const char *name);
-//void	exit(t_command *command);
-void	pwd(void);
-int		unset(t_global *global, char *arg);
-
+// Parsing
+char *ft_find_envVar(t_envVar *head, const char *targetName);
+int ft_split_arg(t_argList *argList, char *input);
+int	ft_str_error(char *str, int number);
+void ft_countdown(void);
 
 // Execution
 void    ft_execute_command(t_command *command);
 
+// Built-ins
+int	change_directory(const char *path);
+int cd(t_command *command);
+int echo(int ac, char **av);
+void    pwd(void);
+
+// Signals
+void init_terminal_settings(void);
+void init_signals(void(*signals_handle)(int));
+void receive_signal_from_user(int signal_num);
+void handle_signal_execution(int signal_num);
+
 // libft
 
-// Parsing
-int	ft_str_error(char *str, int number);
+
 
 #endif

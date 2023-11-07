@@ -3,7 +3,7 @@
 int main(int ac, char **av) {
 
     //signal(SIGINT, handle_signal);
-
+    
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n");
