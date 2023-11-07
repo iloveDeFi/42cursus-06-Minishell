@@ -6,13 +6,14 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:57:04 by bat               #+#    #+#             */
-/*   Updated: 2023/11/01 19:24:30 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/06 14:29:04 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_strtok(char *str, const char *delim) {
+char *ft_strtok(char *str, const char *delim)
+{
     static char *token = NULL;
     if (str != NULL)
         token = str;
