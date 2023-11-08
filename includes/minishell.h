@@ -18,12 +18,27 @@
 # define STDOUT 1
 # define STDERR 2
 # define CD "cd"
-# define ECHO "echo"
+//# define ECHO "echo"
 # define ENV "env"
 # define EXIT "exit"
 # define EXPORT "export"
 # define PWD "pwd"
 # define UNSET "unset"
+
+typedef enum e_token
+{
+	PIPE,     // |
+	HEREDOC,  // <<
+	LPR,      // (
+	RPR,      // )
+	AND,      // &&
+	OR,       // ||
+	APPEND,   // >>
+	OUT,      // >
+	IN,       // <
+	NOT,      // string
+	END       // end of cmd
+}t_token;
 
 typedef enum
 {
@@ -62,8 +77,8 @@ typedef struct s_command
 {
     char *name;
     char **arguments;
-    struct s_command *head;
-    struct s_command *tail;// Un tableau de chaînes pour les arguments
+    struct s_command *next;
+    struct s_command *prev;// Un tableau de chaînes pour les arguments
 } t_command;
 typedef struct s_commandList
 {

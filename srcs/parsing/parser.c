@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/06 16:31:52 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/07 21:58:14 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int ft_split_arg(t_argList *argList, char *input)
     return argList->arglistLength;
 }
 
-char *ft_find_envVar(t_envVar *head, const char *targetName)
+char *ft_find_envVar(t_envVar *head, char *targetName)
 {
     t_envVar *current = head;
     while (current != NULL)
     {
-        if (ft_strcmp(current->name, targetName == 0))
+        if (ft_strcmp(current->name, targetName) == 0)
             return current;
         current = current->next;
     }
