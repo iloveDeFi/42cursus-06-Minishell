@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:30:18 by bbessard          #+#    #+#             */
-/*   Updated: 2022/11/22 11:27:15 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/11/10 00:17:32 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = get_end_index(s1, set);
 	if (start >= end)
 		return (ft_strdup(""));
-	str = malloc(sizeof(*str) * (end - start + 1));
+	str = malloc(sizeof(*str) * (end - start + 2));
 	if (str != NULL)
 		ft_strlcpy(str, s1 + start, (end - start + 1));
 	return (str);
+	free(str);
 }

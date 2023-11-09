@@ -57,30 +57,28 @@ int main(int ac, char **av, char **envp) {
         int i = 0;
         while (token != NULL) 
         {
+            ft_strtrim(token, " \t\n");
+            ft_tokenize_with_quotes(token);
             av[i] = token;
             token = ft_strtok(NULL, " \n");
             i++;
         }
         av[i] = NULL; // La dernière entrée doit être NULL pour indiquer la fin des arguments
 
-        // Créer nouveau processus
         pid_t pid = fork();
 
         if (pid == -1) 
         {
             perror("fork");
             exit(EXIT_FAILURE);
-        } else if (pid == 0) {
-            // Dans le processus fils, exécutez la commande
+        } 
+        else if (pid == 0) 
+        {
             execvp(av[0], av);
-            // Si execvp retourne, il y a eu une erreur
             perror("minishell");
             exit(EXIT_FAILURE);
-        } else 
-        {
-            // Dans le processus parent, attendez que le fils se termine
+        } else
             wait(NULL);
-        }
         free(input);
     }
     return 0;
