@@ -9,11 +9,12 @@
 #include <errno.h>
 #include <limits.h>
 #include <termios.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
 # define  MAX_INPUT_SIZE 1024
-
+// File Descriptor
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -46,6 +47,32 @@ typedef enum
     TRUE
 }   Bool;
 
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+	int status;
+	int stdin_fd;
+	int stdout_fd;
+    t_global *child; // pour pointer faire t_mini.child->enVars etc
+    t_global *exec;
+    t_global *errors;
+}   t_mini;
+
+typedef struct s_env
+{
+    char *var;
+    char *value;
+    struct s_env *next;
+} t_env;
+
+typedef struct s_envList
+{
+    int envListLength;
+    t_env *head;
+    t_env *tail;
+} t_envList;
 // Structures
 typedef struct s_node 
 {
@@ -57,8 +84,8 @@ typedef struct s_node
 typedef struct s_nodeList
 {
     int nodeListLength;
-    struct t_node *head;
-    struct t_node *tail;
+    t_node *head;
+    t_node *tail;
 } t_nodeList;
 typedef struct s_arg
 {
@@ -69,8 +96,8 @@ typedef struct s_arg
 typedef struct s_argList
 {
     int arglistLength;
-    struct t_arg *head;
-    struct t_arg *tail;
+    t_arg *head;
+    t_arg *tail;
 } t_argList;
 
 typedef struct s_command
@@ -84,8 +111,8 @@ typedef struct s_commandList
 {
     int commandListLength;
     char *name;
-    struct t_command *head;
-    struct t_command *tail;
+    t_command *head;
+    t_command *tail;
 } t_commandList;
 
 typedef struct s_envVar
@@ -98,8 +125,8 @@ typedef struct s_envVar
 typedef struct s_envVarList 
 {
     int envVarListLength;
-    struct t_envVar *head;
-    struct t_envVar *tail;
+    t_envVar *head;
+    t_envVar *tail;
 } t_envVarList;
 
 typedef struct s_redir
@@ -113,8 +140,8 @@ typedef struct s_redir
 typedef struct s_redirList
 {
     int redirListLength;
-    struct t_redir *head;
-    struct t_redir *tail;
+    t_redir *head;
+    t_redir *tail;
 } t_redirList;
 
 typedef struct s_pipes
@@ -126,8 +153,8 @@ typedef struct s_pipes
 typedef struct s_pipesList
 {
     int pipeslistLength;
-    struct t_pipes *head;
-    struct t_pipes *tail;
+    t_pipes *head;
+    t_pipes *tail;
 } t_pipesList;
 
 typedef struct s_global
