@@ -32,7 +32,7 @@ void write_inputrc(void)
 }
 
 
-int main(int ac, char **av, char **env) {
+int main(int ac, char **av, char **envp) {
 
     //signal(SIGINT, handle_signal);
     

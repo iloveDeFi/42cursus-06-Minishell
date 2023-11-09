@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/09 16:29:45 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/09 17:09:37 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,21 @@ void ft_initialize_environment(t_envList *envList, char **env)
 {
     int i;
     char **var_array;
+    t_env *newNode;
 
+    newNode = NULL;
+    var_array = ft_env_duplicate(env);
+    i = 0;
+    while (var_array[i])
+    {
+        newNode = ft_createNode(var_array[i]);
+        if (!envList)
+            envList = &newNode;
+        else 
+            appendToList(envList, newNode);
+        i++;
+    }
+    free_array(var_array);
 }
 
 void ft_initialize_minishell(t_mini *shell, t_env **env)

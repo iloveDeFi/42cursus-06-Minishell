@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/10/31 16:35:46 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/09 17:03:27 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,20 @@ void removeNode(t_node **head, t_node *node)
     if (node->prev != NULL)
         node->prev->next = node->next;
     free(node);
+}
+
+t_node *ft_createNode(void *data)
+{
+    t_node *newNode = malloc(sizeof(t_node));
+    
+    if (newNode == NULL)
+    {
+        fprintf(stderr, "Chaos, memory allocation failed with new node\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    
+    return newNode;
 }
