@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/07 21:58:14 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/10 09:41:53 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int ft_split_arg(t_argList *argList, char *input)
             argList->tail = newArg;
         }
         argList->arglistLength++;
-        token = strtok(NULL, " ");
+        token = ft_strtok(NULL, " ");
     }
     return argList->arglistLength;
 }

@@ -10,7 +10,7 @@
 #include <limits.h>
 #include <termios.h>
 #include <fcntl.h>
-//#include <stdbool.h>
+#include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 

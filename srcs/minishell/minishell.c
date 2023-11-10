@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/09 17:47:46 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/10 11:41:45 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     shell->child = NULL;
     shell->exec = NULL;
     shell->errors = NULL;
-    write_input();
+    write_inputrc();
 }

@@ -8,7 +8,8 @@ void write_inputrc(void)
 
     home = getenv("HOME");
     home = ft_strjoin(home, "/.inputrc");
-    if (home == NULL) {
+    if (home == NULL) 
+    {
         perror("ft_strjoin");
         exit(EXIT_FAILURE);
     }
@@ -38,8 +39,8 @@ int main(int ac, char **av, char **envp) {
     
     if (ac > 1) 
     {
-        fprintf(stderr, "CHAOS, there are too many arguments\n");
-        return 1; // Utilisation de 1 pour indiquer une erreur
+        fprintf(stderr, "CHAOS, too many arguments\n");
+        return 1;
     }
 
     while (1) {
@@ -48,7 +49,7 @@ int main(int ac, char **av, char **envp) {
         if (input == NULL) 
         {
             fprintf(stderr, "Exiting...\n");
-            break; // Sortir de la boucle si l'utilisateur a saisi Ctrl+D
+            break;
         }
 
         add_history(input);
@@ -57,13 +58,14 @@ int main(int ac, char **av, char **envp) {
         int i = 0;
         while (token != NULL) 
         {
-            ft_strtrim(token, " \t\n");
+            av[i] = malloc(ft_strlen(token + 1));
+            ft_strcpy(av[i], token);
+            ft_strtrim_with_quotes(token, " \t\n");
             ft_tokenize_with_quotes(token);
-            av[i] = token;
             token = ft_strtok(NULL, " \n");
             i++;
         }
-        av[i] = NULL; // La dernière entrée doit être NULL pour indiquer la fin des arguments
+        av[i] = NULL;
 
         pid_t pid = fork();
 
@@ -78,7 +80,12 @@ int main(int ac, char **av, char **envp) {
             perror("minishell");
             exit(EXIT_FAILURE);
         } else
-            wait(NULL);
+            {
+                wait(NULL);
+                int j = 0;
+                while (j < i)
+                    free(av[++j]);
+            }
         free(input);
     }
     return 0;
