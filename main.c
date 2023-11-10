@@ -1,6 +1,38 @@
 #include "minishell.h"
 
-int main(int ac, char **av) {
+void write_inputrc(void)
+{
+    int fd;
+    char *buf;
+    char *home;
+
+    home = getenv("HOME");
+    home = ft_strjoin(home, "/.inputrc");
+    if (home == NULL) {
+        perror("ft_strjoin");
+        exit(EXIT_FAILURE);
+    }
+
+    fd = open(home, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+    if (fd == -1) 
+    {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+    const char *content = "set echo-control-characters Off\n";
+    ssize_t bytes_written = write(fd, content, strlen(content));
+    if (bytes_written == -1) {
+        perror("write");
+        close(fd);
+        free(home);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+    free(home);
+}
+
+
+int main(int ac, char **av, char **envp) {
 
     //signal(SIGINT, handle_signal);
     
