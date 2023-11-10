@@ -1,9 +1,10 @@
 #include "minishell.h"
 
+int g_exit_code = 0;
+
 void write_inputrc(void)
 {
     int fd;
-    char *buf;
     char *home;
 
     home = getenv("HOME");
@@ -32,7 +33,8 @@ void write_inputrc(void)
 }
 
 
-int main(int ac, char **av, char **envp) {
+int main(int ac, char **av) 
+{
 
     //signal(SIGINT, handle_signal);
     
