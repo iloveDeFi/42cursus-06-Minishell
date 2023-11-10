@@ -200,6 +200,7 @@ char *ft_find_envVar(t_envVar *head, const char *targetName);
 int ft_split_arg(t_argList *argList, char *input);
 int	ft_str_error(char *str, int number);
 void ft_countdown(void);
+int ft_is_sep(char c)
 
 // Execution
 void    ft_execute_command(t_command *command);

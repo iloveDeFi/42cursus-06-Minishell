@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/07 21:58:14 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/10 14:21:42 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,11 @@ char *ft_find_envVar(t_envVar *head, char *targetName)
         current = current->next;
     }
     return NULL;
+}
+
+int ft_is_sep(char c)
+{
+    if (c == '<' || c == '>' || c == '|')
+        return (FALSE);
+    return (TRUE);
 }
