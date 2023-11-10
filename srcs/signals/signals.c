@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:03:24 by bat               #+#    #+#             */
-/*   Updated: 2023/11/07 11:35:52 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/07 11:43:58 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@ void receive_signal_from_user(int signal_num) {
     if (signal_num == SIGINT)
     {
         printf("\nSignal SIGINT (Ctrl+C) received. Stopping the current process.\n");
-        exit(EXIT_SUCCESS);    
+        ft_putstr_fd("\n", STDOUT_FILENO);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
+        g_exit_code = 1;
+        //exit(EXIT_SUCCESS);    
     }
     else if (signal_num == SIGQUIT)
     {
-        
+        rl_on_new_line();
+        rl_redisplay();
     }
 }
 
