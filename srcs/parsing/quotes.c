@@ -27,7 +27,7 @@ void ft_tokenize_with_quotes(char *input)
             while (*current_char != quote && *current_char != '\0')
                 current_char++;
         }
-        if (*current_char == '\0')
+        else if (*current_char == '\0')
         {
             fprintf(stderr, "Error: Unterminated quote\n");
             return;

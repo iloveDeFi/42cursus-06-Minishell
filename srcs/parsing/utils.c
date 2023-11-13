@@ -14,10 +14,10 @@ char *ft_strtrim_with_quotes(char *str)
     i = 0;
     if (str == NULL)
         return NULL;
-    while (str[start] != '\0' && (ft_is_white_space(str[start])))
+    while (str[start] != '\0' && ((ft_is_white_space(str[start])) || ft_is_quote(str[start])))
         start++;
     end = len - 1;
-    while (str[end] >= 0 && ft_is_white_space(str[end]))
+    while (str[end] >= 0 && (ft_is_white_space(str[end]) || ft_is_quote(str[end])))
         end--;
     i = 0;
     result = (char *)malloc(sizeof(char) * (end - start + 2));
@@ -29,4 +29,17 @@ char *ft_strtrim_with_quotes(char *str)
     }
     result[i] = '\0';
     return (result);
+}
+
+char *ft_strcpy(char *dest, char *src)
+{
+	int i;
+
+	if (dest == NULL || src == NULL)
+		return NULL;
+
+	i = 0;
+	while (src[++i] != '\0')
+		dest[i] = src[i];
+	return (dest);
 }

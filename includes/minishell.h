@@ -74,6 +74,7 @@ typedef struct s_envList
     t_env *head;
     t_env *tail;
 } t_envList;
+
 // Structures
 typedef struct s_node 
 {
@@ -88,12 +89,14 @@ typedef struct s_nodeList
     t_node *head;
     t_node *tail;
 } t_nodeList;
+
 typedef struct s_arg
 {
     char *name;
     struct s_arg *next;
     struct s_arg *prev;
 } t_arg;
+
 typedef struct s_argList
 {
     int arglistLength;
@@ -108,6 +111,7 @@ typedef struct s_command
     struct s_command *next;
     struct s_command *prev;// Un tableau de chaînes pour les arguments
 } t_command;
+
 typedef struct s_commandList
 {
     int commandListLength;
@@ -207,6 +211,7 @@ char *ft_strtrim_with_quotes(char *str);
 int ft_is_quote(char c) ;
 int ft_check_quotes_error(void);
 void ft_tokenize_with_quotes(char *input);
+char *ft_strcpy(char *dest, char *src);
 
 // Execution
 void    ft_execute_command(t_command *command);

@@ -1,9 +1,9 @@
-º#include "minishell.h"
+#include "minishell.h"
 
 void write_inputrc(void)
 {
     int fd;
-    char *buf;
+    //char *buf;
     char *home;
 
     home = getenv("HOME");
@@ -33,17 +33,23 @@ void write_inputrc(void)
 }
 
 
-int main(int ac, char **av, char **envp) {
+int main(int ac, char **av, char **envp) 
+{
+	t_mini	shell;
+	t_envList	envList;
+	t_env	env;
 
-    //signal(SIGINT, handle_signal);
-    
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, too many arguments\n");
         return 1;
     }
-
-    while (1) {
+	ft_initialize_minishell(&shell, &env);
+	ft_initialize_environment(&envList, &envp);
+    while (1) 
+	{
+		// run function signal(SIGINT, handle_signal);
+		ft_custom_prompt_msg(&shell);
         char *input = readline("Minis_Hell> ");
 
         if (input == NULL) 
@@ -59,8 +65,8 @@ int main(int ac, char **av, char **envp) {
         while (token != NULL) 
         {
             av[i] = malloc(ft_strlen(token + 1));
-            ft_strlcpy(av[i], token);
-            ft_strtrim_with_quotes(token, " \t\n");
+            ft_strcpy(av[i], token);
+            ft_strtrim_with_quotes(token);
             ft_tokenize_with_quotes(token);
             token = ft_strtok(NULL, " \n");
             i++;
