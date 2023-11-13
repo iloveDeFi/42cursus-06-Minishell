@@ -164,16 +164,20 @@ typedef struct s_global
     t_envVarList *envVars;
     t_commandList *commands;
     t_redirList *redirections;
-    t_pipes *pipes;
+    t_pipesList *pipes;
 } t_global;
 
 // Global
 extern int		g_exit_code;
 
 // Main
-int main(int ac, char **av);
+int main(int ac, char **av, char **envp);
 
 // Minishell
+void ft_initialize_minishell(t_mini *shell, t_env **env);
+void ft_initialize_environment(t_envList *envList, char **env);
+void ft_exit_shell(t_mini *shell);
+void ft_custom_prompt_msg(t_mini *shell);
 
 // Linked Lists
     // File 1
@@ -196,8 +200,13 @@ void removeNode(t_node **head, t_node *node);
 // Parsing
 char *ft_find_envVar(t_envVar *head, const char *targetName);
 int ft_split_arg(t_argList *argList, char *input);
-int	ft_str_error(char *str, int number);
 void ft_countdown(void);
+int	ft_is_white_space(char c);
+int ft_is_pipe_or_redir(char c);
+char *ft_strtrim_with_quotes(char *str);
+int ft_is_quote(char c) ;
+int ft_check_quotes_error(void);
+void ft_tokenize_with_quotes(char *input);
 
 // Execution
 void    ft_execute_command(t_command *command);

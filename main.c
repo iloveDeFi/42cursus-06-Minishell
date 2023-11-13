@@ -1,4 +1,4 @@
-#include "minishell.h"
+º#include "minishell.h"
 
 void write_inputrc(void)
 {
@@ -59,7 +59,7 @@ int main(int ac, char **av, char **envp) {
         while (token != NULL) 
         {
             av[i] = malloc(ft_strlen(token + 1));
-            ft_strcpy(av[i], token);
+            ft_strlcpy(av[i], token);
             ft_strtrim_with_quotes(token, " \t\n");
             ft_tokenize_with_quotes(token);
             token = ft_strtok(NULL, " \n");
