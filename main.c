@@ -37,7 +37,7 @@ int main(int ac, char **av, char **envp)
 {
 	t_mini	shell;
 	t_envList	envList;
-	t_env	env;
+	t_env	*env;
 
     if (ac > 1) 
     {
@@ -45,7 +45,7 @@ int main(int ac, char **av, char **envp)
         return 1;
     }
 	ft_initialize_minishell(&shell, &env);
-	ft_initialize_environment(&envList, &envp);
+	ft_initialize_environment(&envList, envp);
     while (1) 
 	{
 		// run function signal(SIGINT, handle_signal);
@@ -74,7 +74,8 @@ int main(int ac, char **av, char **envp)
         av[i] = NULL;
 
         pid_t pid = fork();
-
+        // libérer la mémoire allouée avant exit(EXIT_FAILURE) 
+        // dans le processus enfant pour éviter les fuites de mémoire.
         if (pid == -1) 
         {
             perror("fork");

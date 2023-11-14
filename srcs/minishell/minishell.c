@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/13 14:04:39 by bbessard         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:02:28 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void ft_exit_shell(t_mini *shell)
 }
 
 //before calling function set head and tail to NULL and length to 0
-void ft_initialize_environment(t_envList *envList, char **env)
+void ft_initialize_environment(t_envList **envList, char **env)
 {
     int i;
     char **var_array;

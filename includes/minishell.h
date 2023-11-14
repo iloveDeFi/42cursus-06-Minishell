@@ -47,20 +47,6 @@ typedef enum
     FALSE,
     TRUE
 }   Bool;
-
-typedef struct s_mini
-{
-    char *av;
-    int numberOfCommands;
-    int fd_history;
-	int status;
-	int stdin_fd;
-	int stdout_fd;
-    t_global *child; // pour pointer faire t_mini.child->enVars etc
-    t_global *exec;
-    t_global *errors;
-}   t_mini;
-
 typedef struct s_env
 {
     char *var;
@@ -170,6 +156,19 @@ typedef struct s_global
     t_redirList *redirections;
     t_pipesList *pipes;
 } t_global;
+
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+	int status;
+	int stdin_fd;
+	int stdout_fd;
+    t_global *child; // pour pointer faire t_mini.child->enVars etc
+    t_global *exec;
+    t_global *errors;
+}   t_mini;
 
 // Global
 extern int		g_exit_code;
