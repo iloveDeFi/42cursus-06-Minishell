@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:14 by bat               #+#    #+#             */
-/*   Updated: 2023/11/06 15:47:51 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/14 16:29:30 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Fonction pour gérer la commande "exit"
-void exit(t_command *command) 
+void my_exit(t_command *command) 
 {
     int exit_code;
     
@@ -24,7 +24,7 @@ void exit(t_command *command)
             exit(exit_code);
         else 
         {
-            printf(stderr, "Invalid exit code: %s\n", command->arguments[1]);
+            fprintf(stderr, "Invalid exit code: %s\n", command->arguments[1]);
             exit(EXIT_FAILURE);
         }
     } 
