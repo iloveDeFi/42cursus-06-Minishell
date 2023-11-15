@@ -178,7 +178,7 @@ int main(int ac, char **av, char **envp);
 
 // Minishell
 void ft_initialize_minishell(t_mini *shell, t_env **env);
-void ft_initialize_environment(t_envList *envList, char **env);
+void ft_initialize_environment(t_envList **envList, char **env);
 void ft_exit_shell(t_mini *shell);
 void ft_custom_prompt_msg(t_mini *shell);
 
@@ -199,6 +199,7 @@ t_node *findNode(t_node *head, void *target);
 t_node *getPreviousNode(t_node *head, t_node *node);
 int getListSize(t_node *head);
 void removeNode(t_node **head, t_node *node);
+t_node *ft_createNode(void *data);
 
 // Parsing
 char *ft_find_envVar(t_envVar *head, const char *targetName);
@@ -220,6 +221,10 @@ int	change_directory(const char *path);
 int cd(t_command *command);
 int echo(int ac, char **av);
 void    pwd(void);
+char **ft_env_duplicate(char **envp);
+void my_exit(t_command *command);
+int unset(t_global *global, char *arg);
+int is_valid_identifier(const char *name);
 
 // Signals
 void init_terminal_settings(void);
