@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void ft_countdown(void)
+/*void ft_countdown(void)
 {
     int i;
 
@@ -22,4 +22,4 @@ void ft_countdown(void)
     }
     printf("Let's go my gigot d'agneau!\n");
     return (0);
-}
+}*/

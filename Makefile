@@ -6,7 +6,7 @@
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/15 17:16:12 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/11/15 19:03:29 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,7 @@ MINISHELL_FILES =      minishell.c \
 
 PARSING_FILES =        parser.c \
                       error.c \
+					  fun.c \
 					  pipes.c \
 					  quotes.c \
 					  redirections.c \
@@ -130,11 +131,12 @@ EXECUTING_FILES =      bin.c \
 
 BUILTINS_FILES =       cd.c \
                       echo.c \
+					  env.c \
                       exit.c \
                       export.c \
                       export_utils.c \
                       pwd.c \
-                      unset.c
+                      unset.c 
 
 SIGNALS_FILES =        signals.c \
 
@@ -174,9 +176,6 @@ $(NAME): $(OBJS) libft/libft.a
 # Baptiste
 #$(NAME): $(OBJS) libft/libft.a
 	#$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
-
-$(NAME): $(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
 
 libft/libft.a:
 	@make -C $(LIBFT_FOLDER)
