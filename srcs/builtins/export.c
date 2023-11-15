@@ -6,13 +6,11 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:19 by bat               #+#    #+#             */
-/*   Updated: 2023/11/10 16:18:08 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/15 09:46:49 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int ft_error_export(char *args)
 {
@@ -31,11 +29,10 @@ int ft_check_wrong_char(char *str)
         return (0);
     while (str[i])
     {
-        if (ft_is_sep(str[i]) || str[i] >= 33 && str[i] <= 47
-            || str[i] == '=' && str[i + 1] == '=')
+        if (ft_is_sep(str[i]) || (str[i] >= 33 && str[i] <= 47)
+            || (str[i] == '=' && str[i + 1] == '='))
             return (TRUE);
         i++; 
     }
     return (FALSE);   
 }
-
