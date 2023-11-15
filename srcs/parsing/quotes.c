@@ -32,7 +32,6 @@ void ft_tokenize_with_quotes(char *input)
             fprintf(stderr, "Error: Unterminated quote\n");
             return;
         }
-        current_char++;
         else if (*current_char == ' ')
         {
             *current_char = '\0';
@@ -44,3 +43,5 @@ void ft_tokenize_with_quotes(char *input)
     }
     printf("Token : \"%s\"\n", starting_token);
 }
+
+

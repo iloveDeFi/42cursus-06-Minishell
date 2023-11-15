@@ -311,7 +311,7 @@ int		    ft_split_arg(t_argList *argList, char *input);
 int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);
-char        *ft_strcpy(char *dest, char *src);
+char        *ft_strcpy(char *dest, const char *src);
 int	        ft_is_white_space(char c);
 int         ft_is_pipe_or_redir(char c);
 int         ft_is_quote(char c);

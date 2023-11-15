@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void    ft_env(t_envList *env_list)
+/*void    ft_env(t_envList *env_list)
 {
     t_env *tmp = env_list->head;
 
@@ -15,4 +15,4 @@ void    ft_env(t_envList *env_list)
         }
         tmp = tmp->next; // Passer à l'élément suivant de la liste
     }
-}
+}*/
