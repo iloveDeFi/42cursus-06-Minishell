@@ -266,55 +266,64 @@ typedef struct s_global
 } t_global;
 
 
-void rl_replace_line(const char *str, int i);
+
 
 // Global
-extern int		g_exit_code;
+extern int	g_exit_code;
+void		rl_replace_line(const char *str, int i);
 
 // Main
-void write_inputrc(void);
+void		write_inputrc(void);
 
 // Minishell
 
+void	ft_initialize_environment(t_envList *envList, char **env);
+void	ft_initialize_minishell(t_mini *shell, t_env **env);
+void	ft_exit_shell(t_mini *shell);
+
+
 // Linked Lists
     // File 1
-void appendToList(t_node **head, void *data);
+void	appendToList(t_node **head, void *data);
 void    *getLastElement(t_node *head);
 int		isListEmpty(t_node *head);
 void	print_list(t_node *head, void (*printFunction)(void *data));
-void printGeneric(void *data);
+void	printGeneric(void *data);
     // File 2
-void iterateList(t_node *head, void (*callback)(void *data));
-void freeList(t_node *head);
-void freeNode(t_node *node);
-int compareString(void *data, void *target);
-t_node *findNode(t_node *head, void *target);
+void	iterateList(t_node *head, void (*callback)(void *data));
+void	freeList(t_node *head);
+void	freeNode(t_node *node);
+int		compareString(void *data, void *target);
+t_node	*findNode(t_node *head, void *target);
     // File 3
-t_node *getPreviousNode(t_node *head, t_node *node);
-int getListSize(t_node *head);
-void removeNode(t_node **head, t_node *node);
-t_node *ft_createNode(void *data);
+t_node	*getPreviousNode(t_node *head, t_node *node);
+int		getListSize(t_node *head);
+void	removeNode(t_node **head, t_node *node);
+t_node	*ft_createNode(void *data);
 
 // Parsing
-t_envVar *ft_find_envVar(t_envVar *head, const char *targetName);
-int ft_split_arg(t_argList *argList, char *input);
-int	ft_str_error(char *str, int number);
-void ft_countdown(void);
+t_envVar	*ft_find_envVar(t_envVar *head, const char *targetName);
+int		ft_split_arg(t_argList *argList, char *input);
+int		ft_str_error(char *str, int number);
+void	ft_countdown(void);
 // Execution
 void    ft_execute_command(t_command *command);
 
 // Built-ins
-int	change_directory(const char *path);
-int cd(t_command *command);
-int echo(int ac, char **av);
+int		change_directory(const char *path);
+int		cd(t_command *command);
+int		echo(int ac, char **av);
 void    pwd(void);
-char **ft_env_duplicate(char **envp);
+char	**ft_env_duplicate(char **envp);
+int		ft_error_export(char *args);
+int		ft_check_wrong_char(char *str);
 
 // Signals
-void init_terminal_settings(void);
-void init_signals(void(*signals_handle)(int));
-void receive_signal_from_user(int signal_num);
-void handle_signal_execution(int signal_num);
+void	init_terminal_settings(void);
+void	init_signals(void(*signals_handle)(int));
+void	receive_signal_from_user(int signal_num);
+void	handle_signal_execution(int signal_num);
+int		ft_is_sep(char c);
 
 // libft
 
