@@ -1,12 +1,12 @@
 #include "minishell.h"
 
-void    ft_env(t_envlist *env_list)
+void    ft_env(t_envList *env_list)
 {
-    t_env *temp = env_list->head;
+    t_env *tmp = env_list->head;
 
-    while(temp != NULL)
+    while(tmp != NULL)
     {
-        if (temp->var != NULL)
+        if (tmp->var != NULL)
         {
             ft_putstr_fd(tmp->var, 1);
             write(1, "=", 1);

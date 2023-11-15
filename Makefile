@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/15 15:34:38 by bat              ###   ########.fr        #
+#    Updated: 2023/11/15 16:42:53 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,10 +112,17 @@ LIBFT_ARCHIVES =		$(SRCS_DIRECTORY)/libft/libft.a
 # ALL FILES.C
 MAIN_FILE = main.c
 
-MINISHELL_FILES =      minishell.c
+MINISHELL_FILES =      minishell.c \
+						prompt.c
 
 PARSING_FILES =        parser.c \
-                      error.c
+                      error.c \
+					  fun.c \
+					  pipes.c \
+					  quotes.c \
+					  redirections.c \
+					  tools.c \
+					  utils.c 
 
 EXECUTING_FILES =      bin.c \
                       builtin.c \
@@ -123,11 +130,12 @@ EXECUTING_FILES =      bin.c \
 
 BUILTINS_FILES =       cd.c \
                       echo.c \
+					  env.c \
                       exit.c \
                       export.c \
                       export_utils.c \
                       pwd.c \
-                      unset.c
+                      unset.c 
 
 SIGNALS_FILES =        signals.c \
 
