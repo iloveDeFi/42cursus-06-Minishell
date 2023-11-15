@@ -33,7 +33,7 @@ void write_inputrc(void)
 }
 
 
-int main(int ac, char **av) 
+int main(int ac, char **av, char **envp) 
 {
     t_mini	shell;
 	t_envList	envList;

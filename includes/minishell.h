@@ -275,13 +275,15 @@ extern int	g_exit_code;
 void		rl_replace_line(const char *str, int i);
 
 // Main
-void		write_inputrc(void);
+int     main(int ac, char **av, char **envp);
+void    write_inputrc(void);
 
 // Minishell
 
 void	ft_initialize_environment(t_envList *envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
+void    ft_custom_prompt_msg(t_mini *shell);
 
 
 // Linked Lists
@@ -304,10 +306,18 @@ void	removeNode(t_node **head, t_node *node);
 t_node	*ft_createNode(void *data);
 
 // Parsing
-t_envVar	*ft_find_envVar(t_envVar *head, const char *targetName);
-int		ft_split_arg(t_argList *argList, char *input);
-int		ft_str_error(char *str, int number);
-void	ft_countdown(void);
+t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
+int		    ft_split_arg(t_argList *argList, char *input);
+int		    ft_str_error(char *str, int number);
+void	    ft_countdown(void);
+char        *ft_strtrim_with_quotes(char *str);
+char        *ft_strcpy(char *dest, char *src);
+int	        ft_is_white_space(char c);
+int         ft_is_pipe_or_redir(char c);
+int         ft_is_quote(char c);
+void        ft_tokenize_with_quotes(char *input);
+int         ft_check_quotes_error(void);
+
 // Execution
 void    ft_execute_command(t_command *command);
 
@@ -316,10 +326,12 @@ int		change_directory(const char *path);
 int		cd(t_command *command);
 int		echo(int ac, char **av);
 void    pwd(void);
+void    ft_env(t_envList *env_list);
 char	**ft_env_duplicate(char **envp);
 int		ft_error_export(char *args);
 int		ft_check_wrong_char(char *str);
 int 	ft_only_digit(char *str);
+int	    ft_is_sep(char c);
 
 
 // Signals
