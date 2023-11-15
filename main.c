@@ -35,16 +35,20 @@ void write_inputrc(void)
 
 int main(int ac, char **av) 
 {
+    t_mini	shell;
+	t_envList	envList;
+	t_env	*env;
 
-    //signal(SIGINT, handle_signal);
-    
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
-
+    ft_initialize_minishell(&shell, &env);
+	ft_initialize_environment(&envList, envp);
     while (1) {
+        //signal(SIGINT, handle_signal);
+        ft_custom_prompt_msg(&shell);
         char *input = readline("Minis_Hell> ");
 
         if (input == NULL) 
@@ -59,7 +63,10 @@ int main(int ac, char **av)
         int i = 0;
         while (token != NULL) 
         {
-            av[i] = token;
+            av[i] = malloc(ft_strlen(token + 1));
+            ft_strcpy(av[i], token);
+            ft_strtrim_with_quotes(token);
+            ft_tokenize_with_quotes(token);
             token = ft_strtok(NULL, " \n");
             i++;
         }
@@ -82,6 +89,9 @@ int main(int ac, char **av)
         {
             // Dans le processus parent, attendez que le fils se termine
             wait(NULL);
+            int j = 0;
+            while (j < i)
+                free(av[++j]);
         }
         free(input);
     }
