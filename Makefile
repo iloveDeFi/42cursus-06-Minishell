@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/15 15:34:38 by bat              ###   ########.fr        #
+#    Updated: 2023/11/15 17:16:12 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,15 +107,22 @@ HEADER_DIRECTORY :=		./includes
 SRCS_DIRECTORY :=		./srcs
 LIBFT_FOLDER =			$(SRCS_DIRECTORY)/libft
 LIBFT_HEADER =			$(SRCS_DIRECTORY)/libft/libft.h
-LIBFT_ARCHIVES =		$(SRCS_DIRECTORY)/libft/libft.a
+LIBFT_ARCHIVES = 		$(LIBFT_FOLDER)/libft.a
+
 
 # ALL FILES.C
 MAIN_FILE = main.c
 
-MINISHELL_FILES =      minishell.c
+MINISHELL_FILES =      minishell.c \
+						prompt.c
 
 PARSING_FILES =        parser.c \
-                      error.c
+                      error.c \
+					  pipes.c \
+					  quotes.c \
+					  redirections.c \
+					  tools.c \
+					  utils.c 
 
 EXECUTING_FILES =      bin.c \
                       builtin.c \
@@ -137,6 +144,7 @@ LINKED_LISTS_FILES =   1_linkedList.c \
 
 INCLUDES_FILES =       minishell.h
 
+# GLOBAL VARIABLES
 # GLOBAL VARIABLES
 MAKE = make -C
 CC = gcc -g3 -fsanitize=address
@@ -160,12 +168,15 @@ RM = rm -f
 all: $(NAME)
 
 # Jbelda
-#$(NAME): $(OBJS) libft/libft.a
-#	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
+$(NAME): $(OBJS) libft/libft.a
+	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
 
 # Baptiste
+#$(NAME): $(OBJS) libft/libft.a
+	#$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
+
 $(NAME): $(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
 
 libft/libft.a:
 	@make -C $(LIBFT_FOLDER)

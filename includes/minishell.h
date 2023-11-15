@@ -283,7 +283,7 @@ void    write_inputrc(void);
 void	ft_initialize_environment(t_envList *envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
-void    ft_custom_prompt_msg(t_mini *shell);
+void	ft_custom_prompt_msg(t_mini *shell);
 
 
 // Linked Lists
@@ -310,13 +310,13 @@ t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
 int		    ft_split_arg(t_argList *argList, char *input);
 int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
-char        *ft_strtrim_with_quotes(char *str);
+char		*ft_strtrim_with_quotes(char *str);
 char        *ft_strcpy(char *dest, char *src);
 int	        ft_is_white_space(char c);
 int         ft_is_pipe_or_redir(char c);
-int         ft_is_quote(char c);
-void        ft_tokenize_with_quotes(char *input);
-int         ft_check_quotes_error(void);
+int			ft_is_quote(char c);
+void		ft_tokenize_with_quotes(char *input);
+int			ft_check_quotes_error(void);
 
 // Execution
 void    ft_execute_command(t_command *command);
