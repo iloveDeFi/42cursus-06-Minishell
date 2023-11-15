@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 09:48:25 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/15 09:50:45 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,4 @@ t_envVar *ft_find_envVar(t_envVar *head, const char *targetName)
         current = current->next;
     }
     return NULL;
-}
-
-int ft_is_sep(char c)
-{
-    if (c == '<' || c == '>' || c == '|')
-        return (FALSE);
-    return (TRUE);
 }

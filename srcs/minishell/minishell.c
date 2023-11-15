@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/10 17:14:21 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/15 13:42:31 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     shell->status = 0;
     shell->stdin_fd = dup(STDIN_FILENO);
     shell->stdout_fd = dup(STDOUT_FILENO);
-    /*g_status.infork = NO;
-    g_status.status = 0;
+    //g_status.infork = NO;
+    //g_status.status = 0;
     shell->child = NULL;
     shell->exec = NULL;
-    shell->errors = NULL;*/
+    shell->errors = NULL;
     write_inputrc();
 }

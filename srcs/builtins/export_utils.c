@@ -7,6 +7,15 @@ int	ft_is_sep(char c)
 	return (0);
 }
 
+int ft_only_digit(char *str)
+{
+    while (*str && ft_isdigit(*str))
+        str++;
+    if (!*str)
+        return (TRUE);
+    return (FALSE);
+}
+
 char **ft_env_duplicate(char **envp)
 {
     char **copy;

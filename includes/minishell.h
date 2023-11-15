@@ -171,18 +171,7 @@ typedef struct s_global
 	t_pipes *pipes;
 } t_global;*/
 
-typedef struct s_mini
-{
-    char *av;
-    int numberOfCommands;
-    int fd_history;
-    int status;
-    int stdin_fd;
-    int stdout_fd;
-    // t_global *child; // pour pointer faire t_mini.child->enVars etc
-    // t_global *exec;
-    // t_global *errors;
-} t_mini;
+
 
 // Structure générique pour un nœud
 typedef struct s_node 
@@ -265,6 +254,19 @@ typedef struct s_global
     t_pipesList *pipes;
 } t_global;
 
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+    int status;
+    int stdin_fd;
+    int stdout_fd;
+    t_global *child; // pour pointer faire t_mini.child->enVars etc
+    t_global *exec;
+    t_global *errors;
+} t_mini;
+
 
 
 
@@ -317,6 +319,8 @@ void    pwd(void);
 char	**ft_env_duplicate(char **envp);
 int		ft_error_export(char *args);
 int		ft_check_wrong_char(char *str);
+int 	ft_only_digit(char *str);
+
 
 // Signals
 void	init_terminal_settings(void);
