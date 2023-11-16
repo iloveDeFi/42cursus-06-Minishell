@@ -1,11 +1,20 @@
 #include "minishell.h"
 
-int ft_check_args_error(char *str)
+int	ft_str_error(char *str, int number)
 {
-	
+	write(1, str, ft_strlen(str));
+	write(1, "\n", 1);
+	return (number);
 }
 
-int ft_check_quotes_error()
+void	free_array(char **array)
 {
+	int	i;
 
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void ft_redirect_output(t_command *command, char *input)
+/*void ft_redirect_output(t_command *command, char *input)
 {
     int i;
 
@@ -16,5 +16,4 @@ void ft_redirect_output(t_command *command, char *input)
 
         }
     }
-    return NULL;
-}
+}*/

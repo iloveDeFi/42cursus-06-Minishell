@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:03:24 by bat               #+#    #+#             */
-/*   Updated: 2023/11/07 11:43:58 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/10 17:45:31 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void receive_signal_from_user(int signal_num) {
+
+void receive_signal_from_user(int signal_num) 
+{
     if (signal_num == SIGINT)
     {
         printf("\nSignal SIGINT (Ctrl+C) received. Stopping the current process.\n");

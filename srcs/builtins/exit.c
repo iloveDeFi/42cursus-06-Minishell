@@ -6,14 +6,14 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:14 by bat               #+#    #+#             */
-/*   Updated: 2023/11/14 16:29:30 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/16 10:06:40 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Fonction pour gérer la commande "exit"
-void my_exit(t_command *command) 
+/*void exit(t_command *command) 
 {
     int exit_code;
     
@@ -30,4 +30,4 @@ void my_exit(t_command *command)
     } 
     else 
         exit(0);
-}
+}*/

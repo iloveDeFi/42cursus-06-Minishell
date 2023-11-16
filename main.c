@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int g_exit_code = 0;
+
 void write_inputrc(void)
 {
     int fd;
