@@ -331,6 +331,7 @@ int		ft_is_builtins(t_command *cmd);
 int 	t_exec_builtins(t_command *cmd);
 int		is_valid_identifier(const char *name);
 void	exec_external_code(t_command *cmd);
+void	exec_cmd(t_command *cmd);
 
 // Built-ins
 int		change_directory(const char *path);

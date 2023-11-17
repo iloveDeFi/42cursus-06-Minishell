@@ -24,7 +24,7 @@
     }
 }*/
 
-oid	exec_cmd(t_command *cmd)
+void	exec_cmd(t_command *cmd)
 {
 	int	init_stdout;
 	int	init_stdin;
