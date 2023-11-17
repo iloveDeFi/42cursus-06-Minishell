@@ -14,12 +14,12 @@ char *ft_strtrim_with_quotes(char *str)
     i = 0;
     if (str == NULL)
         return NULL;
-    /*while (str[start] != '\0' && ((ft_is_white_space(str[start])) || ft_is_quote(str[start])))
+    while (str[start] != '\0' && ((ft_is_white_space(str[start])) || ft_is_quote(str[start])))
         start++;
     end = len - 1;
     while (str[end] >= 0 && (ft_is_white_space(str[end]) || ft_is_quote(str[end])))
         end--;
-    i = 0;*/
+    i = 0;
     result = (char *)malloc(sizeof(char) * (end - start + 2));
     while (start <= end)
     {

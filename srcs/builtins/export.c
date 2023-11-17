@@ -6,11 +6,20 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:12:19 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 09:46:49 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/17 10:02:31 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_args(char *name)
+{
+	if (!ft_check_wrong_char(name))
+		return (0);
+	if (!ft_only_digit(name))
+		return (0);
+	return (1);
+}
 
 int ft_error_export(char *args)
 {

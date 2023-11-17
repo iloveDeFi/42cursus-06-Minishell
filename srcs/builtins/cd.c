@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:11:44 by bat               #+#    #+#             */
-/*   Updated: 2023/10/31 10:21:51 by julien           ###   ########.fr       */
+/*   Updated: 2023/11/16 13:55:51 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,25 @@ int	change_directory(const char *path)
 	}
 }
 
-int cd(t_command *command)
+int cd(char **arguments)
 {
-	char	*home_directory;
+    char *home_directory;
 
-	if (command->arguments == NULL || command->arguments[1] == NULL)
-	{
-		home_directory = getenv("HOME");
-		if (home_directory != NULL)
-		{
-			return (change_directory(home_directory));
-		}
-		else
-		{
-			perror("cd");
-			return (-1);
-		}
-	}
-	else
-	{
-		return (change_directory(command->arguments[1]));
-	}
+    if (arguments == NULL || arguments[1] == NULL)
+    {
+        home_directory = getenv("HOME");
+        if (home_directory != NULL)
+        {
+            return change_directory(home_directory);
+        }
+        else
+        {
+            perror("cd");
+            return -1;
+        }
+    }
+    else
+    {
+        return change_directory(arguments[1]);
+    }
 }

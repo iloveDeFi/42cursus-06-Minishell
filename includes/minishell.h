@@ -202,6 +202,8 @@ typedef struct s_command
 {
     char *name;
     char **arguments;
+	int		fdread;
+	int		fdwrite;
     struct s_command *next;
     struct s_command *prev;
 } t_command;
@@ -287,7 +289,12 @@ void	ft_custom_prompt_msg(t_mini *shell);
 
 
 // Linked Lists
-    // File 1
+    
+	//EnvarList
+t_global *create_global();
+t_envVarList *create_envVarList();
+	
+	// File 1
 void	appendToList(t_node **head, void *data);
 void    *getLastElement(t_node *head);
 int		isListEmpty(t_node *head);
@@ -319,19 +326,27 @@ void		ft_tokenize_with_quotes(char *input);
 int			ft_check_quotes_error(void);
 
 // Execution
-void    ft_execute_command(t_command *command);
+void    ft_execute_command(t_command *cmd);
+int		ft_is_builtins(t_command *cmd);
+int 	t_exec_builtins(t_command *cmd);
+int		is_valid_identifier(const char *name);
+void	exec_external_code(t_command *cmd);
 
 // Built-ins
 int		change_directory(const char *path);
-int		cd(t_command *command);
-int		echo(int ac, char **av);
-void    pwd(void);
-void    ft_env(t_envList *env_list);
+int		cd(char **arguments);
+int 	echo(char **arguments);
+int 	pwd(void);
+int 	ft_env(t_envList *env_list);
+int 	ft_unset(t_envVarList *envVarList, char *arg);
 char	**ft_env_duplicate(char **envp);
 int		ft_error_export(char *args);
 int		ft_check_wrong_char(char *str);
 int 	ft_only_digit(char *str);
 int	    ft_is_sep(char c);
+void 	ft_exit(t_command *command);
+void 	cd_changepwd(t_envVarList *envVars, char *path);
+int		check_args(char *name);
 
 
 // Signals

@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:11:47 by bat               #+#    #+#             */
-/*   Updated: 2023/10/30 10:28:09 by julien           ###   ########.fr       */
+/*   Updated: 2023/11/16 13:15:27 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo(int ac, char **av)
+int echo(char **arguments) 
 {
     const char *message = "An error occured : not enough arguments\n";
-    if (ac < 2)
+    
+    if (arguments[1] == NULL) 
     {
         write(STDERR_FILENO, message, strlen(message));
-        exit(EXIT_FAILURE);
+        return 1;  // or another error code according to your convention
     }
+
     int i = 1;
-    while (av[i] != NULL)
+    while (arguments[i] != NULL) 
     {
-        write(STDOUT_FILENO, av[i], strlen(av[i]));
-        if (av[i + 1] != NULL)
+        write(STDOUT_FILENO, arguments[i], strlen(arguments[i]));
+        if (arguments[i + 1] != NULL)
             write(STDOUT_FILENO, " ", 1);
         i++;
-    write(STDOUT_FILENO, "\n", 1);
-    exit(EXIT_SUCCESS);
     }
-    return 0;
+    write(STDOUT_FILENO, "\n", 1);
+
+    return 0;  // or another success code according to your convention
 }
+

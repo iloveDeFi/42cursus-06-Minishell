@@ -6,7 +6,7 @@
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/15 19:03:29 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/11/16 13:25:07 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,7 +142,8 @@ SIGNALS_FILES =        signals.c \
 
 LINKED_LISTS_FILES =   1_linkedList.c \
                       2_linkedList.c \
-                      3_linkedList.c
+                      3_linkedList.c \
+					  envar_list.c
 
 INCLUDES_FILES =       minishell.h
 
