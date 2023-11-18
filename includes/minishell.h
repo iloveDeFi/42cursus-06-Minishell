@@ -41,13 +41,13 @@ typedef enum e_token
 	IN,       // <
 	NOT,      // string
 	END       // end of cmd
-}t_token;
+} t_token;
 
 typedef enum
 {
 	FALSE,
 	TRUE
-}   Bool;
+} Bool;
 
 /*typedef struct s_mini
 {
@@ -204,8 +204,10 @@ typedef struct s_command
     char **arguments;
 	int		fdread;
 	int		fdwrite;
+    char    *redirectFile;
     struct s_command *next;
     struct s_command *prev;
+    t_token tokenType;
 } t_command;
 
 typedef t_list t_commandList;
@@ -324,6 +326,8 @@ int         ft_is_pipe_or_redir(char c);
 int			ft_is_quote(char c);
 void		ft_tokenize_with_quotes(char *input);
 int			ft_check_quotes_error(void);
+void        ft_redirect_stdout(t_command *command, char *input);
+void        ft_redirect_stdin(t_command *command, char *input);
 
 // Execution
 void    ft_execute_command(t_command *cmd);

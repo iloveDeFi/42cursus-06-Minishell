@@ -1,19 +1,35 @@
 #include "minishell.h"
 
-/*void ft_redirect_output(t_command *command, char *input)
+void ft_redirect_stdout(t_command *command, char *input) 
 {
-    int i;
+    int i = 0;
+    while (input[i] != '\0') {
+        if (input[i] == '>') {
+            if (input[i + 1] == '>') {
+                command->tokenType = APPEND; 
+                i += 2;
+            } else {
+                command->tokenType = OUT; 
+                i += 1;
+            }
+            while (input[i] == ' ') i++; 
+            int startIndex = i;
+            while (input[i] != ' ' && input[i] != '\0') i++;
+            int fileLength = i - startIndex;
+            command->redirectFile = (char *)malloc(fileLength + 1);
+            if (command->redirectFile == NULL)
+                return;
+            ft_strlcpy(command->redirectFile, input + startIndex, fileLength + 1);
 
-    i = 0;
-    while(input[++i] != '\0')
-    {
-        if (input[i] == 62 && input[i + 1] != 62)
-        {
-
+            // Supposons que vous ayez un champ pour stocker le fichier de redirection
+            break; // Supposer qu'une seule redirection est traitée par ligne de commande
         }
-        else if (input[i] == 62 && input[i + 1] == 62)
-        {
-
-        }
+        i++;
     }
-}*/
+}
+
+void ft_redirect_stdin(t_command *command, char *input)
+{
+    int i = 0;
+    while
+}
