@@ -65,7 +65,7 @@ int main(int ac, char **av, char **envp)
             av[i] = malloc(ft_strlen(token) + 1);
             ft_strcpy(av[i], token);
             ft_strtrim_with_quotes(token);
-            //ft_tokenize_with_quotes(token);
+            ft_tokenize_with_quotes(token);
             token = ft_strtok(NULL, " \n");
             i++;
         }
