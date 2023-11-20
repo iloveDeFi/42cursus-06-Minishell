@@ -13,7 +13,7 @@
 #include <limits.h>
 #include <termios.h>
 #include <fcntl.h>
-
+#include <stddef.h>
 
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
