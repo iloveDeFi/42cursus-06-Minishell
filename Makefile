@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/17 14:00:38 by bat              ###   ########.fr        #
+#    Updated: 2023/11/20 14:07:53 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,8 @@ PARSING_FILES =        parser.c \
 					  quotes.c \
 					  redirections.c \
 					  tools.c \
-					  utils.c 
+					  utils.c \
+					  expansion.c
 
 EXECUTING_FILES =      bin.c \
                       builtin.c \

@@ -329,6 +329,7 @@ int			ft_check_quotes_error(void);
 void        ft_redirect_stdout(t_command *command, char *input);
 void        ft_redirect_stdin(t_command *command, char *input);
 void        ft_parse_pipes(t_command *commands, char *input);
+char        *ft_strpbrk(const char *s1, const char *s2);
 
 
 // Execution

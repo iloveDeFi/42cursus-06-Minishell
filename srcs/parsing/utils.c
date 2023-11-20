@@ -48,3 +48,21 @@ char *ft_strcpy(char *dest, const char *src)
     dest[i] = '\0'; // N'oubliez pas de terminer la chaîne de destination
     return dest;
 }
+
+char *ft_strpbrk(const char *s1, const char *s2)
+{
+    int i = 0;
+
+    while (s1[i] != '\0')
+    {
+        int j = 0;
+        while (s2[j] != '\0')
+        {
+            if (s1[i] == s2[j])
+                return (char *)(s1 + i);
+            j++;
+        }
+        i++;
+    }
+    return NULL;
+}
