@@ -321,6 +321,7 @@ int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);
 char        *ft_strcpy(char *dest, const char *src);
+char        *ft_strndup(const char *s, size_t n);
 int	        ft_is_white_space(char c);
 int         ft_is_pipe_or_redir(char c);
 int			ft_is_quote(char c);
@@ -329,7 +330,11 @@ int			ft_check_quotes_error(void);
 void        ft_redirect_stdout(t_command *command, char *input);
 void        ft_redirect_stdin(t_command *command, char *input);
 void        ft_parse_pipes(t_command *commands, char *input);
-char        *ft_strpbrk(const char *s1, const char *s2);
+int         ft_calculate_new_length(const char *cmd, int last_exit_status);
+char        *ft_getenv_var_value(const char *name);
+char        *ft_expand_env_variables(const char *cmd, int last_exit_status);
+
+
 
 
 // Execution

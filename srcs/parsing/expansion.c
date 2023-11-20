@@ -11,7 +11,6 @@ char *ft_getenv_var_value(const char *name) {
     }
 }
 
-
 int ft_calculate_new_length(const char *cmd, int last_exit_status) {
     int length = 0;
     int i = 0;
@@ -30,7 +29,10 @@ int ft_calculate_new_length(const char *cmd, int last_exit_status) {
                 char *var_name = ft_strndup(cmd + start, i - start);
                 char *var_value = ft_getenv_var_value(var_name);
                 length += ft_strlen(var_value);
-                free(var_name);
+                // free(var_name); ne pas libérer car cela pourrait 
+                //essayer de libérer une chaîne littérale ou un pointeur 
+                // interne de getenv, ce qui n'est pas valide et peut 
+                //conduire à un comportement indéfini.
             }
         } else {
             length++;
@@ -60,7 +62,10 @@ char *ft_expand_env_variables(const char *cmd, int last_exit_status)
                 while (cmd[i] != '\0' && cmd[i] != ' ') i++;
                 char *var_name = ft_strndup(cmd + start, i - start);
                 var_value = ft_getenv_var_value(var_name);
-                free(var_name);
+                // free(var_name); ne pas libérer car cela pourrait 
+                //essayer de libérer une chaîne littérale ou un pointeur 
+                // interne de getenv, ce qui n'est pas valide et peut 
+                //conduire à un comportement indéfini.
             }
             ft_strcpy(result + j, var_value);
             j += ft_strlen(var_value);

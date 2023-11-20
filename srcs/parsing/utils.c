@@ -66,3 +66,28 @@ char *ft_strpbrk(const char *s1, const char *s2)
     }
     return NULL;
 }
+
+char *ft_strndup(const char *s, size_t n) 
+{
+    size_t len;
+    size_t i;
+    
+    len = strlen(s);
+    if (len > n) {
+        len = n;
+    }
+
+    char *new_str = (char *)malloc(len + 1);
+    if (new_str == NULL)
+        return NULL; 
+
+    i = 0;
+    while (i < len)
+    {
+        new_str[i] = s[i];
+        i++;
+    }
+    new_str[len] = '\0';
+    return new_str;
+}
+

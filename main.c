@@ -43,7 +43,7 @@ int main(int ac, char **av, char **envp)
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
-    ft_memset(env, 0, sizeof(t_env));
+    // ft_memset(env, 0, sizeof(t_env)); Good to do ?
     ft_initialize_minishell(&shell, &env);
 	ft_initialize_environment(&envList, envp);
     while (1) {
