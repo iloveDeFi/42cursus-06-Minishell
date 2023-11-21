@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+int is_valid_env_char(char c) {
+    return ft_isalpha(c) || (c == '_');
+}
+
+// DO NOT free if returning empty line resulting of getenv
 char *ft_getenv_var_value(const char *name) {
     char *value;
     
@@ -25,14 +30,11 @@ int ft_calculate_new_length(const char *cmd, int last_exit_status) {
                 i++;
             } else {
                 int start = i;
-                while (cmd[i] != '\0' && cmd[i] != ' ') i++;
+                while (cmd[i] != '\0' && is_valid_env_char(cmd[i])) i++;
                 char *var_name = ft_strndup(cmd + start, i - start);
                 char *var_value = ft_getenv_var_value(var_name);
                 length += ft_strlen(var_value);
-                // free(var_name); ne pas libérer car cela pourrait 
-                //essayer de libérer une chaîne littérale ou un pointeur 
-                // interne de getenv, ce qui n'est pas valide et peut 
-                //conduire à un comportement indéfini.
+                free(var_name);
             }
         } else {
             length++;
@@ -59,13 +61,10 @@ char *ft_expand_env_variables(const char *cmd, int last_exit_status)
                 i++;
             } else {
                 int start = i;
-                while (cmd[i] != '\0' && cmd[i] != ' ') i++;
+                while (cmd[i] != '\0' && is_valid_env_char(cmd[i])) i++;
                 char *var_name = ft_strndup(cmd + start, i - start);
                 var_value = ft_getenv_var_value(var_name);
-                // free(var_name); ne pas libérer car cela pourrait 
-                //essayer de libérer une chaîne littérale ou un pointeur 
-                // interne de getenv, ce qui n'est pas valide et peut 
-                //conduire à un comportement indéfini.
+                free(var_name);
             }
             ft_strcpy(result + j, var_value);
             j += ft_strlen(var_value);

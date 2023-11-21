@@ -330,6 +330,7 @@ int			ft_check_quotes_error(void);
 void        ft_redirect_stdout(t_command *command, char *input);
 void        ft_redirect_stdin(t_command *command, char *input);
 void        ft_parse_pipes(t_command *commands, char *input);
+int         is_valid_env_char(char c);
 int         ft_calculate_new_length(const char *cmd, int last_exit_status);
 char        *ft_getenv_var_value(const char *name);
 char        *ft_expand_env_variables(const char *cmd, int last_exit_status);
