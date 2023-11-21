@@ -275,6 +275,7 @@ typedef struct s_mini
     int status;
     int stdin_fd;
     int stdout_fd;
+    int fd_history;
     t_global *child; // pour pointer faire t_mini.child->enVars etc
     t_global *exec;
     t_global *errors;
