@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int is_valid_env_char(char c) {
+int ft_is_valid_env_char(char c) {
     return ft_isalpha(c) || (c == '_');
 }
 
@@ -30,7 +30,7 @@ int ft_calculate_new_length(const char *cmd, int last_exit_status) {
                 i++;
             } else {
                 int start = i;
-                while (cmd[i] != '\0' && is_valid_env_char(cmd[i])) i++;
+                while (cmd[i] != '\0' && ft_is_valid_env_char(cmd[i])) i++;
                 char *var_name = ft_strndup(cmd + start, i - start);
                 char *var_value = ft_getenv_var_value(var_name);
                 length += ft_strlen(var_value);
@@ -44,25 +44,25 @@ int ft_calculate_new_length(const char *cmd, int last_exit_status) {
     return length;
 }
 
-char *ft_expand_env_variables(const char *cmd, int last_exit_status) 
+char *ft_expand_env_variables(t_command *command, int last_exit_status) 
 {
-    if (!cmd) return NULL;
+    if (!command) return NULL;
 
-    char *result = malloc(ft_calculate_new_length(cmd, last_exit_status) + 1);
+    char *result = malloc(ft_calculate_new_length(command->name, last_exit_status) + 1);
     if (!result) return NULL;
 
     int i = 0, j = 0;
-    while (cmd[i] != '\0') {
-        if (cmd[i] == '$') {
+    while (command->name[i] != '\0') {
+        if (command->name[i] == '$' && command->state != SINGLE_QUOTE) {
             i++;
             char *var_value;
-            if (cmd[i] == '?') {
+            if (command->name[i] == '?') {
                 var_value = ft_itoa(last_exit_status);
                 i++;
             } else {
                 int start = i;
-                while (cmd[i] != '\0' && is_valid_env_char(cmd[i])) i++;
-                char *var_name = ft_strndup(cmd + start, i - start);
+                while (command->name[i] != '\0' && ft_is_valid_env_char(command->name[i])) i++;
+                char *var_name = ft_strndup(command->name + start, i - start);
                 var_value = ft_getenv_var_value(var_name);
                 free(var_name);
             }
@@ -70,7 +70,7 @@ char *ft_expand_env_variables(const char *cmd, int last_exit_status)
             j += ft_strlen(var_value);
             free(var_value);
         } else {
-            result[j] = cmd[i];
+            result[j] = command->name[i];
             j++;
             i++;
         }

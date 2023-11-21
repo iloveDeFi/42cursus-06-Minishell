@@ -40,8 +40,16 @@ typedef enum e_token
 	OUT,      // >
 	IN,       // <
 	NOT,      // string
-	END       // end of cmd
+	END,      // end of cmd          
 } t_token;
+
+typedef enum e_quote 
+{
+    NORMAL,        // no quote
+    SINGLE_QUOTE,
+    DOUBLE_QUOTE,
+    ESCAPED        // backslash
+} t_quote;
 
 typedef enum
 {
@@ -208,6 +216,7 @@ typedef struct s_command
     struct s_command *next;
     struct s_command *prev;
     t_token tokenType;
+    t_quote state;
 } t_command;
 
 typedef t_list t_commandList;
@@ -327,15 +336,14 @@ int         ft_is_pipe_or_redir(char c);
 int			ft_is_quote(char c);
 void		ft_tokenize_with_quotes(char *input);
 int			ft_check_quotes_error(void);
+void        ft_follow_quotes_state(t_command *cmd);
 void        ft_redirect_stdout(t_command *command, char *input);
 void        ft_redirect_stdin(t_command *command, char *input);
 void        ft_parse_pipes(t_command *commands, char *input);
-int         is_valid_env_char(char c);
+int         ft_is_valid_env_char(char c);
 int         ft_calculate_new_length(const char *cmd, int last_exit_status);
 char        *ft_getenv_var_value(const char *name);
-char        *ft_expand_env_variables(const char *cmd, int last_exit_status);
-
-
+char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 
 
 // Execution
