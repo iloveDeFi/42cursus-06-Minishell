@@ -19,24 +19,22 @@ int ft_is_builtins(t_command *cmd)
     return(0); 
 }
 
-
-
-int ft_exec_builtins(t_global *global, t_command *cmd)
+int ft_exec_builtins(t_global *global)
 {
-    if (ft_strcmp(cmd->name, "cd") == 0)
-        g_exit_code = cd(cmd->arguments);
-    else if (ft_strcmp(cmd->name, "echo") == 0)
-        g_exit_code = echo(cmd->arguments);
-    else if (ft_strcmp(cmd->name, "env") == 0)
+    if (ft_strcmp(global->cmd->name, "cd") == 0)
+        g_exit_code = cd(global->cmd->arguments);
+    else if (ft_strcmp(global->cmd->name, "echo") == 0)
+        g_exit_code = echo(global->cmd->arguments);
+    else if (ft_strcmp(global->cmd->name, "env") == 0)
         g_exit_code = ft_env(global->envVars);
-    else if (ft_strcmp(cmd->name, "exit") == 0)
-        ft_exit(cmd);
+    else if (ft_strcmp(global->cmd->name, "exit") == 0)
+        ft_exit(global->cmd);
     //else if (ft_strcmp(cmd->name, "export") == 0)
         //g_exit_code = export(cmd->arguments);
-    else if (ft_strcmp(cmd->name, "pwd") == 0)
+    else if (ft_strcmp(global->cmd->name, "pwd") == 0)
         g_exit_code = pwd();
-    else if (ft_strcmp(cmd->name, "unset") == 0)
-        g_exit_code = ft_unset(global->envVars, cmd->arguments[1]);
+    else if (ft_strcmp(global->cmd->name, "unset") == 0)
+        g_exit_code = ft_unset(global->envVars, global->cmd->arguments[1]);
     return (g_exit_code);
 }
 

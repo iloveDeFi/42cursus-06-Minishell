@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/17 14:00:38 by bat              ###   ########.fr        #
+#    Updated: 2023/11/19 10:40:53 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,8 @@ PARSING_FILES =        parser.c \
 EXECUTING_FILES =      bin.c \
                       builtin.c \
                       executor.c \
-					  #execute_command.c
+					  execute_command.c \
+					  execute_command_with_redirection.c
 
 BUILTINS_FILES =       cd.c \
                       echo.c \
@@ -153,10 +154,10 @@ INCLUDES_FILES =       minishell.h
 MAKE = make -C
 CC = gcc -g3 -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -O3 -g -Iincludes
-#LDFLAGS = -L/usr/local/opt/readline/lib
-#CPPFLAGS = -I/usr/local/opt/readline/include
-LDFLAGS = -L/opt/homebrew/opt/readline/lib
-CPPFLAGS = -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/usr/local/opt/readline/lib
+CPPFLAGS = -I/usr/local/opt/readline/include
+#LDFLAGS = -L/opt/homebrew/opt/readline/lib
+#CPPFLAGS = -I/opt/homebrew/opt/readline/include
 SRCS = $(MAIN_FILE) \
       $(addprefix $(SRCS_DIRECTORY)/builtins/, $(BUILTINS_FILES)) \
       $(addprefix $(SRCS_DIRECTORY)/minishell/, $(MINISHELL_FILES)) \
@@ -173,12 +174,12 @@ RM = rm -f
 all: $(NAME)
 
 # Jbelda
-#$(NAME): $(OBJS) libft/libft.a
-#	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
-
-# Baptiste
 $(NAME): $(OBJS) libft/libft.a
 	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft $(LDFLAGS) -lreadline -o $(NAME)
+
+# Baptiste
+#$(NAME): $(OBJS) libft/libft.a
+	#$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft $(LDFLAGS) -lreadline -o $(NAME)
 
 libft/libft.a:
 	@make -C $(LIBFT_FOLDER)

@@ -16,6 +16,20 @@ int ft_only_digit(char *str)
     return (FALSE);
 }
 
+/*int	add_var_to_list(t_env **env_list, char *args)
+{
+	t_env	*new_node;
+
+	new_node = create_node(args);
+	if (!new_node)
+		return (0);
+	if (!is_in_lst(new_node->var, env_list))
+		add_to_list(env_list, new_node);
+	else
+		replace_in_lst(new_node, env_list);
+	return (1);
+}*/
+
 char **ft_env_duplicate(char **envp)
 {
     char **copy;

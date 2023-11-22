@@ -1,57 +1,33 @@
 #include "minishell.h"
 
-/*void    ft_execute_command(t_command *command)
-{
-    pid_t   child_pid;
-    int     status;
-
-    child_pid = fork();
-    if (child_pid < 0)
-        perror("[ERROR] : Fork error\n");
-    if (child_pid == 0)
-    {
-        execvp(command->name, command->arguments);
-        perror("[ERROR] : Execution command\n");
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        waitpid(child_pid, &status, 0);
-        if (WIFEXITED(status))
-        {    
-            printf("%d\n", WIFEXITED(status));
-        }
-    }
-}*/
-
-void	exec_cmd(t_command *cmd)
+void	ft_exec_cmd(t_global *global)
 {
 	int	init_stdout;
 	int	init_stdin;
 
 	init_stdout = dup(STDOUT_FILENO);
 	init_stdin = dup(STDIN_FILENO);
-	if (cmd->fdread >= 3)
-		dup2(cmd->fdread, STDIN_FILENO);
-	if (cmd->fdwrite >= 3)
-		dup2(cmd->fdwrite, STDOUT_FILENO);
-	if (is_builtins(cmd) == 1)
-		exec_builtins(cmd);
-	else if (is_builtins(cmd) == 127)
+	if (global->fdread >= 3)
+		dup2(global->fdread, STDIN_FILENO);
+	if (global->fdwrite >= 3)
+		dup2(global->fdwrite, STDOUT_FILENO);
+	if (ft_is_builtins(global->cmd) == 1)
+		ft_exec_builtins(global);
+	else if (ft_is_builtins(global->cmd) == 127)
 		g_exit_code = 127;
 	else
-		exec_external_code(cmd);
-	if (cmd->fdread >= 3)
-		close(cmd->fdread);
-	if (cmd->fdwrite >= 3)
-		close(cmd->fdwrite);
+		ft_exec_external_code(global);
+	if (global->fdread >= 3)
+		close(global->fdread);
+	if (global->fdwrite >= 3)
+		close(global->fdwrite);
 	dup2(init_stdout, STDOUT_FILENO);
 	dup2(init_stdin, STDIN_FILENO);
 	close(init_stdout);
 	close(init_stdin);
 }
 
-void	exec_external_code(t_command *cmd)
+void	ft_exec_external_code(t_global *global)
 {
 	pid_t	pid;
 	int		status;
@@ -61,7 +37,7 @@ void	exec_external_code(t_command *cmd)
 		perror("Error with fork");
 	if (pid == 0)
 	{
-		exec_external(cmd);
+		execute_external_command(global->cmd->name, global->cmd->arguments);
 		perror("execve");
 		exit(errno);
 	}

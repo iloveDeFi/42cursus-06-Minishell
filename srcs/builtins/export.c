@@ -10,12 +10,12 @@ int	check_args(char *name)
 	return (1);
 }
 
-int ft_error_export(char *args)
+int ft_error_export(char *command, char *arg, char *message, int status)
 {
-    ft_putstr_fd("export: ", STDERR_FILENO);
-    ft_putstr_fd(args, STDERR_FILENO);
-    ft_putstr_fd(" : Identifer not valid\n", STDERR_FILENO);
-    return (EXIT_FAILURE);
+    ft_putstr_fd(command, STDERR_FILENO);
+    ft_putstr_fd(arg, STDERR_FILENO);
+    ft_putstr_fd(message, STDERR_FILENO);
+    return (status);
 }
 
 int ft_check_wrong_char(char *str)
@@ -29,8 +29,31 @@ int ft_check_wrong_char(char *str)
     {
         if (ft_is_sep(str[i]) || (str[i] >= 33 && str[i] <= 47)
             || (str[i] == '=' && str[i + 1] == '='))
-            return (TRUE);
+            return (0);
         i++; 
     }
-    return (FALSE);   
+    return (1);   
 }
+
+/*int export(t_envList *env_list, t_arg *args)
+{
+    if (args != NULL)
+    {
+        while (args != NULL)
+        {
+            if (!check_args(args->name))
+                return (ft_error_export("export: ",
+                                            args->name, ": not a valid identifier", 1));
+            //if (!add_var_to_list(env_list, args->name))
+                return (perror("Error malloc"));
+
+            args = args->next;
+        }
+    }
+    else
+    {
+        ft_error_export(env_list);
+    }
+
+    return (1);
+}*/

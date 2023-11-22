@@ -43,11 +43,11 @@ typedef enum e_token
 	END       // end of cmd
 } t_token;
 
-typedef enum
+typedef enum Bool
 {
 	FALSE,
 	TRUE
-} Bool;
+} t_Bool;
 
 /*typedef struct s_mini
 {
@@ -202,8 +202,6 @@ typedef struct s_command
 {
     char *name;
     char **arguments;
-	int		fdread;
-	int		fdwrite;
     char    *redirectFile;
     struct s_command *next;
     struct s_command *prev;
@@ -254,8 +252,11 @@ typedef struct s_global
     t_argList *arguments;
     t_envVarList *envVars;
     t_commandList *commands;
+    t_command *cmd;
     t_redirList *redirections;
     t_pipesList *pipes;
+    int		fdread;
+	int		fdwrite;
 } t_global;
 
 typedef struct s_mini
@@ -334,10 +335,11 @@ void        ft_parse_pipes(t_command *commands, char *input);
 // Execution
 void    ft_execute_command(t_command *cmd);
 int		ft_is_builtins(t_command *cmd);
-int 	t_exec_builtins(t_command *cmd);
+int     ft_exec_builtins(t_global *global);
 int		is_valid_identifier(const char *name);
-void	exec_external_code(t_command *cmd);
-void	exec_cmd(t_command *cmd);
+void	ft_exec_external_code(t_global *global);
+void	ft_exec_cmd(t_global *global);
+void    execute_external_command(char *command, char *args[]);
 
 // Built-ins
 int		change_directory(const char *path);
@@ -347,7 +349,7 @@ int 	pwd(void);
 int 	ft_env(t_envList *env_list);
 int 	ft_unset(t_envVarList *envVarList, char *arg);
 char	**ft_env_duplicate(char **envp);
-int		ft_error_export(char *args);
+int     ft_error_export(char *command, char *arg, char *message, int status);
 int		ft_check_wrong_char(char *str);
 int 	ft_only_digit(char *str);
 int	    ft_is_sep(char c);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void execute_command_with_redirection(char *command, char *file) 
+/*void execute_command_with_redirection(char *command, char *file) 
 {
     int pid;
     int status;
@@ -35,3 +35,4 @@ void execute_command_with_redirection(char *command, char *file)
         exit(EXIT_FAILURE);
     }
 }
+*/
