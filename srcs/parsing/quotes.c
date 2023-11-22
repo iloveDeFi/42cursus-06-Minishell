@@ -44,4 +44,37 @@ void ft_tokenize_with_quotes(char *input)
     printf("Token : \"%s\"\n", starting_token);
 }
 
-
+void ft_follow_quotes_state(t_command *cmd) {
+    int i = 0, j = 0;
+    char *result = malloc(strlen(cmd->name) + 1);
+    if (result == NULL) return;
+    while (cmd->name[i] != '\0') {
+        if (cmd->state == NORMAL) {
+            if (cmd->name[i] == '\'')
+                cmd->state = SINGLE_QUOTE;
+            else if (cmd->name[i] == '\"')
+                cmd->state = DOUBLE_QUOTE;
+            else if (cmd->name[i] == '\\')
+                cmd->state = ESCAPED;
+            else
+                result[j++] = cmd->name[i];
+        } else if (cmd->state == SINGLE_QUOTE) {
+            if (cmd->name[i] == '\'')
+                cmd->state = NORMAL;
+            else
+                result[j++] = cmd->name[i];
+        } else if (cmd->state == DOUBLE_QUOTE) {
+            if (cmd->name[i] == '\"')
+                cmd->state = NORMAL;
+            else
+                result[j++] = cmd->name[i];
+        } else if (cmd->state == ESCAPED) {
+            result[j++] = cmd->name[i];
+            cmd->state = NORMAL;
+        }
+        i++;
+    }
+    result[j] = '\0';
+    printf("Processed Command: %s\n", result);
+    free(result);
+}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
+#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/19 10:40:53 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/11/22 15:07:51 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,8 @@ PARSING_FILES =        parser.c \
 					  quotes.c \
 					  redirections.c \
 					  tools.c \
-					  utils.c 
+					  utils.c \
+					  expansion.c
 
 EXECUTING_FILES =      bin.c \
                       builtin.c \

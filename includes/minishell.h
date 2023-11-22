@@ -13,7 +13,7 @@
 #include <limits.h>
 #include <termios.h>
 #include <fcntl.h>
-
+#include <stddef.h>
 
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
@@ -40,8 +40,16 @@ typedef enum e_token
 	OUT,      // >
 	IN,       // <
 	NOT,      // string
-	END       // end of cmd
+	END,      // end of cmd          
 } t_token;
+
+typedef enum e_quote 
+{
+    NORMAL,        // no quote
+    SINGLE_QUOTE,
+    DOUBLE_QUOTE,
+    ESCAPED        // backslash
+} t_quote;
 
 typedef enum Bool
 {
@@ -206,9 +214,23 @@ typedef struct s_command
     struct s_command *next;
     struct s_command *prev;
     t_token tokenType;
+    t_quote state;
 } t_command;
 
 typedef t_list t_commandList;
+
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+    int status;
+    int stdin_fd;
+    int stdout_fd;
+    t_global *child; // pour pointer faire t_mini.child->enVars etc
+    t_global *exec;
+    t_error *error;
+} t_mini;
 
 typedef struct s_env
 {
@@ -247,6 +269,14 @@ typedef struct s_pipes
 
 typedef t_list t_pipesList;
 
+typedef struct s_error
+{
+    bool error;
+    char *error_name;
+    struct s_error *next;
+    struct s_error *prev;
+} t_error
+
 typedef struct s_global
 {
     t_argList *arguments;
@@ -255,24 +285,10 @@ typedef struct s_global
     t_command *cmd;
     t_redirList *redirections;
     t_pipesList *pipes;
+    t_error *error;
     int		fdread;
 	int		fdwrite;
 } t_global;
-
-typedef struct s_mini
-{
-    char *av;
-    int numberOfCommands;
-    int fd_history;
-    int status;
-    int stdin_fd;
-    int stdout_fd;
-    t_global *child; // pour pointer faire t_mini.child->enVars etc
-    t_global *exec;
-    t_global *errors;
-} t_mini;
-
-
 
 
 // Global
@@ -289,7 +305,7 @@ void	ft_initialize_environment(t_envList *envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
-
+void    manage_history(t_mini *shell);
 
 // Linked Lists
     
@@ -322,14 +338,20 @@ int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);
 char        *ft_strcpy(char *dest, const char *src);
+char        *ft_strndup(const char *s, size_t n);
 int	        ft_is_white_space(char c);
 int         ft_is_pipe_or_redir(char c);
 int			ft_is_quote(char c);
 void		ft_tokenize_with_quotes(char *input);
 int			ft_check_quotes_error(void);
+void        ft_follow_quotes_state(t_command *cmd);
 void        ft_redirect_stdout(t_command *command, char *input);
 void        ft_redirect_stdin(t_command *command, char *input);
 void        ft_parse_pipes(t_command *commands, char *input);
+int         ft_is_valid_env_char(char c);
+int         ft_calculate_new_length(const char *cmd, int last_exit_status);
+char        *ft_getenv_var_value(const char *name);
+char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 
 
 // Execution

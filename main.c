@@ -40,23 +40,27 @@ int main(int ac, char **av, char **envp)
 
     if (ac > 1) 
     {
-        fprintf(stderr, "CHAOS, there are too many arguments\n");
+        fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
+    // ft_memset(env, 0, sizeof(t_env)); Good ???
     ft_initialize_minishell(&shell, &env);
 	ft_initialize_environment(&envList, envp);
     while (1) {
         //signal(SIGINT, handle_signal);
         ft_custom_prompt_msg(&shell);
         char *input = readline("Minis_Hell> ");
-
+        if (shell.av == NULL)
+			break ;
+        /*
         if (input == NULL) 
         {
-            fprintf(stderr, "Exiting...\n");
+            fprintf(stderr, "Exiting...\n"); // TO DO : strerror or perror
             break; // Sortir de la boucle si l'utilisateur a saisi Ctrl+D
         }
+        */
 
-        add_history(input);
+        add_history(&shell);
 
         char *token = ft_strtok(input, " \n");
         int i = 0;
