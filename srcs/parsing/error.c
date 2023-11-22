@@ -1,12 +1,5 @@
 #include "minishell.h"
 
-int	ft_str_error(char *str, int number)
-{
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
-	return (number);
-}
-
 void	free_array(char **array)
 {
 	int	i;
@@ -17,4 +10,17 @@ void	free_array(char **array)
 	while (array[i])
 		free(array[i++]);
 	free(array);
+}
+
+void initialization_of_errors(t_mini *shell)
+{
+    if (shell != NULL) {
+        shell->error = malloc(sizeof(t_error));
+        if (shell->error != NULL) {
+            shell->error->error = FALSE;
+            shell->error->error_name = NULL;
+            shell->error->next = NULL;
+            shell->error->prev = NULL;
+        }
+    }
 }

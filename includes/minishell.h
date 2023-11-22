@@ -221,6 +221,19 @@ typedef struct s_command
 
 typedef t_list t_commandList;
 
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+    int status;
+    int stdin_fd;
+    int stdout_fd;
+    t_global *child; // pour pointer faire t_mini.child->enVars etc
+    t_global *exec;
+    t_error *error;
+} t_mini;
+
 typedef struct s_env
 {
     char *var;
@@ -258,6 +271,14 @@ typedef struct s_pipes
 
 typedef t_list t_pipesList;
 
+typedef struct s_error
+{
+    bool error;
+    char *error_name;
+    struct s_error *next;
+    struct s_error *prev;
+} t_error
+
 typedef struct s_global
 {
     t_argList *arguments;
@@ -265,23 +286,8 @@ typedef struct s_global
     t_commandList *commands;
     t_redirList *redirections;
     t_pipesList *pipes;
+    t_error *error;
 } t_global;
-
-typedef struct s_mini
-{
-    char *av;
-    int numberOfCommands;
-    int fd_history;
-    int status;
-    int stdin_fd;
-    int stdout_fd;
-    int fd_history;
-    t_global *child; // pour pointer faire t_mini.child->enVars etc
-    t_global *exec;
-    t_global *errors;
-} t_mini;
-
-
 
 
 // Global
@@ -298,7 +304,7 @@ void	ft_initialize_environment(t_envList *envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
-
+void    manage_history(t_mini *shell);
 
 // Linked Lists
     
