@@ -219,6 +219,14 @@ typedef struct s_command
 
 typedef t_list t_commandList;
 
+typedef struct s_error
+{
+    t_Bool error;
+    char *error_name;
+    struct s_error *next;
+    struct s_error *prev;
+} t_error;
+
 typedef struct s_mini
 {
     char *av;
@@ -227,8 +235,8 @@ typedef struct s_mini
     int status;
     int stdin_fd;
     int stdout_fd;
-    t_global *child; // pour pointer faire t_mini.child->enVars etc
-    t_global *exec;
+    t_global *child; // TO DO : comment rappeler t_global etant plus bas ?
+    t_global *exec;  // est-ce quil faut plutot rappeler la structure NON t_global ?
     t_error *error;
 } t_mini;
 
@@ -268,14 +276,6 @@ typedef struct s_pipes
 } t_pipes;
 
 typedef t_list t_pipesList;
-
-typedef struct s_error
-{
-    bool error;
-    char *error_name;
-    struct s_error *next;
-    struct s_error *prev;
-} t_error
 
 typedef struct s_global
 {

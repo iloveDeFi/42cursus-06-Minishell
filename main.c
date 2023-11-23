@@ -60,7 +60,7 @@ int main(int ac, char **av, char **envp)
         }
         */
 
-        add_history(&shell);
+        manage_history(&shell);
 
         char *token = ft_strtok(input, " \n");
         int i = 0;
