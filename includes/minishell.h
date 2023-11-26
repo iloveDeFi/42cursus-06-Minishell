@@ -269,11 +269,12 @@ typedef struct s_redir
 
 typedef t_list t_redirList;
 
-typedef struct s_pipes
+typedef struct s_execute
 {
+    int *fd;
     int pfd[2];
-    int pid;
-} t_pipes;
+    int *pid;
+} t_execute;
 
 typedef t_list t_pipesList;
 
@@ -286,6 +287,7 @@ typedef struct s_global
     t_redirList *redirections;
     t_pipesList *pipes;
     t_error *error;
+    t_execute *execute;
     int		fdread;
 	int		fdwrite;
 } t_global;
@@ -334,6 +336,7 @@ t_node	*ft_createNode(void *data);
 // Parsing
 t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
 int		    ft_split_arg(t_argList *argList, char *input);
+int         test_parsing(t_mini *shell, t_env **env_list);
 int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);

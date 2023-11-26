@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 09:50:45 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/26 21:36:41 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@
     }
     return argList->arglistLength;
 }*/
+
+int test_parsing(t_mini *shell, t_env **env_list)
+{
+    if (ft_split_arg(shell, env_list))
+        return (0);
+    else {
+        perror("parsing failed");
+        return (1);
+    }
+}
+
 
 int ft_split_arg(t_list *argList, char *input)
 {
