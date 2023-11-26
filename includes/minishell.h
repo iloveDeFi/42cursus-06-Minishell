@@ -14,6 +14,7 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
@@ -355,6 +356,7 @@ int         ft_is_valid_env_char(char c);
 int         ft_calculate_new_length(const char *cmd, int last_exit_status);
 char        *ft_getenv_var_value(const char *name);
 char        *ft_expand_env_variables(t_command *command, int last_exit_status);
+t_Bool      check_only_spaces(const char *str);
 
 
 // Execution
