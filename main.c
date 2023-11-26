@@ -61,7 +61,8 @@ int main(int ac, char **av, char **envp)
         */
 
         manage_history(&shell);
-
+        if (ft_check_only_spaces(shell.av) == TRUE)
+            ft_destroy_current_shell(&shell);
         char *token = ft_strtok(input, " \n");
         int i = 0;
         while (token != NULL) 
