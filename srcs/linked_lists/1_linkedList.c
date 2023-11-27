@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void appendToList(t_node **head, void *data) 
+void ft_appendToList(t_command  **head, void *data) 
 {
-    t_node *newNode = malloc(sizeof(t_node));
+    t_command  *newNode = malloc(sizeof(t_command ));
     if (newNode == NULL) 
     {
         fprintf(stderr, "Error when allocating memory\n");
@@ -16,7 +16,7 @@ void appendToList(t_node **head, void *data)
         *head = newNode;
     else 
     {
-        t_node *currentNode = *head;
+        t_command  *currentNode = *head;
         while (currentNode->next != NULL)
             currentNode = currentNode->next;
         currentNode->next = newNode;
@@ -24,17 +24,17 @@ void appendToList(t_node **head, void *data)
     }
 }
 
-void    *getLastElement(t_node *head)
+void    *getLastElement(t_command  *head)
 {
 	if (head == NULL)
         return NULL;
-    t_node *current = head;
+    t_command  *current = head;
     while (current->next != NULL)
         current = current->next;
     return current->data;
 }
 
-int isListEmpty(t_node *head)
+int ft_isListEmpty(t_command  *head)
 {
     if (head == NULL)
         return 1;
@@ -42,9 +42,9 @@ int isListEmpty(t_node *head)
         return 0;
 }
 
-void	print_list(t_node *head, void (*printFunction)(void *data))
+void    ft_print_list(t_command  *head, void (*printFunction)(void *data))
 {
-    t_node *current = head;
+    t_command  *current = head;
     while (current != NULL)
     {
         printFunction(current->data);
@@ -53,7 +53,7 @@ void	print_list(t_node *head, void (*printFunction)(void *data))
 }
 
 // adapt casting depending data type to store in list
-void printGeneric(void *data)
+void ft_printGeneric(void *data)
 {
     char *str = (char *)data;
     printf("%s\n", str);

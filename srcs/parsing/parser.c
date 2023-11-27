@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 13:35:37 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/27 15:29:51 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
     return argList->arglistLength;
 }*/
 
-int test_parsing(t_list *commandList, char *input)
+int ft_test_parsing(t_commandList *commandList, char *input)
 {
     if (ft_split_arg(commandList, input))
         return (0);
@@ -53,7 +53,7 @@ int test_parsing(t_list *commandList, char *input)
     }
 }
 
-int ft_split_arg(t_list *commandList, char *input)
+int ft_split_arg(t_commandList *commandList, char *input)
 {
     char *token;
     
@@ -70,12 +70,12 @@ int ft_split_arg(t_list *commandList, char *input)
 
         if (commandList->head == NULL)
         {
-            commandList->head = ft_createNode(newCommand);
+            commandList->head = ft_createNodeCommand(newCommand);
             commandList->tail = commandList->head;
         }
         else 
         {
-            appendToList(&(commandList->head), ft_createNode(newCommand));
+            ft_appendToList(&(commandList->head), ft_createNodeCommand(newCommand));
             commandList->tail = commandList->tail->next;
         }
 

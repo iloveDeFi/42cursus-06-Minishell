@@ -77,6 +77,7 @@ typedef struct s_list
 
 typedef struct s_command
 {
+    void *data;
     char *name;
     char **arguments;
     char    *redirectFile;
@@ -193,27 +194,27 @@ void    manage_history(t_mini *shell);
 t_global *create_global();
 t_envVarList *create_envVarList();
 	// File 1
-void	appendToList(t_node **head, void *data);
-void    *getLastElement(t_node *head);
-int		isListEmpty(t_node *head);
-void	print_list(t_node *head, void (*printFunction)(void *data));
-void	printGeneric(void *data);
+void	ft_appendToList(t_command  **head, void *data);
+void    *ft_getLastElement(t_command  *head);
+int		ft_isListEmpty(t_command  *head);
+void	ft_print_list (t_command *head, void (*printFunction)(void *data));
+void	ft_printGeneric(void *data);
     // File 2
-void	iterateList(t_node *head, void (*callback)(void *data));
-void	freeList(t_node *head);
-void	freeNode(t_node *node);
-int		compareString(void *data, void *target);
-t_node	*findNode(t_node *head, void *target);
+void	ft_iterateList(t_command  *head, void (*callback)(void *data));
+void	ft_freeList(t_command  *head);
+void	ft_freeNode(t_command  *node);
+int		ft_compareString(void *data, void *target);
+t_command 	*ft_findNode(t_command  *head, void *target);
     // File 3
-t_node	*getPreviousNode(t_node *head, t_node *node);
-int		getListSize(t_node *head);
-void	removeNode(t_node **head, t_node *node);
-t_node	*ft_createNode(void *data);
+t_command 	*ft_getPreviousNode(t_command  *head, t_command  *node);
+int		ft_getListSize(t_command  *head);
+void    ft_removeNode(t_command **head, t_command *node);
+t_command 	*ft_createNodeCommand(void *data);
 
 // Parsing
 t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
-int         ft_split_arg(t_list *commandList, char *input);
-int         test_parsing(t_list *commandList, char *input);
+int         ft_split_arg(t_commandList *commandList, char *input);
+int         ft_test_parsing(t_commandList *commandList, char *input);
 int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);

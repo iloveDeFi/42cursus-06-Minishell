@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 // Go through list to apply callback function on each element
-void iterateList(t_node *head, void (*callback)(void *data))
+void ft_iterateList(t_command  *head, void (*callback)(void *data))
 {
-    t_node *current = head;
+    t_command  *current = head;
     
     while (current != NULL)
     {
@@ -24,20 +24,20 @@ void iterateList(t_node *head, void (*callback)(void *data))
     }
 }
 
-void freeList(t_node *head)
+void ft_freeList(t_command  *head)
 {
-    t_node *current = head;
+    t_command  *current = head;
     
     while (current != NULL)
     {
-        t_node *next = current->next;
+        t_command  *next = current->next;
         free(current->data);
         free(current);
         current = next;
     }
 }
 
-void freeNode(t_node *node)
+void ft_freeNode(t_command  *node)
 {
     if (node != NULL)
     {
@@ -50,19 +50,19 @@ void freeNode(t_node *node)
     }
 }
 
-int compareString(void *data, void *target)
+int ft_compareString(void *data, void *target)
 {
     char *str = (char *)data;
     char *key = (char *)target;
     return ft_strcmp(str, key);
 }
 
-t_node *findNode(t_node *head, void *target)
+t_command  *ft_findNode(t_command  *head, void *target)
 {
-    t_node *current = head;
+    t_command  *current = head;
     while (current != NULL)
     {
-        if (compareString(current->data, target) == 0)
+        if (ft_compareString(current->data, target) == 0)
             return current;
         current = current->next;
     }

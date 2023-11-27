@@ -37,7 +37,10 @@ int main(int ac, char **av, char **envp)
     t_mini	shell;
 	t_env	*envList;
 	t_env	*env;
+    t_commandList *commandList;
 
+    (void)av;
+    commandList = NULL;
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
@@ -63,6 +66,19 @@ int main(int ac, char **av, char **envp)
         manage_history(&shell);
         if (ft_check_only_spaces(shell.av) == TRUE)
             ft_destroy_current_shell(&shell);
+        else if (ft_strcmp(shell.av, ""))
+		{
+			if (ft_test_parsing(commandList, input))
+            {
+                // ft_process_my_command(commandList, input); // TO DO PROCESS COMMANDE
+				g_exit_code = 0;
+            }
+			ft_destroy_current_shell(&shell);
+		}
+    return 0;
+}
+}
+/*
         char *token = ft_strtok(input, " \n");
         int i = 0;
         while (token != NULL) 
@@ -98,6 +114,5 @@ int main(int ac, char **av, char **envp)
                 free(av[++j]);
         }
         free(input);
-    }
-    return 0;
-}
+
+*/

@@ -6,16 +6,16 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 15:47:02 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/27 15:27:50 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node *getPreviousNode(t_node *head, t_node *node)
+t_command  *ft_getPreviousNode(t_command  *head, t_command  *node)
 {
-    t_node *current = head;
-    t_node *previous = NULL;
+    t_command *current = head;
+    t_command  *previous = NULL;
     while (current != NULL)
     {
         if(current == node)
@@ -26,10 +26,10 @@ t_node *getPreviousNode(t_node *head, t_node *node)
     return NULL; // TO CHECK
 }
 
-int getListSize(t_node *head)
+int ft_getListSize(t_command  *head)
 {
     int size = 0;
-    t_node *current = head;
+    t_command  *current = head;
     while (current != NULL)
     {
         size++;
@@ -38,7 +38,7 @@ int getListSize(t_node *head)
     return size;
 }
 
-void removeNode(t_node **head, t_node *node)
+void ft_removeNode(t_command **head, t_command *node)
 {
     if (*head == NULL || node == NULL)
         return;
@@ -51,9 +51,9 @@ void removeNode(t_node **head, t_node *node)
     free(node);
 }
 
-t_node *ft_createNode(void *data)
+t_command *ft_createNodeCommand(void *data)
 {
-    t_node *newNode = malloc(sizeof(t_node));
+    t_command *newNode = malloc(sizeof(t_command));
     
     if (newNode == NULL)
     {
