@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 13:42:31 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/22 13:47:08 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void ft_exit_shell(t_mini *shell)
     free_array(var_array);
 }*/
 
-void ft_initialize_environment(t_envList *envList, char **env)
+/*void ft_initialize_environment(t_envList *envList, char **env)
 {
     int i;
     char **var_array;
     t_node *newNode;  // Modifier le type de newNode pour t_node
 
     envList->head = NULL;  // Assurez-vous que envList->head est initialisé à NULL
-    var_array = ft_env_duplicate(env);
+    var_array = ft_env_duplicate(envList);
     i = 0;
     while (var_array[i])
     {
@@ -56,7 +56,29 @@ void ft_initialize_environment(t_envList *envList, char **env)
         i++;
     }
     free_array(var_array);
+}*/
+
+void	ft_initialize_environment(t_env **envlist, char **env)
+{
+	t_env	*new_node;
+	char	**var_array;
+	int		i;
+
+	new_node = NULL;
+	var_array = ft_env_duplicate(env);
+	i = 0;
+	while (var_array[i])
+	{
+		new_node = create_node(var_array[i]);
+		if (!envlist)
+			envlist = &new_node;
+		else
+			add_to_list(envlist, new_node);
+		i++;
+	}
+	free_array(var_array);
 }
+
 
 
 
