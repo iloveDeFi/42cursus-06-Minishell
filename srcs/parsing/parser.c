@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 09:50:45 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 13:35:37 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,47 @@
     return argList->arglistLength;
 }*/
 
-int ft_split_arg(t_list *argList, char *input)
+int test_parsing(t_list *commandList, char *input)
+{
+    if (ft_split_arg(commandList, input))
+        return (0);
+    else {
+        perror("parsing failed");
+        return (1);
+    }
+}
+
+int ft_split_arg(t_list *commandList, char *input)
 {
     char *token;
     
     token = ft_strtok(input, " ");
     while (token != NULL)
     {
-        t_arg *newArg = malloc(sizeof(t_arg));
-        if (newArg == NULL)
+        t_command *newCommand = malloc(sizeof(t_command));
+        if (newCommand == NULL)
         {
             perror("CHAOS, error allocating memory");
             exit(EXIT_FAILURE);
         }
-        newArg->name = ft_strdup(token);
+        newCommand->name = ft_strdup(token);
 
-        if (argList->head == NULL)
+        if (commandList->head == NULL)
         {
-            argList->head = ft_createNode(newArg);
-            argList->tail = argList->head;
+            commandList->head = ft_createNode(newCommand);
+            commandList->tail = commandList->head;
         }
         else 
         {
-            appendToList(&(argList->head), ft_createNode(newArg));
-            argList->tail = argList->tail->next;
+            appendToList(&(commandList->head), ft_createNode(newCommand));
+            commandList->tail = commandList->tail->next;
         }
 
-        argList->length++;
+        commandList->length++;
         token = strtok(NULL, " ");
     }
 
-    return argList->length;
+    return commandList->length;
 }
 
 /*char *ft_find_envVar(t_envVar *head, const char *targetName)
