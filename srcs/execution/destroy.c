@@ -34,7 +34,7 @@ void ft_destroy_commands(t_commandList *commands)
 void ft_destroy_current_shell(t_mini *mini)
 {
     // Détruisez les commandes en appelant la fonction destroy_commands
-    destroy_commands(mini->exec->commands);
+    ft_destroy_commands(mini->exec->commands);
     
     if (mini->av != NULL)
     {
