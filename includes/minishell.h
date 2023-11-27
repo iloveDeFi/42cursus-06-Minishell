@@ -86,7 +86,12 @@ typedef struct s_command
     t_quote state;
 } t_command;
 
-typedef t_list t_commandList;
+typedef struct s_commandList
+{
+    int length;
+    struct s_command *head;
+    struct s_command *tail;
+}   t_commandList;
 
 typedef struct s_error
 {
@@ -268,7 +273,7 @@ void	free_node(t_env *new_node, t_env *tmp, char *str);
 //env_list
 t_env	*create_node(char *var_array);
 int	add_var_to_list(t_env **envlist, char *args);
-int export(t_envList *envlist, t_arg *args);
+int export(t_envList *envlist, t_command *args);
 int	is_in_lst(char	*var, t_env **envlist);
 void	add_to_list(t_env **envlist, t_env *new_node);
 void	replace_in_lst(t_env *new_node, t_env **envlist);

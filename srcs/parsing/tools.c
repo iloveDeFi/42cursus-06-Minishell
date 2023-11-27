@@ -15,7 +15,7 @@ int	ft_is_white_space(char c)
     return (0);
 }
 
-t_Bool check_only_spaces(const char *str) {
+t_Bool ft_check_only_spaces(const char *str) {
     int i;
 
     i = 0;
