@@ -204,21 +204,21 @@ void    manage_history(t_mini *shell);
 t_global *create_global();
 t_envVarList *create_envVarList();
 	// File 1
-void	ft_appendToList(t_command  **head, void *data);
-void    *ft_getLastElement(t_command  *head);
-int		ft_isListEmpty(t_command  *head);
-void	ft_print_list (t_command *head, void (*printFunction)(void *data));
+void    ft_appendToList(t_commandList *list, t_command *newCommand);
+void    *ft_getLastElement(t_commandList  *head);
+int		ft_isListEmpty(t_commandList  *head);
+void	ft_print_list (t_commandList *head, void (*printFunction)(void *data));
 void	ft_printGeneric(void *data);
     // File 2
-void	ft_iterateList(t_command  *head, void (*callback)(void *data));
-void	ft_freeList(t_command  *head);
+void	ft_iterateList(t_commandList  *head, void (*callback)(void *data));
+void	ft_freeList(t_commandList  *head);
 void	ft_freeNode(t_command  *node);
 int		ft_compareString(void *data, void *target);
-t_command 	*ft_findNode(t_command  *head, void *target);
+t_command 	*ft_findNode(t_commandList  *head, void *target);
     // File 3
-t_command 	*ft_getPreviousNode(t_command  *head, t_command  *node);
-int		ft_getListSize(t_command  *head);
-void    ft_removeNode(t_command **head, t_command *node);
+t_command 	*ft_getPreviousNode(t_commandList  *head, t_command *node);
+int		    ft_getListSize(t_commandList  *head);
+void        ft_removeNode(t_commandList **head, t_command *node);
 t_command 	*ft_createNodeCommand(t_command *newNode);
 
 // Parsing
@@ -255,8 +255,8 @@ int		is_valid_identifier(const char *name);
 void	ft_exec_external_code(t_global *global);
 void	ft_exec_cmd(t_global *global);
 void    ft_execute_external_command(char *command, char *args[]);
-void        ft_destroy_current_shell(t_mini *shell);
-void        destroy_children(t_mini *mini);
+void    ft_destroy_current_shell(t_mini *shell);
+void    destroy_children(t_mini *mini);
 void    destroy_commands(t_command *commands);
 
 // Built-ins

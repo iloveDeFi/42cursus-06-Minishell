@@ -1,36 +1,43 @@
 #include "minishell.h"
 
-void destroy_commands(t_command *commands) 
+void ft_destroy_commands(t_command *commands) 
 {
     if (commands == NULL)
-        return ;
-    
+        return;
+
     while (commands != NULL) 
-	{
-        t_command *next_command = commands;
-        
+    {
+        t_command *next_command = commands->next;
+
         // Libérez la mémoire allouée pour cet élément de la liste de commandes
         free(commands->name);
         free(commands->redirectFile);
+
         // Libérez la mémoire allouée pour les arguments de la commande
         if (commands->args != NULL) {
-            for (int i = 0; commands->args[i] != NULL; i++) {
+            int i = 0;
+            while (commands->args[i] != NULL) {
                 free(commands->args[i]);
+                i++;
             }
             free(commands->args);
         }
-        // Passez à la commande suivante
+
+        // Libérez la mémoire de la structure t_command
         free(commands);
+
+        // Passez à la commande suivante
         commands = next_command;
     }
-    free(commands);
 }
+
+
 
 void ft_destroy_current_shell(t_mini *mini)
 {
     // Détruisez les commandes en appelant la fonction destroy_commands
     if (mini->commands != NULL) {
-        destroy_commands(mini->commands);
+        ft_destroy_commands(mini->commands);
         free(mini->commands);
         mini->commands = NULL;
     }

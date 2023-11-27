@@ -1,40 +1,38 @@
 #include "minishell.h"
 
-void ft_appendToList(t_command  **head, void *data) 
+void ft_appendToList(t_commandList *list, t_command *newCommand) 
 {
-    t_command  *newNode = malloc(sizeof(t_command ));
-    if (newNode == NULL) 
-    {
-        fprintf(stderr, "Error when allocating memory\n");
-        exit(EXIT_FAILURE);
+    if (list == NULL || newCommand == NULL) {
+        return;
     }
-    newNode->data = data;
-    newNode->next = NULL;
-    newNode->prev = NULL;
 
-    if (*head == NULL) 
-        *head = newNode;
-    else 
-    {
-        t_command  *currentNode = *head;
-        while (currentNode->next != NULL)
-            currentNode = currentNode->next;
-        currentNode->next = newNode;
-        newNode->prev = currentNode;
+    if (list->head == NULL) {
+        // Si la liste est vide, le nouvel élément devient la tête de la liste
+        list->head = newCommand;
+        list->tail = newCommand;
+        newCommand->next = NULL;
+    } else {
+        // Sinon, ajoutez le nouvel élément à la fin de la liste
+        list->tail->next = newCommand;
+        list->tail = newCommand;
+        newCommand->next = NULL;
     }
+
+    list->length++;
 }
 
-void    *getLastElement(t_command  *head)
+
+void    *getLastElement(t_commandList *head)
 {
 	if (head == NULL)
         return NULL;
-    t_command  *current = head;
+    t_command *current = head->head;
     while (current->next != NULL)
         current = current->next;
     return current->data;
 }
 
-int ft_isListEmpty(t_command  *head)
+int ft_isListEmpty(t_commandList    *head)
 {
     if (head == NULL)
         return 1;
@@ -42,9 +40,9 @@ int ft_isListEmpty(t_command  *head)
         return 0;
 }
 
-void    ft_print_list(t_command  *head, void (*printFunction)(void *data))
+void    ft_print_list(t_commandList *head, void (*printFunction)(void *data))
 {
-    t_command  *current = head;
+    t_command *current = head->head;
     while (current != NULL)
     {
         printFunction(current->data);

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 20:29:42 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 22:06:20 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command  *ft_getPreviousNode(t_command  *head, t_command  *node)
+t_command  *ft_getPreviousNode(t_commandList  *head, t_command  *node)
 {
-    t_command *current = head;
+    t_command *current = head->head;
     t_command  *previous = NULL;
     while (current != NULL)
     {
@@ -26,10 +26,10 @@ t_command  *ft_getPreviousNode(t_command  *head, t_command  *node)
     return NULL; // TO CHECK
 }
 
-int ft_getListSize(t_command  *head)
+int ft_getListSize(t_commandList  *head)
 {
     int size = 0;
-    t_command  *current = head;
+    t_command  *current = head->head;
     while (current != NULL)
     {
         size++;
@@ -38,16 +38,24 @@ int ft_getListSize(t_command  *head)
     return size;
 }
 
-void ft_removeNode(t_command **head, t_command *node)
+void ft_removeNode(t_commandList **head, t_command *node)
 {
     if (*head == NULL || node == NULL)
         return;
-    if (*head == node)
-        *head = node->next;
+    
+    if ((*head)->head == node)
+        (*head)->head = node->next;
+
     if (node->next != NULL)
         node->next->prev = node->prev;
+
     if (node->prev != NULL)
         node->prev->next = node->next;
+
+    // Assurez-vous que les pointeurs prev et next du nœud à supprimer sont à NULL
+    node->prev = NULL;
+    node->next = NULL;
+
     free(node);
 }
 

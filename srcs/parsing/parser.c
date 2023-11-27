@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 21:20:45 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 21:52:33 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
         }
         else 
         {
-            ft_appendToList(&(commandList->head), ft_createNodeCommand(newCommand));
+            ft_appendToList(commandList, newCommand);
             commandList->tail = commandList->tail->next;
         }
 
