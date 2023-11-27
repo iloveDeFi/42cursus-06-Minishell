@@ -12,5 +12,5 @@ void manage_history(t_mini *shell)
 		write(shell->fd_history, shell->av, ft_strlen(shell->av));
 		write(shell->fd_history, "\n", 1);
 	}
-	init_errs(shell);
+	initialization_of_errors(shell);
 }

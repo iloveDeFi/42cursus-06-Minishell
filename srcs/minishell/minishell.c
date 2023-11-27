@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/15 13:42:31 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 11:26:33 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     //g_status.status = 0;
     shell->child = NULL;
     shell->exec = NULL;
-    shell->errors = NULL;
+    shell->error = NULL;
     write_inputrc();
 }
