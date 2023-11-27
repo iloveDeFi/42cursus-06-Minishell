@@ -301,7 +301,7 @@ void    write_inputrc(void);
 
 // Minishell
 
-void	ft_initialize_environment(t_envList *envList, char **env);
+void	ft_initialize_environment(t_env **envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
@@ -312,7 +312,6 @@ void    manage_history(t_mini *shell);
 	//EnvarList
 t_global *create_global();
 t_envVarList *create_envVarList();
-	
 	// File 1
 void	appendToList(t_node **head, void *data);
 void    *getLastElement(t_node *head);
@@ -379,13 +378,29 @@ void 	ft_exit(t_command *command);
 void 	cd_changepwd(t_envVarList *envVars, char *path);
 int		check_args(char *name);
 
-
 // Signals
 void	init_terminal_settings(void);
 void	init_signals(void(*signals_handle)(int));
 void	receive_signal_from_user(int signal_num);
 void	handle_signal_execution(int signal_num);
 int		ft_is_sep(char c);
+void	free_node(t_env *new_node, t_env *tmp, char *str);
+
+//env_list
+t_env	*create_node(char *var_array);
+int	add_var_to_list(t_env **envlist, char *args);
+int export(t_envList *envlist, t_arg *args);
+int	is_in_lst(char	*var, t_env **envlist);
+void	add_to_list(t_env **envlist, t_env *new_node);
+void	replace_in_lst(t_env *new_node, t_env **envlist);
+t_env	*get_in_lst(char *var, t_env **envlist);
+void	print_export_list(t_env **envlist);
+t_env	*sort_list_export(t_env **envlist);
+int	count_list(t_env **list);
+void	swap_nodes(t_env *tmp);
+t_env	*ft_envlist_duplicate(t_env **envlist);
+t_env	*dup_node(char *name, char *value);
+void	delete_list(t_env *envlist);
 
 // libft
 

@@ -7,7 +7,7 @@ int	check_args(char *name)
 		return (0);
 	if (!ft_only_digit(name))
 		return (0);
-	return (1);
+    return (1);
 }
 
 int ft_error_export(char *command, char *arg, char *message, int status)
@@ -35,25 +35,21 @@ int ft_check_wrong_char(char *str)
     return (1);   
 }
 
-/*int export(t_envList *env_list, t_arg *args)
+int	export_func(t_env **envlist, t_arg *args)
 {
-    if (args != NULL)
-    {
-        while (args != NULL)
-        {
-            if (!check_args(args->name))
-                return (ft_error_export("export: ",
-                                            args->name, ": not a valid identifier", 1));
-            //if (!add_var_to_list(env_list, args->name))
-                return (perror("Error malloc"));
-
-            args = args->next;
-        }
-    }
-    else
-    {
-        ft_error_export(env_list);
-    }
-
-    return (1);
-}*/
+	if (args != NULL)
+	{
+		while (args != NULL)
+		{
+			if (!check_args(args->name))
+				return (ft_error_export("export: ",
+						args->name, ": not a valid identifier", 1));
+			if (!add_var_to_list(envlist, args->name))
+				return (-1);
+			args = args->next;
+		}
+	}
+	else
+		print_export_list(envlist);
+	return (1);
+}

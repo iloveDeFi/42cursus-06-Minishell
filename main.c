@@ -35,7 +35,7 @@ void write_inputrc(void)
 int main(int ac, char **av, char **envp) 
 {
     t_mini	shell;
-	t_envList	envList;
+	t_env	*envList;
 	t_env	*env;
 
     if (ac > 1) 
