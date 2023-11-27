@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/22 15:07:51 by bat              ###   ########.fr        #
+#    Updated: 2023/11/27 11:22:42 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,8 @@ LIBFT_ARCHIVES = 		$(LIBFT_FOLDER)/libft.a
 MAIN_FILE = main.c
 
 MINISHELL_FILES =      minishell.c \
-						prompt.c
+						prompt.c \
+						history.c
 
 PARSING_FILES =        parser.c \
                       error.c \

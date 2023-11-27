@@ -227,19 +227,6 @@ typedef struct s_error
     struct s_error *prev;
 } t_error;
 
-typedef struct s_mini
-{
-    char *av;
-    int numberOfCommands;
-    int fd_history;
-    int status;
-    int stdin_fd;
-    int stdout_fd;
-    t_global *child; // TO DO : comment rappeler t_global etant plus bas ?
-    t_global *exec;  // est-ce quil faut plutot rappeler la structure NON t_global ?
-    t_error *error;
-} t_mini;
-
 typedef struct s_env
 {
     char *var;
@@ -289,6 +276,19 @@ typedef struct s_global
     int		fdread;
 	int		fdwrite;
 } t_global;
+
+typedef struct s_mini
+{
+    char *av;
+    int numberOfCommands;
+    int fd_history;
+    int status;
+    int stdin_fd;
+    int stdout_fd;
+    t_global *child; // TO DO : comment rappeler t_global etant plus bas ?
+    t_global *exec;  // est-ce quil faut plutot rappeler la structure NON t_global ?
+    t_error *error;
+} t_mini;
 
 
 // Global

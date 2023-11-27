@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/22 13:47:08 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 11:20:09 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     //g_status.status = 0;
     shell->child = NULL;
     shell->exec = NULL;
-    shell->errors = NULL;
+    shell->error = NULL;
     write_inputrc();
 }
