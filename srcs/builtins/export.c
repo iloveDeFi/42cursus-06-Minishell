@@ -35,7 +35,7 @@ int ft_check_wrong_char(char *str)
     return (1);   
 }
 
-int	export_func(t_env **envlist, t_command *args)
+int	export_func(t_env **envlist, t_args *args)
 {
 	if (args != NULL)
 	{

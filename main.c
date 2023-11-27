@@ -37,11 +37,10 @@ int main(int ac, char **av, char **envp)
     t_mini	shell;
 	t_env	*envList;
 	t_env	*env;
-    t_commandList *commandList;
+    t_commandList commandList;
     t_global *global;
 
     (void)av;
-    commandList = NULL;
     global = NULL;
     if (ac > 1) 
     {
@@ -49,6 +48,7 @@ int main(int ac, char **av, char **envp)
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
     // ft_memset(env, 0, sizeof(t_env)); Good ???
+    ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
 	ft_initialize_environment(&envList, envp);
     while (1) {
@@ -70,7 +70,7 @@ int main(int ac, char **av, char **envp)
             ft_destroy_current_shell(&shell);
         else if (ft_strcmp(shell.av, ""))
 		{
-			if (ft_test_parsing(commandList, input))
+			if (ft_test_parsing(&commandList, input))
             {
                 ft_exec_cmd(global);
 				g_exit_code = 0;

@@ -6,9 +6,9 @@ void ft_exit(t_command *command)
 {
     int exit_code;
     
-    if (command->arguments[1] != NULL) 
+    if (command->args[1] != NULL) 
     {   
-        exit_code = ft_atoi(command->arguments[1]);
+        exit_code = ft_atoi(command->args[1]);
         if (exit_code == 0) 
             exit(exit_code);
         else 
@@ -19,7 +19,7 @@ void ft_exit(t_command *command)
                 exit(EXIT_FAILURE);
             }
 
-            printf("Invalid exit code: %s\n", command->arguments[1]);
+            printf("Invalid exit code: %s\n", command->args[1]);
             exit(EXIT_FAILURE);
         }
     } 

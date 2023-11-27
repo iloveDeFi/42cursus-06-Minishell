@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 14:05:27 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/27 21:12:14 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ void	ft_initialize_environment(t_env **envlist, char **env)
 	free_array(var_array);
 }
 
-
-
-
 void ft_initialize_minishell(t_mini *shell, t_env **env)
 {
     *env = NULL;
@@ -91,10 +88,17 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     shell->status = 0;
     shell->stdin_fd = dup(STDIN_FILENO);
     shell->stdout_fd = dup(STDOUT_FILENO);
-    //g_status.infork = NO;
-    //g_status.status = 0;
-    shell->child = NULL;
-    shell->exec = NULL;
-    shell->error = NULL;
+    shell->commands = NULL;
+    shell->child = malloc(sizeof(t_global));
+    if (shell->child == NULL) {
+        perror("Failed to allocate memory for shell->child");
+        exit(EXIT_FAILURE);
+    }
+    shell->exec = malloc(sizeof(t_global));  // Initialisez-le de la même manière si nécessaire
+    if (shell->exec == NULL) {
+        perror("Failed to allocate memory for shell->exec");
+        exit(EXIT_FAILURE);
+    }
+    shell->error = NULL;  // Assurez-vous de l'initialiser correctement si nécessaire
     write_inputrc();
 }

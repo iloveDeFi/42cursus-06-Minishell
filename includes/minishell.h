@@ -79,7 +79,7 @@ typedef struct s_command
 {
     void *data;
     char *name;
-    char **arguments;
+    char **args;
     char    *redirectFile;
     struct s_command *next;
     struct s_command *prev;
@@ -93,6 +93,13 @@ typedef struct s_commandList
     struct s_command *head;
     struct s_command *tail;
 }   t_commandList;
+
+typedef struct s_args
+{
+    char *name;
+    struct s_args *next;
+}
+    t_args;
 
 typedef struct s_error
 {
@@ -150,6 +157,8 @@ typedef struct s_global
     t_envVarList *envVars;
     t_commandList *commands;
     t_command *cmd;
+    t_args *args;
+    t_env *envlist;
     t_redirList *redirections;
     t_pipesList *pipes;
     t_error *error;
@@ -166,6 +175,7 @@ typedef struct s_mini
     int status;
     int stdin_fd;
     int stdout_fd;
+    t_command *commands;
     t_global *child; // TO DO : comment rappeler t_global etant plus bas ?
     t_global *exec;  // est-ce quil faut plutot rappeler la structure NON t_global ?
     t_error *error;
@@ -209,7 +219,7 @@ t_command 	*ft_findNode(t_command  *head, void *target);
 t_command 	*ft_getPreviousNode(t_command  *head, t_command  *node);
 int		ft_getListSize(t_command  *head);
 void    ft_removeNode(t_command **head, t_command *node);
-t_command 	*ft_createNodeCommand(void *data);
+t_command 	*ft_createNodeCommand(t_command *newNode);
 
 // Parsing
 t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
@@ -247,6 +257,7 @@ void	ft_exec_cmd(t_global *global);
 void    ft_execute_external_command(char *command, char *args[]);
 void        ft_destroy_current_shell(t_mini *shell);
 void        destroy_children(t_mini *mini);
+void    destroy_commands(t_command *commands);
 
 // Built-ins
 int		change_directory(const char *path);
@@ -263,6 +274,7 @@ int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
 void 	cd_changepwd(t_envVarList *envVars, char *path);
 int		check_args(char *name);
+int	    export_func(t_env **envlist, t_args *args);
 
 // Signals
 void	init_terminal_settings(void);
@@ -275,7 +287,6 @@ void	free_node(t_env *new_node, t_env *tmp, char *str);
 //env_list
 t_env	*create_node(char *var_array);
 int	add_var_to_list(t_env **envlist, char *args);
-int export(t_envList *envlist, t_command *args);
 int	is_in_lst(char	*var, t_env **envlist);
 void	add_to_list(t_env **envlist, t_env *new_node);
 void	replace_in_lst(t_env *new_node, t_env **envlist);

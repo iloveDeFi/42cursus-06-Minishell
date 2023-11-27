@@ -37,7 +37,7 @@ void	ft_exec_external_code(t_global *global)
 		perror("Error with fork");
 	if (pid == 0)
 	{
-		ft_execute_external_command(global->cmd->name, global->cmd->arguments);
+		ft_execute_external_command(global->cmd->name, global->cmd->args);
 		perror("execve");
 		exit(errno);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 15:27:50 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/27 20:29:42 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,24 @@ void ft_removeNode(t_command **head, t_command *node)
     free(node);
 }
 
-t_command *ft_createNodeCommand(void *data)
+t_command *ft_createNodeCommand(t_command *newNode)
 {
-    t_command *newNode = malloc(sizeof(t_command));
+    newNode = malloc(sizeof(t_command));
     
     if (newNode == NULL)
     {
         fprintf(stderr, "Chaos, memory allocation failed with new node\n");
         exit(EXIT_FAILURE);
     }
-    newNode->data = data;
+
+    // Initialisez les champs de la structure t_command avec les données passées en argument
+    newNode->name = NULL;
+    newNode->args = NULL;
+    newNode->redirectFile = NULL;
     newNode->next = NULL;
     newNode->prev = NULL;
-    
+    newNode->tokenType = NOT;
+    newNode->state = NORMAL;
+
     return newNode;
 }

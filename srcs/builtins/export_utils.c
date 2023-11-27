@@ -68,22 +68,15 @@ int	is_in_lst(char	*var, t_env **envlist)
 	return (tmp != NULL);
 }
 
-void	add_to_list(t_env **envlist, t_env *new_node)
+void add_to_list(t_env **envlist, t_env *new_node)
 {
-	t_env	*list;
+    if (!envlist || !new_node)
+        return;
 
-	if (!envlist || !new_node)
-		return ;
-	if (*envlist)
-	{
-		list = *envlist;
-		while (list && list->next)
-			list = list->next;
-		list->next = new_node;
-	}
-	else
-		*envlist = new_node;
+    new_node->next = *envlist;
+    *envlist = new_node;
 }
+
 
 void	replace_in_lst(t_env *new_node, t_env **envlist)
 {
