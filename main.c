@@ -38,9 +38,11 @@ int main(int ac, char **av, char **envp)
 	t_env	*envList;
 	t_env	*env;
     t_commandList *commandList;
+    t_global *global;
 
     (void)av;
     commandList = NULL;
+    global = NULL;
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
@@ -70,7 +72,7 @@ int main(int ac, char **av, char **envp)
 		{
 			if (ft_test_parsing(commandList, input))
             {
-                // ft_process_my_command(commandList, input); // TO DO PROCESS COMMANDE
+                ft_exec_cmd(global);
 				g_exit_code = 0;
             }
 			ft_destroy_current_shell(&shell);

@@ -234,6 +234,7 @@ int         ft_calculate_new_length(const char *cmd, int last_exit_status);
 char        *ft_getenv_var_value(const char *name);
 char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 t_Bool      ft_check_only_spaces(const char *str);
+void        ft_init_commandList(t_commandList *commandList);
 
 
 // Execution
@@ -243,7 +244,7 @@ int     ft_exec_builtins(t_global *global);
 int		is_valid_identifier(const char *name);
 void	ft_exec_external_code(t_global *global);
 void	ft_exec_cmd(t_global *global);
-void    execute_external_command(char *command, char *args[]);
+void    ft_execute_external_command(char *command, char *args[]);
 void        ft_destroy_current_shell(t_mini *shell);
 void        destroy_children(t_mini *mini);
 

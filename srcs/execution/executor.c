@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:10 by bat               #+#    #+#             */
-/*   Updated: 2023/11/22 10:19:36 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/11/27 17:42:37 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void execute_external_command(char *command, char *args[]) 
+void ft_execute_external_command(char *command, char *args[]) 
 {
     pid_t pid;
     int status;

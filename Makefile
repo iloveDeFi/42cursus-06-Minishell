@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/27 14:05:38 by bat              ###   ########.fr        #
+#    Updated: 2023/11/27 17:48:45 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ EXECUTING_FILES =      bin.c \
                       builtin.c \
                       executor.c \
 					  execute_command.c \
-					  execute_command_with_redirection.c \
+					  execute_redirection.c \
 					  destroy.c 
 
 BUILTINS_FILES =       cd.c \

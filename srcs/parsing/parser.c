@@ -6,45 +6,29 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 15:29:51 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/27 18:11:30 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int ft_split_arg(t_argList *argList, char *input)
+void ft_init_commandList(t_commandList *commandList)
 {
-    char *token;
-    
-    token = ft_strtok(input, " ");
-    while (token != NULL)
+    if (commandList == NULL)
     {
-        t_arg *newArg = malloc(sizeof(t_arg));
-        if (newArg == NULL)
-        {
-            perror("CHAOS, error allocating memory");
-            exit(EXIT_FAILURE);
-        }
-        newArg->name = ft_strdup(token);
-        if (argList->head == NULL)
-        {
-            argList->head = newArg;
-            argList->tail = newArg;
-            newArg->prev = NULL; 
-        }
-        else {
-            newArg->prev = argList->tail;
-            //argList->tail->next = newArg;
-            argList->tail = newArg;
-        }
-        argList->arglistLength++;
-        token = strtok(NULL, " ");
+        // Gérer l'erreur si le pointeur est NULL
+        return;
     }
-    return argList->arglistLength;
-}*/
+
+    // Initialisez les membres de la structure t_commandList
+    commandList->head = NULL;
+    commandList->tail = NULL;
+    commandList->length = 0;
+}
 
 int ft_test_parsing(t_commandList *commandList, char *input)
 {
+    ft_init_commandList(commandList);
     if (ft_split_arg(commandList, input))
         return (0);
     else {
@@ -80,23 +64,11 @@ int ft_split_arg(t_commandList *commandList, char *input)
         }
 
         commandList->length++;
-        token = strtok(NULL, " ");
+        token = ft_strtok(NULL, " ");
     }
 
     return commandList->length;
 }
-
-/*char *ft_find_envVar(t_envVar *head, const char *targetName)
-{
-    t_envVar *current = head;
-    while (current != NULL)
-    {
-        if (ft_strcmp(current->name, targetName) == 0)
-            return current;
-        current = current->next;
-    }
-    return NULL;
-}*/
 
 t_envVar *ft_find_envVar(t_envVar *head, const char *targetName)
 {
