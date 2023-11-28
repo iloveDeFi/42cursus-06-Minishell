@@ -193,11 +193,12 @@ void    write_inputrc(void);
 
 // Minishell
 
+void	exit_shell(t_mini *shell);
 void	ft_initialize_environment(t_env **envList, char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
-void    manage_history(t_mini *shell);
+void    ft_manage_history(t_mini *shell, const char *input);
 
 // Linked Lists
     
@@ -211,10 +212,10 @@ int		ft_isListEmpty(t_commandList  *head);
 void	ft_print_list (t_commandList *head, void (*printFunction)(void *data));
 void	ft_printGeneric(void *data);
     // File 2
-void	ft_iterateList(t_commandList  *head, void (*callback)(void *data));
-void	ft_freeList(t_commandList  *head);
-void	ft_freeNode(t_command  *node);
-int		ft_compareString(void *data, void *target);
+void	    ft_iterateList(t_commandList  *head, void (*callback)(void *data));
+void	    ft_freeList(t_commandList  *head);
+void	    ft_freeNode(t_command  *node);
+int		    ft_compareString(void *data, void *target);
 t_command 	*ft_findNode(t_commandList  *head, void *target);
     // File 3
 t_command 	*ft_getPreviousNode(t_commandList  *head, t_command *node);
@@ -287,14 +288,14 @@ void	free_node(t_env *new_node, t_env *tmp, char *str);
 
 //env_list
 t_env	*create_node(char *var_array);
-int	add_var_to_list(t_env **envlist, char *args);
-int	is_in_lst(char	*var, t_env **envlist);
+int	    add_var_to_list(t_env **envlist, char *args);
+int	    is_in_lst(char	*var, t_env **envlist);
 void	add_to_list(t_env **envlist, t_env *new_node);
 void	replace_in_lst(t_env *new_node, t_env **envlist);
 t_env	*get_in_lst(char *var, t_env **envlist);
 void	print_export_list(t_env **envlist);
 t_env	*sort_list_export(t_env **envlist);
-int	count_list(t_env **list);
+int	    count_list(t_env **list);
 void	swap_nodes(t_env *tmp);
 t_env	*ft_envlist_duplicate(t_env **envlist);
 t_env	*dup_node(char *name, char *value);
