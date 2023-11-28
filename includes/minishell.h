@@ -83,6 +83,8 @@ typedef struct s_command
     char    *redirectFile;
     struct s_command *next;
     struct s_command *prev;
+    int		fdread;
+	int		fdwrite;
     t_token tokenType;
     t_quote state;
 } t_command;
@@ -114,6 +116,7 @@ typedef struct s_env
 {
     char *var;
     char *value;
+    int *data;
     struct s_env *next;
 } t_env;
 
@@ -163,8 +166,6 @@ typedef struct s_global
     t_pipesList *pipes;
     t_error *error;
     t_execute *execute;
-    int		fdread;
-	int		fdwrite;
 } t_global;
 
 typedef struct s_mini
@@ -249,12 +250,12 @@ void        ft_init_commandList(t_commandList *commandList);
 
 // Execution
 void    ft_execute_command(t_command *cmd);
-int		ft_is_builtins(t_command *cmd);
-int     ft_exec_builtins(t_global *global);
+int     ft_is_builtins(t_command *cmd);
+int     ft_exec_builtins(t_command *cmd);
 int		is_valid_identifier(const char *name);
-void	ft_exec_external_code(t_global *global);
-void	ft_exec_cmd(t_global *global);
-void    ft_execute_external_command(char *command, char *args[]);
+void	ft_exec_external_code(t_command *cmd);
+void	ft_exec_cmd(t_command *cmd);
+void    ft_execute_external_command(t_command *cmd);
 void    ft_destroy_current_shell(t_mini *shell);
 void    destroy_children(t_mini *mini);
 void    destroy_commands(t_command *commands);
@@ -264,8 +265,8 @@ int		change_directory(const char *path);
 int		cd(char **arguments);
 int 	echo(char **arguments);
 int 	pwd(void);
-int 	ft_env(t_envList *env_list);
-int 	ft_unset(t_envVarList *envVarList, char *arg);
+int 	ft_env(t_env **env_list);
+int	    ft_unset(t_env **env_list, t_command *cmd);
 char	**ft_env_duplicate(char **envp);
 int     ft_error_export(char *command, char *arg, char *message, int status);
 int		ft_check_wrong_char(char *str);
@@ -274,7 +275,7 @@ int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
 void 	cd_changepwd(t_envVarList *envVars, char *path);
 int		check_args(char *name);
-int	    export_func(t_env **envlist, t_args *args);
+int	    export_func(t_env **envlist, t_command *args);
 
 // Signals
 void	init_terminal_settings(void);

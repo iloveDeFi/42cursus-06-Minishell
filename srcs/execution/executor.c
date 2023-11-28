@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:10 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 17:42:37 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/28 20:18:23 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_execute_external_command(char *command, char *args[]) 
+/*void ft_execute_external_command(t_command *cmd) 
 {
     pid_t pid;
     int status;
@@ -22,7 +22,7 @@ void ft_execute_external_command(char *command, char *args[])
     if (pid == 0) 
     { 
         // Dans le processus enfant
-        if (execve(command, args, NULL) == -1) 
+        if (execve(cmd) == -1) 
         {
             perror("Erreur lors de l'exécution de la commande");
             exit(EXIT_FAILURE);
@@ -36,3 +36,4 @@ void ft_execute_external_command(char *command, char *args[])
     //Dans le processus parents
         wait(&status);
 }
+*/

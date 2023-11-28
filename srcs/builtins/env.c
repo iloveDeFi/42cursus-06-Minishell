@@ -1,23 +1,20 @@
 #include "minishell.h"
 
-int ft_env(t_envList *env_list)
+int	ft_env(t_env **env_list)
 {
-    if (env_list == NULL)
-        return (EXIT_FAILURE);
+	t_env	*tmp;
 
-    t_node *tmp_node = env_list->head;
-
-    while (tmp_node != NULL)
-    {
-        t_env *tmp = (t_env *)tmp_node->data;
-        if (tmp != NULL && tmp->var != NULL)
-        {
-            write(1, tmp->var, strlen(tmp->var));
-            write(1, "=", 1);
-            write(1, tmp->value, strlen(tmp->value));
-            write(1, "\n", 1);
-        }
-        tmp_node = tmp_node->next;
-    }
-    return (EXIT_SUCCESS);
+	tmp = *env_list;
+	while (tmp != NULL)
+	{
+		if (tmp->var != NULL)
+		{
+			ft_putstr_fd(tmp->var, 1);
+			write(1, "=", 1);
+			ft_putstr_fd(tmp->value, 1);
+			write(1, "\n", 1);
+		}
+		tmp = tmp->next;
+	}
+    return (0);
 }

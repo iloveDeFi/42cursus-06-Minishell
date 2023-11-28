@@ -38,10 +38,9 @@ int main(int ac, char **av, char **envp)
 	t_env	*envList;
 	t_env	*env;
     t_commandList commandList;
-    t_global *global;
+    t_command *cmd = NULL;
 
     (void)av;
-    global = NULL;
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
@@ -51,7 +50,8 @@ int main(int ac, char **av, char **envp)
     ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
 	ft_initialize_environment(&envList, envp);
-    while (1) {
+    while (1) 
+    {
         //signal(SIGINT, handle_signal);
         ft_custom_prompt_msg(&shell);
         char *input = readline("Minis_Hell> ");
@@ -72,13 +72,14 @@ int main(int ac, char **av, char **envp)
 		{
 			if (ft_test_parsing(&commandList, input))
             {
-                ft_exec_cmd(global);
+                ft_exec_cmd(cmd);
 				g_exit_code = 0;
             }
 			ft_destroy_current_shell(&shell);
 		}
+
+    }
     return 0;
-}
 }
 /*
         char *token = ft_strtok(input, " \n");

@@ -1,55 +1,24 @@
 
 #include "minishell.h"
 
-int ft_unset(t_envVarList *envVarList, char *arg) {
-    int exit_code = 0;
-    t_node *current = envVarList->head;
-    t_node *prev = NULL;
-
-    while (current) {
-        t_envVar *tmp = (t_envVar *)current->data;
-
-        if (tmp != NULL && strcmp(arg, tmp->name) == 0) {
-            if (prev == NULL)
-                envVarList->head = current->next;
-            else
-                prev->next = current->next;
-
-            free(tmp->name);
-            free(tmp->value);
-            free(tmp);
-            free(current);
-            break;
-        }
-        prev = current;
-        current = current->next;
-    }
-
-    if (!is_valid_identifier(arg)) 
-        exit_code = EXIT_FAILURE;
-
-    if (exit_code != 0)
-        return exit_code;
-
-    return EXIT_SUCCESS;
-}
-
-
-
-
-// Helper function to check if a string is a valid identifier
-int is_valid_identifier(const char *name)
+int	ft_unset(t_env **env_list, t_command *cmd)
 {
-    int i;
+	t_env	*check_node;
+	t_env	*prev_node;
 
-    i = 1;
-    if (!name || !name[0] || !isalpha(name[0]))
-        return FALSE;
-    while (name[i])
-    {
-        if (!isalnum(name[i]) && name[i] != '_')
-            return FALSE;
-        i++;
-    }
-    return TRUE;
+	check_node = *env_list;
+	if (!cmd || *env_list == NULL)
+		return (EXIT_FAILURE) ;
+	while (ft_strcmp(cmd->name, check_node->var) != 0 && cmd->name)
+	{
+		prev_node = check_node;
+		check_node = check_node->next;
+		if (check_node == NULL)
+			return (EXIT_FAILURE);
+	}
+	prev_node->next = check_node->next;
+	free(check_node->var);
+	free(check_node->value);
+	free(check_node);
+    return (EXIT_SUCCESS);
 }
