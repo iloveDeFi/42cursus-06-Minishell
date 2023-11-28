@@ -2,6 +2,12 @@
 
 int g_exit_code = 0;
 
+void	exit_shell(t_mini *shell)
+{
+	if (shell->av)
+		free(shell->av);
+}
+
 void write_inputrc(void)
 {
     int fd;
@@ -40,45 +46,38 @@ int main(int ac, char **av, char **envp)
     t_commandList commandList;
     t_global *global;
 
-    (void)av;
+    
     global = NULL;
+    (void)av;
     if (ac > 1) 
     {
         fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
         return 1; // Utilisation de 1 pour indiquer une erreur
     }
-    // ft_memset(env, 0, sizeof(t_env)); Good ???
+    //ft_memset(&env, 0, sizeof(t_env));
     ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
 	ft_initialize_environment(&envList, envp);
     while (1) {
         //signal(SIGINT, handle_signal);
         ft_custom_prompt_msg(&shell);
-        char *input = readline("Minis_Hell> ");
         if (shell.av == NULL)
 			break ;
-        /*
-        if (input == NULL) 
-        {
-            fprintf(stderr, "Exiting...\n"); // TO DO : strerror or perror
-            break; // Sortir de la boucle si l'utilisateur a saisi Ctrl+D
-        }
-        */
-
-        manage_history(&shell);
-        if (ft_check_only_spaces(shell.av) == TRUE)
+        ft_manage_history(&shell, shell.av);  
+        if (ft_check_only_spaces(shell.av) == TRUE) {
             ft_destroy_current_shell(&shell);
-        else if (ft_strcmp(shell.av, ""))
-		{
-			if (ft_test_parsing(&commandList, input))
-            {
-                ft_exec_cmd(global);
-				g_exit_code = 0;
-            }
-			ft_destroy_current_shell(&shell);
-		}
-    return 0;
-}
+    }   else if (ft_strcmp(shell.av, "")) 
+    {
+        if (ft_test_parsing(&commandList, shell.av)) 
+        {
+            ft_exec_cmd(global);
+            g_exit_code = 0;
+        }
+        ft_destroy_current_shell(&shell);
+        }
+    }
+    ft_exit_shell(&shell);
+	return (0);
 }
 /*
         char *token = ft_strtok(input, " \n");
