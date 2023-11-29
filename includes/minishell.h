@@ -143,7 +143,7 @@ typedef struct s_execute
 {
     int *fd;
     int pfd[2];
-    int *pid;
+    pid_t *pid;
     int *status;
     int active;
     struct s_execute *next;
