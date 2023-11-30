@@ -46,8 +46,6 @@ int main(int ac, char **av, char **envp)
     t_commandList commandList;
     t_command *cmd = NULL;
 
-    
-    global = NULL;
     (void)av;
     if (ac > 1) 
     {
@@ -65,13 +63,15 @@ int main(int ac, char **av, char **envp)
         if (shell.av == NULL)
 			break ;
         ft_manage_history(&shell, shell.av);  
-        if (ft_check_only_spaces(shell.av) == TRUE) {
+        if (ft_check_only_spaces(shell.av) == TRUE) 
+        {
             ft_destroy_current_shell(&shell);
-    }   else if (ft_strcmp(shell.av, "")) 
-    {
+        }   
+        else if (ft_strcmp(shell.av, "") != 0) 
+        {
         if (ft_test_parsing(&commandList, shell.av)) 
         {
-            ft_exec_cmd(global);
+            ft_exec_cmd(cmd);
             g_exit_code = 0;
         }
         ft_destroy_current_shell(&shell);

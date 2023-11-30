@@ -19,8 +19,6 @@ int ft_is_builtins(t_command *cmd)
     return(0); 
 }
 
-
-
 int ft_exec_builtins(t_command *cmd)
 {
     t_env *envList = NULL;

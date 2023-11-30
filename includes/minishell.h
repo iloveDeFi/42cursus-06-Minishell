@@ -59,21 +59,7 @@ typedef enum Bool
 } t_Bool;
 
 
-// Structure générique pour un nœud
-typedef struct s_node 
-{
-    void *data;
-    struct s_node *next;
-    struct s_node *prev;
-} t_node;
-
 // Structure générique pour une liste
-typedef struct s_list
-{
-    int length;
-    t_node *head;
-    t_node *tail;
-} t_list;
 
 typedef struct s_command
 {
@@ -96,13 +82,6 @@ typedef struct s_commandList
     struct s_command *tail;
 }   t_commandList;
 
-typedef struct s_args
-{
-    char *name;
-    struct s_args *next;
-}
-    t_args;
-
 typedef struct s_error
 {
     t_Bool error;
@@ -110,7 +89,6 @@ typedef struct s_error
     struct s_error *next;
     struct s_error *prev;
 } t_error;
-
 
 typedef struct s_env
 {
@@ -120,17 +98,13 @@ typedef struct s_env
     struct s_env *next;
 } t_env;
 
-typedef t_list t_envList;
-
-typedef struct s_envVar
+typedef struct t_envList
 {
-    char *name;
-    char *value;
-    struct s_envVar *next;
-    struct s_envVar *prev;
-} t_envVar;
-
-typedef t_list t_envVarList;
+    int length;
+    struct s_env *head;
+    struct s_env *tail;
+}
+    t_envList;
 
 typedef struct s_redir
 {
@@ -140,7 +114,7 @@ typedef struct s_redir
     struct s_redir *prev;
 } t_redir;
 
-typedef t_list t_redirList;
+//typedef t_list t_redirList;
 
 typedef struct s_execute
 {
@@ -152,18 +126,15 @@ typedef struct s_execute
     struct s_execute *next;
 } t_execute;
 
-typedef t_list t_pipesList;
+//typedef t_list t_pipesList;
 
 typedef struct s_global
 {
     t_commandList *arguments;
-    t_envVarList *envVars;
     t_commandList *commands;
     t_command *cmd;
-    t_args *args;
     t_env *envlist;
-    t_redirList *redirections;
-    t_pipesList *pipes;
+    t_redir *redirections;
     t_error *error;
     t_execute *execute;
 } t_global;
@@ -201,10 +172,7 @@ void	ft_custom_prompt_msg(t_mini *shell);
 void    ft_manage_history(t_mini *shell, const char *input);
 
 // Linked Lists
-    
-	//EnvarList
-t_global *create_global();
-t_envVarList *create_envVarList();
+
 	// File 1
 void    ft_appendToList(t_commandList *list, t_command *newCommand);
 void    *ft_getLastElement(t_commandList  *head);
@@ -224,7 +192,7 @@ void        ft_removeNode(t_commandList **head, t_command *node);
 t_command 	*ft_createNodeCommand(t_command *newNode);
 
 // Parsing
-t_envVar    *ft_find_envVar(t_envVar *head, const char *targetName);
+t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 int         ft_split_arg(t_commandList *commandList, char *input);
 int         ft_test_parsing(t_commandList *commandList, char *input);
 int		    ft_str_error(char *str, int number);
@@ -274,7 +242,6 @@ int		ft_check_wrong_char(char *str);
 int 	ft_only_digit(char *str);
 int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
-void 	cd_changepwd(t_envVarList *envVars, char *path);
 int		check_args(char *name);
 int	    export_func(t_env **envlist, t_command *args);
 

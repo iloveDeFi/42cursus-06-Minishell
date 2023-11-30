@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 21:52:33 by bat              ###   ########.fr       */
+/*   Updated: 2023/11/28 22:09:07 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ int ft_split_arg(t_commandList *commandList, char *input)
     return commandList->length;
 }
 
-t_envVar *ft_find_envVar(t_envVar *head, const char *targetName)
-{
-    t_envVar *current = head;
-    while (current != NULL)
-    {
-        if (ft_strcmp(current->name, targetName) == 0)
-            return current;
-        current = current->next;
+t_env *ft_find_envVar(t_envList *envList, const char *targetName) {
+    t_env *var = envList->head;  // Début de la liste
+
+    while (var != NULL) {
+        if (strcmp(var->var, targetName) == 0) {  // Comparaison avec le nom de la variable
+            return var;
+        }
+        var = var->next;
     }
-    return NULL;
+
+    return NULL;  // Aucune correspondance trouvée
 }

@@ -21,7 +21,8 @@ t_Bool ft_check_only_spaces(const char *str) {
     i = 0;
     while (str[i] != '\0')
     {
-        if (str[i] != ' ') {
+        if (str[i] != ' ') 
+        {
             return FALSE;
         }  
         i++;
