@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/11/28 20:27:09 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/01 14:54:39 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,25 @@ void ft_exit_shell(t_mini *shell)
     free_array(var_array);
 }*/
 
-void	ft_initialize_environment(t_env **envlist, char **env)
+t_env *ft_initialize_environment(char **env)
 {
-	t_env	*new_node;
-	char	**var_array;
-	int		i;
+    t_env *envList = NULL;
+    t_env *new_node;
+    char **var_array;
+    int i = 0;
 
-	new_node = NULL;
-	var_array = ft_env_duplicate(env);
-	i = 0;
-	while (var_array[i])
-	{
-		new_node = create_node(var_array[i]);
-		if (!envlist)
-			envlist = &new_node;
-		else
-			add_to_list(envlist, new_node);
-		i++;
-	}
-	free_array(var_array);
+    var_array = ft_env_duplicate(env);
+    while (var_array[i])
+    {
+        new_node = create_node(var_array[i]);
+        add_to_list(&envList, new_node);
+        i++;
+    }
+    free_array(var_array);
+
+    return envList;
 }
+
 
 void ft_initialize_minishell(t_mini *shell, t_env **env)
 {

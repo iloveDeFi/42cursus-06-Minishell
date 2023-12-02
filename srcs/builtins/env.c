@@ -7,7 +7,7 @@ int	ft_env(t_env **env_list)
 	tmp = *env_list;
 	while (tmp != NULL)
 	{
-		if (tmp->var != NULL)
+		if (tmp->var != NULL && tmp->value != NULL)
 		{
 			ft_putstr_fd(tmp->var, 1);
 			write(1, "=", 1);

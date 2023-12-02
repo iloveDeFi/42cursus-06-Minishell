@@ -147,7 +147,7 @@ typedef struct s_mini
     int status;
     int stdin_fd;
     int stdout_fd;
-    t_command *commands;
+    t_commandList *commands;
     t_global *child; // TO DO : comment rappeler t_global etant plus bas ?
     t_global *exec;  // est-ce quil faut plutot rappeler la structure NON t_global ?
     t_error *error;
@@ -165,7 +165,7 @@ void    write_inputrc(void);
 // Minishell
 
 void	exit_shell(t_mini *shell);
-void	ft_initialize_environment(t_env **envList, char **env);
+t_env   *ft_initialize_environment(char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
 void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
@@ -189,12 +189,12 @@ t_command 	*ft_findNode(t_commandList  *head, void *target);
 t_command 	*ft_getPreviousNode(t_commandList  *head, t_command *node);
 int		    ft_getListSize(t_commandList  *head);
 void        ft_removeNode(t_commandList **head, t_command *node);
-t_command 	*ft_createNodeCommand(t_command *newNode);
+t_command 	*ft_createNodeCommand(void);
 
 // Parsing
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 int         ft_split_arg(t_commandList *commandList, char *input);
-int         ft_test_parsing(t_commandList *commandList, char *input);
+int         ft_test_parsing(t_commandList *commandList, char *input,t_env **envList);
 int		    ft_str_error(char *str, int number);
 void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);
@@ -215,24 +215,28 @@ char        *ft_getenv_var_value(const char *name);
 char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 t_Bool      ft_check_only_spaces(const char *str);
 void        ft_init_commandList(t_commandList *commandList);
+char        *extract_quoted_argument(char *input);
+
+
 
 
 // Execution
 void    ft_execute_command(t_command *cmd);
 int     ft_is_builtins(t_command *cmd);
-int     ft_exec_builtins(t_command *cmd);
+int     ft_exec_builtins(t_command *cmd,t_env **envList);
 int		is_valid_identifier(const char *name);
 void	ft_exec_external_code(t_command *cmd);
 void	ft_exec_cmd(t_command *cmd);
-void    ft_execute_external_command(t_command *cmd);
+void    ft_execute_external_command(char *cmdPath, char *args[]);
+void    destroy_commands(t_commandList *commandList);
 void    ft_destroy_current_shell(t_mini *shell);
 void    destroy_children(t_mini *mini);
-void    destroy_commands(t_command *commands);
+
 
 // Built-ins
 int		change_directory(const char *path);
 int		cd(char **arguments);
-int 	echo(char **arguments);
+int     echo(t_command **args);
 int 	pwd(void);
 int 	ft_env(t_env **env_list);
 int	    ft_unset(t_env **env_list, t_command *cmd);
@@ -243,7 +247,7 @@ int 	ft_only_digit(char *str);
 int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
 int		check_args(char *name);
-int	    export_func(t_env **envlist, t_command *args);
+int     export_func(t_env **envlist, t_command *cmd);
 
 // Signals
 void	init_terminal_settings(void);

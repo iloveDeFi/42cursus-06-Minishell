@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_linkedList.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:17:07 by bat               #+#    #+#             */
-/*   Updated: 2023/11/27 22:06:20 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/01 11:31:33 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void ft_removeNode(t_commandList **head, t_command *node)
     free(node);
 }
 
-t_command *ft_createNodeCommand(t_command *newNode)
+t_command *ft_createNodeCommand(void)
 {
-    newNode = malloc(sizeof(t_command));
+    t_command *newNode = malloc(sizeof(t_command));
     
     if (newNode == NULL)
     {
@@ -69,7 +69,7 @@ t_command *ft_createNodeCommand(t_command *newNode)
         exit(EXIT_FAILURE);
     }
 
-    // Initialisez les champs de la structure t_command avec les données passées en argument
+    // Initialisez les champs de la structure t_command
     newNode->name = NULL;
     newNode->args = NULL;
     newNode->redirectFile = NULL;

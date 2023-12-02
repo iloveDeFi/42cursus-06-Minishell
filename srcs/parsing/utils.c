@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char *ft_strtrim_with_quotes(char *str)
+/*char *ft_strtrim_with_quotes(char *str)
 {
     int len;
     int start;
@@ -29,7 +29,7 @@ char *ft_strtrim_with_quotes(char *str)
     }
     result[i] = '\0';
     return (result);
-}
+}*/
 
 
 char *ft_strcpy(char *dest, const char *src)

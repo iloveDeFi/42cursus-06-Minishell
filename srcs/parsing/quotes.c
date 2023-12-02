@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_is_quote(char c) 
+/*int ft_is_quote(char c) 
 {
     if (c == '\'' || c == '"')
         return (1);
@@ -77,4 +77,32 @@ void ft_follow_quotes_state(t_command *cmd) {
     result[j] = '\0';
     printf("Processed Command: %s\n", result);
     free(result);
+}*/
+
+// Fonction pour extraire un argument entre guillemets
+char *extract_quoted_argument(char *input) 
+{
+    char *start = strchr(input, '"');
+    char *end = strchr(start + 1, '"');
+
+    // Vérifier si les guillemets sont présents et sont correctement positionnés
+    if (start != NULL && end != NULL && start < end) 
+    {
+        size_t arg_length = end - start - 1;
+        char *argument = malloc(arg_length + 1);
+
+        if (argument != NULL) 
+        {
+            strncpy(argument, start + 1, arg_length);
+            argument[arg_length] = '\0';
+            return argument;
+        } 
+        else 
+        {
+            perror("CHAOS, error allocating memory");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    return NULL; // Aucun argument trouvé entre guillemets
 }

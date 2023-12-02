@@ -39,22 +39,27 @@ t_env	*create_node(char *var_array)
 	i = 0;
 	if (new_node)
 	{
-		while (var_array[i] != '=' && var_array[i])
+		while (var_array[i] != '=' && var_array[i] != '\0')
 			i++;
 		new_node->var = ft_substr(var_array, 0, i);
+
 		if (var_array[i] == '\0')
 		{
+			// Cas où var_array ne contient pas le caractère '='
 			new_node->value = ft_strdup("");
-			new_node->next = NULL;
-			return (new_node);
 		}
-		i++;
-		new_node->value = ft_substr(var_array, i, (ft_strlen(var_array) - i));
+		else
+		{
+			i++; // Ignorer le caractère '='
+			new_node->value = ft_strdup(var_array + i);
+		}
+
 		new_node->next = NULL;
-		return (new_node);
+		return new_node;
 	}
-	return (NULL);
+	return NULL;
 }
+
 
 int	is_in_lst(char	*var, t_env **envlist)
 {

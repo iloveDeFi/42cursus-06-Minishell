@@ -1,25 +1,25 @@
 #include "minishell.h"
 
-void ft_appendToList(t_commandList *list, t_command *newCommand) 
-{
-    if (list == NULL || newCommand == NULL) {
-        return;
-    }
+// void ft_appendToList(t_commandList *list, t_command *newCommand) 
+// {
+//     if (list == NULL || newCommand == NULL) {
+//         return;
+//     }
 
-    if (list->head == NULL) {
-        // Si la liste est vide, le nouvel élément devient la tête de la liste
-        list->head = newCommand;
-        list->tail = newCommand;
-        newCommand->next = NULL;
-    } else {
-        // Sinon, ajoutez le nouvel élément à la fin de la liste
-        list->tail->next = newCommand;
-        list->tail = newCommand;
-        newCommand->next = NULL;
-    }
+//     if (list->head == NULL) {
+//         // Si la liste est vide, le nouvel élément devient la tête de la liste
+//         list->head = newCommand;
+//         list->tail = newCommand;
+//         newCommand->next = NULL;
+//     } else {
+//         // Sinon, ajoutez le nouvel élément à la fin de la liste
+//         list->tail->next = newCommand;
+//         list->tail = newCommand;
+//         newCommand->next = NULL;
+//     }
 
-    list->length++;
-}
+//     list->length++;
+// }
 
 
 void    *getLastElement(t_commandList *head)
@@ -40,15 +40,6 @@ int ft_isListEmpty(t_commandList    *head)
         return 0;
 }
 
-void    ft_print_list(t_commandList *head, void (*printFunction)(void *data))
-{
-    t_command *current = head->head;
-    while (current != NULL)
-    {
-        printFunction(current->data);
-        current = current->next;
-    }
-}
 
 // adapt casting depending data type to store in list
 void ft_printGeneric(void *data)

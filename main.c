@@ -40,45 +40,67 @@ void write_inputrc(void)
 
 int main(int ac, char **av, char **envp) 
 {
-    t_mini	shell;
-	t_env	*envList;
-	t_env	*env;
+    t_mini      shell;
+    t_env       *envList = ft_initialize_environment(envp);
+    t_env       *env;
     t_commandList commandList;
-    t_command *cmd = NULL;
+    t_command   *cmd = NULL;
 
     (void)av;
+
     if (ac > 1) 
     {
-        fprintf(stderr, "CHAOS, there are too many arguments\n"); // TO DO : strerror or perror
-        return 1; // Utilisation de 1 pour indiquer une erreur
+        fprintf(stderr, "CHAOS, there are too many arguments\n");
+        return 1;
     }
-    //ft_memset(&env, 0, sizeof(t_env));
+
     ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
-	ft_initialize_environment(&envList, envp);
+    ft_initialize_environment(envp);
+
     while (1) 
     {
-        //signal(SIGINT, handle_signal);
         ft_custom_prompt_msg(&shell);
-        if (shell.av == NULL)
-			break ;
-        ft_manage_history(&shell, shell.av);  
+
+        if (shell.av == NULL) 
+            printf("Arret shell\n");
+
+        ft_manage_history(&shell, shell.av);
+
         if (ft_check_only_spaces(shell.av) == TRUE) 
-        {
+        {   
             ft_destroy_current_shell(&shell);
+            continue;
         }   
         else if (ft_strcmp(shell.av, "") != 0) 
         {
-        if (ft_test_parsing(&commandList, shell.av)) 
-        {
-            ft_exec_cmd(cmd);
-            g_exit_code = 0;
-        }
-        ft_destroy_current_shell(&shell);
+            if (ft_test_parsing(&commandList, shell.av, &envList)) 
+            {
+                printf("Test avant EXEC \n");
+
+               if (commandList.head != NULL) 
+                {
+                    printf("Command to execute: %s\n", commandList.head->name);
+                    cmd = commandList.head;
+
+                    if (ft_is_builtins(cmd) == 1)
+                    {
+                        int status = ft_exec_builtins(cmd, &envList);
+                        if (status != 0) 
+                            fprintf(stderr, "Error executing builtin command\n");
+                    }
+                    else
+                        printf("Not a builtin, execute external command\n");
+                } 
+                else 
+                    fprintf(stderr, "Error: commandList head is NULL\n");
+            }
+
+            ft_destroy_current_shell(&shell);
         }
     }
     ft_exit_shell(&shell);
-	return (0);
+    return (0);
 }
 /*
         char *token = ft_strtok(input, " \n");

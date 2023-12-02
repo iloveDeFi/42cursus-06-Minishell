@@ -1,32 +1,38 @@
 #include "minishell.h"
 
-void	ft_manage_history(t_mini *shell, const char *input)
+void ft_manage_history(t_mini *shell, const char *input) 
 {
     // Vérifier si le fichier d'historique est déjà ouvert
-    if (shell->fd_history == -1) {
+    if (shell->fd_history == -1) 
+    {
         shell->fd_history = open("./.history_cmd", O_APPEND | O_WRONLY);
-        if (shell->fd_history == -1) {
+        if (shell->fd_history == -1) 
+        {
             perror("Erreur lors de l'ouverture du fichier d'historique");
             return;
         }
     }
+    if (input != NULL) 
+    {
+        // Assurer que la chaîne input est terminée par '\0'
+        size_t input_len = strlen(input);
+        char *input_copy = malloc(input_len + 1); // +1 pour le caractère nul
+        if (input_copy == NULL) 
+        {
+            perror("Erreur d'allocation de mémoire");
+            return;
+        }
 
-    // Ajouter la commande à l'historique (assurez-vous que cette fonction est correctement définie)
-    add_history(input);
+        strcpy(input_copy, input);
 
-    // Copier la valeur de input dans shell->av
-    //if (shell->av != NULL) {
-     //  free(shell->av);
-    //}
-    shell->av = ft_strdup(input);
+        // Ajouter la commande à l'historique
+        add_history(input_copy);
 
-    // Écrire la commande dans le fichier d'historique
-    write(shell->fd_history, input, ft_strlen(input));
-    write(shell->fd_history, "\n", 1);
+        // Écrire la commande dans le fichier d'historique
+        write(shell->fd_history, input_copy, input_len);
+        write(shell->fd_history, "\n", 1);
 
-    // Fermer le fichier d'historique (vous devez le fermer après avoir écrit les données)
-    close(shell->fd_history);
-    
-    // Initialisation des erreurs (si nécessaire)
-    // initialization_of_errors(shell);
+        // Libérer la mémoire allouée pour input_copy
+        free(input_copy);
+    }
 }
