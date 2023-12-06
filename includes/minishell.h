@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#define MAX_PATH_LENGTH 256
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
 # define STDIN 0
@@ -126,6 +127,20 @@ typedef struct s_execute
     struct s_execute *next;
 } t_execute;
 
+typedef struct s_pathNode 
+{
+    char *directory;
+    struct s_pathNode *next;
+} t_pathNode;
+
+typedef struct s_pathList
+{
+    struct s_pathNode *head;
+} t_pathList;
+
+
+
+
 //typedef t_list t_pipesList;
 
 typedef struct s_global
@@ -223,14 +238,15 @@ char        *extract_quoted_argument(char *input);
 // Execution
 void    ft_execute_command(t_command *cmd);
 int     ft_is_builtins(t_command *cmd);
-int     ft_exec_builtins(t_command *cmd,t_env **envList);
 int		is_valid_identifier(const char *name);
-void	ft_exec_external_code(t_command *cmd);
+void    ft_exec_external_code(t_command *cmd);
 void	ft_exec_cmd(t_command *cmd);
-void    ft_execute_external_command(char *cmdPath, char *args[]);
+void    ft_execute_external_command(char *cmdPath, char *args[], t_env *envList);
 void    destroy_commands(t_commandList *commandList);
 void    ft_destroy_current_shell(t_mini *shell);
 void    destroy_children(t_mini *mini);
+int ft_exec_builtins(t_command *cmd,t_env **envList);
+
 
 
 // Built-ins
@@ -271,6 +287,12 @@ void	swap_nodes(t_env *tmp);
 t_env	*ft_envlist_duplicate(t_env **envlist);
 t_env	*dup_node(char *name, char *value);
 void	delete_list(t_env *envlist);
+
+void freePathList(t_pathList *pathList);
+void initializePathList(t_pathList *pathList, const char *path);
+char *find_executable(char *command, t_pathList *pathList);
+char    *get_path(t_env *envList);
+
 
 // libft
 

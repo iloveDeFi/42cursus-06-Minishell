@@ -6,7 +6,7 @@
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/28 22:11:14 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/12/02 19:00:25 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,10 +129,10 @@ PARSING_FILES =        parser.c \
 
 EXECUTING_FILES =      bin.c \
                       builtin.c \
-                      executor.c \
 					  execute_command.c \
 					  execute_redirection.c \
-					  destroy.c 
+					  destroy.c \
+					  path.c
 
 BUILTINS_FILES =       cd.c \
                       echo.c \

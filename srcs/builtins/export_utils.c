@@ -7,7 +7,7 @@ int	ft_is_sep(char c)
 	return (0);
 }
 
-int ft_only_digit(char *str)
+int	ft_only_digit(char *str)
 {
     while (*str && ft_isdigit(*str))
         str++;
@@ -81,7 +81,6 @@ void add_to_list(t_env **envlist, t_env *new_node)
     new_node->next = *envlist;
     *envlist = new_node;
 }
-
 
 void	replace_in_lst(t_env *new_node, t_env **envlist)
 {

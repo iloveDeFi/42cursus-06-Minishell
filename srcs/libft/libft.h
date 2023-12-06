@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:20:57 by bbessard          #+#    #+#             */
-/*   Updated: 2023/11/01 19:24:40 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/02 19:08:02 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char			**ft_split(char const *s, char c);
 char			*ft_strtrim(char const *s1, char const *set);
 int             ft_hidenp(const char *str1, const char *str2);
 char	        *add_letter_to_string(char const *s1, char const letter);
+char            *ft_strcat(char *dest, const char *src);
 
 
 /* mem_*/

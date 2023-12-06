@@ -3,12 +3,17 @@
 void ft_redirect_stdout(t_command *command, char *input) 
 {
     int i = 0;
-    while (input[i] != '\0') {
-        if (input[i] == '>') {
-            if (input[i + 1] == '>') {
+    while (input[i] != '\0') 
+    {
+        if (input[i] == '>') 
+        {
+            if (input[i + 1] == '>') 
+            {
                 command->tokenType = APPEND; 
                 i += 2;
-            } else {
+            } 
+            else 
+            {
                 command->tokenType = OUT; 
                 i += 1;
             }

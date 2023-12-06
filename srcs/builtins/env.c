@@ -16,5 +16,5 @@ int	ft_env(t_env **env_list)
 		}
 		tmp = tmp->next;
 	}
-    return (0);
+	return (0);
 }

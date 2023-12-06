@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	ft_unset(t_env **env_list, t_command *cmd)
@@ -8,7 +7,7 @@ int	ft_unset(t_env **env_list, t_command *cmd)
 
 	check_node = *env_list;
 	if (!cmd || *env_list == NULL)
-		return (EXIT_FAILURE) ;
+		return (EXIT_FAILURE);
 	while (ft_strcmp(cmd->name, check_node->var) != 0 && cmd->name)
 	{
 		prev_node = check_node;
@@ -20,5 +19,5 @@ int	ft_unset(t_env **env_list, t_command *cmd)
 	free(check_node->var);
 	free(check_node->value);
 	free(check_node);
-    return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

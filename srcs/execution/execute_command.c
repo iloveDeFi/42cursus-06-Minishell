@@ -2,17 +2,16 @@
 
 void	ft_exec_cmd(t_command *cmd)
 {
-	t_env       *envList;
-	if (cmd == NULL) {
-        fprintf(stderr, "Error: Trying to execute a NULL command\n");
-        return;
-    }
+	t_env	*envList;
+	int		init_stdout;
+	int		init_stdin;
 
+	if (cmd == NULL)
+	{
+		fprintf(stderr, "Error: Trying to execute a NULL command\n");
+		return ;
+	}
 	printf("Executing command: %s\n", cmd->name);
-
-	int	init_stdout;
-	int	init_stdin;
-
 	init_stdout = dup(STDOUT_FILENO);
 	init_stdin = dup(STDIN_FILENO);
 	if (cmd->fdread >= 3)
@@ -20,7 +19,7 @@ void	ft_exec_cmd(t_command *cmd)
 	if (cmd->fdwrite >= 3)
 		dup2(cmd->fdwrite, STDOUT_FILENO);
 	if (ft_is_builtins(cmd) == 1)
-		ft_exec_builtins(cmd,&envList);
+		ft_exec_builtins(cmd, &envList);
 	else if (ft_is_builtins(cmd) == 127)
 		g_exit_code = 127;
 	else
@@ -33,7 +32,6 @@ void	ft_exec_cmd(t_command *cmd)
 	dup2(init_stdin, STDIN_FILENO);
 	close(init_stdout);
 	close(init_stdin);
-
 	printf("Execution complete\n");
 }
 
@@ -46,18 +44,102 @@ void	ft_exec_external_code(t_command *cmd)
 	if (pid == -1)
 	{
 		perror("Error with fork");
-		exit(EXIT_FAILURE); // Ajout d'une sortie anticipée en cas d'échec de fork
+		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
-		ft_execute_external_command(cmd->name, cmd->args);
-		perror("ft_execute_external_command"); // Modification ici
-		exit(EXIT_FAILURE); // Utilisation d'une valeur d'échec standard
+		if (dup2(cmd->fdwrite, STDOUT_FILENO) == -1)
+		{
+			perror("Error redirecting STDOUT_FILENO");
+			exit(EXIT_FAILURE);
+		}
+		close(cmd->fdread);
+		close(cmd->fdwrite);
+		printf("Executing external command:\n");
+		printf("Command to execute: %s\n", cmd->name);
+		for (int i = 0; cmd->args[i] != NULL; i++)
+			printf("Argument %d: %s\n", i, cmd->args[i]);
+		printf("Test avant EXEC\n");
+		if (execvp(cmd->name, cmd->args) == -1)
+		{
+			perror("Error during external command execution");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
+		printf("Child process created with PID: %d\n", pid);
+
 		waitpid(pid, &status, 0);
+
 		if (WIFEXITED(status))
-			g_exit_code = WEXITSTATUS(status);
+		{
+			int exitStatus = WEXITSTATUS(status);
+			printf("Le processus enfant s'est terminé avec le code de sortie : %d\n", exitStatus);
+		}
+		else if (WIFSIGNALED(status))
+		{
+			int signalNumber = WTERMSIG(status);
+			printf("Le processus enfant a été interrompu par le signal : %d\n", signalNumber);
+		}
 	}
+}
+
+void	ft_execute_external_command(char *cmdPath, char *args[], t_env *envList) 
+{
+	char	*path;
+	char 	*full_path;
+	
+	path = get_path(envList);
+	if (path != NULL) 
+	{
+		t_pathList	pathList;
+		initializePathList(&pathList, path);
+
+		full_path = find_executable(cmdPath, &pathList);
+		if (full_path != NULL) 
+		{
+			pid_t	pid;
+			int 	status;
+
+			pid = fork();
+
+			if (pid == 0) 
+			{
+				if (execve(full_path, args, NULL) == -1) 
+				{
+					perror("Erreur lors de l'exécution de la commande");
+					exit(EXIT_FAILURE);
+				}
+			} 
+			else if (pid == -1) 
+			{
+				perror("Erreur lors de la création du processus enfant");
+				exit(EXIT_FAILURE);
+			} 
+			else 
+			{
+				waitpid(pid, &status, 0);
+
+				if (WIFEXITED(status)) 
+				{
+					int exitStatus = WEXITSTATUS(status);
+					printf("Le processus enfant s'est terminé avec le code de sortie : %d\n", exitStatus);
+				} 
+				else if (WIFSIGNALED(status)) 
+				{
+					int signalNumber = WTERMSIG(status);
+					printf("Le processus enfant a été interrompu par le signal : %d\n", signalNumber);
+				}
+			}
+			free(full_path);
+		}
+		else
+		{
+			fprintf(stderr, "Command not found in PATH: %s\n", cmdPath);
+		}
+		freePathList(&pathList);
+	}
+	else
+		fprintf(stderr, "PATH not found in environment\n");
 }

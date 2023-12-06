@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	change_directory(const char *path)
@@ -14,30 +13,28 @@ int	change_directory(const char *path)
 	}
 	else
 	{
-		perror("cd");
+		fprintf(stderr, "cd: %s: No such file or directory\n", path);
 		return (-1);
 	}
 }
 
-int cd(char **arguments)
+int	cd(char **arguments)
 {
-    char *home_directory;
+	char	*home_directory;
 
-    if (arguments == NULL || arguments[1] == NULL)
-    {
-        home_directory = getenv("HOME");
-        if (home_directory != NULL)
-        {
-            return change_directory(home_directory);
-        }
-        else
-        {
-            perror("cd");
-            return -1;
-        }
-    }
-    else
-    {
-        return change_directory(arguments[1]);
-    }
+	if (arguments == NULL || arguments[1] == NULL)
+	{
+		home_directory = ("HOME");
+		if (home_directory != NULL)
+		{
+			return (chdir(home_directory));
+		}
+		else
+		{
+			perror("cd");
+			return (-1);
+		}
+	}
+	else
+		return (chdir(arguments[1]));
 }

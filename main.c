@@ -40,11 +40,12 @@ void write_inputrc(void)
 
 int main(int ac, char **av, char **envp) 
 {
-    t_mini      shell;
-    t_env       *envList = ft_initialize_environment(envp);
-    t_env       *env;
+    t_mini shell;
+    t_env *envList = ft_initialize_environment(envp);
+    t_env *env;
+    t_pathList pathList;
     t_commandList commandList;
-    t_command   *cmd = NULL;
+    t_command *cmd = NULL;
 
     (void)av;
 
@@ -53,6 +54,10 @@ int main(int ac, char **av, char **envp)
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1;
     }
+
+    char *path = get_path(envList);
+    
+    initializePathList(&pathList, path);
 
     ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
@@ -63,7 +68,10 @@ int main(int ac, char **av, char **envp)
         ft_custom_prompt_msg(&shell);
 
         if (shell.av == NULL) 
+        {
             printf("Arret shell\n");
+            break;
+        }
 
         ft_manage_history(&shell, shell.av);
 
@@ -71,37 +79,51 @@ int main(int ac, char **av, char **envp)
         {   
             ft_destroy_current_shell(&shell);
             continue;
-        }   
+        } 
         else if (ft_strcmp(shell.av, "") != 0) 
         {
             if (ft_test_parsing(&commandList, shell.av, &envList)) 
             {
                 printf("Test avant EXEC \n");
 
-               if (commandList.head != NULL) 
+                if (commandList.head != NULL) 
                 {
                     printf("Command to execute: %s\n", commandList.head->name);
                     cmd = commandList.head;
 
-                    if (ft_is_builtins(cmd) == 1)
+                    if (ft_is_builtins(cmd) == 1) 
                     {
                         int status = ft_exec_builtins(cmd, &envList);
                         if (status != 0) 
                             fprintf(stderr, "Error executing builtin command\n");
-                    }
-                    else
+                    } 
+                    else 
+                    {
                         printf("Not a builtin, execute external command\n");
+
+                        // Utiliser la liste du chemin pour trouver l'exécutable
+                        char *executablePath = find_executable(cmd->name, &pathList);
+                        if (executablePath != NULL) 
+                        {
+                            free(executablePath);
+                        } 
+                        else
+                            printf("Executable not found in the PATH\n");
+                    }
                 } 
-                else 
+                else
                     fprintf(stderr, "Error: commandList head is NULL\n");
             }
-
             ft_destroy_current_shell(&shell);
         }
     }
+    // Libérer la mémoire utilisée par la liste du chemin
+    freePathList(&pathList);
     ft_exit_shell(&shell);
-    return (0);
+    return 0;
 }
+
+
 /*
         char *token = ft_strtok(input, " \n");
         int i = 0;

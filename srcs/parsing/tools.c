@@ -15,16 +15,15 @@ int	ft_is_white_space(char c)
     return (0);
 }
 
-t_Bool ft_check_only_spaces(const char *str) {
-    int i;
-
-    i = 0;
-    while (str[i] != '\0')
+t_Bool ft_check_only_spaces(const char *str) 
+{
+    if (str == NULL) 
+        return FALSE;
+    int i = 0;
+    while (str[i] != '\0') 
     {
         if (str[i] != ' ') 
-        {
             return FALSE;
-        }  
         i++;
     }
     return TRUE;

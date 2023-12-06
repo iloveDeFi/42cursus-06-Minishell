@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	check_args(char *name)
@@ -7,50 +6,45 @@ int	check_args(char *name)
 		return (0);
 	if (!ft_only_digit(name))
 		return (0);
-    return (1);
+	return (1);
 }
 
-int ft_error_export(char *command, char *arg, char *message, int status)
+int	ft_error_export(char *command, char *arg, char *message, int status)
 {
-    ft_putstr_fd(command, STDERR_FILENO);
-    ft_putstr_fd(arg, STDERR_FILENO);
-    ft_putstr_fd(message, STDERR_FILENO);
-    return (status);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	return (status);
 }
 
-int ft_check_wrong_char(char *str)
+int	ft_check_wrong_char(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (str[i] == '=')
-        return (0);
-    while (str[i])
-    {
-        if (ft_is_sep(str[i]) || (str[i] >= 33 && str[i] <= 47)
-            || (str[i] == '=' && str[i + 1] == '='))
-            return (0);
-        i++; 
-    }
-    return (1);   
+	i = 0;
+	if (str[i] == '=')
+		return (0);
+	while (str[i])
+	{
+		if (ft_is_sep(str[i]) || (str[i] >= 33 && str[i] <= 47)
+			|| (str[i] == '=' && str[i + 1] == '='))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int export_func(t_env **envlist, t_command *cmd)
+int	export_func(t_env **envlist, t_command *cmd)
 {
-    if (cmd->name != NULL && cmd->args != NULL && cmd->args[0] != NULL)
-    {
-        if (!check_args(cmd->args[0]))
-            return (ft_error_export("export: ", cmd->args[0], ": not a valid identifier", 1));
-
-        if (!add_var_to_list(envlist, cmd->args[0]))
-            return (-1);
-    }
-    else
-    {
-        // Cas où cmd est NULL, imprimez la liste d'exportation
-        print_export_list(envlist);
-    }
-
-    return (1);
+	if (cmd->name != NULL && cmd->args != NULL && cmd->args[0] != NULL)
+	{
+		if (!check_args(cmd->args[0]))
+			return (ft_error_export("export: ", cmd->args[0],
+					": not a valid identifier", 1));
+		if (!add_var_to_list(envlist, cmd->args[0]))
+			return (-1);
+	}
+	else
+		print_export_list(envlist);
+	return (1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/01 18:17:44 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/02 20:32:27 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
     return commandList->length;
 }
 
-int ft_test_parsing(t_commandList *commandList, char *input,t_env **envList)
+int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
     ft_init_commandList(commandList);
     if (ft_split_arg(commandList, input) > 0) 
@@ -133,7 +133,7 @@ int ft_test_parsing(t_commandList *commandList, char *input,t_env **envList)
             if (ft_is_builtins(cmd)) 
             {
                 printf("Parsing succeeded. Commands:\n");
-                ft_exec_builtins(cmd,envList);
+                ft_exec_builtins(cmd, envList);
             } 
             else 
             {
