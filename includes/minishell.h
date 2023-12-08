@@ -67,6 +67,7 @@ typedef struct s_command
     void *data;
     char *name;
     char **args;
+    int argCount;
     char    *redirectFile;
     struct s_command *next;
     struct s_command *prev;
@@ -126,20 +127,6 @@ typedef struct s_execute
     int active;
     struct s_execute *next;
 } t_execute;
-
-typedef struct s_pathNode 
-{
-    char *directory;
-    struct s_pathNode *next;
-} t_pathNode;
-
-typedef struct s_pathList
-{
-    struct s_pathNode *head;
-} t_pathList;
-
-
-
 
 //typedef t_list t_pipesList;
 
@@ -239,20 +226,27 @@ char        *extract_quoted_argument(char *input);
 void    ft_execute_command(t_command *cmd);
 int     ft_is_builtins(t_command *cmd);
 int		is_valid_identifier(const char *name);
-void    ft_exec_external_code(t_command *cmd);
-void	ft_exec_cmd(t_command *cmd);
+void    ft_exec_external_code(t_command *cmd, t_env *envList);
+void	ft_exec_cmd(t_command *cmd, t_env *envList);
 void    ft_execute_external_command(char *cmdPath, char *args[], t_env *envList);
 void    destroy_commands(t_commandList *commandList);
 void    ft_destroy_current_shell(t_mini *shell);
 void    destroy_children(t_mini *mini);
-int ft_exec_builtins(t_command *cmd,t_env **envList);
+int     ft_exec_builtins(t_command *cmd,t_env **envList);
+char    *find_executable_path(const char *command, t_env *envList);
+void    free_split(char **array);
+t_env   *ft_copy_env_list(t_env *src);
+t_env   *create_node2(char *var, char *value);
+char    *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
+void    free_split(char **arr);
+
 
 
 
 // Built-ins
 int		change_directory(const char *path);
 int		cd(char **arguments);
-int     echo(t_command **args);
+int     ft_echo(t_command **args);
 int 	pwd(void);
 int 	ft_env(t_env **env_list);
 int	    ft_unset(t_env **env_list, t_command *cmd);
@@ -288,15 +282,13 @@ t_env	*ft_envlist_duplicate(t_env **envlist);
 t_env	*dup_node(char *name, char *value);
 void	delete_list(t_env *envlist);
 
-void freePathList(t_pathList *pathList);
-void initializePathList(t_pathList *pathList, const char *path);
-char *find_executable(char *command, t_pathList *pathList);
-char    *get_path(t_env *envList);
-
 
 // libft
 
 // error / free
 void	free_array(char **array);
+void ft_appendToListArg(t_command *command, const char *arg);
+char *ft_custom_strdup(const char *str);
+
 
 #endif

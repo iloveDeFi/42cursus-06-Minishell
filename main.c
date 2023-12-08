@@ -43,7 +43,6 @@ int main(int ac, char **av, char **envp)
     t_mini shell;
     t_env *envList = ft_initialize_environment(envp);
     t_env *env;
-    t_pathList pathList;
     t_commandList commandList;
     t_command *cmd = NULL;
 
@@ -54,11 +53,7 @@ int main(int ac, char **av, char **envp)
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1;
     }
-
-    char *path = get_path(envList);
     
-    initializePathList(&pathList, path);
-
     ft_init_commandList(&commandList);
     ft_initialize_minishell(&shell, &env);
     ft_initialize_environment(envp);
@@ -102,13 +97,7 @@ int main(int ac, char **av, char **envp)
                         printf("Not a builtin, execute external command\n");
 
                         // Utiliser la liste du chemin pour trouver l'exécutable
-                        char *executablePath = find_executable(cmd->name, &pathList);
-                        if (executablePath != NULL) 
-                        {
-                            free(executablePath);
-                        } 
-                        else
-                            printf("Executable not found in the PATH\n");
+                        ft_execute_external_command(cmd->name, cmd->args, envList);
                     }
                 } 
                 else
@@ -118,11 +107,9 @@ int main(int ac, char **av, char **envp)
         }
     }
     // Libérer la mémoire utilisée par la liste du chemin
-    freePathList(&pathList);
     ft_exit_shell(&shell);
     return 0;
 }
-
 
 /*
         char *token = ft_strtok(input, " \n");

@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/02 20:32:27 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/08 11:26:10 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,7 @@ void ft_print_list(t_commandList *head, void (*printFunction)(void *data))
 
 // Détruire liste de commandes.
 
-void destroy_commands(t_commandList *commandList) 
-{
-    t_command *current = commandList->head;
-    while (current != NULL) 
-    {
-        t_command *next = current->next;
-        free(current->name);
-        free(current);
-        current = next;
-    }
-    commandList->head = NULL;
-    commandList->tail = NULL;
-    commandList->length = 0;
-}
+
 
 // Ajouter commande fin de liste.
 
@@ -83,15 +70,55 @@ void ft_appendToList(t_commandList *commandList, t_command *newCommand)
 
 // Fonction pour diviser une chaîne en commandes et les ajouter à la liste
 
+char *ft_custom_strdup(const char *str) {
+    size_t len = strlen(str);
+    char *copy = malloc(len + 1);
+
+    if (copy == NULL) {
+        perror("CHAOS, error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(copy, str);
+    return copy;
+}
+
+void ft_appendToListArg(t_command *command, const char *arg) 
+{
+    // Allouer de la mémoire pour la nouvelle chaîne d'argument
+    char *argCopy = ft_custom_strdup(arg);
+    if (argCopy == NULL) 
+    {
+        perror("CHAOS, error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+
+    // Allouer de la mémoire pour la liste d'arguments
+    command->args = malloc(sizeof(char *));
+    if (command->args == NULL) 
+    {
+        perror("CHAOS, error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+
+    // Ajouter le nouvel argument à la liste
+    command->args[0] = argCopy;
+    command->argCount = 1;
+}
+
 int ft_split_arg(t_commandList *commandList, char *input) 
 {
     char *token = ft_strtok(input, " ");
 
+    if (token == NULL) {
+        fprintf(stderr, "Error: Empty command\n");
+        return 0;
+    }
+
     while (token != NULL) 
     {
         t_command *newCommand = ft_createNodeCommand();
-
-        newCommand->name = ft_strdup(token);
+        newCommand->name = ft_custom_strdup(token);
 
         if (newCommand == NULL) 
         {
@@ -99,27 +126,37 @@ int ft_split_arg(t_commandList *commandList, char *input)
             destroy_commands(commandList);
             exit(EXIT_FAILURE);
         }
-        if (newCommand->name == NULL) 
+
+        // Avancer le pointeur au prochain argument
+        token = ft_strtok(NULL, " ");
+
+        // Ajouter chaque argument à la liste des arguments
+        while (token != NULL && *token != '\0' && *token != ' ') 
         {
-            perror("CHAOS, error allocating memory");
-            free(newCommand);
-            destroy_commands(commandList);
-            exit(EXIT_FAILURE);
+            ft_appendToListArg(newCommand, token);
+
+            // Avancer le pointeur au prochain argument
+            token = ft_strtok(NULL, " ");
         }
+
         if (commandList->head == NULL) 
         {
             commandList->head = newCommand;
             commandList->tail = commandList->head;
-        } else 
+        } 
+        else 
         {
             ft_appendToList(commandList, newCommand);
             commandList->tail = commandList->tail->next;
         }
+
         commandList->length++;
-        token = ft_strtok(NULL, " ");
     }
+
     return commandList->length;
 }
+
+
 
 int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
@@ -155,6 +192,9 @@ int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
         return 0;
     }
 }
+
+
+
 
 // // Fonction pour tester la division de la chaîne en commandes
 // int ft_test_parsing(t_commandList *commandList, char *input) {

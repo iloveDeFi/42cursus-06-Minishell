@@ -25,7 +25,7 @@ int	ft_exec_builtins(t_command *cmd, t_env **envList)
 	if (ft_strcmp(cmd->name, "cd") == 0)
 		return (cd(cmd->args));
 	else if (ft_strcmp(cmd->name, "echo") == 0)
-		return (echo(&cmd));
+		return (ft_echo(&cmd));
 	else if (ft_strcmp(cmd->name, "env") == 0)
 		return (ft_env(envList));
 	else if (ft_strcmp(cmd->name, "pwd") == 0)

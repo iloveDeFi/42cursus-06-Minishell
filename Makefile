@@ -6,7 +6,7 @@
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/12/02 19:00:25 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/12/07 11:40:31 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,7 +179,6 @@ all: $(NAME)
 # Jbelda
 $(NAME): $(OBJS) libft/libft.a
 	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft $(LDFLAGS) -lreadline -o $(NAME)
-
 # Baptiste
 #$(NAME): $(OBJS) libft/libft.a
 	#$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft $(LDFLAGS) -lreadline -o $(NAME)
