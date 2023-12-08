@@ -1,5 +1,62 @@
 #include "minishell.h"
 
+/* 
+Dans léxecution condition qui check si commande commence par . ou / 
+si oui code pour la gestion du Path
+call ft_execute_path()
+
+if (cmd[0] == '.'|| cmd[0] == '/') {
+    ft_execute_path()
+}
+*/
+
+int ft_execute_path(t_commandList *command, const char *path)
+{
+    const char *path;
+
+    path = getenv("PATH");
+    if (path != NULL) {
+
+    }
+    else {
+        perror("PATH isn't defined");
+    }
+    return (0);
+}
+
+void ft_execute_command_with_path(t_commandList *command, const char *path) {
+    
+    char *token;
+    char *fullPath[];
+    
+    token = ft_strtok((char *)path, ":");
+    while (token != NULL) {
+        fullPath[strlen(token) + strlen(command) + 2];
+        sprintf(fullPath, "%s/%s", token, command);
+
+        if (access(fullPath, X_OK) == 0) {
+            printf("Command '%s' found : %s\n", command, fullPath);
+            // Ici, vous pouvez appeler la fonction d'exécution de la commande
+            // (par exemple, execve, system, etc.).
+            // TO DO CALL Execute command function
+            return;
+        }
+        // next token
+        token = ft_strtok(NULL, ":");
+    }
+    printf("Error : Command '%s' not found.\n", command);
+}
+
+int main() {
+    const char *path = "/usr/local/myapp/bin:/usr/bin:/bin";
+    const char *command = "ls";
+
+    executeCommand(command, path);
+
+
+    return 0;
+}
+
 // char *get_path(t_env *envList) 
 // {
 // 	while (envList != NULL) 
