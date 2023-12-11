@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/08 11:26:10 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/11 16:29:49 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Initialiser la liste de commande
-
-void ft_init_commandList(t_commandList *commandList) 
-{
-    if (commandList == NULL) {
-        fprintf(stderr, "Error: NULL pointer in ft_init_commandList\n");
-        exit(EXIT_FAILURE);
-    }
-
-    commandList->head = NULL;
-    commandList->tail = NULL;
-    commandList->length = 0;
-}
 
 // Aficher une commande.
 
@@ -49,11 +36,6 @@ void ft_print_list(t_commandList *head, void (*printFunction)(void *data))
     }
 }
 
-
-// Détruire liste de commandes.
-
-
-
 // Ajouter commande fin de liste.
 
 void ft_appendToList(t_commandList *commandList, t_command *newCommand) 
@@ -71,7 +53,7 @@ void ft_appendToList(t_commandList *commandList, t_command *newCommand)
 // Fonction pour diviser une chaîne en commandes et les ajouter à la liste
 
 char *ft_custom_strdup(const char *str) {
-    size_t len = strlen(str);
+    size_t len = ft_strlen(str);
     char *copy = malloc(len + 1);
 
     if (copy == NULL) {
@@ -79,7 +61,7 @@ char *ft_custom_strdup(const char *str) {
         exit(EXIT_FAILURE);
     }
 
-    strcpy(copy, str);
+    ft_strcpy(copy, str);
     return copy;
 }
 
@@ -123,7 +105,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
         if (newCommand == NULL) 
         {
             perror("CHAOS, error allocating memory");
-            destroy_commands(commandList);
+            ft_destroy_command(commandList);
             exit(EXIT_FAILURE);
         }
 
@@ -160,7 +142,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
 
 int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
-    ft_init_commandList(commandList);
+    ft_initialize_commandList(commandList);
     if (ft_split_arg(commandList, input) > 0) 
     {
         if (commandList != NULL && commandList->head != NULL) 
@@ -174,8 +156,7 @@ int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
             } 
             else 
             {
-                // Ici, vous pouvez implémenter la logique pour exécuter des commandes externes
-                // ou gérer d'autres cas selon les besoins de votre programme.
+                ft_execute_external_command(cmd->name, cmd->args, *envList);
                 printf("Executing external command:\n");
             }
         } 
@@ -188,7 +169,7 @@ int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
     else 
     {
         perror("Parsing failed");
-        destroy_commands(commandList);  // Libération mémoire en cas d'échec
+        ft_destroy_command(commandList);
         return 0;
     }
 }

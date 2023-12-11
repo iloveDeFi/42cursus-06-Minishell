@@ -1,61 +1,6 @@
 #include "minishell.h"
 
 /* 
-Dans léxecution condition qui check si commande commence par . ou / 
-si oui code pour la gestion du Path
-call ft_execute_path()
-
-if (cmd[0] == '.'|| cmd[0] == '/') {
-    ft_execute_path()
-}
-*/
-
-int ft_execute_path(t_commandList *command, const char *path)
-{
-    const char *path;
-
-    path = getenv("PATH");
-    if (path != NULL) {
-
-    }
-    else {
-        perror("PATH isn't defined");
-    }
-    return (0);
-}
-
-void ft_execute_command_with_path(t_commandList *command, const char *path) {
-    
-    char *token;
-    char *fullPath[];
-    
-    token = ft_strtok((char *)path, ":");
-    while (token != NULL) {
-        fullPath[strlen(token) + strlen(command) + 2];
-        sprintf(fullPath, "%s/%s", token, command);
-
-        if (access(fullPath, X_OK) == 0) {
-            printf("Command '%s' found : %s\n", command, fullPath);
-            // Ici, vous pouvez appeler la fonction d'exécution de la commande
-            // (par exemple, execve, system, etc.).
-            // TO DO CALL Execute command function
-            return;
-        }
-        // next token
-        token = ft_strtok(NULL, ":");
-    }
-    printf("Error : Command '%s' not found.\n", command);
-}
-
-int main() {
-    const char *path = "/usr/local/myapp/bin:/usr/bin:/bin";
-    const char *command = "ls";
-
-    executeCommand(command, path);
-
-
-    return 0;
-}
 
 // char *get_path(t_env *envList) 
 // {
@@ -136,7 +81,63 @@ int main() {
 // }
 
 
-char *find_executable_path(const char *command, t_env *envList) {
+Dans léxecution condition qui check si commande commence par . ou / 
+si oui code pour la gestion du Path
+call ft_execute_path()
+
+if (cmd[0] == '.'|| cmd[0] == '/') {
+    ft_execute_path()
+}
+*/
+
+/*int ft_execute_path(t_commandList *command, const char *path)
+{
+    const char *myPath;
+
+    myPath = getenv("PATH");
+    if (myPath != NULL) {
+
+    }
+    else {
+        perror("PATH isn't defined");
+    }
+    return (0);
+}*/
+
+// TO DO dans ft_execute_external_command
+// ft_find_executable_path(cmdPath, envList);
+
+void ft_execute_command_with_path(const char *path, t_commandList *commandList, t_env *env) {
+    char *token;
+    char fullPath[MAX_PATH_LENGTH];
+
+    t_command *currentCommand = commandList->head;
+
+    token = ft_strtok((char *)path, ":");
+    while (token != NULL) 
+    {
+        while (currentCommand != NULL) 
+        {
+            ft_strcpy(fullPath, token);
+            ft_strcat(fullPath, "/");
+            ft_strcat(fullPath, currentCommand->name);
+            if (access(fullPath, X_OK) == 0) 
+            {
+                printf("Command '%s' found: %s\n", command, fullPath);
+            // Ici, vous pouvez appeler la fonction d'exécution de la commande
+            // (par exemple, execve, system, etc.).
+                ft_exec_cmd(currentCommand->name, env);
+                return;
+            }
+            currentCommand = currentCommand->next;
+        }
+        currentCommand = commandList->head;
+        // go to next token bro
+        token = ft_strtok(NULL, ":");
+    }
+}
+
+char *ft_find_executable_path(const char *command, t_env *envList) {
     // Si le chemin est absolu, essayez de l'exécuter directement
     if (access(command, F_OK | X_OK) == 0) {
         return strdup(command);
@@ -172,76 +173,3 @@ char *find_executable_path(const char *command, t_env *envList) {
     return NULL;
 }
 
-void free_split(char **arr)
-{
-    if (arr == NULL)
-        return;
-
-    int i = 0;
-    while (arr[i] != NULL) {
-        free(arr[i]);
-        i++;
-    }
-
-    free(arr);
-}
-
-t_env *ft_copy_env_list(t_env *src)
-{
-    t_env *new_list = NULL;
-    t_env *last = NULL;
-
-    while (src != NULL)
-    {
-        t_env *new_node = create_node2(src->var, src->value);
-        if (new_node != NULL)
-        {
-            if (last == NULL)
-                new_list = new_node;
-            else
-                last->next = new_node;
-
-            last = new_node;
-        }
-        src = src->next;
-    }
-
-    return new_list;
-}
-
-t_env *create_node2(char *var, char *value)
-{
-    t_env *new_node;
-    new_node = malloc(sizeof(t_env));
-
-    if (new_node)
-    {
-        new_node->var = ft_strdup(var);
-        new_node->value = ft_strdup(value);
-        new_node->next = NULL;
-        return new_node;
-    }
-    return NULL;
-}
-
-
-char *ft_strjoin_free(char const *s1, char const *s2, int free_s1)
-{
-    if (s1 == NULL || s2 == NULL)
-        return NULL;
-
-    size_t len_s1 = strlen(s1);
-    size_t len_s2 = strlen(s2);
-
-    char *result = malloc(len_s1 + len_s2 + 1);
-    if (result == NULL)
-        return NULL;
-
-    strcpy(result, s1);
-    strcat(result + len_s1, s2);
-
-    if (free_s1)
-        free((void *)s1);
-
-    return result;
-}

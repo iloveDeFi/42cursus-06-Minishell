@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/12/01 14:54:39 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/11 15:42:56 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void ft_exit_shell(t_mini *shell)
-{
-    if (shell->av)
-        free(shell->av);
-}
 
 //before calling function set head and tail to NULL and length to 0
 /*void ft_initialize_environment(t_envList *envList, char **env)
@@ -57,6 +51,25 @@ void ft_exit_shell(t_mini *shell)
     }
     free_array(var_array);
 }*/
+
+void ft_exit_shell(t_mini *shell)
+{
+    if (shell->av)
+        free(shell->av);
+}
+
+void ft_initialize_commandList(t_commandList *commandList) 
+{
+    if (commandList == NULL) {
+        fprintf(stderr, "Error: NULL pointer in ft_init_commandList\n");
+        exit(EXIT_FAILURE);
+    }
+
+    commandList->head = NULL;
+    commandList->tail = NULL;
+    commandList->length = 0;
+}
+
 
 t_env *ft_initialize_environment(char **env)
 {
@@ -99,5 +112,5 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
         exit(EXIT_FAILURE);
     }
     shell->error = NULL;  // Assurez-vous de l'initialiser correctement si nécessaire
-    write_inputrc();
+    ft_write_inputrc();
 }

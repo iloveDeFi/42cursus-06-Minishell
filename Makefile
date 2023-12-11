@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
+#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/12/07 11:40:31 by julienbelda      ###   ########.fr        #
+#    Updated: 2023/12/11 16:34:38 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,7 @@
 #PARSING_FILES = 		parser.c \
 						error.c
 
-#EXECUTING_FILES = 		bin.c \
-						builtin.c \
+#EXECUTING_FILES = 		builtin.c \
 						executor.c
 
 #BUILTINS_FILES = 		cd.c \
@@ -97,11 +96,11 @@ $(addprefix $(SRCS_DIRECTORY)/signals/, $(SIGNALS_FILES))
 NAME = minishell
 
 # DIRECTORIES
-MINISHELL_FOLDER =	minishell
-PARSING_FOLDER =	parsing
-BUILT_FOLDER =		builtins
-EXECUTING_FOLDER =	execution
-SIGNALS_FOLDER =	signals
+MINISHELL_FOLDER =		minishell
+PARSING_FOLDER =		parsing
+BUILT_FOLDER =			builtins
+EXECUTING_FOLDER =		execution
+SIGNALS_FOLDER =		signals
 LINKED_LISTS_FOLDER = 	linked_lists
 HEADER_DIRECTORY :=		./includes
 SRCS_DIRECTORY :=		./srcs
@@ -113,28 +112,28 @@ LIBFT_ARCHIVES = 		$(LIBFT_FOLDER)/libft.a
 # ALL FILES.C
 MAIN_FILE = main.c
 
-MINISHELL_FILES =      minishell.c \
-						prompt.c \
-						history.c
+MINISHELL_FILES =		minishell.c \
+						history_and_prompt.c \
+						signals.c
 
-PARSING_FILES =        parser.c \
+PARSING_FILES =       parser.c \
                       error.c \
-					  fun.c \
-					  pipes.c \
-					  quotes.c \
-					  redirections.c \
-					  tools.c \
-					  utils.c \
+					  pipe.c \
+					  quote.c \
+					  redirection.c \
+					  tool_parse.c \
+					  util.c \
 					  expansion.c
 
-EXECUTING_FILES =      bin.c \
-                      builtin.c \
-					  execute_command.c \
-					  execute_redirection.c \
+EXECUTING_FILES =	  builtin.c \
+					  command.c \
+					  redirection.c \
 					  destroy.c \
-					  path.c
+					  path.c \
+					  tool_exec.c \
+					  pipe.c
 
-BUILTINS_FILES =       cd.c \
+BUILTINS_FILES =      cd.c \
                       echo.c \
 					  env.c \
                       exit.c \
@@ -143,9 +142,7 @@ BUILTINS_FILES =       cd.c \
                       pwd.c \
                       unset.c 
 
-SIGNALS_FILES =        signals.c \
-
-LINKED_LISTS_FILES =   1_linkedList.c \
+LINKED_LISTS_FILES =  1_linkedList.c \
                       2_linkedList.c \
                       3_linkedList.c 
 					  

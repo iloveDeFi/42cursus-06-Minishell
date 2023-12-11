@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 01:03:24 by bat               #+#    #+#             */
-/*   Updated: 2023/11/10 17:45:31 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/11 16:12:30 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void receive_signal_from_user(int signal_num) 
+void ft_receive_signal_from_user(int signal_num) 
 {
     if (signal_num == SIGINT)
     {
@@ -32,7 +32,7 @@ void receive_signal_from_user(int signal_num)
     }
 }
 
-void handle_signal_execution(int signal_num) 
+void ft_handle_signal_execution(int signal_num) 
 {
     if (signal_num == SIGINT)
     {
@@ -63,7 +63,7 @@ void init_signals(void(*signals_handle)(int))
         perror("Error with SIGQUIT");
 }
 
-void init_terminal_settings(void)
+void ft_init_terminal_settings(void)
 {
     struct termios	termios;
 

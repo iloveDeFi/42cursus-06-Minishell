@@ -66,7 +66,7 @@ void ft_exec_external_code(t_command *cmd, t_env *envList)
         close(cmd->fdread);
         close(cmd->fdwrite);
 
-        char *executable_path = find_executable_path(cmd->name, envList);
+        char *executable_path = ft_find_executable_path(cmd->name, envList);
         if (executable_path != NULL)
         {
             printf("Executing external command:\n");
@@ -109,7 +109,7 @@ void ft_exec_external_code(t_command *cmd, t_env *envList)
 
 void ft_execute_external_command(char *cmdPath, char *args[], t_env *envList)
 {
-    char *full_path = find_executable_path(cmdPath, envList);
+    char *full_path = ft_find_executable_path(cmdPath, envList);
 
     if (full_path != NULL)
     {

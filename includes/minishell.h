@@ -16,7 +16,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#define MAX_PATH_LENGTH 256
+# define MAX_PATH_LENGTH 4096
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
 # define STDIN 0
@@ -162,16 +162,24 @@ void		rl_replace_line(const char *str, int i);
 
 // Main
 int     main(int ac, char **av, char **envp);
-void    write_inputrc(void);
+void    ft_write_inputrc(void);
+void	ft_exit_shell(t_mini *shell);
+t_env   *ft_initialize_all(t_mini *shell, char **envp);
 
 // Minishell
 
-void	exit_shell(t_mini *shell);
+void	ft_exit_shell(t_mini *shell);
+void    ft_initialize_commandList(t_commandList *commandList);
 t_env   *ft_initialize_environment(char **env);
 void	ft_initialize_minishell(t_mini *shell, t_env **env);
-void	ft_exit_shell(t_mini *shell);
 void	ft_custom_prompt_msg(t_mini *shell);
 void    ft_manage_history(t_mini *shell, const char *input);
+// Function about signals
+void ft_receive_signal_from_user(int signal_num);
+void ft_handle_signal_execution(int signal_num);
+void init_signals(void(*signals_handle)(int));
+void ft_init_terminal_settings(void);
+
 
 // Linked Lists
 
@@ -216,8 +224,7 @@ int         ft_calculate_new_length(const char *cmd, int last_exit_status);
 char        *ft_getenv_var_value(const char *name);
 char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 t_Bool      ft_check_only_spaces(const char *str);
-void        ft_init_commandList(t_commandList *commandList);
-char        *extract_quoted_argument(char *input);
+char        *ft_extract_quoted_argument(char *input);
 
 
 
@@ -225,20 +232,20 @@ char        *extract_quoted_argument(char *input);
 // Execution
 void    ft_execute_command(t_command *cmd);
 int     ft_is_builtins(t_command *cmd);
-int		is_valid_identifier(const char *name);
+int		ft_is_valid_identifier(const char *name);
 void    ft_exec_external_code(t_command *cmd, t_env *envList);
 void	ft_exec_cmd(t_command *cmd, t_env *envList);
 void    ft_execute_external_command(char *cmdPath, char *args[], t_env *envList);
-void    destroy_commands(t_commandList *commandList);
+void    ft_destroy_command(t_commandList *commandList);
 void    ft_destroy_current_shell(t_mini *shell);
-void    destroy_children(t_mini *mini);
+void    ft_destroy_children(t_mini *mini);
 int     ft_exec_builtins(t_command *cmd,t_env **envList);
-char    *find_executable_path(const char *command, t_env *envList);
-void    free_split(char **array);
+char    *ft_find_executable_path(const char *command, t_env *envList);
+void    ft_free_split(char **array);
 t_env   *ft_copy_env_list(t_env *src);
-t_env   *create_node2(char *var, char *value);
+t_env   *ft_create_node2(char *var, char *value);
 char    *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
-void    free_split(char **arr);
+void    ft_free_split(char **arr);
 
 
 
