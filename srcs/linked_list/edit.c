@@ -1,0 +1,45 @@
+#include "minihell.h"
+
+void ft_add_to_list(t_env **envlist, t_env *new_node)
+{
+    if (!envlist || !new_node)
+        return;
+
+    new_node->next = *envlist;
+    *envlist = new_node;
+}
+
+void ft_replace_in_lst(t_env *new_node, t_env **envlist)
+{
+	t_env	*tmp;
+
+	tmp = get_in_lst(new_node->var, envlist);
+	if (tmp)
+		free_node(new_node, tmp, new_node->value);
+}
+
+// Go through list to apply callback function on each element
+void ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*callback)(void *data))
+{
+    t_command  *current = head->head;
+    
+    while (current != NULL)
+    {
+        callback(current->data);
+    current = current->next;
+    }
+}
+
+int ft_compareString(void *data, void *target)
+{
+    char *str = (char *)data;
+    char *key = (char *)target;
+    return ft_strcmp(str, key);
+}
+
+// adapt casting depending data type to store in list
+void ft_printGeneric(void *data)
+{
+    char *str = (char *)data;
+    printf("%s\n", str);
+}

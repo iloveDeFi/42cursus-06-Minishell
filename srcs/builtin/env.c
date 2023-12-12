@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_env(t_env **env_list)
+int	env(t_env **env_list)
 {
 	t_env	*tmp;
 

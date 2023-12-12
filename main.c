@@ -2,43 +2,6 @@
 
 int g_exit_code = 0;
 
-void ft_initialize_commandList(t_commandList *commandList) {
-    commandList->head = NULL;
-    commandList->tail = NULL;
-    commandList->length = 0;
-}
-
-t_env *ft_initialize_all(t_mini *shell, char **envp)
-{
-    t_commandList commandList;
-    t_env *envList = ft_initialize_environment(envp);
-
-    ft_initialize_minishell(shell, &envList);
-    ft_initialize_commandList(&commandList);
-
-    return envList;
-}
-
-/*void *ft_initialize_all(t_mini *shell, t_env **envList, char **envp)
-{
-    t_commandList commandList;
-    //t_env *envList = ft_initialize_environment(envp);
-
-    // ft_initialize_commandList(&commandList);
-    // ft_initialize_minishell(&shell, &env);
-    // Vous pouvez ajouter d'autres initialisations ici si nécessaire
-    ft_initialize_environment(envp);
-    ft_initialize_minishell(shell, envList);
-    ft_initialize_commandList(&commandList);
-}*/
-
-void	ft_exit_shell(t_mini *shell)
-{
-	if (shell->av)
-		free(shell->av);
-    // TO DO free something else here?
-}
-
 void ft_write_inputrc(void)
 {
     int fd;
@@ -73,10 +36,11 @@ void ft_write_inputrc(void)
 int main(int ac, char **av, char **envp) 
 {
     t_mini shell;
-    t_env *envList = NULL;
+    t_env *envList;
     t_commandList commandList;
     
     (void)av;
+    envList = NULL;
     if (ac > 1) {
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1;
@@ -86,6 +50,7 @@ int main(int ac, char **av, char **envp)
 
     while (1) 
     {
+        // TO DO add signals here
         ft_custom_prompt_msg(&shell);
 
         if (shell.av == NULL) {
@@ -100,7 +65,7 @@ int main(int ac, char **av, char **envp)
             continue;
         } 
         else if (ft_strcmp(shell.av, "") != 0) {
-            ft_test_parsing(&commandList, shell.av, &envList);
+            ft_launch_parsing(&commandList, shell.av, &envList);
             ft_destroy_current_shell(&shell);
         }
     }

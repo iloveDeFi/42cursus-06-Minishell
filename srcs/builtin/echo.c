@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_echo(t_command **args)
+int echo(t_command **args)
 {
     const char *message = "An error occurred: not enough arguments\n";
     int i = 0;
@@ -8,12 +8,12 @@ int ft_echo(t_command **args)
 
     if (args == NULL || args[0] == NULL || args[0]->args == NULL)
     {
-        write(STDERR_FILENO, message, strlen(message));
+        write(STDERR_FILENO, message, ft_strlen(message));
         return (1);
     }
 
     // Check for the -n flag
-    if (args[0]->argCount > 1 && strcmp(args[0]->args[1], "-n") == 0)
+    if (args[0]->argCount > 1 && ft_strcmp(args[0]->args[1], "-n") == 0)
     {
         no_newline = true;
         i = 1; // Skip the -n flag
@@ -23,7 +23,7 @@ int ft_echo(t_command **args)
 	{
 		if (args[0]->args[i] != NULL)
 		{
-			write(STDOUT_FILENO, args[0]->args[i], strlen(args[0]->args[i]));
+			write(STDOUT_FILENO, args[0]->args[i], ft_strlen(args[0]->args[i]));
 
 			if (args[0]->args[i + 1] != NULL)
 				write(STDOUT_FILENO, " ", 1);

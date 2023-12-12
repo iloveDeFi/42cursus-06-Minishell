@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/12/11 15:42:56 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/11 17:09:04 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void ft_initialize_commandList(t_commandList *commandList)
     commandList->length = 0;
 }
 
-
 t_env *ft_initialize_environment(char **env)
 {
     t_env *envList = NULL;
@@ -81,15 +80,14 @@ t_env *ft_initialize_environment(char **env)
     var_array = ft_env_duplicate(env);
     while (var_array[i])
     {
-        new_node = create_node(var_array[i]);
-        add_to_list(&envList, new_node);
+        new_node = ft_create_node(var_array[i]);
+        ft_add_to_list(&envList, new_node);
         i++;
     }
     free_array(var_array);
 
     return envList;
 }
-
 
 void ft_initialize_minishell(t_mini *shell, t_env **env)
 {
@@ -113,4 +111,15 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     }
     shell->error = NULL;  // Assurez-vous de l'initialiser correctement si nécessaire
     ft_write_inputrc();
+}
+
+t_env *ft_initialize_all(t_mini *shell, char **envp)
+{
+    t_commandList commandList;
+    t_env *envList = ft_initialize_environment(envp);
+
+    ft_initialize_minishell(shell, &envList);
+    ft_initialize_commandList(&commandList);
+
+    return envList;
 }

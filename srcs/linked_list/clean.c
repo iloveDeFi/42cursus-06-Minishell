@@ -12,19 +12,7 @@
 
 #include "minishell.h"
 
-// Go through list to apply callback function on each element
-void ft_iterateList(t_commandList  *head, void (*callback)(void *data))
-{
-    t_command  *current = head->head;
-    
-    while (current != NULL)
-    {
-        callback(current->data);
-    current = current->next;
-    }
-}
-
-void ft_freeList(t_commandList  *head)
+void ft_free_list(t_commandList  *head)
 {
     t_command  *current = head->head;
     
@@ -33,38 +21,62 @@ void ft_freeList(t_commandList  *head)
         t_command  *next = current->next;
         free(current->data);
         free(current);
+
         current = next;
     }
 }
 
-void ft_freeNode(t_command  *node)
+void ft_delete_list(t_env *envlist)
+{
+	t_env	*tmp;
+	t_env	*node;
+
+	tmp = envlist;
+	if (envlist == NULL)
+		return ;
+	while (tmp != NULL)
+	{
+		free(tmp->var);
+		free(tmp->value);
+		node = tmp->next;
+		free(tmp);
+		tmp = node;
+	}
+}
+
+void ft_free_node(t_command  *node)
 {
     if (node != NULL)
     {
         free(node->data);
+
         if (node->prev != NULL)
             node->prev->next = node->next;
+            
         if (node->next != NULL)
             node->next->prev = node->prev;
+
         free(node);
     }
 }
 
-int ft_compareString(void *data, void *target)
-{
-    char *str = (char *)data;
-    char *key = (char *)target;
-    return ft_strcmp(str, key);
-}
 
-t_command  *ft_findNode(t_commandList  *head, void *target)
+void ft_delete_node(t_commandList **head, t_command *node)
 {
-    t_command  *current = head->head;
-    while (current != NULL)
-    {
-        if (ft_compareString(current->data, target) == 0)
-            return current;
-        current = current->next;
-    }
-    return NULL;
+    if (*head == NULL || node == NULL)
+        return;
+    
+    if ((*head)->head == node)
+        (*head)->head = node->next;
+
+    if (node->next != NULL)
+        node->next->prev = node->prev;
+
+    if (node->prev != NULL)
+        node->prev->next = node->next;
+
+    node->prev = NULL;
+    node->next = NULL;
+
+    free(node);
 }

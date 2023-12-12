@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/11 16:29:49 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/12 13:12:41 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
 
 
 
-int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
+int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
     ft_initialize_commandList(commandList);
     if (ft_split_arg(commandList, input) > 0) 
@@ -154,6 +154,9 @@ int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
                 printf("Parsing succeeded. Commands:\n");
                 ft_exec_builtins(cmd, envList);
             } 
+            else if (cmd->name[0] == '.'|| cmd->name[0] == '/') {
+                ft_execute_command_with_path(cmd->name, commandList, *envList);
+            }
             else 
             {
                 ft_execute_external_command(cmd->name, cmd->args, *envList);
@@ -174,71 +177,15 @@ int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
     }
 }
 
-
-
-
-// // Fonction pour tester la division de la chaîne en commandes
-// int ft_test_parsing(t_commandList *commandList, char *input) {
-//     // ft_init_commandList(commandList);
-    
-
-//     if (ft_split_arg(commandList, input) > 0) {
-//         printf("Parsing succeeded. Commands:\n");
-//         if (commandList != NULL)
-//             ft_print_list(commandList, ft_print_command);
-//         else
-//             fprintf(stderr, "Error: commandList is NULL\n");
-//         return 1;
-//     } else {
-//         perror("Parsing failed");
-//         destroy_commands(commandList);  // Libération mémoire en cas d'échec
-//         return 0;
-//     }
-// }
-
-// int ft_split_arg(t_commandList *commandList, char *input)
-// {
-//     char *token;
-    
-//     token = ft_strtok(input, " ");
-//     while (token != NULL)
-//     {
-//         t_command *newCommand = malloc(sizeof(t_command));
-//         if (newCommand == NULL)
-//         {
-//             perror("CHAOS, error allocating memory");
-//             exit(EXIT_FAILURE);
-//         }
-//         newCommand->name = ft_strdup(token);
-
-//         if (commandList->head == NULL)
-//         {
-//             commandList->head = ft_createNodeCommand(newCommand);
-//             commandList->tail = commandList->head;
-//         }
-//         else 
-//         {
-//             ft_appendToList(commandList, newCommand);
-//             commandList->tail = commandList->tail->next;
-//         }
-
-//         commandList->length++;
-//         token = ft_strtok(NULL, " ");
-//     }
-
-//     return commandList->length;
-// }
-
-
 t_env *ft_find_envVar(t_envList *envList, const char *targetName) {
-    t_env *var = envList->head;  // Début de la liste
+    t_env *var = envList->head;
 
     while (var != NULL) {
-        if (strcmp(var->var, targetName) == 0) {  // Comparaison avec le nom de la variable
+        if (strcmp(var->var, targetName) == 0) {
             return var;
         }
         var = var->next;
     }
 
-    return NULL;  // Aucune correspondance trouvée
+    return NULL;
 }

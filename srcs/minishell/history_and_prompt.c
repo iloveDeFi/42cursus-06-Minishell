@@ -1,7 +1,6 @@
 #include "minishell.h"
 
-void ft_manage_history(t_mini *shell, const char *input) 
-{
+void ft_manage_history(t_mini *shell, const char *input) {
     // Vérifier si le fichier d'historique est déjà ouvert
     if (shell->fd_history == -1) 
     {
@@ -51,3 +50,35 @@ void ft_custom_prompt_msg(t_mini *shell) {
         free(input); // Libérez la mémoire allouée par readline après la copie
     }
 }
+
+/*
+permettrait à l'utilisateur de modifier la commande en cours d'édition avant de l'exécuter
+int main() {
+    char *line;
+
+    // Initialisation de Readline
+    rl_initialize();
+
+    // Lire une ligne
+    line = readline("Entrez une ligne: ");
+
+    if (line) {
+        // Ajouter la ligne à l'historique
+        add_history(line);
+
+        // Remplacer la ligne avec "Nouvelle Ligne"
+        ft_rl_replace_line("Nouvelle Ligne", 0);
+
+        // Afficher la ligne modifiée
+        rl_redisplay();
+
+        // Libérer la mémoire allouée pour la ligne
+        free(line);
+    }
+
+    // Libérer les ressources de Readline
+    rl_cleanup_after_signal();
+    
+    return 0;
+}
+*/

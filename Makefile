@@ -6,7 +6,7 @@
 #    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/12/11 16:34:38 by bat              ###   ########.fr        #
+#    Updated: 2023/12/11 16:37:45 by bat              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,10 +98,9 @@ NAME = minishell
 # DIRECTORIES
 MINISHELL_FOLDER =		minishell
 PARSING_FOLDER =		parsing
-BUILT_FOLDER =			builtins
+BUILT_FOLDER =			builtin
 EXECUTING_FOLDER =		execution
-SIGNALS_FOLDER =		signals
-LINKED_LISTS_FOLDER = 	linked_lists
+LINKED_LISTS_FOLDER = 	linked_list
 HEADER_DIRECTORY :=		./includes
 SRCS_DIRECTORY :=		./srcs
 LIBFT_FOLDER =			$(SRCS_DIRECTORY)/libft
@@ -114,7 +113,7 @@ MAIN_FILE = main.c
 
 MINISHELL_FILES =		minishell.c \
 						history_and_prompt.c \
-						signals.c
+						signal.c
 
 PARSING_FILES =       parser.c \
                       error.c \
@@ -133,16 +132,16 @@ EXECUTING_FILES =	  builtin.c \
 					  tool_exec.c \
 					  pipe.c
 
-BUILTINS_FILES =      cd.c \
+BUILTIN_FILES =      cd.c \
                       echo.c \
 					  env.c \
                       exit.c \
                       export.c \
-                      export_utils.c \
+                      export_util.c \
                       pwd.c \
                       unset.c 
 
-LINKED_LISTS_FILES =  1_linkedList.c \
+LINKED_LIST_FILES =   1_linkedList.c \
                       2_linkedList.c \
                       3_linkedList.c 
 					  
