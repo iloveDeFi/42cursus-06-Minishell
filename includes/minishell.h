@@ -235,17 +235,16 @@ char        *ft_extract_quoted_argument(char *input);
 
 
 // EXECUTION
-void        ft_execute_command(t_command *cmd);
+void	    ft_execute_command(t_command *cmd, t_commandList *commandList, t_env *envList);
 void        ft_execute_command_with_path(const char *path, t_commandList *commandList, t_env *env);
 int         ft_is_builtin(t_command *cmd);
+int         ft_execute_builtin(t_command *cmd,t_env **envList);
 int		    ft_is_valid_identifier(const char *name);
-void        ft_exec_external_code(t_command *cmd, t_env *envList);
-void	    ft_execute_command(t_command *cmd, t_commandList *commandList, t_env *envList);
-void        ft_execute_external_command(char *cmdPath, char *args[], t_env *envList);
+// void        ft_execute_external_code(t_command *cmd, t_env *envList);
+void        ft_execute_external_command(t_command *command, t_commandList *commandList, t_env *envList);
 void        ft_destroy_command(t_commandList *commandList);
 void        ft_destroy_current_shell(t_mini *shell);
 void        ft_destroy_children(t_mini *mini);
-int         ft_exec_builtin(t_command *cmd,t_env **envList);
 char        *ft_find_executable_path(const char *command, t_env *envList);
 t_env       *ft_copy_env_list(t_env *src);
 t_env       *ft_create_node2(char *var, char *value);
@@ -269,7 +268,7 @@ int 	ft_is_only_digit(char *str);
 int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
 int		ft_check_argument(char *name);
-int     ft_export_func(t_env **envlist, t_command *cmd);
+int     ft_export_function(t_env **envlist, t_command *cmd);
 
 // ENV_LIST
 t_env	*ft_create_node(char *var_array);

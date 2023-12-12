@@ -1,32 +1,32 @@
 #include "minishell.h"
 
-void	ft_exec_cmd(t_command *cmd, t_commandList *commandList, t_env *envList)
+void	ft_execute_command(t_command *command, t_commandList *commandList, t_env *envList)
 {
 	int		init_stdout;
 	int		init_stdin;
 
-	if (cmd == NULL)
+	if (command == NULL)
 	{
 		fprintf(stderr, "Error: Trying to execute a NULL command\n");
 		return ;
 	}
-	printf("Executing command: %s\n", cmd->name);
+	printf("Executing command: %s\n", command->name);
 	init_stdout = dup(STDOUT_FILENO);
 	init_stdin = dup(STDIN_FILENO);
-	if (cmd->fdread >= 3)
-		dup2(cmd->fdread, STDIN_FILENO);
-	if (cmd->fdwrite >= 3)
-		dup2(cmd->fdwrite, STDOUT_FILENO);
-	if (ft_is_builtin(cmd) == 1)
-		ft_exec_builtin(cmd, &envList);
-	else if (ft_is_builtin(cmd) == 127)
+	if (command->fdread >= 3)
+		dup2(command->fdread, STDIN_FILENO);
+	if (command->fdwrite >= 3)
+		dup2(command->fdwrite, STDOUT_FILENO);
+	if (ft_is_builtin(command) == 1)
+		ft_execute_builtin(command, &envList);
+	else if (ft_is_builtin(command) == 127)
 		g_exit_code = 127;
 	else
-		ft_exec_external_command(cmd, commandList);
-	if (cmd->fdread >= 3)
-		close(cmd->fdread);
-	if (cmd->fdwrite >= 3)
-		close(cmd->fdwrite);
+		ft_execute_external_command(command, commandList, *envList);
+	if (command->fdread >= 3)
+		close(command->fdread);
+	if (command->fdwrite >= 3)
+		close(command->fdwrite);
 	dup2(init_stdout, STDOUT_FILENO);
 	dup2(init_stdin, STDIN_FILENO);
 	close(init_stdout);

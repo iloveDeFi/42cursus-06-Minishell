@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_is_builtins(t_command *cmd)
+int	ft_is_builtin(t_command *cmd)
 {
 	if (!cmd->name)
 	{
@@ -18,25 +18,25 @@ int	ft_is_builtins(t_command *cmd)
 	return (0);
 }
 
-int	ft_exec_builtins(t_command *cmd, t_env **envList)
+int	ft_execute_builtin(t_command *cmd, t_env **envList)
 {
 	t_command	export_command;
 
 	if (ft_strcmp(cmd->name, "cd") == 0)
 		return (cd(cmd->args));
 	else if (ft_strcmp(cmd->name, "echo") == 0)
-		return (ft_echo(&cmd));
+		return (echo(&cmd));
 	else if (ft_strcmp(cmd->name, "env") == 0)
-		return (ft_env(envList));
+		return (env(envList));
 	else if (ft_strcmp(cmd->name, "pwd") == 0)
 		return (pwd());
 	else if (ft_strcmp(cmd->name, "unset") == 0)
-		return (ft_unset(envList, cmd));
+		return (unset(envList, cmd));
 	else if (ft_strcmp(cmd->name, "export") == 0)
 	{
 		export_command.name = "export";
 		export_command.args = cmd->args;
-		export_func(envList, &export_command);
+		ft_export_function(envList, &export_command);
 	}
 	fprintf(stderr, "Unknown builtin command: %s\n", cmd->name);
 	return (-1);

@@ -36,34 +36,25 @@ t_command  *ft_find_node(t_commandList  *head, void *target)
     return current->data;
 }*/
 
-int ft_is_empty_list(t_commandList    *head)
-{
-    if (head == NULL)
-        return 1;
-    else 
-        return 0;
-}
 
-int	ft_is_in_list(char	*var, t_env **envlist)
+void	ft_swap_nodes(t_env *tmp)
 {
-	t_env	*tmp;
-	
-	tmp = *envlist;
-	if (tmp == NULL || var == NULL)
-		return (0);
-	while (tmp != NULL && ft_strcmp(tmp->var, var) != 0)
-		tmp = tmp->next;
-	return (tmp != NULL);
-}
+	char	*name;
+	char	*value;
 
-int ft_get_list_size(t_commandList  *head)
-{
-    int size = 0;
-    t_command  *current = head->head;
-    while (current != NULL)
-    {
-        size++;
-        current = current->next;
-    }
-    return size;
+	if (ft_strcmp(tmp->var, tmp->next->var) > 0)
+	{
+		name = ft_strdup(tmp->next->var);
+		value = ft_strdup(tmp->next->value);
+		free(tmp->next->var);
+		free(tmp->next->value);
+		tmp->next->var = ft_strdup(tmp->var);
+		tmp->next->value = ft_strdup(tmp->value);
+		free(tmp->var);
+		free(tmp->value);
+		tmp->var = ft_strdup(name);
+		tmp->value = ft_strdup(value);
+		free(name);
+		free(value);
+	}
 }

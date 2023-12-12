@@ -6,51 +6,11 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/12/11 17:09:04 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/12 15:26:44 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//before calling function set head and tail to NULL and length to 0
-/*void ft_initialize_environment(t_envList *envList, char **env)
-{
-    int i;
-    char **var_array;
-    t_env *newNode;
-
-    newNode = NULL;
-    var_array = ft_env_duplicate(env);
-    i = 0;
-    while (var_array[i])
-    {
-        newNode = ft_createNode(var_array[i]);
-        if (!envList)
-            envList = &newNode;
-        else 
-            appendToList(envList, newNode);
-        i++;
-    }
-    free_array(var_array);
-}*/
-
-/*void ft_initialize_environment(t_envList *envList, char **env)
-{
-    int i;
-    char **var_array;
-    t_node *newNode;  // Modifier le type de newNode pour t_node
-
-    envList->head = NULL;  // Assurez-vous que envList->head est initialisé à NULL
-    var_array = ft_env_duplicate(envList);
-    i = 0;
-    while (var_array[i])
-    {
-        newNode = ft_createNode(var_array[i]);
-        appendToList(&(envList->head), newNode);  // Passez l'adresse de envList->head
-        i++;
-    }
-    free_array(var_array);
-}*/
 
 void ft_exit_shell(t_mini *shell)
 {
@@ -84,7 +44,7 @@ t_env *ft_initialize_environment(char **env)
         ft_add_to_list(&envList, new_node);
         i++;
     }
-    free_array(var_array);
+    ft_free_array(var_array);
 
     return envList;
 }

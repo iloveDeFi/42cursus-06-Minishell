@@ -38,7 +38,7 @@ char *ft_find_executable_path(const char *command, t_env *envList) {
     }
 
     // Obtenez la valeur de la variable d'environnement PATH
-    t_env *path_env = ft_get_in_lst("PATH", &envList);
+    t_env *path_env = ft_get_in_list("PATH", &envList);
     if (path_env == NULL) {
         fprintf(stderr, "Error: PATH variable not found in environment\n");
         return NULL;

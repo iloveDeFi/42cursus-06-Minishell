@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/12 13:12:41 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/12 15:36:25 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,18 +148,18 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
         if (commandList != NULL && commandList->head != NULL) 
         {
             ft_print_list(commandList, ft_print_command);
-            t_command *cmd = commandList->head;
-            if (ft_is_builtins(cmd)) 
+            t_command *command = commandList->head;
+            if (ft_is_builtin(command)) 
             {
                 printf("Parsing succeeded. Commands:\n");
-                ft_exec_builtins(cmd, envList);
+                ft_execute_builtin(command, envList);
             } 
-            else if (cmd->name[0] == '.'|| cmd->name[0] == '/') {
-                ft_execute_command_with_path(cmd->name, commandList, *envList);
+            else if (command->name[0] == '.'|| command->name[0] == '/') {
+                ft_execute_command_with_path(command->name, commandList, *envList);
             }
             else 
             {
-                ft_execute_external_command(cmd->name, cmd->args, *envList);
+                ft_execute_external_command(command, commandList, *envList);
                 printf("Executing external command:\n");
             }
         } 
@@ -181,7 +181,7 @@ t_env *ft_find_envVar(t_envList *envList, const char *targetName) {
     t_env *var = envList->head;
 
     while (var != NULL) {
-        if (strcmp(var->var, targetName) == 0) {
+        if (ft_strcmp(var->name, targetName) == 0) {
             return var;
         }
         var = var->next;
