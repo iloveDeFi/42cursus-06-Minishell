@@ -26,7 +26,7 @@ t_command  *ft_find_node(t_commandList  *head, void *target)
     return NULL;
 }
 
-/* void    *ft_get_last_element_in_list(t_commandList *head)
+void    *ft_get_last_element_in_list(t_commandList *head)
 {
 	if (head == NULL)
         return NULL;
@@ -34,7 +34,7 @@ t_command  *ft_find_node(t_commandList  *head, void *target)
     while (current->next != NULL)
         current = current->next;
     return current->data;
-}*/
+}
 
 
 void	ft_swap_nodes(t_env *tmp)

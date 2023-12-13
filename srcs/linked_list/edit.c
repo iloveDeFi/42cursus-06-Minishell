@@ -50,10 +50,3 @@ int ft_compareString(void *data, void *target)
     char *key = (char *)target;
     return ft_strcmp(str, key);
 }
-
-// adapt casting depending data type to store in list
-void ft_printGeneric(void *data)
-{
-    char *str = (char *)data;
-    printf("%s\n", str);
-}

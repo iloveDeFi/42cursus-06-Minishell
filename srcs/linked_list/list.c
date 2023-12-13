@@ -46,3 +46,11 @@ t_env	*ft_get_in_list(char *var, t_env **envlist)
 		return (tmp);
 	return (NULL);
 }
+
+// adapt casting depending data type to store in list
+void ft_printGeneric(void *data)
+{
+    char *str = (char *)data;
+    printf("%s\n", str);
+}
+

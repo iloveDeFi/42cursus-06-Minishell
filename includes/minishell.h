@@ -163,48 +163,61 @@ typedef struct s_mini
 
 // GLOBAL
 extern int	g_exit_code;
-void    rl_replace_line(const char *str, int i);
+void        rl_replace_line(const char *str, int i);
 
 // MAIN
-int     main(int ac, char **av, char **envp);
-void    ft_write_inputrc(void);
-void	ft_exit_shell(t_mini *shell);
-t_env   *ft_initialize_all(t_mini *shell, char **envp);
+int         main(int ac, char **av, char **envp);
+void        ft_write_inputrc(void);
+void	    ft_exit_shell(t_mini *shell);
+t_env       *ft_initialize_all(t_mini *shell, char **envp);
 
 // MINISHELL
-void	ft_exit_shell(t_mini *shell);
-void    ft_initialize_commandList(t_commandList *commandList);
-t_env   *ft_initialize_environment(char **env);
-void	ft_initialize_minishell(t_mini *shell, t_env **env);
-t_env   *ft_initialize_all(t_mini *shell, char **envp);
+void	    ft_exit_shell(t_mini *shell);
+void        ft_initialize_commandList(t_commandList *commandList);
+t_env       *ft_initialize_environment(char **env);
+void	    ft_initialize_minishell(t_mini *shell, t_env **env);
+t_env       *ft_initialize_all(t_mini *shell, char **envp);
 // history & prompt
-void	ft_custom_prompt_msg(t_mini *shell);
-void    ft_manage_history(t_mini *shell, const char *input);
-void    ft_rl_replace_line(const char *str, int i);
+void	    ft_custom_prompt_msg(t_mini *shell);
+void        ft_manage_history(t_mini *shell, const char *input);
+void        ft_rl_replace_line(const char *str, int i);
 // functions about signals
-void    ft_receive_signal_from_user(int signal_num);
-void    ft_handle_signal_execution(int signal_num);
-void    ft_init_signals(void(*signals_handle)(int));
-void    ft_init_terminal_settings(void);
+void        ft_receive_signal_from_user(int signal_num);
+void        ft_handle_signal_execution(int signal_num);
+void        ft_init_signals(void(*signals_handle)(int));
+void        ft_init_terminal_settings(void);
 
 // LINKED LIST
-// file 1
-void        ft_appendToList(t_commandList *list, t_command *newCommand);
-void        *ft_getLastElement(t_commandList  *head);
-int		    ft_isListEmpty(t_commandList  *head);
-void	    ft_print_list (t_commandList *head, void (*printFunction)(void *data));
-void	    ft_printGeneric(void *data);
-// file 2
-void	    ft_iterateList(t_commandList  *head, void (*callback)(void *data));
-void	    ft_freeList(t_commandList  *head);
-void	    ft_freeNode(t_command  *node);
-int		    ft_compareString(void *data, void *target);
-t_command 	*ft_findNode(t_commandList  *head, void *target);
-// file 3
-t_command 	*ft_getPreviousNode(t_commandList  *head, t_command *node);
-int		    ft_getListSize(t_commandList  *head);
-void        ft_removeNode(t_commandList **head, t_command *node);
-t_command 	*ft_createNodeCommand(void);
+// clean
+void        ft_free_list(t_commandList  *head);
+void        ft_delete_list(t_env *envlist);
+void        ft_free_node(t_command  *node);
+void        ft_delete_node(t_commandList **head, t_command *node);
+// create
+t_command   *ft_create_node_for_command(void);
+t_command   *ft_create_node_for_envVar(void);
+void        ft_create_node_bat(void **node, t_node_type type);
+// duplicate
+t_env	    *ft_envlist_duplicate(t_env **envlist);
+t_env	    *ft_duplicate_node(char *name, char *value);
+char        **ft_env_duplicate(char **envp);
+// edit
+void        ft_add_to_list(t_env **envlist, t_env *new_node);
+int	        ft_add_envVar_to_list(char *name, t_env **envlist);
+void        ft_replace_in_lst(t_env *new_node, t_env **envlist);
+void        ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*callback)(void *data));
+int         ft_compareString(void *data, void *target);
+// list
+int         ft_is_empty_list(t_commandList    *head);
+int	        ft_is_in_list(char	*var, t_env **envlist);
+int         ft_get_list_size(t_commandList  *head);
+t_env	    *ft_get_in_list(char *var, t_env **envlist);
+void        ft_printGeneric(void *data);
+// node
+t_command  *ft_get_previous_node(t_commandList  *head, t_command  *node);
+t_command  *ft_find_node(t_commandList  *head, void *target);
+void	    ft_swap_nodes(t_env *tmp);
+void        *ft_get_last_element_in_list(t_commandList *head);
 
 // PARSING
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
@@ -231,27 +244,26 @@ char        *ft_expand_env_variables(t_command *command, int last_exit_status);
 t_Bool      ft_check_only_spaces(const char *str);
 char        *ft_extract_quoted_argument(char *input);
 
-
-
-
 // EXECUTION
-void	    ft_execute_command(t_command *cmd, t_commandList *commandList, t_env *envList);
-void        ft_execute_command_with_path(const char *path, t_commandList *commandList, t_env *env);
-int         ft_is_builtin(t_command *cmd);
-int         ft_execute_builtin(t_command *cmd,t_env **envList);
-int		    ft_is_valid_identifier(const char *name);
-// void        ft_execute_external_code(t_command *cmd, t_env *envList);
-void        ft_execute_external_command(t_command *command, t_commandList *commandList, t_env *envList);
-void        ft_destroy_command(t_commandList *commandList);
-void        ft_destroy_current_shell(t_mini *shell);
-void        ft_destroy_children(t_mini *mini);
-char        *ft_find_executable_path(const char *command, t_env *envList);
-t_env       *ft_copy_env_list(t_env *src);
-t_env       *ft_create_node2(char *var, char *value);
-char        *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
-void        ft_free_split(char **array);
-int		    ft_is_sep(char c);
-void	    ft_free_node(t_env *new_node, t_env *tmp, char *str);
+// builtins
+int	    ft_is_builtin(t_command *cmd);
+int	    ft_execute_builtin(t_command *cmd, t_env **envList);
+// command
+void	ft_execute_command(t_command *command, t_commandList *commandList, t_env *envList);
+void    ft_execute_external_command(t_command *command, t_commandList *commandList, t_env *envList);
+// destroy
+void    ft_destroy_command(t_commandList *commandList);
+void	ft_destroy_current_shell(t_mini *mini);
+// path
+char    ft_lookfor_command_and_build_path(const char *path, t_commandList *commandList, t_env *env);
+void    ft_execute_command_with_path(t_command *command, t_commandList *commandList, t_envList *envList);
+void    ft_execute_command_with_relative_path(t_command *command);
+void    ft_execute_command_with_absolute_path(t_command *command);
+// tool_exec
+char    *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
+t_env   *create_node2(char *var, char *value);
+t_env   *ft_copy_env_list(t_env *src);
+void    free_split(char **arr);
 
 
 // BUILT-IN
