@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/02 20:32:27 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/13 09:28:46 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,40 +121,108 @@ int ft_split_arg(t_commandList *commandList, char *input)
     return commandList->length;
 }
 
-int ft_test_parsing(t_commandList *commandList, char *input ,t_env **envList)
-{
+/* int ft_split_arg(t_commandList *commandList, char *input) {
+    char *token = ft_strtok(input, " ");
+
+    while (token != NULL) {
+        t_command *newCommand = ft_createNodeCommand();
+
+        newCommand->name = ft_strdup(token);
+
+        if (newCommand == NULL || newCommand->name == NULL) {
+            perror("CHAOS, error allocating memory");
+            destroy_commands(commandList);
+            exit(EXIT_FAILURE);
+        }
+
+        if (commandList->head == NULL) {
+            commandList->head = newCommand;
+            commandList->tail = commandList->head;
+        } else {
+            ft_appendToList(commandList, newCommand);
+            commandList->tail = commandList->tail->next;
+        }
+
+        // Ajout direct des arguments à la structure t_command
+        commandList->tail->args = ft_split_arg_list(input);
+
+        commandList->length++;
+        token = ft_strtok(NULL, " ");
+    }
+    return commandList->length;
+} */
+
+
+
+int ft_test_parsing(t_commandList *commandList, char *input, t_env **envList) {
     ft_init_commandList(commandList);
-    if (ft_split_arg(commandList, input) > 0) 
-    {
-        if (commandList != NULL && commandList->head != NULL) 
-        {
+
+    if (ft_split_arg(commandList, input) > 0) {
+        if (commandList != NULL && commandList->head != NULL) {
             ft_print_list(commandList, ft_print_command);
             t_command *cmd = commandList->head;
-            if (ft_is_builtins(cmd)) 
-            {
+
+            // Utilisez la liste d'arguments directement à partir de ft_split_arg
+            cmd->args = commandList->head->args;
+
+            if (ft_is_builtins(cmd)) {
                 printf("Parsing succeeded. Commands:\n");
                 ft_exec_builtins(cmd, envList);
-            } 
-            else 
-            {
-                // Ici, vous pouvez implémenter la logique pour exécuter des commandes externes
-                // ou gérer d'autres cas selon les besoins de votre programme.
+            } else {
                 printf("Executing external command:\n");
             }
-        } 
-        else 
-        {
+        } else {
             fprintf(stderr, "Error: commandList or its head is NULL\n");
         }
         return 1;
-    } 
-    else 
-    {
+    } else {
         perror("Parsing failed");
         destroy_commands(commandList);  // Libération mémoire en cas d'échec
         return 0;
     }
 }
+
+
+
+char *ft_strtok_quoted(char *str, const char *delim) {
+    static char *input = NULL;
+    if (str != NULL) {
+        input = str;
+    }
+
+    if (input == NULL || *input == '\0') {
+        return NULL;
+    }
+
+    char *token_start = input;
+    char quote = '\0';
+
+    while (*input != '\0' && (quote != '\0' || strchr(delim, *input) == NULL)) {
+        if (*input == '\"' || *input == '\'') {
+            if (quote == '\0') {
+                quote = *input;
+            } else if (quote == *input) {
+                quote = '\0';
+            }
+            input++;
+        } else {
+            input++;
+        }
+    }
+
+    if (*input != '\0') {
+        *input = '\0';
+        input++;
+    }
+
+    return token_start;
+}
+
+char **ft_split_arg_list(char *input) {
+    // Utilisez ft_strsplit pour diviser la chaîne d'arguments
+    return ft_split(input, ' ');
+}
+
 
 // // Fonction pour tester la division de la chaîne en commandes
 // int ft_test_parsing(t_commandList *commandList, char *input) {

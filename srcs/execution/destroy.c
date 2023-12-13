@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	destroy_commands(t_commandList *commandList)
+/* void	destroy_commands(t_commandList *commandList)
 {
 	t_command	*current;
 	t_command	*next;
@@ -16,7 +16,7 @@ void	destroy_commands(t_commandList *commandList)
 	commandList->head = NULL;
 	commandList->tail = NULL;
 	commandList->length = 0;
-}
+} */
 
 void	ft_destroy_current_shell(t_mini *mini)
 {

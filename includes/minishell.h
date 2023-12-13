@@ -245,14 +245,16 @@ void    ft_execute_external_command(char *cmdPath, char *args[], t_env *envList)
 void    destroy_commands(t_commandList *commandList);
 void    ft_destroy_current_shell(t_mini *shell);
 void    destroy_children(t_mini *mini);
-int ft_exec_builtins(t_command *cmd,t_env **envList);
+int     ft_exec_builtins(t_command *cmd,t_env **envList);
+char *ft_strtok_quoted(char *str, const char *delim);
 
-
+int ft_count_args(char **args);
+char **ft_split_arg_list(char *input);
 
 // Built-ins
 int		change_directory(const char *path);
 int		cd(char **arguments);
-int     echo(t_command **args);
+int     echo(t_command *cmd);
 int 	pwd(void);
 int 	ft_env(t_env **env_list);
 int	    ft_unset(t_env **env_list, t_command *cmd);
@@ -261,7 +263,7 @@ int     ft_error_export(char *command, char *arg, char *message, int status);
 int		ft_check_wrong_char(char *str);
 int 	ft_only_digit(char *str);
 int	    ft_is_sep(char c);
-void 	ft_exit(t_command *command);
+void	ft_exit(t_command *command);
 int		check_args(char *name);
 int     export_func(t_env **envlist, t_command *cmd);
 
