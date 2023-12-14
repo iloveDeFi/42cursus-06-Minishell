@@ -58,3 +58,16 @@ void	ft_swap_nodes(t_env *tmp)
 		free(value);
 	}
 }
+
+t_env   *ft_find_envVar(t_envList *envList, const char *targetName) {
+    t_env *var = envList->head;
+
+    while (var != NULL) {
+        if (ft_strcmp(var->name, targetName) == 0) {
+            return var;
+        }
+        var = var->next;
+    }
+
+    return NULL;
+}

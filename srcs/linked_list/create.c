@@ -41,7 +41,7 @@ t_command *ft_create_node_for_envVar(void)
     return newNode;
 }
 
-void ft_create_node(void **node, t_node_type type) {
+void ft_create_node_by_type(void **node, t_node_type type) {
     if (node == NULL) {
         return;
     }

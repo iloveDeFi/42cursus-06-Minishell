@@ -188,6 +188,12 @@ void        ft_init_signals(void(*signals_handle)(int));
 void        ft_init_terminal_settings(void);
 
 // LINKED LIST
+// add
+void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
+void        ft_appendToListArg(t_command *command, const char *arg);
+void        ft_print_command(void *data);
+void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
+
 // clean
 void        ft_free_list(t_commandList  *head);
 void        ft_delete_list(t_env *envlist);
@@ -196,7 +202,7 @@ void        ft_delete_node(t_commandList **head, t_command *node);
 // create
 t_command   *ft_create_node_for_command(void);
 t_command   *ft_create_node_for_envVar(void);
-void        ft_create_node_bat(void **node, t_node_type type);
+t_command   *ft_create_node_by_type(void **node, t_node_type type);
 // duplicate
 t_env	    *ft_envlist_duplicate(t_env **envlist);
 t_env	    *ft_duplicate_node(char *name, char *value);
@@ -214,17 +220,15 @@ int         ft_get_list_size(t_commandList  *head);
 t_env	    *ft_get_in_list(char *var, t_env **envlist);
 void        ft_printGeneric(void *data);
 // node
-t_command  *ft_get_previous_node(t_commandList  *head, t_command  *node);
-t_command  *ft_find_node(t_commandList  *head, void *target);
+t_command   *ft_get_previous_node(t_commandList  *head, t_command  *node);
+t_command   *ft_find_node(t_commandList  *head, void *target);
 void	    ft_swap_nodes(t_env *tmp);
 void        *ft_get_last_element_in_list(t_commandList *head);
+t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 
 // PARSING
-t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 int         ft_split_arg(t_commandList *commandList, char *input);
 int         ft_launch_parsing(t_commandList *commandList, char *input,t_env **envList);
-int		    ft_str_error(char *str, int number);
-void	    ft_countdown(void);
 char        *ft_strtrim_with_quotes(char *str);
 char        *ft_strcpy(char *dest, const char *src);
 char        *ft_strndup(const char *s, size_t n);

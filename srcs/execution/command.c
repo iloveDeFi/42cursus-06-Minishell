@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+/*
 void	ft_execute_command(t_command *command, t_commandList *commandList, t_env *envList)
 {
 	int		init_stdout;
@@ -33,6 +33,7 @@ void	ft_execute_command(t_command *command, t_commandList *commandList, t_env *e
 	close(init_stdin);
 	printf("Execution complete\n");
 }
+*/
 
 void ft_execute_external_command(t_command *command, t_commandList *commandList, t_env *envList)
 {
@@ -44,40 +45,31 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList,
         int status;
 
         pid = fork();
-
-        if (pid == 0)
-        {
-            if (execve(full_path, &command->name, NULL) == -1)
-            {
+        if (pid == 0){
+            if (execve(full_path, &command->name, NULL) == -1) {
                 perror("Erreur lors de l'exécution de la commande");
                 exit(EXIT_FAILURE);
             }
         }
-        else if (pid == -1)
-        {
+        else if (pid == -1) {
             perror("Erreur lors de la création du processus enfant");
             exit(EXIT_FAILURE);
         }
-        else
-        {
+        else {
             waitpid(pid, &status, 0);
 
-            if (WIFEXITED(status))
-            {
+            if (WIFEXITED(status)) {
                 int exitStatus = WEXITSTATUS(status);
                 printf("Le processus enfant s'est terminé avec le code de sortie : %d\n", exitStatus);
             }
-            else if (WIFSIGNALED(status))
-            {
+            else if (WIFSIGNALED(status)) {
                 int signalNumber = WTERMSIG(status);
                 printf("Le processus enfant a été interrompu par le signal : %d\n", signalNumber);
             }
-
             free(full_path);
         }
     }
-    else
-    {
+    else {
         fprintf(stderr, "Command not found in PATH: %s\n", command->name);
     }
 }

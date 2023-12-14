@@ -17,6 +17,7 @@ char *ft_strcpy(char *dest, const char *src)
     return dest;
 }
 
+
 char *ft_strpbrk(const char *s1, const char *s2)
 {
     int i = 0;
@@ -33,6 +34,19 @@ char *ft_strpbrk(const char *s1, const char *s2)
         i++;
     }
     return NULL;
+}
+
+char *ft_custom_strdup(const char *str) {
+    size_t len = ft_strlen(str);
+    char *copy = malloc(len + 1);
+
+    if (copy == NULL) {
+        perror("CHAOS, error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+
+    ft_strcpy(copy, str);
+    return copy;
 }
 
 char *ft_strndup(const char *s, size_t n) 
