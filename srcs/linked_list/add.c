@@ -12,10 +12,10 @@ void ft_appendToList(t_commandList *commandList, t_command *newCommand)
     newCommand->next = NULL;
 }
 
-void ft_appendToListArg(t_command *command, t_commandList *commandList) 
+void ft_appendToListArg(t_command *command) 
 {
     // Allouer de la mémoire pour la nouvelle chaîne d'argument
-    char *argCopy = ft_custom_strdup(arg);
+    char *argCopy = ft_custom_strdup(*command->args);
     if (argCopy == NULL) 
     {
         perror("CHAOS, error allocating memory");

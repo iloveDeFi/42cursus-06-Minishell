@@ -100,7 +100,8 @@ typedef struct s_error
 typedef struct s_env
 {
     char *name;
-    int *value;
+    char *var;
+    char *value;
     struct s_env *next;
     struct s_env *prev;
 } t_env;
@@ -169,7 +170,6 @@ void        rl_replace_line(const char *str, int i);
 int         main(int ac, char **av, char **envp);
 void        ft_write_inputrc(void);
 void	    ft_exit_shell(t_mini *shell);
-t_env       *ft_initialize_all(t_mini *shell, char **envp);
 
 // MINISHELL
 void	    ft_exit_shell(t_mini *shell);
@@ -190,7 +190,7 @@ void        ft_init_terminal_settings(void);
 // LINKED LIST
 // add
 void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
-void        ft_appendToListArg(t_command *command, const char *arg);
+void        ft_appendToListArg(t_command *command);
 void        ft_print_command(void *data);
 void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
 
@@ -201,23 +201,19 @@ void        ft_free_node(t_command  *node);
 void        ft_delete_node(t_commandList **head, t_command *node);
 // create
 t_command   *ft_create_node_for_command(void);
-t_command   *ft_create_node_for_envVar(void);
-t_command   *ft_create_node_by_type(void **node, t_node_type type);
+t_env	    *ft_create_node_for_envVar(char *var_array);
+void        *ft_create_node_by_type(void *node, t_node_type type, char *var_array);
+t_env	    *create_node(char *var_array);
 // duplicate
-t_env	    *ft_envlist_duplicate(t_env **envlist);
 t_env	    *ft_duplicate_node(char *name, char *value);
 char        **ft_env_duplicate(char **envp);
 // edit
-void        ft_add_to_list(t_env **envlist, t_env *new_node);
-int	        ft_add_envVar_to_list(char *name, t_env **envlist);
-void        ft_replace_in_lst(t_env *new_node, t_env **envlist);
+int	        ft_add_envVar_to_list(t_env **envlist, char *args);
 void        ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*callback)(void *data));
 int         ft_compareString(void *data, void *target);
 // list
 int         ft_is_empty_list(t_commandList    *head);
-int	        ft_is_in_list(char	*var, t_env **envlist);
 int         ft_get_list_size(t_commandList  *head);
-t_env	    *ft_get_in_list(char *var, t_env **envlist);
 void        ft_printGeneric(void *data);
 // node
 t_command   *ft_get_previous_node(t_commandList  *head, t_command  *node);
@@ -228,7 +224,7 @@ t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 
 // PARSING
 int         ft_split_arg(t_commandList *commandList, char *input);
-int         ft_launch_parsing(t_commandList *commandList, char *input,t_env **envList);
+int         ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);
 char        *ft_strtrim_with_quotes(char *str);
 char        *ft_strcpy(char *dest, const char *src);
 char        *ft_strndup(const char *s, size_t n);
@@ -253,14 +249,14 @@ char        *ft_extract_quoted_argument(char *input);
 int	    ft_is_builtin(t_command *cmd);
 int	    ft_execute_builtin(t_command *cmd, t_env **envList);
 // command
-void	ft_execute_command(t_command *command, t_commandList *commandList, t_env *envList);
-void    ft_execute_external_command(t_command *command, t_commandList *commandList, t_env *envList);
+void	ft_execute_command(t_command *command, t_env *envList);
+void    ft_execute_external_command(t_command *command, t_commandList *commandList);
 // destroy
 void    ft_destroy_command(t_commandList *commandList);
 void	ft_destroy_current_shell(t_mini *mini);
 // path
-char    ft_lookfor_command_and_build_path(const char *path, t_commandList *commandList, t_env *env);
-void    ft_execute_command_with_path(t_command *command, t_commandList *commandList, t_envList *envList);
+char    *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
+void    ft_execute_command_with_path(t_command *command);
 void    ft_execute_command_with_relative_path(t_command *command);
 void    ft_execute_command_with_absolute_path(t_command *command);
 // tool_exec
@@ -272,11 +268,11 @@ void    free_split(char **arr);
 
 // BUILT-IN
 int		change_directory(const char *path);
-int		cd(char **arguments);
-int     echo(t_command **args);
+int     cd(char **arguments);
+int     echo(t_command *cmd);
 int 	pwd(void);
 int 	env(t_env **env_list);
-int	    unset(t_env **env_list, t_command *cmd);
+int	    ft_unset(t_env **env_list, t_command *cmd);
 char	**ft_env_duplicate(char **envp);
 int     ft_error_export(char *command, char *arg, char *message, int status);
 int		ft_check_wrong_char(char *str);
@@ -284,13 +280,13 @@ int 	ft_is_only_digit(char *str);
 int	    ft_is_sep(char c);
 void 	ft_exit(t_command *command);
 int		ft_check_argument(char *name);
-int     ft_export_function(t_env **envlist, t_command *cmd);
+int     ft_export(t_env **envlist, t_command *cmd);
 
 // ENV_LIST
 t_env	*ft_create_node(char *var_array);
 int	    ft_add_var_to_list(t_env **envlist, char *args);
-int	    ft_is_in_lst(char	*var, t_env **envlist);
-void	ft_add_to_list(t_env **envlist, t_env *new_node);
+int	    ft_is_in_lst(char *var, t_env **envlist);
+void    ft_add_to_list(t_env **envlist, t_env *new_node);
 void	ft_replace_in_list(t_env *new_node, t_env **envlist);
 t_env	*ft_get_in_list(char *var, t_env **envlist);
 void	ft_print_export_list(t_env **envlist);
@@ -305,5 +301,11 @@ void	ft_delete_list(t_env *envlist);
 void	ft_free_array(char **array);
 void    ft_append_to_argument_list(t_command *command, const char *arg);
 char    *ft_custom_strdup(const char *str);
+void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
+
+
+char **ft_split_arg_list(char *input);
+char *ft_strtok_quoted(char *str, const char *delim);
+
 
 #endif

@@ -12,11 +12,11 @@ t_env	*ft_envlist_duplicate(t_env **envlist)
 		return (NULL);
 	while (list != NULL)
 	{
-		new = dup_node(list->var, list->value);
+		new = ft_duplicate_node(list->var, list->value);
 		if (copy == NULL)
 			copy = new;
 		else
-			add_to_list(&copy, new);
+			ft_add_to_list(&copy, new);
 		list = list->next;
 	}
 	return (copy);

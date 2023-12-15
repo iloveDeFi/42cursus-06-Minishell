@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	exit(t_command *command)
+/* void	exit(t_command *command)
 {
 	int	exit_code;
 
@@ -23,3 +23,4 @@ void	exit(t_command *command)
 	else
 		exit(0);
 }
+ */

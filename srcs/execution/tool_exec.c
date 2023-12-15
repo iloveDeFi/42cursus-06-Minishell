@@ -1,4 +1,4 @@
-#include "minishell"
+#include "minishell.h"
 
 void free_split(char **arr)
 {
@@ -37,6 +37,7 @@ t_env *ft_copy_env_list(t_env *src)
     return new_list;
 }
 
+// Modifier la fonction create_node2 dans tool_exec.c
 t_env *create_node2(char *var, char *value)
 {
     t_env *new_node;
@@ -45,12 +46,13 @@ t_env *create_node2(char *var, char *value)
     if (new_node)
     {
         new_node->var = ft_strdup(var);
-        new_node->value = ft_strdup(value);
+        new_node->value = ft_strdup(value); // Assurez-vous que value est une chaîne de caractères
         new_node->next = NULL;
         return new_node;
     }
     return NULL;
 }
+
 
 
 char *ft_strjoin_free(char const *s1, char const *s2, int free_s1)

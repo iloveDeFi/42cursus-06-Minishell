@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-/*
 int	change_directory(const char *path)
 {
 	char	*pwd;
@@ -18,7 +17,7 @@ int	change_directory(const char *path)
 		return (-1);
 	}
 }
-*/
+
 
 int	cd(char **arguments)
 {

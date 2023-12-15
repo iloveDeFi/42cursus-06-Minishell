@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/13 16:17:42 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/15 12:32:57 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
 
     while (token != NULL) 
     {
-        t_command *newCommand = ft_create_node_by_type(token, COMMAND_NODE);
+        t_command *newCommand = ft_create_node_for_command();
         newCommand->name = ft_custom_strdup(token);
 
         if (newCommand == NULL) {
@@ -34,7 +34,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
         token = ft_strtok(NULL, " ");
 
         while (token != NULL && *token != '\0' && *token != ' ') {
-            ft_appendToListArg(newCommand, commandList);
+            ft_appendToListArg(newCommand);
             token = ft_strtok(NULL, " ");
         }
 
@@ -52,8 +52,6 @@ int ft_split_arg(t_commandList *commandList, char *input)
     return commandList->length;
 }
 
-
-
 int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
     ft_initialize_commandList(commandList);
@@ -69,11 +67,11 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
                 ft_execute_builtin(command, envList);
             } 
             else if (command->name[0] == '.'|| command->name[0] == '/') {
-                ft_execute_command_with_path(command->name, commandList, *envList);
+                ft_execute_command_with_path(command);
             }
             else 
             {
-                ft_execute_external_command(command, commandList, *envList);
+                ft_execute_external_command(command, commandList);
                 printf("Executing external command:\n");
             }
         } 

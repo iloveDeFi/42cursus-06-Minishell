@@ -4,7 +4,7 @@ int	check_args(char *name)
 {
 	if (!ft_check_wrong_char(name))
 		return (0);
-	if (!ft_only_digit(name))
+	if (!ft_is_only_digit(name))
 		return (0);
 	return (1);
 }
@@ -34,17 +34,17 @@ int	ft_check_wrong_char(char *str)
 	return (1);
 }
 
-int	export_func(t_env **envlist, t_command *cmd)
+int	ft_export(t_env **envlist, t_command *cmd)
 {
 	if (cmd->name != NULL && cmd->args != NULL && cmd->args[0] != NULL)
 	{
 		if (!check_args(cmd->args[0]))
 			return (ft_error_export("export: ", cmd->args[0],
 					": not a valid identifier", 1));
-		if (!add_var_to_list(envlist, cmd->args[0]))
+		if (!ft_add_var_to_list(envlist, cmd->args[0]))
 			return (-1);
 	}
 	else
-		print_export_list(envlist);
+		ft_print_export_list(envlist);
 	return (1);
 }

@@ -14,6 +14,18 @@ void ft_free_list(t_commandList  *head)
     }
 }
 
+void	ft_free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
 void ft_delete_list(t_env *envlist)
 {
 	t_env	*tmp;
@@ -46,6 +58,15 @@ void ft_free_node(t_command  *node)
 
         free(node);
     }
+}
+
+void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str)
+{
+	free(tmp->value);
+	tmp->value = ft_strdup(str);
+	free(new_node->var);
+	free(new_node->value);
+	free(new_node);
 }
 
 

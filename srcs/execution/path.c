@@ -8,20 +8,35 @@ void ft_execute_command_with_absolute_path(t_command *command)
     }
 }
 
-void ft_execute_command_with_relative_path(t_command *command){
+void ft_execute_command_with_relative_path(t_command *command) {
     char *current_path = getcwd(NULL, 0);
     if (current_path == NULL) {
         perror("Error executing relative path");
         exit(EXIT_FAILURE);
     }
-        
+
     char *full_path = malloc(strlen(current_path) + strlen(command->name) + 2);
     if (full_path == NULL) {
         perror("Erreur d'allocation de mémoire");
         exit(EXIT_FAILURE);
     }
 
-    sprintf(full_path, "%s/%s", current_path, command->name);
+    char *path_ptr = full_path;
+    while (*current_path != '\0') {
+        *path_ptr = *current_path;
+        path_ptr++;
+        current_path++;
+    }
+    *path_ptr = '/';
+    path_ptr++;
+
+    char *command_name = command->name;
+    while (*command_name != '\0') {
+        *path_ptr = *command_name;
+        path_ptr++;
+        command_name++;
+    }
+    *path_ptr = '\0';
 
     if (access(full_path, X_OK) == 0) {
         if (execve(full_path, command->args, NULL) == -1) {
@@ -29,17 +44,17 @@ void ft_execute_command_with_relative_path(t_command *command){
             exit(EXIT_FAILURE);
         }
     } else {
-        fprintf(stderr, "Command not found: %s\n", full_path);
-         exit(EXIT_FAILURE);
-    } 
+        // Utilisation de printf pour afficher le message d'erreur
+        printf("Command not found: %s\n", full_path);
+        exit(EXIT_FAILURE);
+    }
+
     free(current_path);
     free(full_path);
 }
 
-void ft_execute_command_with_path(t_command *command, t_commandList *commandList, t_envList *envList) {
-    char *current_path = NULL;
-    char *tmp_path = NULL;
-    char *full_path = NULL;
+
+void ft_execute_command_with_path(t_command *command) {
 
     if (command->name[0] == '/') {
         ft_execute_command_with_absolute_path(command);  
@@ -48,7 +63,7 @@ void ft_execute_command_with_path(t_command *command, t_commandList *commandList
     } 
 }
 
-char ft_lookfor_command_and_build_path(const char *path, t_commandList *commandList, t_env *env) {
+char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) {
     char *token;
     char fullPath[MAX_PATH_LENGTH];
 
@@ -59,9 +74,9 @@ char ft_lookfor_command_and_build_path(const char *path, t_commandList *commandL
     {
         while (currentCommand != NULL) 
         {
-            ft_strcpy(fullPath, token);
-            ft_strcat(fullPath, "/");
-            ft_strcat(fullPath, currentCommand->name);
+            strcpy(fullPath, token);
+            strcat(fullPath, "/");
+            strcat(fullPath, currentCommand->name);
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
@@ -73,5 +88,9 @@ char ft_lookfor_command_and_build_path(const char *path, t_commandList *commandL
         // go to next token bro
         token = ft_strtok(NULL, ":");
     }
+
+    // Si la commande n'est pas trouvée, retourner NULL
+    return NULL;
 }
+ 
 

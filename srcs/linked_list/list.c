@@ -33,6 +33,7 @@ int ft_get_list_size(t_commandList  *head)
     return size;
 }
 
+// Dans le fichier source linked_list.c (ou le fichier approprié)
 t_env	*ft_get_in_list(char *var, t_env **envlist)
 {
 	t_env	*tmp;
@@ -46,6 +47,22 @@ t_env	*ft_get_in_list(char *var, t_env **envlist)
 		return (tmp);
 	return (NULL);
 }
+
+int	ft_count_list(t_env **list)
+{
+	int		i;
+	t_env	*tmp;
+
+	tmp = *list;
+	i = 0;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
+}
+
 
 // adapt casting depending data type to store in list
 void ft_printGeneric(void *data)

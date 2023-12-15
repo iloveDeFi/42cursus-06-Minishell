@@ -17,37 +17,46 @@ t_command *ft_create_node_for_command(void)
     new_node_command->prev = NULL;
     new_node_command->tokenType = NOT;
     new_node_command->state = NORMAL;
-    *node = (void *)new_node_command;
     
-    return newNode;
+    return new_node_command;
 }
 
-t_command *ft_create_node_for_envVar(void)
+t_env	*ft_create_node_for_envVar(char *var_array)
 {
-    t_env *new_node_env;
-    
-    new_node_env = (t_env *)malloc(sizeof(t_env));
-    
-    if (new_node_env == NULL) {
-        fprintf(stderr, "Chaos, memory allocation failed with new node\n");
+	t_env	*new_node;
+	int		i;
+
+	new_node = malloc(sizeof(t_env));
+	i = 0;
+	if (new_node)
+	{
+		while (var_array[i] != '=' && var_array[i] != '\0')
+			i++;
+		new_node->var = ft_substr(var_array, 0, i);
+
+		if (var_array[i] == '\0')
+			new_node->value = ft_strdup("");
+		else
+		{
+			i++; // Ignorer le caractère '='
+			new_node->value = ft_strdup(var_array + i);
+		}
+
+		new_node->next = NULL;
+		return new_node;
+	}
+	return NULL;
+}
+
+void *ft_create_node_by_type(void *node, t_node_type type, char *var_array) 
+{
+    if (node == NULL) {
         exit(EXIT_FAILURE);
     }
-    new_node_env->name = NULL;
-    new_node_env->value = NULL;
-    new_node_env->next = NULL;
-    new_node_env->prev = NULL;
-    *node = (void *)new_node_envVar;
-    
-    return newNode;
-}
-
-void ft_create_node_by_type(void **node, t_node_type type) {
-    if (node == NULL) {
-        return;
-    }
     if (type == ENV_NODE) {
-        ft_create_node_for_enVar();
+        ft_create_node_for_envVar(var_array);
     } else if (type == COMMAND_NODE) {
         ft_create_node_for_command();
     }
-}
+    return NULL;
+} 
