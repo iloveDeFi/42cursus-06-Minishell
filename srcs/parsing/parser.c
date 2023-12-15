@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/15 12:32:57 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/15 13:27:52 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,18 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
             t_command *command = commandList->head;
             if (ft_is_builtin(command)) 
             {
-                printf("Parsing succeeded. Commands:\n");
+                printf("Builting. Parsing succeeded. Commands:\n");
                 ft_execute_builtin(command, envList);
             } 
-            else if (command->name[0] == '.'|| command->name[0] == '/') {
+            else if (command->name[0] == '.'|| command->name[0] == '/') 
+            {
+                printf("Relative or absolute path detected.\n");
                 ft_execute_command_with_path(command);
             }
             else 
             {
+                printf("Call ft_execute_external_command:\n");
                 ft_execute_external_command(command, commandList);
-                printf("Executing external command:\n");
             }
         } 
         else 

@@ -35,9 +35,10 @@
 } */
 
 
-  void ft_execute_external_command(t_command *command, t_commandList *commandList)
+void ft_execute_external_command(t_command *command, t_commandList *commandList)
 {
-    char *full_path = ft_lookfor_command_and_build_path(command->name, commandList);
+    char *path = getenv("PATH");
+    char *full_path = ft_lookfor_command_and_build_path(path, commandList);
 
     if (full_path != NULL)
     {
@@ -46,7 +47,7 @@
 
         pid = fork();
         if (pid == 0){
-            if (execve(full_path, &command->name, NULL) == -1) {
+            if (execve(full_path, &(command->name), NULL) == -1) {
                 perror("Erreur lors de l'exécution de la commande");
                 exit(EXIT_FAILURE);
             }

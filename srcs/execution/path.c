@@ -74,13 +74,13 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
     {
         while (currentCommand != NULL) 
         {
-            strcpy(fullPath, token);
-            strcat(fullPath, "/");
-            strcat(fullPath, currentCommand->name);
+            ft_strcpy(fullPath, token);
+            ft_strcat(fullPath, "/");
+            ft_strcat(fullPath, currentCommand->name);
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
-                return strdup(fullPath);
+                return ft_strdup(fullPath);
             }
             currentCommand = currentCommand->next;
         }
@@ -89,7 +89,7 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
         token = ft_strtok(NULL, ":");
     }
 
-    // Si la commande n'est pas trouvée, retourner NULL
+    printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;
 }
  
