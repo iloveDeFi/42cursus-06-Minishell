@@ -50,6 +50,7 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList)
             if (execve(full_path, &(command->name), NULL) == -1) {
                 perror("Erreur lors de l'exécution de la commande");
                 exit(EXIT_FAILURE);
+                free(full_path);
             }
         }
         else if (pid == -1) {

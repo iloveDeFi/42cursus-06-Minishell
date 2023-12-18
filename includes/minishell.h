@@ -171,12 +171,13 @@ int         main(int ac, char **av, char **envp);
 void        ft_write_inputrc(void);
 void	    ft_exit_shell(t_mini *shell);
 
-// MINISHELL
+// MINISHELL TO DO 6 FUNCTIONS HERE
 void	    ft_exit_shell(t_mini *shell);
+//void        ft_initialize_env_list(t_envList *envList); 
 void        ft_initialize_commandList(t_commandList *commandList);
-t_env       *ft_initialize_environment(char **env);
+t_env       *ft_initialize_envList(char **env);
 void	    ft_initialize_minishell(t_mini *shell, t_env **env);
-t_env       *ft_initialize_all(t_mini *shell, char **envp);
+int       *ft_initialize_all(t_mini *shell, char **envp);
 // history & prompt
 void	    ft_custom_prompt_msg(t_mini *shell);
 void        ft_manage_history(t_mini *shell, const char *input);

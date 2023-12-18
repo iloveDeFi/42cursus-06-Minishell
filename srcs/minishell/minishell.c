@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/12/15 00:06:54 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/15 15:38:28 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void ft_exit_shell(t_mini *shell)
     if (shell->av)
         free(shell->av);
 }
+
+// TO DO ENVLIST OK ??
+/*void ft_initialize_env_list(t_envList *envList)
+{
+    envList->length = 0;
+    envList->head = NULL;
+    envList->tail = NULL;
+}
+*/
 
 void ft_initialize_commandList(t_commandList *commandList) 
 {
@@ -30,7 +39,7 @@ void ft_initialize_commandList(t_commandList *commandList)
     commandList->length = 0;
 }
 
-t_env *ft_initialize_environment(char **env)
+t_env *ft_initialize_envList(char **env)
 {
     t_env *envList = NULL;
     t_env *new_node;
@@ -73,13 +82,18 @@ void ft_initialize_minishell(t_mini *shell, t_env **env)
     ft_write_inputrc();
 }
 
-t_env *ft_initialize_all(t_mini *shell, char **envp)
+int *ft_initialize_all(t_mini *shell, char **envp)
 {
     t_commandList commandList;
-    t_env *envList = ft_initialize_environment(envp);
+    t_env *envList;
+    
+    // envList = ft_initialize_envList(envp);
 
+    ft_initialize_envList(envp);
     ft_initialize_minishell(shell, &envList);
     ft_initialize_commandList(&commandList);
+    //ft_initialize_env_list(t_envList *envList);
 
-    return envList;
+    printf("commandList & envList & minishell are initialized\n");
+    return 0;
 }

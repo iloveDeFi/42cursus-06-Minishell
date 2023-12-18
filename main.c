@@ -40,13 +40,12 @@ int main(int ac, char **av, char **envp)
     t_commandList commandList;
     
     (void)av;
-    envList = NULL;
     if (ac > 1) {
         fprintf(stderr, "CHAOS, there are too many arguments\n");
         return 1;
     }
     
-    envList = ft_initialize_all(&shell, envp);
+    ft_initialize_all(&shell, envp);
 
     while (1) 
     {

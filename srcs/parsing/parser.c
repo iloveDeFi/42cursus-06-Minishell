@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/15 13:27:52 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/15 15:40:05 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int ft_split_arg(t_commandList *commandList, char *input)
 
 int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
-    ft_initialize_commandList(commandList);
+    // TO DO already init ?
+    // ft_initialize_commandList(commandList);
     if (ft_split_arg(commandList, input) > 0) 
     {
         if (commandList != NULL && commandList->head != NULL) 
