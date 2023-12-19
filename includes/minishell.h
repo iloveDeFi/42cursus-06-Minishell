@@ -30,7 +30,7 @@
 # define PWD "pwd"
 # define UNSET "unset"
 
-typedef enum e_token
+typedef enum e_token_type
 {
 	PIPE,     // |
 	HEREDOC,  // <<
@@ -42,8 +42,12 @@ typedef enum e_token
 	OUT,      // >
 	IN,       // <
 	NOT,      // string
-	END,      // end of cmd          
-} t_token;
+	END,      // end of cmd
+    COMMAND_TYPE,
+    ARGUMENT_TYPE,
+    OPTION_TYPE,
+    UNKNOWN_TYPE  
+} t_token_type;
 
 typedef enum e_quote 
 {
@@ -78,7 +82,7 @@ typedef struct s_command
     struct s_command *prev;
     int		fdread;
 	int		fdwrite;
-    t_token tokenType;
+    t_token_type tokenType;
     t_quote state;
 } t_command;
 
@@ -224,26 +228,27 @@ void        *ft_get_last_element_in_list(t_commandList *head);
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 
 // PARSING
-int         ft_split_arg(t_commandList *commandList, char *input);
-int         ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);
-char        *ft_strtrim_with_quotes(char *str);
-char        *ft_strcpy(char *dest, const char *src);
-char        *ft_strndup(const char *s, size_t n);
-int	        ft_is_white_space(char c);
-int         ft_is_pipe_or_redir(char c);
-int			ft_is_quote(char c);
-void		ft_tokenize_with_quotes(char *input);
-int			ft_check_quotes_error(void);
-void        ft_follow_quotes_state(t_command *cmd);
-void        ft_redirect_stdout(t_command *command, char *input);
-void        ft_redirect_stdin(t_command *command, char *input);
-void        ft_parse_pipes(t_command *commands, char *input);
-int         ft_is_valid_env_char(char c);
-int         ft_calculate_new_length(const char *cmd, int last_exit_status);
-char        *ft_getenv_var_value(const char *name);
-char        *ft_expand_env_variables(t_command *command, int last_exit_status);
-t_Bool      ft_check_only_spaces(const char *str);
-char        *ft_extract_quoted_argument(char *input);
+t_token_type    ft_allocate_token_type(char *token);
+int             ft_split_arg(t_commandList *commandList, char *input);
+int             ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);
+char            *ft_strtrim_with_quotes(char *str);
+char            *ft_strcpy(char *dest, const char *src);
+char            *ft_strndup(const char *s, size_t n);
+int	            ft_is_white_space(char c);
+int             ft_is_pipe_or_redir(char c);
+int			    ft_is_quote(char c);
+void		    ft_tokenize_with_quotes(char *input);
+int			    ft_check_quotes_error(void);
+void            ft_follow_quotes_state(t_command *cmd);
+void            ft_redirect_stdout(t_command *command, char *input);
+void            ft_redirect_stdin(t_command *command, char *input);
+void            ft_parse_pipes(t_command *commands, char *input);
+int             ft_is_valid_env_char(char c);
+int             ft_calculate_new_length(const char *cmd, int last_exit_status);
+char            *ft_getenv_var_value(const char *name);
+char            *ft_expand_env_variables(t_command *command, int last_exit_status);
+t_Bool          ft_check_only_spaces(const char *str);
+char            *ft_extract_quoted_argument(char *input);
 
 // EXECUTION
 // builtins

@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void ft_parse_pipes(t_command *commands, char *input) {
+void ft_parse_pipes(t_command *commands, char *input) 
+{
     int i = 0;
     int cmdIndex = 0;
     int startIndex = 0;
