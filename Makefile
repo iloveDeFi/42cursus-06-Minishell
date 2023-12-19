@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2023/11/16 10:16:41 by bat              ###   ########.fr        #
+#    Updated: 2023/12/19 21:35:18 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -168,11 +168,11 @@ RM = rm -f
 all: $(NAME)
 
 # Jbelda
-#$(NAME): $(OBJS) libft/libft.a
-#	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
+$(NAME): $(OBJS) libft/libft.a
+	$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/usr/local/opt/readline/lib -lreadline -o $(NAME)
 
 # Baptiste
-$(NAME): $(OBJS) libft/libft.a
+#$(NAME): $(OBJS) libft/libft.a
 	#$(CC) $(CFLAGS) $(OBJS) -L./srcs/libft -lft -L/opt/homebrew/opt/readline/lib -lreadline -o $(NAME)
 
 libft/libft.a:
