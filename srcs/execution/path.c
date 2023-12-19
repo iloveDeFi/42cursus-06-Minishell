@@ -85,7 +85,7 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
             ft_strcat(fullPath, currentCommand->name);
             if (access(fullPath, X_OK) == 0) 
             {
-                printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
+                printf("Command '%s' found: '%s\n'", currentCommand->name, fullPath);
                 return ft_strdup(fullPath);
             }
             currentCommand = currentCommand->next;
@@ -94,7 +94,7 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
         // Go to next token bro
         token = ft_strtok(NULL, ":");
     }
-
+    printf("Command '%s\n' found: '%s\n'", currentCommand->name, fullPath);
     printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;
 }
