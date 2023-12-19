@@ -134,6 +134,7 @@ typedef struct s_execute
     struct s_execute *next;
 } t_execute;
 
+
 //typedef t_list t_pipesList;
 
 typedef struct s_global
@@ -306,6 +307,7 @@ void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
 
 char **ft_split_arg_list(char *input);
 char *ft_strtok_quoted(char *str, const char *delim);
+void ft_execute_command_with_path(t_command *command);
 
 
 #endif

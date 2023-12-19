@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/15 13:27:52 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/19 11:17:21 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int ft_split_arg(t_commandList *commandList, char *input)
 {
     char *token = ft_strtok(input, " ");
 
-    if (token == NULL) {
+    if (token == NULL) 
+    {
         fprintf(stderr, "Error: Empty command\n");
         return 0;
     }
@@ -26,31 +27,34 @@ int ft_split_arg(t_commandList *commandList, char *input)
         t_command *newCommand = ft_create_node_for_command();
         newCommand->name = ft_custom_strdup(token);
 
-        if (newCommand == NULL) {
+        if (newCommand == NULL) 
+        {
             perror("CHAOS, error allocating memory");
             ft_destroy_command(commandList);
             exit(EXIT_FAILURE);
         }
-        token = ft_strtok(NULL, " ");
 
-        while (token != NULL && *token != '\0' && *token != ' ') {
-            ft_appendToListArg(newCommand);
-            token = ft_strtok(NULL, " ");
-        }
-
-        if (commandList->head == NULL) {
+        if (commandList->head == NULL) 
+        {
+            // Première commande dans la liste
             commandList->head = newCommand;
             commandList->tail = commandList->head;
         } 
-        else {
-            ft_appendToList(commandList, newCommand);
+        else 
+        {
+            // Ajoutez la commande à la fin de la liste
+            commandList->tail->next = newCommand;
             commandList->tail = commandList->tail->next;
         }
 
         commandList->length++;
+        token = ft_strtok(NULL, " ");
     }
+
     return commandList->length;
 }
+
+
 
 int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {

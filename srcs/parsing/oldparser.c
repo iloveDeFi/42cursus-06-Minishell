@@ -1,3 +1,84 @@
+/* int ft_split_arg(t_commandList *commandList, char *input) 
+{
+    char *token = ft_strtok(input, " ");
+
+    while (token != NULL) 
+    {
+        t_command *newCommand = ft_create_node_for_command();
+
+        newCommand->name = ft_strdup(token);
+
+        if (newCommand == NULL) 
+        {
+            perror("CHAOS, error allocating memory");
+            ft_destroy_command(commandList);
+            exit(EXIT_FAILURE);
+        }
+        if (newCommand->name == NULL) 
+        {
+            perror("CHAOS, error allocating memory");
+            free(newCommand);
+            ft_destroy_command(commandList);
+            exit(EXIT_FAILURE);
+        }
+        if (commandList->head == NULL) 
+        {
+            commandList->head = newCommand;
+            commandList->tail = commandList->head;
+        } else 
+        {
+            ft_appendToList(commandList, newCommand);
+            commandList->tail = commandList->tail->next;
+        }
+        commandList->length++;
+        token = ft_strtok(NULL, " ");
+    }
+    return commandList->length;
+} 
+
+int ft_launch_parsing(t_commandList *commandList, char *input, t_env **envList) 
+{
+    ft_initialize_commandList(commandList);
+
+    if (ft_split_arg(commandList, input) > 0) 
+    {
+        if (commandList != NULL && commandList->head != NULL) 
+        {
+            ft_print_list(commandList, ft_print_command);
+            t_command *cmd = commandList->head;
+
+            // Utilisez la liste d'arguments directement à partir de ft_split_arg
+            cmd->args = commandList->head->args;
+
+            if (ft_is_builtin(cmd)) 
+            {
+                printf("Parsing succeeded. Commands:\n");
+                ft_execute_builtin(cmd, envList);
+            } 
+            else 
+                printf("Executing external command:\n");
+        } 
+        else 
+            fprintf(stderr, "Error: commandList or its head is NULL\n");
+        return 1;
+    } 
+    else 
+    {
+        perror("Parsing failed");
+        ft_destroy_command(commandList);  // Libération mémoire en cas d'échec
+        return 0;
+    }
+}
+ */
+
+
+
+
+
+
+
+
+
 /* #include "minishell.h"
 
 int ft_split_command(t_commandList *commandList, char *command, char *arguments) 
