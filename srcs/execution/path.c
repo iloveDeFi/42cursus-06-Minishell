@@ -8,7 +8,8 @@ void ft_execute_command_with_absolute_path(t_command *command)
     }
 }
 
-void ft_execute_command_with_relative_path(t_command *command) {
+void ft_execute_command_with_relative_path(t_command *command) 
+{
     char *current_path = getcwd(NULL, 0);
     if (current_path == NULL) {
         perror("Error executing relative path");
@@ -56,8 +57,10 @@ void ft_execute_command_with_relative_path(t_command *command) {
 void ft_execute_command_with_path(t_command *command) 
 {
 
-    if (command->name[0] == '/') 
-    {
+void ft_execute_command_with_path(t_command *command) 
+{
+
+    if (command->name[0] == '/') {
         ft_execute_command_with_absolute_path(command);  
     } else if (command->name[0] == '.') 
     {
@@ -67,11 +70,14 @@ void ft_execute_command_with_path(t_command *command)
 
 char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
 {
+char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
+{
     char *token;
     char fullPath[MAX_PATH_LENGTH];
 
     t_command *currentCommand = commandList->head;
 
+    // Faites une copie du chemin d'origine
     char *originalPath = ft_strdup(path);
 
     token = ft_strtok((char *)originalPath, ":");
@@ -85,15 +91,22 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
+                
+                // Réinitialisez le chemin après utilisation
+                free(originalPath);
                 return ft_strdup(fullPath);
             }
             currentCommand = currentCommand->next;
         }
         currentCommand = commandList->head;
-        // Go to next token bro
+        // Passez au jeton suivant
         token = ft_strtok(NULL, ":");
     }
 
+    // Restaurez le chemin d'origine après utilisation
+    free(originalPath);
+
+    printf("Command not found in PATH: %s\n", currentCommand->name);
     printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;
 }
