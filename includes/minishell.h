@@ -228,6 +228,8 @@ void        *ft_get_last_element_in_list(t_commandList *head);
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 
 // PARSING
+void            print_command(t_command *cmd);
+char            **ft_send_token_in_good_list(char *token, t_command *command);
 t_token_type    ft_allocate_token_type(char *token);
 int             ft_split_arg(t_commandList *commandList, char *input);
 int             ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);

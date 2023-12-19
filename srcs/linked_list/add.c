@@ -53,3 +53,25 @@ void ft_print_command(void *data)
     if (command != NULL) 
         printf("Command: %s\n", command->name);
 }
+
+void ft_append_to_argument_list(t_command *command, const char *arg) {
+    // Vérifier si args est vide ou non initialisé
+    if (command->args == NULL) {
+        command->args = (char **)malloc(sizeof(char *));
+        if (command->args == NULL) {
+            perror("Memory allocation failed");
+            exit(EXIT_FAILURE);
+        }
+        command->args[0] = ft_custom_strdup(arg);
+        command->argCount = 1;
+    } else {
+        // Réallouer de la mémoire pour contenir un nouvel argument
+        command->args = (char **)realloc(command->args, (command->argCount + 1) * sizeof(char *));
+        if (command->args == NULL) {
+            perror("Memory allocation failed");
+            exit(EXIT_FAILURE);
+        }
+        command->args[command->argCount] = ft_custom_strdup(arg);
+        command->argCount++;
+    }
+}

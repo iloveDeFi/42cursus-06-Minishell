@@ -6,11 +6,49 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 21:35:59 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/19 22:27:54 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_command(t_command *cmd) {
+    // Affichage du nom de la commande
+    printf("Command name: %s\n", cmd->name);
+
+    // Affichage des arguments
+    if (cmd->argCount > 0 && cmd->args != NULL) {
+        printf("Arguments:\n");
+        for (int i = 0; i < cmd->argCount; i++) {
+            printf("%d: %s\n", i + 1, cmd->args[i]);
+        }
+    } else {
+        printf("No arguments\n");
+    }
+}
+
+char **ft_send_token_in_good_list(char *token, t_command *command) 
+{
+    if (command->tokenType == COMMAND_TYPE) 
+    {
+        command->name = ft_custom_strdup(token);
+    } 
+    else if (command->tokenType == ARGUMENT_TYPE) 
+    {
+        ft_append_to_argument_list(command, token);
+        // Créer ou réallouer l'espace mémoire pour stocker les arguments
+        if (command->argCount == 0) {
+            command->args = malloc(sizeof(char *));
+        } else {
+            command->args = realloc(command->args, (command->argCount + 1) * sizeof(char *));
+        }
+        // Stocker le token dans args
+        command->args[command->argCount] = ft_custom_strdup(token);
+        command->argCount++;
+    }
+    return command->args; // Retourner la liste complète d'arguments
+}
+
 
 t_token_type ft_check_and_allocate_token_type(char *token, int tokenIndex) 
 {
@@ -50,7 +88,10 @@ int ft_split_arg(t_commandList *commandList, char *input)
         
         newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
         newCommand->name = ft_custom_strdup(token);
-        newCommand->args = ;
+        // TO DO FREE newCommand->args when not used anymore
+        newCommand->args = ft_send_token_in_good_list(token, newCommand);
+        
+        print_command(newCommand);
 
         switch(newCommand->tokenType) 
         {
