@@ -3,35 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 15:31:21 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/19 20:21:12 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_token_type ft_check_and_allocate_token_type(char *token, int tokenIndex) 
+{
+    if (tokenIndex == 0 && token[0] != '-') 
+    {
+        return COMMAND_TYPE;
+    }
+    else if (token[0] == '-') 
+    {
+        return OPTION_TYPE;
+    }
+    else 
+    {
+        return ARGUMENT_TYPE;
+    }
+}
+
 int ft_split_arg(t_commandList *commandList, char *input) 
 {
     char *token = ft_strtok(input, " ");
+    int tokenIndex = 0;
 
     if (token == NULL) 
     {
         fprintf(stderr, "Error: Empty command\n");
         return 0;
     }
-
     while (token != NULL) 
     {
         t_command *newCommand = ft_create_node_for_command();
-        newCommand->name = ft_custom_strdup(token);
-
         if (newCommand == NULL) 
         {
             perror("CHAOS, error allocating memory");
             ft_destroy_command(commandList);
             exit(EXIT_FAILURE);
+        }
+        
+        newCommand->name = ft_custom_strdup(token);
+        newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
+
+        switch(newCommand->tokenType) 
+        {
+            case COMMAND_TYPE:
+                printf("Token type: COMMAND\n");
+                break;
+            case ARGUMENT_TYPE:
+                printf("Token type: ARGUMENT\n");
+                break;
+            case OPTION_TYPE:
+                printf("Token type: OPTION\n");
+                break;
+            default:
+                printf("Unknown token type\n");
+                break;
         }
 
         if (commandList->head == NULL) 
@@ -42,13 +75,14 @@ int ft_split_arg(t_commandList *commandList, char *input)
         } 
         else 
         {
-            // Ajoutez la commande à la fin de la liste
+            // Ajouter la commande à la fin de la liste
             commandList->tail->next = newCommand;
             commandList->tail = commandList->tail->next;
         }
 
         commandList->length++;
         token = ft_strtok(NULL, " ");
+        tokenIndex++;
     }
 
     return commandList->length;
