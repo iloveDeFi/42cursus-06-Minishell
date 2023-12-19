@@ -173,7 +173,6 @@ void	    ft_exit_shell(t_mini *shell);
 
 // MINISHELL TO DO 6 FUNCTIONS HERE
 void	    ft_exit_shell(t_mini *shell);
-//void        ft_initialize_env_list(t_envList *envList); 
 void        ft_initialize_commandList(t_commandList *commandList);
 t_env       *ft_initialize_envList(char **env);
 void	    ft_initialize_minishell(t_mini *shell, t_env **env);
@@ -257,7 +256,6 @@ void    ft_destroy_command(t_commandList *commandList);
 void	ft_destroy_current_shell(t_mini *mini);
 // path
 char    *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
-void    ft_execute_command_with_path(t_command *command);
 void    ft_execute_command_with_relative_path(t_command *command);
 void    ft_execute_command_with_absolute_path(t_command *command);
 // tool_exec
