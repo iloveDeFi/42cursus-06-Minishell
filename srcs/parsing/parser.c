@@ -1,16 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 10:55:37 by bat              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
+
+void  ft_allocate_token_type(t_commandList *commandList, char *token)
+{
+    t_command *newCommand;
+    if (token == token[0])
+        newCommand->tokenType = TYPE_COMMAND;
+    else if (token > token[1])
+        newCommand->tokenType = TYPE_ARGUMENT;
+}
 
 int ft_split_arg(t_commandList *commandList, char *input) 
 {
@@ -25,7 +22,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
     {
         t_command *newCommand = ft_create_node_for_command();
         newCommand->name = ft_custom_strdup(token);
-
+        ft_check_token_type(token);
         if (newCommand == NULL) {
             perror("CHAOS, error allocating memory");
             ft_destroy_command(commandList);

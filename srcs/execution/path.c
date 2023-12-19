@@ -58,9 +58,11 @@ void ft_execute_command_with_relative_path(t_command *command)
 void ft_execute_command_with_path(t_command *command) 
 {
 
-    if (command->name[0] == '/') {
+    if (command->name[0] == '/') 
+    {
         ft_execute_command_with_absolute_path(command);  
-    } else if (command->name[0] == '.') {
+    } else if (command->name[0] == '.') 
+    {
         ft_execute_command_with_relative_path(command);   
     } 
 }

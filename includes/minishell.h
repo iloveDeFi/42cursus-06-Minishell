@@ -42,7 +42,10 @@ typedef enum e_token
 	OUT,      // >
 	IN,       // <
 	NOT,      // string
-	END,      // end of cmd          
+	END,      // end of cmd
+    TYPE_COMMAND,
+    TYPE_ARGUMENT,
+    TYPE_OPTION,         
 } t_token;
 
 typedef enum e_quote 
@@ -223,6 +226,7 @@ void        *ft_get_last_element_in_list(t_commandList *head);
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 
 // PARSING
+void        ft_allocate_token_type(t_commandList *commandList, char *token);
 int         ft_split_arg(t_commandList *commandList, char *input);
 int         ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);
 char        *ft_strtrim_with_quotes(char *str);
