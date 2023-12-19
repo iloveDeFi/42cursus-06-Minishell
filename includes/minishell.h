@@ -191,7 +191,7 @@ void        ft_init_terminal_settings(void);
 // LINKED LIST
 // add
 void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
-void        ft_appendToListArg(t_command *command);
+void        ft_appendToListArg(t_command *command, char *arg);
 void        ft_print_command(void *data);
 void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
 
@@ -308,6 +308,7 @@ void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
 char **ft_split_arg_list(char *input);
 char *ft_strtok_quoted(char *str, const char *delim);
 void ft_execute_command_with_path(t_command *command);
+char **ft_split_arg_list(char *input);
 
 
 #endif

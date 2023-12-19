@@ -39,7 +39,6 @@ int main(int ac, char **av, char **envp)
     t_env *envList;
     t_commandList commandList;
     
-    
     (void)av;
     if (ac > 1) {
         fprintf(stderr, "CHAOS, there are too many arguments\n");

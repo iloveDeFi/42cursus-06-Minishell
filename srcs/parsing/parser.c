@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 15:31:21 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/19 20:52:41 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
         fprintf(stderr, "Error: Empty command\n");
         return 0;
     }
-
-    while (token != NULL) 
+    while (token != NULL)
     {
         t_command *newCommand = ft_create_node_for_command();
         newCommand->name = ft_custom_strdup(token);
@@ -50,11 +49,8 @@ int ft_split_arg(t_commandList *commandList, char *input)
         commandList->length++;
         token = ft_strtok(NULL, " ");
     }
-
     return commandList->length;
 }
-
-
 
 int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
