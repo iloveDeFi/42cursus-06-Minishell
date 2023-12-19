@@ -8,8 +8,7 @@ void ft_execute_command_with_absolute_path(t_command *command)
     }
 }
 
-void ft_execute_command_with_relative_path(t_command *command) 
-{
+void ft_execute_command_with_relative_path(t_command *command) {
     char *current_path = getcwd(NULL, 0);
     if (current_path == NULL) {
         perror("Error executing relative path");
@@ -87,7 +86,6 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
-                free(originalPath);
                 return ft_strdup(fullPath);
             }
             currentCommand = currentCommand->next;
@@ -96,8 +94,7 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
         // Go to next token bro
         token = ft_strtok(NULL, ":");
     }
-    free(originalPath);
-    printf("Command not found in PATH: %s\n", currentCommand->name);
+
     printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;
 }
