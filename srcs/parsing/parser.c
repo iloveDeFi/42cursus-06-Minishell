@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 20:21:12 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/19 20:48:04 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int ft_split_arg(t_commandList *commandList, char *input)
         
         newCommand->name = ft_custom_strdup(token);
         newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
+        // newCommand->args = 
 
         switch(newCommand->tokenType) 
         {

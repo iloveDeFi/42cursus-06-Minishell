@@ -2,13 +2,15 @@
 
 void ft_execute_command_with_absolute_path(t_command *command)
 {
-    if (execve(command->name, command->args, NULL) == -1) {
+    if (execve(command->name, command->args, NULL) == -1)
+    {
             perror("Error executing absolute path");
             exit(EXIT_FAILURE);  
     }
 }
 
-void ft_execute_command_with_relative_path(t_command *command) {
+void ft_execute_command_with_relative_path(t_command *command) 
+{
     char *current_path = getcwd(NULL, 0);
     if (current_path == NULL) {
         perror("Error executing relative path");
@@ -31,19 +33,22 @@ void ft_execute_command_with_relative_path(t_command *command) {
     path_ptr++;
 
     char *command_name = command->name;
-    while (*command_name != '\0') {
+    while (*command_name != '\0') 
+    {
         *path_ptr = *command_name;
         path_ptr++;
         command_name++;
     }
     *path_ptr = '\0';
 
-    if (access(full_path, X_OK) == 0) {
+    if (access(full_path, X_OK) == 0) 
+    {
         if (execve(full_path, command->args, NULL) == -1) {
             perror("Erreur lors de l'exécution de la commande");
             exit(EXIT_FAILURE);
         }
-    } else {
+    } else 
+    {
         // Utilisation de printf pour afficher le message d'erreur
         printf("Command not found: %s\n", full_path);
         exit(EXIT_FAILURE);
@@ -56,9 +61,11 @@ void ft_execute_command_with_relative_path(t_command *command) {
 
 void ft_execute_command_with_path(t_command *command) {
 
-    if (command->name[0] == '/') {
+    if (command->name[0] == '/') 
+    {
         ft_execute_command_with_absolute_path(command);  
-    } else if (command->name[0] == '.') {
+    } else if (command->name[0] == '.') 
+    {
         ft_execute_command_with_relative_path(command);   
     } 
 }
