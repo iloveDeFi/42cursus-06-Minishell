@@ -72,7 +72,6 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
 
     t_command *currentCommand = commandList->head;
 
-    // Faites une copie du chemin d'origine
     char *originalPath = ft_strdup(path);
 
     token = ft_strtok((char *)originalPath, ":");
@@ -86,21 +85,16 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
-                
-                // Réinitialisez le chemin après utilisation
                 free(originalPath);
                 return ft_strdup(fullPath);
             }
             currentCommand = currentCommand->next;
         }
         currentCommand = commandList->head;
-        // Passez au jeton suivant
+        // Go to next token bro
         token = ft_strtok(NULL, ":");
     }
-
-    // Restaurez le chemin d'origine après utilisation
     free(originalPath);
-
     printf("Command not found in PATH: %s\n", currentCommand->name);
     printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;

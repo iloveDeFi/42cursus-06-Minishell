@@ -176,7 +176,7 @@ void	    ft_exit_shell(t_mini *shell);
 void        ft_initialize_commandList(t_commandList *commandList);
 t_env       *ft_initialize_envList(char **env);
 void	    ft_initialize_minishell(t_mini *shell, t_env **env);
-int       *ft_initialize_all(t_mini *shell, char **envp);
+int         *ft_initialize_all(t_mini *shell, char **envp);
 // history & prompt
 void	    ft_custom_prompt_msg(t_mini *shell);
 void        ft_manage_history(t_mini *shell, const char *input);
@@ -258,6 +258,8 @@ void	ft_destroy_current_shell(t_mini *mini);
 char    *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 void    ft_execute_command_with_relative_path(t_command *command);
 void    ft_execute_command_with_absolute_path(t_command *command);
+void    ft_execute_command_with_path(t_command *command);
+
 // tool_exec
 char    *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
 t_env   *create_node2(char *var, char *value);
