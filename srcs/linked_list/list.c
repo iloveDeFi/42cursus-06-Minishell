@@ -8,7 +8,6 @@ int ft_is_empty_list(t_commandList    *head)
         return 0;
 }
 
-
 int	ft_is_in_list(char	*var, t_env **envlist)
 {
 	t_env	*tmp;
@@ -63,11 +62,4 @@ int	ft_count_list(t_env **list)
 	return (i);
 }
 
-
-// adapt casting depending data type to store in list
-void ft_printGeneric(void *data)
-{
-    char *str = (char *)data;
-    printf("%s\n", str);
-}
 

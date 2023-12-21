@@ -1,5 +1,28 @@
 #include "minishell.h"
 
+void ft_add_to_list(t_env **envlist, t_env *new_node)
+{
+    if (!envlist || !new_node)
+        return;
+
+    new_node->next = *envlist;
+    *envlist = new_node;
+}
+
+int	ft_add_envVar_to_list(t_env **envlist, char *args)
+{
+	t_env	*new_node;
+
+	new_node = ft_create_node(args);
+	if (!new_node)
+		return (0);
+	if (!ft_is_in_lst(new_node->var, envlist))
+		ft_add_to_list(envlist, new_node);
+	else
+		ft_replace_in_list(new_node, envlist);
+	return (1);
+}
+
 void ft_appendToList(t_commandList *commandList, t_command *newCommand) 
 {
     if (commandList->tail == NULL) 
@@ -35,39 +58,26 @@ void ft_appendToListArg(t_command *command)
     command->argCount = 1;
 }
 
-void ft_print_list(t_commandList *head, void (*printFunction)(void *data)) 
+void ft_append_to_argument_list(t_command *command, const char *arg) 
 {
-    if (head == NULL || head->head == NULL) 
-        return;
-    t_command *current = head->head;
-    while (current != NULL) 
-    {
-        printFunction(current);
-        current = current->next;
-    }
-}
-
-void ft_print_command(void *data) 
-{
-    t_command *command = (t_command *)data;
-    if (command != NULL) 
-        printf("Command: %s\n", command->name);
-}
-
-void ft_append_to_argument_list(t_command *command, const char *arg) {
     // Vérifier si args est vide ou non initialisé
-    if (command->args == NULL) {
+    if (command->args == NULL) 
+    {
         command->args = (char **)malloc(sizeof(char *));
-        if (command->args == NULL) {
+        if (command->args == NULL) 
+        {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
         }
         command->args[0] = ft_custom_strdup(arg);
         command->argCount = 1;
-    } else {
+    } 
+    else 
+    {
         // Réallouer de la mémoire pour contenir un nouvel argument
         command->args = (char **)realloc(command->args, (command->argCount + 1) * sizeof(char *));
-        if (command->args == NULL) {
+        if (command->args == NULL) 
+        {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
         }

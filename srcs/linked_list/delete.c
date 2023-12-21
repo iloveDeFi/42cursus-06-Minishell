@@ -1,0 +1,39 @@
+#include "minishell.h"
+
+void ft_delete_list(t_env *envlist)
+{
+	t_env	*tmp;
+	t_env	*node;
+
+	tmp = envlist;
+	if (envlist == NULL)
+		return ;
+	while (tmp != NULL)
+	{
+		free(tmp->var);
+		free(tmp->value);
+		node = tmp->next;
+		free(tmp);
+		tmp = node;
+	}
+}
+
+void ft_delete_node(t_commandList **head, t_command *node)
+{
+    if (*head == NULL || node == NULL)
+        return;
+    
+    if ((*head)->head == node)
+        (*head)->head = node->next;
+
+    if (node->next != NULL)
+        node->next->prev = node->prev;
+
+    if (node->prev != NULL)
+        node->prev->next = node->next;
+
+    node->prev = NULL;
+    node->next = NULL;
+
+    free(node);
+}

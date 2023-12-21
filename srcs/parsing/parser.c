@@ -6,23 +6,26 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 22:27:54 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/20 16:01:55 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_command(t_command *cmd) {
-    // Affichage du nom de la commande
-    printf("Command name: %s\n", cmd->name);
+void print_command(t_command *cmd) 
+{
+    printf("Command name from print_command : %s\n", cmd->name);
 
-    // Affichage des arguments
-    if (cmd->argCount > 0 && cmd->args != NULL) {
+    if (cmd->argCount > 0 && cmd->args != NULL) 
+    {
         printf("Arguments:\n");
-        for (int i = 0; i < cmd->argCount; i++) {
+        for (int i = 0; i < cmd->argCount; i++) 
+        {
             printf("%d: %s\n", i + 1, cmd->args[i]);
         }
-    } else {
+    }
+    else 
+    {
         printf("No arguments\n");
     }
 }
@@ -32,14 +35,36 @@ char **ft_send_token_in_good_list(char *token, t_command *command)
     if (command->tokenType == COMMAND_TYPE) 
     {
         command->name = ft_custom_strdup(token);
+        /*
+        t_commandList *commandList
+        if (commandList->head == NULL) 
+        {
+            // Première commande dans la liste
+            commandList->head = command;
+            commandList->tail = commandList->head;
+        } 
+        else 
+        {
+            // Ajouter la commande à la fin de la liste
+            commandList->tail->next = command;
+            commandList->tail = commandList->tail->next;
+        }
+
+        commandList->length++;
+        token = ft_strtok(NULL, " ");
+        // tokenIndex++;
+        */
     } 
     else if (command->tokenType == ARGUMENT_TYPE) 
     {
         ft_append_to_argument_list(command, token);
         // Créer ou réallouer l'espace mémoire pour stocker les arguments
-        if (command->argCount == 0) {
+        if (command->argCount == 0) 
+        {
             command->args = malloc(sizeof(char *));
-        } else {
+        } 
+        else 
+        {
             command->args = realloc(command->args, (command->argCount + 1) * sizeof(char *));
         }
         // Stocker le token dans args
@@ -87,28 +112,9 @@ int ft_split_arg(t_commandList *commandList, char *input)
         }
         
         newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
-        newCommand->name = ft_custom_strdup(token);
         // TO DO FREE newCommand->args when not used anymore
         newCommand->args = ft_send_token_in_good_list(token, newCommand);
-        
-        print_command(newCommand);
-
-        switch(newCommand->tokenType) 
-        {
-            case COMMAND_TYPE:
-                printf("Token type: COMMAND\n");
-                break;
-            case ARGUMENT_TYPE:
-                printf("Token type: ARGUMENT\n");
-                break;
-            case OPTION_TYPE:
-                printf("Token type: OPTION\n");
-                break;
-            default:
-                printf("Unknown token type\n");
-                break;
-        }
-
+        newCommand->name = ft_custom_strdup(token);
         if (commandList->head == NULL) 
         {
             // Première commande dans la liste
@@ -125,6 +131,26 @@ int ft_split_arg(t_commandList *commandList, char *input)
         commandList->length++;
         token = ft_strtok(NULL, " ");
         tokenIndex++;
+        
+        // print_command(newCommand);
+        print_command_list(commandList);
+
+
+        switch(newCommand->tokenType) 
+        {
+            case COMMAND_TYPE:
+                printf("Token type: COMMAND\n");
+                break;
+            case ARGUMENT_TYPE:
+                printf("Token type: ARGUMENT\n");
+                break;
+            case OPTION_TYPE:
+                printf("Token type: OPTION\n");
+                break;
+            default:
+                printf("Unknown token type\n");
+                break;
+        }
     }
 
     return commandList->length;

@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
         return 1;
     }
     envList = NULL;
-    envList = ft_initialize_environment(envp);
+    //envList = ft_initialize_environment(envp);
     
     ft_initialize_all(&shell, envp);
 

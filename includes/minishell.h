@@ -194,38 +194,48 @@ void        ft_init_terminal_settings(void);
 
 // LINKED LIST
 // add
+void        ft_add_to_list(t_env **envlist, t_env *new_node);
+int	        ft_add_envVar_to_list(t_env **envlist, char *args);
 void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
 void        ft_appendToListArg(t_command *command);
-void        ft_print_command(void *data);
-void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
-
-// clean
+void        ft_append_to_argument_list(t_command *command, const char *arg);
+// free
 void        ft_free_list(t_commandList  *head);
-void        ft_delete_list(t_env *envlist);
+void	    ft_free_array(char **array);
 void        ft_free_node(t_command  *node);
-void        ft_delete_node(t_commandList **head, t_command *node);
+void        ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
 // create
 t_command   *ft_create_node_for_command(void);
 t_env	    *ft_create_node_for_envVar(char *var_array);
 void        *ft_create_node_by_type(void *node, t_node_type type, char *var_array);
-t_env	    *create_node(char *var_array);
+// delete
+void        ft_delete_list(t_env *envlist);
+void        ft_delete_node(t_commandList **head, t_command *node);
 // duplicate
+t_env	    *ft_envlist_duplicate(t_env **envlist);
 t_env	    *ft_duplicate_node(char *name, char *value);
 char        **ft_env_duplicate(char **envp);
 // edit
-int	        ft_add_envVar_to_list(t_env **envlist, char *args);
+void        ft_replace_in_list(t_env *new_node, t_env **envlist);
 void        ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*callback)(void *data));
 int         ft_compareString(void *data, void *target);
 // list
 int         ft_is_empty_list(t_commandList    *head);
+int	        ft_is_in_list(char	*var, t_env **envlist);
 int         ft_get_list_size(t_commandList  *head);
-void        ft_printGeneric(void *data);
+t_env	    *ft_get_in_list(char *var, t_env **envlist);
+int	        ft_count_list(t_env **list);
 // node
 t_command   *ft_get_previous_node(t_commandList  *head, t_command  *node);
 t_command   *ft_find_node(t_commandList  *head, void *target);
 void	    ft_swap_nodes(t_env *tmp);
 void        *ft_get_last_element_in_list(t_commandList *head);
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
+// print
+void        ft_print_command(void *data);
+void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
+void        ft_printGeneric(void *data);
+void        print_command_list(t_commandList *commandList);
 
 // PARSING
 void            print_command(t_command *cmd);
