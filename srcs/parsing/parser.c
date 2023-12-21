@@ -6,29 +6,13 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/20 16:01:55 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/21 13:03:39 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_command(t_command *cmd) 
-{
-    printf("Command name from print_command : %s\n", cmd->name);
 
-    if (cmd->argCount > 0 && cmd->args != NULL) 
-    {
-        printf("Arguments:\n");
-        for (int i = 0; i < cmd->argCount; i++) 
-        {
-            printf("%d: %s\n", i + 1, cmd->args[i]);
-        }
-    }
-    else 
-    {
-        printf("No arguments\n");
-    }
-}
 
 char **ft_send_token_in_good_list(char *token, t_command *command) 
 {
