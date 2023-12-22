@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/22 15:42:06 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/22 20:55:57 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,11 @@ int ft_split_arg(t_commandList *commandList, char *input)
         //newCommand->args = ft_edit_args_argument_value(newCommand->args, token, newCommand->argCount);
         if (commandList->head == NULL) 
         {
-            // Première commande dans la liste
             commandList->head = newCommand;
             commandList->tail = commandList->head;
         } 
         else 
         {
-            // Ajouter la commande à la fin de la liste
             commandList->tail->next = newCommand;
             commandList->tail = commandList->tail->next;
         }
@@ -123,9 +121,8 @@ int ft_split_arg(t_commandList *commandList, char *input)
         commandList->length++;
         token = ft_strtok(NULL, " ");
         tokenIndex++;
-        
         // print_command(newCommand);
-        ft_print_command_list(commandList);
+        //print_command_list(commandList);
     }
 
     return commandList->length;
@@ -140,21 +137,21 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
     {
         if (commandList != NULL && commandList->head != NULL) 
         {
-            ft_print_list(commandList, ft_print_command);
+            // ft_print_list(commandList, ft_print_command);
             t_command *command = commandList->head;
             if (ft_is_builtin(command)) 
             {
-                printf("Parsing succeeded. Command is a builtin. ft_execute_builtin\n");
+                printf("Builtin detected. Calling ft_execute_builtin.\n");
                 ft_execute_builtin(command, envList);
             } 
             else if (command->name[0] == '.'|| command->name[0] == '/') 
             {
-                printf("Relative or absolute path detected.\n");
+                printf("Relative or absolute path detected. Calling ft_execute_command_with_path.\n");
                 ft_execute_command_with_path(command);
             }
             else 
             {
-                printf("Call ft_execute_external_command:\n");
+                printf("Calling ft_execute_external_command.\n");
                 ft_execute_external_command(command, commandList);
             }
         } 
@@ -166,7 +163,7 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
     } 
     else 
     {
-        perror("Parsing failed");
+        perror("Parsing failed in ft_split_arg");
         ft_destroy_command(commandList);
         return 0;
     }

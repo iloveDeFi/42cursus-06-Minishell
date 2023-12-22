@@ -70,7 +70,6 @@ typedef enum node_type {
 
 
 // Structure générique pour une liste
-
 typedef struct s_command
 {
     void *data;
@@ -194,6 +193,8 @@ void        ft_init_terminal_settings(void);
 
 // LINKED LIST
 // add
+void        ft_add_to_list(t_env **envlist, t_env *new_node);
+int	        ft_add_envVar_to_list(t_env **envlist, char *args);
 void        ft_add_to_list(t_env **envlist, t_env *new_node);
 int	        ft_add_envVar_to_list(t_env **envlist, char *args);
 void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
