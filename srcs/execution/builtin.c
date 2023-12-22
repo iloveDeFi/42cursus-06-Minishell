@@ -23,7 +23,7 @@ int	ft_execute_builtin(t_command *cmd, t_env **envList)
 	t_command	export_command;
 
 	if (ft_strcmp(cmd->name, "cd") == 0)
-		return (cd(cmd->args));
+		return (cd(cmd));
 	else if (ft_strcmp(cmd->name, "echo") == 0)
 		return (echo(cmd));
 	else if (ft_strcmp(cmd->name, "env") == 0)

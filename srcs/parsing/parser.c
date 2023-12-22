@@ -6,7 +6,7 @@
 /*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/19 21:44:15 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/22 15:21:41 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,73 +18,122 @@ t_token_type ft_check_and_allocate_token_type(char *token, int tokenIndex)
     {
         return COMMAND_TYPE;
     }
-    else if (token[0] == '-') 
-    {
-        return OPTION_TYPE;
-    }
     else 
     {
         return ARGUMENT_TYPE;
     }
 }
 
-int ft_split_arg(t_commandList *commandList, char *input) 
+void process_command(t_commandList *commandList, char *token) 
 {
-    char *token = ft_strtok(input, " ");
-    int tokenIndex = 0;
-
-    if (token == NULL) 
+    t_command *command = ft_create_node_for_command();
+    if (command == NULL) 
     {
-        fprintf(stderr, "Error: Empty command\n");
-        return 0;
+        perror("CHAOS, error allocating memory");
+        ft_destroy_command(commandList);
+        exit(EXIT_FAILURE);
     }
-    while (token != NULL) 
+
+    command->name = ft_strdup(token);
+    command->tokenType = COMMAND_TYPE;
+
+    // Aucune allocation initiale pour le tableau d'arguments
+    command->args = NULL;
+
+    if (commandList->head == NULL) 
     {
-        t_command *newCommand = ft_create_node_for_command();
-        if (newCommand == NULL) 
-        {
-            perror("CHAOS, error allocating memory");
-            ft_destroy_command(commandList);
-            exit(EXIT_FAILURE);
-        }
-        
-        newCommand->name = ft_custom_strdup(token);
-        newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
-        // newCommand->args = 
+        // Première commande dans la liste
+        commandList->head = command;
+        commandList->tail = commandList->head;
+    } 
+    else 
+    {
+        // Ajouter la commande à la fin de la liste
+        commandList->tail->next = command;
+        commandList->tail = commandList->tail->next;
+    }
 
-        switch(newCommand->tokenType) 
-        {
-            case COMMAND_TYPE:
-                printf("Token type: COMMAND\n");
-                break;
-            case ARGUMENT_TYPE:
-                printf("Token type: ARGUMENT\n");
-                break;
-            case OPTION_TYPE:
-                printf("Token type: OPTION\n");
-                break;
-            default:
-                printf("Unknown token type\n");
-                break;
-        }
+    commandList->length++;
+}
 
-        if (commandList->head == NULL) 
+// Fonction pour traiter un argument
+void process_argument(t_commandList *commandList, t_command *command, char *token, int argIndex) 
+{
+    if (command == NULL) 
+    {
+        fprintf(stderr, "An error occurred: not enough arguments\n");
+        return;
+    }
+    t_command *newArg = ft_create_node_for_command();
+    if (newArg == NULL) {
+        perror("CHAOS, error allocating memory");
+        ft_destroy_command(commandList);
+        exit(EXIT_FAILURE);
+    }
+    newArg->name = ft_strdup(token);
+    newArg->tokenType = ARGUMENT_TYPE;
+
+    commandList->tail->next = newArg;
+    commandList->tail = commandList->tail->next;
+
+    commandList->length++;
+
+    store_argument_in_command(command, newArg->name, argIndex);
+}
+
+void store_argument_in_command(t_command *command, char *newArg, int argIndex) 
+{
+    if (command == NULL || newArg == NULL) 
+    {
+        fprintf(stderr, "An error occurred: invalid command or argument\n");
+        exit(EXIT_FAILURE);
+    }
+    char **newArgs = malloc(sizeof(char *) * (argIndex + 2));
+    if (newArgs == NULL) 
+    {
+        perror("CHAOS, error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+    int i = 0;
+    while (i < argIndex) 
+    {
+        if (i < command->argCount && command->args[i] != NULL) 
         {
-            // Première commande dans la liste
-            commandList->head = newCommand;
-            commandList->tail = commandList->head;
+            newArgs[i] = command->args[i];
         } 
         else 
         {
-            // Ajouter la commande à la fin de la liste
-            commandList->tail->next = newCommand;
-            commandList->tail = commandList->tail->next;
+            fprintf(stderr, "An error occurred: invalid argument in the command\n");
+            exit(EXIT_FAILURE);
         }
-
-        commandList->length++;
-        token = ft_strtok(NULL, " ");
-        tokenIndex++;
+        i++;
     }
+    newArgs[argIndex] = newArg;
+    newArgs[argIndex + 1] = NULL;
+    free(command->args);
+    command->args = newArgs;
+}
+
+int ft_split_arg(t_commandList *commandList, char *input) 
+{
+    char *token = ft_strtok(input, " ");
+
+    if (token == NULL) 
+    {
+        fprintf(stderr, "An error occurred: Empty command\n");
+        return 0;
+    }
+    // Traitement du premier token comme une commande
+    process_command(commandList, token);
+    int argIndex = 0;
+
+    while ((token = ft_strtok(NULL, " ")) != NULL) {
+        {
+            process_argument(commandList, commandList->tail, token, argIndex);
+            argIndex++;
+        }
+    }
+
     return commandList->length;
 }
 
@@ -126,3 +175,77 @@ int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
         return 0;
     }
 }
+
+
+/* int ft_split_arg(t_commandList *commandList, char *input) 
+{
+    char *token = ft_strtok(input, " ");
+
+    if (token == NULL) {
+        fprintf(stderr, "Error: Empty command\n");
+        return 0;
+    }
+
+    // Traitement du premier token comme une commande
+    t_command *command = ft_create_node_for_command();
+    if (command == NULL) {
+        perror("CHAOS, error allocating memory");
+        ft_destroy_command(commandList);
+        exit(EXIT_FAILURE);
+    }
+
+    command->name = ft_custom_strdup(token);
+    command->tokenType = COMMAND_TYPE;
+
+    if (commandList->head == NULL) {
+        // Première commande dans la liste
+        commandList->head = command;
+        commandList->tail = commandList->head;
+    } else {
+        // Ajouter la commande à la fin de la liste
+        commandList->tail->next = command;
+        commandList->tail = commandList->tail->next;
+    }
+
+    commandList->length++;
+
+    // Traitement des tokens suivants comme des arguments
+    int argIndex = 0;
+    while ((token = ft_strtok(NULL, " ")) != NULL) {
+        t_command *newArg = ft_create_node_for_command();
+        if (newArg == NULL) {
+            perror("CHAOS, error allocating memory");
+            ft_destroy_command(commandList);
+            exit(EXIT_FAILURE);
+        }
+
+        newArg->name = ft_custom_strdup(token);
+        newArg->tokenType = ARGUMENT_TYPE;
+
+        // Ajouter l'argument à la fin de la liste
+        commandList->tail->next = newArg;
+        commandList->tail = commandList->tail->next;
+
+        commandList->length++;
+
+        // Stocker l'argument dans le champ args de la commande
+        if (argIndex == 0) {
+            command->args = malloc(sizeof(char *) * 2); // +1 pour le dernier NULL
+        } else {
+            command->args = realloc(command->args, sizeof(char *) * (argIndex + 2));
+        }
+
+        if (command->args == NULL) {
+            perror("CHAOS, error allocating memory");
+            ft_destroy_command(commandList);
+            exit(EXIT_FAILURE);
+        }
+
+        command->args[argIndex] = newArg->name;
+        command->args[argIndex + 1] = NULL;
+
+        argIndex++;
+    }
+
+    return commandList->length;
+} */

@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+# define MAX_ARGUMENTS 100
 # define MAX_PATH_LENGTH 4096
 # define  MAX_INPUT_SIZE 1024
 // File Descriptor
@@ -274,7 +275,7 @@ void    free_split(char **arr);
 
 // BUILT-IN
 int		change_directory(const char *path);
-int     cd(char **arguments);
+int	    cd(t_command *command);
 int     echo(t_command *cmd);
 int 	pwd(void);
 int 	env(t_env **env_list);
@@ -310,10 +311,13 @@ char    *ft_custom_strdup(const char *str);
 void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
 
 
-char **ft_split_arg_list(char *input);
 char *ft_strtok_quoted(char *str, const char *delim);
 void ft_execute_command_with_path(t_command *command);
-char **ft_split_arg_list(char *input);
+void process_command(t_commandList *commandList, char *token);
+void process_argument(t_commandList *commandList, t_command *command, char *token, int argIndex);
+void store_argument_in_command(t_command *command, char *newArg, int argIndex);
+
+
 
 
 #endif

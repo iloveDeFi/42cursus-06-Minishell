@@ -1,41 +1,18 @@
 #include "minishell.h"
 
-int	change_directory(const char *path)
+int cd(t_command *command)
 {
-	char	*pwd;
+    if (command == NULL || command->args == NULL || command->args[0] == NULL)
+    {
+        chdir(getenv("HOME"));
+        return 0;
+    }
 
-	if (chdir(path) == 0)
-	{
-		pwd = getcwd(NULL, 0);
-		setenv("PWD", pwd, 1);
-		free(pwd);
-		return (0);
-	}
-	else
-	{
-		fprintf(stderr, "cd: %s: No such file or directory\n", path);
-		return (-1);
-	}
-}
+    if (chdir(command->args[0]) == -1)
+    {
+        printf("minishell: cd: %s: No such file or directory\n", command->args[0]);
+        return 1;
+    }
 
-
-int	cd(char **arguments)
-{
-	char	*home_directory;
-
-	if (arguments == NULL || arguments[1] == NULL)
-	{
-		home_directory = ("HOME");
-		if (home_directory != NULL)
-		{
-			return (chdir(home_directory));
-		}
-		else
-		{
-			perror("cd");
-			return (-1);
-		}
-	}
-	else
-		return (chdir(arguments[1]));
+    return 0;
 }
