@@ -198,10 +198,10 @@ void        ft_add_to_list(t_env **envlist, t_env *new_node);
 int	        ft_add_envVar_to_list(t_env **envlist, char *args);
 void        ft_appendToList(t_commandList *commandList, t_command *newCommand);
 void        ft_appendToListArg(t_command *command);
-void        ft_append_to_argument_list(t_command *command, const char *arg);
+void        ft_append_argument_to_command_node(t_command *command, const char *arg);
 // free
 void        ft_free_list(t_commandList  *head);
-void	    ft_free_array(char **array);
+void	    ft_free_string_array(char **array);
 void        ft_free_node(t_command  *node);
 void        ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
 // create
@@ -232,13 +232,16 @@ void	    ft_swap_nodes(t_env *tmp);
 void        *ft_get_last_element_in_list(t_commandList *head);
 t_env       *ft_find_envVar(t_envList *envList, const char *targetName);
 // print
-void        ft_print_command(void *data);
-void        ft_print_list(t_commandList *head, void (*printFunction)(void *data));
+void        ft_print_command(t_command *cmd); 
+void        ft_print_list(t_commandList *head, void (*printFunction)(t_command *cmd));
 void        ft_printGeneric(void *data);
-void        print_command_list(t_commandList *commandList);
+void        ft_print_command_list(t_commandList *commandList);
+char        *ft_token_type_to_string(t_token_type type);
+void        ft_print_string_array(char **strings);
+
 
 // PARSING
-void            print_command(t_command *cmd);
+char            **ft_edit_args_argument_value(char **array, const char *value, int index);
 char            **ft_send_token_in_good_list(char *token, t_command *command);
 t_token_type    ft_allocate_token_type(char *token);
 int             ft_split_arg(t_commandList *commandList, char *input);
@@ -261,6 +264,7 @@ char            *ft_getenv_var_value(const char *name);
 char            *ft_expand_env_variables(t_command *command, int last_exit_status);
 t_Bool          ft_check_only_spaces(const char *str);
 char            *ft_extract_quoted_argument(char *input);
+int             ft_count_number_of_elements_in_array(char **array); 
 
 // EXECUTION
 // builtins
@@ -282,6 +286,7 @@ char    *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
 t_env   *create_node2(char *var, char *value);
 t_env   *ft_copy_env_list(t_env *src);
 void    free_split(char **arr);
+void    *ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 
 // BUILT-IN
@@ -316,15 +321,11 @@ t_env	*ft_duplicate_node(char *name, char *value);
 void	ft_delete_list(t_env *envlist);
 
 // ERROR & FREE
-void	ft_free_array(char **array);
 void    ft_append_to_argument_list(t_command *command, const char *arg);
 char    *ft_custom_strdup(const char *str);
 void    ft_free_env_node(t_env *new_node, t_env *tmp, char *str);
-
-
-char **ft_split_arg_list(char *input);
-char *ft_strtok_quoted(char *str, const char *delim);
-void ft_execute_command_with_path(t_command *command);
-
+char    **ft_split_arg_list(char *input);
+char    *ft_strtok_quoted(char *str, const char *delim);
+void    ft_execute_command_with_path(t_command *command);
 
 #endif

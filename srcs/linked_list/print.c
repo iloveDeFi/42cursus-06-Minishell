@@ -1,13 +1,6 @@
 #include "minishell.h"
 
-void ft_print_command(void *data) 
-{
-    t_command *command = (t_command *)data;
-    if (command != NULL) 
-        printf("Command: %s\n", command->name);
-}
-
-void print_command(t_command *cmd) 
+void ft_print_command(t_command *cmd) 
 {
     printf("Command name from print_command : %s\n", cmd->name);
 
@@ -25,7 +18,7 @@ void print_command(t_command *cmd)
     }
 }
 
-void ft_print_list(t_commandList *head, void (*printFunction)(void *data)) 
+void ft_print_list(t_commandList *head, void (*printFunction)(t_command *cmd)) 
 {
     if (head == NULL || head->head == NULL) 
         return;
@@ -44,19 +37,20 @@ void ft_printGeneric(void *data)
     printf("%s\n", str);
 }
 
-void print_command_list(t_commandList *commandList) 
+void ft_print_command_list(t_commandList *commandList) 
 {
     if (commandList == NULL || commandList->head == NULL) {
         printf("Empty command list\n");
         return;
     }
 
-    printf("print_command_list - Command List:\n");
+    printf("Command List is :\n");
     t_command *current = commandList->head;
-    while (current != NULL) {
-        printf("print_command_list - Name: %s\n", current->name);
-        printf("print_command_list - Token Type: %d\n", current->tokenType);
-        printf(" print_command_list - Argument Count: %d\n", current->argCount);
+    while (current != NULL) 
+    {
+        printf("Name: %s\n", current->name);
+        printf("Token Type: %s\n", ft_token_type_to_string(current->tokenType));
+        printf("Argument Count: %d\n", current->argCount);
    
         if (current->argCount > 0 && current->args != NULL) {
             printf("print_command_list - Arguments:\n");
@@ -71,3 +65,54 @@ void print_command_list(t_commandList *commandList)
         current = current->next;
     }
 }
+
+char *ft_token_type_to_string(t_token_type type) {
+    switch(type) {
+        case PIPE:
+            return "PIPE";
+        case HEREDOC:
+            return "HEREDOC";
+        case LPR:
+            return "LPR";
+        case RPR:
+            return "RPR";
+        case AND:
+            return "AND";
+        case OR:
+            return "OR";
+        case APPEND:
+            return "APPEND";
+        case OUT:
+            return "OUT";
+        case IN:
+            return "IN";
+        case NOT:
+            return "NOT";
+        case END:
+            return "END";
+        case COMMAND_TYPE:
+            return "COMMAND_TYPE";
+        case ARGUMENT_TYPE:
+            return "ARGUMENT_TYPE";
+        case OPTION_TYPE:
+            return "OPTION_TYPE";
+        case UNKNOWN_TYPE:
+            return "UNKNOWN_TYPE";
+        default:
+            return "Invalid type";
+    }
+}
+/*
+void ft_print_string_array(char **strings) 
+{
+    if (strings == NULL) {
+        printf("Array is NULL\n");
+        return;
+    }
+
+    printf("Print command->args:\n");
+    for (int i = 0; strings[i] != NULL; i++) {
+        printf("%d: '%s'\n", i + 1, strings[i]);
+    }
+}
+*/

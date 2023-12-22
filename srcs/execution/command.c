@@ -47,7 +47,8 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList)
 
         pid = fork();
         if (pid == 0){
-            if (execve(full_path, &(command->name), NULL) == -1) {
+            // TO DO CHAR **
+            if (execve(full_path, command->args, NULL) == -1) {
                 perror("Erreur lors de l'exécution de la commande");
                 exit(EXIT_FAILURE);
             }

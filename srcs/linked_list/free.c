@@ -14,7 +14,7 @@ void ft_free_list(t_commandList  *head)
     }
 }
 
-void	ft_free_array(char **array)
+void ft_free_string_array(char **array)
 {
 	int	i;
 

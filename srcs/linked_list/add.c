@@ -58,30 +58,32 @@ void ft_appendToListArg(t_command *command)
     command->argCount = 1;
 }
 
-void ft_append_to_argument_list(t_command *command, const char *arg) 
+void ft_append_argument_to_command_node(t_command *command, const char *token) 
 {
-    // Vérifier si args est vide ou non initialisé
     if (command->args == NULL) 
     {
-        command->args = (char **)malloc(sizeof(char *));
+        command->args = malloc(100 * sizeof(char *));
+        // command->args = (char **)malloc(2 * sizeof(char *));
         if (command->args == NULL) 
         {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
         }
-        command->args[0] = ft_custom_strdup(arg);
+        command->args[0] = ft_custom_strdup(token);
+        command->args[1] = NULL; 
         command->argCount = 1;
     } 
     else 
     {
         // Réallouer de la mémoire pour contenir un nouvel argument
-        command->args = (char **)realloc(command->args, (command->argCount + 1) * sizeof(char *));
+        command->args = (char **)realloc(command->args, (command->argCount + 2) * sizeof(char *));
         if (command->args == NULL) 
         {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
         }
-        command->args[command->argCount] = ft_custom_strdup(arg);
+        command->args[command->argCount] = ft_custom_strdup(token);
+        command->args[command->argCount + 1] = NULL;
         command->argCount++;
     }
 }

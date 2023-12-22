@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:45:17 by bat               #+#    #+#             */
-/*   Updated: 2023/12/15 00:06:54 by julienbelda      ###   ########.fr       */
+/*   Updated: 2023/12/21 14:25:19 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_env *ft_initialize_environment(char **env)
         ft_add_to_list(&envList, new_node);
         i++;
     }
-    ft_free_array(var_array);
+    ft_free_string_array(var_array);
 
     return envList;
 }

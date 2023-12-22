@@ -72,3 +72,13 @@ char *ft_strndup(const char *s, size_t n)
     new_str[len] = '\0';
     return new_str;
 }
+
+int ft_count_number_of_elements_in_array(char **array) 
+{
+    int count = 0;
+    while (array[count] != NULL) 
+    {
+        count++;
+    }
+    return count;
+}
