@@ -25,14 +25,20 @@ int	ft_add_envVar_to_list(t_env **envlist, char *args)
 
 void ft_appendToList(t_commandList *commandList, t_command *newCommand) 
 {
-    if (commandList->tail == NULL) 
+    if (commandList->head == NULL) 
     {
-        fprintf(stderr, "Error: Attempting to append to an empty list\n");
-        exit(EXIT_FAILURE);
+        commandList->head = newCommand;
+        commandList->tail = commandList->head;
+        commandList->tail->next = NULL;
+    } 
+    else 
+    {
+        commandList->tail->next = newCommand;
+        commandList->tail = commandList->tail->next;
+        commandList->tail->next = NULL;
     }
 
-    commandList->tail->next = newCommand;
-    newCommand->next = NULL;
+    commandList->length++;
 }
 
 void ft_appendToListArg(t_command *command) 

@@ -12,9 +12,12 @@ t_command *ft_create_node_for_command(void)
     }    
     new_node_command->name = NULL;
     new_node_command->args = NULL;
+    new_node_command->argCount = 0;
     new_node_command->redirectFile = NULL;
     new_node_command->next = NULL;
     new_node_command->prev = NULL;
+    new_node_command->fdread = 0;
+    new_node_command->fdwrite = 0;
     new_node_command->tokenType = NOT;
     new_node_command->state = NORMAL;
     

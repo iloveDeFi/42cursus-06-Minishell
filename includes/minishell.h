@@ -68,11 +68,8 @@ typedef enum node_type {
     COMMAND_NODE
 } t_node_type;
 
-
-// Structure générique pour une liste
 typedef struct s_command
 {
-    void *data;
     char *name;
     char **args;
     int argCount;
@@ -243,8 +240,8 @@ void        ft_print_string_array(char **strings);
 
 // PARSING
 char            **ft_edit_args_argument_value(char **array, const char *value, int index);
-char            **ft_send_token_in_good_list(char *token, t_command *command);
-t_token_type    ft_allocate_token_type(char *token);
+char            **ft_send_token_in_good_list(char *token, int token_index, t_token_type token_type, t_commandList *commandList);
+t_token_type    ft_define_token_type(char *token, int tokenIndex);
 int             ft_split_arg(t_commandList *commandList, char *input);
 int             ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList);
 char            *ft_strtrim_with_quotes(char *str);
@@ -277,6 +274,8 @@ void    ft_execute_external_command(t_command *command, t_commandList *commandLi
 // destroy
 void    ft_destroy_command(t_commandList *commandList);
 void	ft_destroy_current_shell(t_mini *mini);
+void    ft_destroy_single_command(t_command *newCommand);
+
 // path
 char    *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 void    ft_execute_command_with_path(t_command *command);

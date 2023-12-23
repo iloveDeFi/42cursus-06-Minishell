@@ -35,6 +35,10 @@ int	ft_execute_builtin(t_command *cmd, t_env **envList)
 	else if (ft_strcmp(cmd->name, "export") == 0)
 	{
 		export_command.name = "export";
+		// TO DO : gérer correctement la mémoire, 
+		// en libérant toute allocation de mémoire supplémentaire 
+		// pour export_command.args après son utilisation, 
+		// pour éviter les fuites de mémoire
 		export_command.args = cmd->args;
 		ft_export(envList, &export_command);
 	}

@@ -6,87 +6,88 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/22 20:55:57 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/23 01:57:00 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*char **ft_edit_args_argument_value(char **array, const char *value, int index) 
+void ft_handle_command_type_token(char *token, t_commandList *commandList, int token_index)
 {
-    int count = ft_count_number_of_elements_in_array(array);
-
-    // Si l'index est plus grand que le nombre actuel d'éléments, réalloue le tableau
-    if (index >= count) {
-        char **temp = realloc(array, (index + 2) * sizeof(char *));
-        if (temp == NULL) {
-            return NULL;
-        }
-        array = temp;
-        for (int i = count; i <= index; i++) {
-            array[i] = NULL;
-        }
+    t_command *newCommand = ft_create_node_for_command();
+    if (newCommand == NULL) 
+    {
+        perror("CHAOS, error allocating memory, newCommand is NULL");
+        // ft_destroy_single_command(newCommand);
+        // return error value not exit ?
+        exit(EXIT_FAILURE);
     }
-    // Ajoute ou modifie la valeur à l'index spécifié
-    if (array[index] == NULL) {
-        array[index] = ft_custom_strdup(value);
-    } else {
-        free(array[index]);
-        array[index] = ft_custom_strdup(value);
-    }
-    return array;
+    newCommand->name = ft_custom_strdup(token);
+    newCommand->tokenType = ft_define_token_type(token, token_index);
+    ft_appendToList(commandList, newCommand);
 }
-*/
 
-char **ft_send_token_in_good_list(char *token, t_command *command) 
+void ft_handle_argument_type_token(char *token,t_command *command)
 {
-    if (command->tokenType == COMMAND_TYPE) 
-    {
-        command->name = ft_custom_strdup(token);
-    } 
-    else if (command->tokenType == ARGUMENT_TYPE) 
-    {
-        /*
-        if (command->argCount == 0) 
-        {
-            command->args = malloc(2 * sizeof(char *));
-        }
-        else 
-        {
-            command->args = ft_realloc(command->args, (command->argCount + 2) * sizeof(char *));
-        }
-        */
+ 
         ft_append_argument_to_command_node(command, token);
-        command->args[command->argCount] = ft_custom_strdup(token);
         // ft_print_string_array(command->args);
-        command->args[command->argCount + 1] = NULL;
-        command->argCount++;
+}
+
+char **ft_send_token_in_good_list(char *token, int token_index, t_token_type token_type, t_commandList *commandList) 
+{
+    t_command *newCommand;
+
+    newCommand = NULL;
+    
+    if (token_type == COMMAND_TYPE)
+    {
+        ft_handle_command_type_token(token, commandList, token_index);
+    }
+    else if (token_type == ARGUMENT_TYPE) 
+    {
+        ft_handle_argument_type_token(token, newCommand);
     }
     // ft_print_string_array(command->args);
-    return command->args;
+    return newCommand->args;
 }
 
-t_token_type ft_check_and_allocate_token_type(char *token, int tokenIndex) 
+t_token_type ft_define_token_type(char *token, int tokenIndex) 
 {
-    if (tokenIndex == 0 && token[0] != '-') 
-    {
+    if (tokenIndex == 0 && token[0] != '-') {
         return COMMAND_TYPE;
-    }
-    else if (token[0] == '-') 
-    {
+    } else if (token[0] == '-') {
         return OPTION_TYPE;
-    }
-    else 
-    {
+    } else if (strcmp(token, "|") == 0) {
+        return PIPE;
+    } else if (strcmp(token, "<<") == 0) {
+        return HEREDOC;
+    } else if (strcmp(token, "(") == 0) {
+        return LPR;
+    } else if (strcmp(token, ")") == 0) {
+        return RPR;
+    } else if (strcmp(token, "&&") == 0) {
+        return AND;
+    } else if (strcmp(token, "||") == 0) {
+        return OR;
+    } else if (strcmp(token, ">>") == 0) {
+        return APPEND;
+    } else if (strcmp(token, ">") == 0) {
+        return OUT;
+    } else if (strcmp(token, "<") == 0) {
+        return IN;
+    } else {
         return ARGUMENT_TYPE;
     }
 }
 
 int ft_split_arg(t_commandList *commandList, char *input) 
 {
-    char *token = ft_strtok(input, " ");
-    int tokenIndex = 0;
+    char *token;
+    int token_index;
 
+    token = ft_strtok(input, " ");
+    token_index = 0;
     if (token == NULL) 
     {
         fprintf(stderr, "Error: Empty command\n");
@@ -94,35 +95,13 @@ int ft_split_arg(t_commandList *commandList, char *input)
     }
     while (token != NULL) 
     {
-        t_command *newCommand = ft_create_node_for_command();
-        if (newCommand == NULL) 
-        {
-            perror("CHAOS, error allocating memory");
-            ft_destroy_command(commandList);
-            exit(EXIT_FAILURE);
-        }
-        
-        newCommand->tokenType = ft_check_and_allocate_token_type(token, tokenIndex);
-        ft_send_token_in_good_list(token, newCommand);
-        // TO DO FREE newCommand->args when not used anymore
-        newCommand->name = ft_custom_strdup(token);
+        t_token_type token_type = ft_define_token_type(token, token_index);
+        ft_send_token_in_good_list(token, token_index, token_type, commandList);
         //newCommand->args = ft_edit_args_argument_value(newCommand->args, token, newCommand->argCount);
-        if (commandList->head == NULL) 
-        {
-            commandList->head = newCommand;
-            commandList->tail = commandList->head;
-        } 
-        else 
-        {
-            commandList->tail->next = newCommand;
-            commandList->tail = commandList->tail->next;
-        }
-
-        commandList->length++;
-        token = ft_strtok(NULL, " ");
-        tokenIndex++;
         // print_command(newCommand);
-        //print_command_list(commandList);
+        // print_command_list(commandList);
+        token_index++;
+        token = ft_strtok(NULL, " ");
     }
 
     return commandList->length;
