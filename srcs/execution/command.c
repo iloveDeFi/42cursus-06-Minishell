@@ -34,45 +34,47 @@
 	printf("Execution complete\n");
 } */
 
-
-void ft_execute_external_command(t_command *command, t_commandList *commandList)
+void ft_execute_external_command(t_command *command, t_commandList *commandList) 
 {
     char *path = getenv("PATH");
     char *full_path = ft_lookfor_command_and_build_path(path, commandList);
 
-    if (full_path != NULL)
-    {
+    if (full_path != NULL) {
         pid_t pid;
         int status;
 
         pid = fork();
-        if (pid == 0)
+        if (pid == 0) 
         {
-            if (execve(full_path, command->args, NULL) == -1) {
+            printf("Je suis le processus enfant. Mon PID est : %d\n", getpid());
+            if (execve(full_path, command->args, NULL) == -1) 
+            {
                 perror("Erreur lors de l'exécution de la commande");
                 exit(EXIT_FAILURE);
             }
-        }
-        else if (pid == -1) {
-            perror("Erreur lors de la création du processus enfant");
-            exit(EXIT_FAILURE);
-        }
-        else {
+        } else if (pid > 0) 
+        {
+            printf("Je suis le processus parent. Le PID de mon enfant est : %d\n", pid);
             waitpid(pid, &status, 0);
 
-            if (WIFEXITED(status)) {
+            if (WIFEXITED(status)) 
+            {
                 int exitStatus = WEXITSTATUS(status);
                 printf("Le processus enfant s'est terminé avec le code de sortie : %d\n", exitStatus);
-            }
-            else if (WIFSIGNALED(status)) {
+            } else if (WIFSIGNALED(status)) 
+            {
                 int signalNumber = WTERMSIG(status);
                 printf("Le processus enfant a été interrompu par le signal : %d\n", signalNumber);
             }
             free(full_path);
+        } else {
+            perror("Erreur lors de la création du processus enfant");
+            exit(EXIT_FAILURE);
         }
-    }
-    else {
+    } else {
         fprintf(stderr, "Command not found in PATH: %s\n", command->name);
+        exit(EXIT_FAILURE);
     }
 }
+
 

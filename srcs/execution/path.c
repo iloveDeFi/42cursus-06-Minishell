@@ -74,8 +74,7 @@ void ft_execute_command_with_path(t_command *command) {
 char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) {
     char *token;
     char fullPath[MAX_PATH_LENGTH];
-
-    t_command *currentCommand = commandList->head;
+    t_command *currentCommand;
 
     // Faites une copie du chemin d'origine
     char *originalPath = ft_strdup(path);
@@ -83,11 +82,13 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
     token = ft_strtok((char *)originalPath, ":");
     while (token != NULL) 
     {
+        currentCommand = commandList->head;
         while (currentCommand != NULL) 
         {
             ft_strcpy(fullPath, token);
             ft_strcat(fullPath, "/");
             ft_strcat(fullPath, currentCommand->name);
+            printf("The full path sent to execve is '%s'", fullPath);
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
