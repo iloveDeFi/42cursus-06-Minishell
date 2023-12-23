@@ -45,22 +45,24 @@ void	ft_destroy_current_shell(t_mini *mini)
 
 void ft_destroy_single_command(t_command *newCommand) 
 {
+	int i;
     if (newCommand == NULL) {
         return;
     }
 
-    free(newCommand->name);
 	free(newCommand->name);
-    free(newCommand->args);
-    free(newCommand->argCount);
+	if (newCommand->args != NULL)
+	{
+		i = 0;
+		while (i < newCommand->argCount)
+		{
+			free(newCommand->args[i]);
+			i++;
+		}
+		free(newCommand->args);
+	}
+    newCommand->argCount = 0;
     free(newCommand->redirectFile);
-    free(newCommand->next);
-    free(newCommand->prev);
-    free(newCommand->fdread);
-    free(newCommand->fdwrite);
-    free(newCommand->tokenType);
-    free(newCommand->state);
-
 
     free(newCommand);
 }
