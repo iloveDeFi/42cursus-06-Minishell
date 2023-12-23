@@ -239,6 +239,19 @@ void        ft_print_string_array(char **strings);
 
 
 // PARSING
+// error
+// expansion
+// parser
+// pipe
+// quote
+// redirection
+// token
+void            ft_handle_command_type_token(char *token, t_commandList *commandList, int token_index);
+void            ft_handle_argument_type_token(char *token,t_command *command);
+char            **ft_send_token_in_good_list(char *token, int token_index, t_token_type token_type, t_commandList *commandList);
+t_token_type    ft_define_token_type(char *token, int tokenIndex);
+// tool
+// util
 char            **ft_edit_args_argument_value(char **array, const char *value, int index);
 char            **ft_send_token_in_good_list(char *token, int token_index, t_token_type token_type, t_commandList *commandList);
 t_token_type    ft_define_token_type(char *token, int tokenIndex);

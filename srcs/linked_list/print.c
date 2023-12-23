@@ -102,17 +102,18 @@ char *ft_token_type_to_string(t_token_type type) {
             return "Invalid type";
     }
 }
-/*
-void ft_print_string_array(char **strings) 
+
+void ft_print_string_array(char **args) 
 {
-    if (strings == NULL) {
-        printf("Array is NULL\n");
+    if (args == NULL) 
+    {
+        printf("Args array is NULL\n");
         return;
     }
-
-    printf("Print command->args:\n");
-    for (int i = 0; strings[i] != NULL; i++) {
-        printf("%d: '%s'\n", i + 1, strings[i]);
+    printf("Arguments are :\n");
+    int i = 0;
+    while (args[i] != NULL) {
+        printf("%s\n", args[i]);
+        i++;
     }
 }
-*/

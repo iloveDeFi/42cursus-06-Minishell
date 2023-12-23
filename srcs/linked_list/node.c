@@ -19,7 +19,7 @@ t_command  *ft_find_node(t_commandList  *head, void *target)
     t_command  *current = head->head;
     while (current != NULL)
     {
-        if (ft_compareString(current->data, target) == 0)
+        if (ft_compareString(current->name, target) == 0)
             return current;
         current = current->next;
     }
@@ -33,7 +33,7 @@ void    *ft_get_last_element_in_list(t_commandList *head)
     t_command *current = head->head;
     while (current->next != NULL)
         current = current->next;
-    return current->data;
+    return current->name;
 }
 
 

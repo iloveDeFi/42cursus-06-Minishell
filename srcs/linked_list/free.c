@@ -7,7 +7,7 @@ void ft_free_list(t_commandList  *head)
     while (current != NULL)
     {
         t_command  *next = current->next;
-        free(current->data);
+        free(current->name);
         free(current);
 
         current = next;
@@ -30,7 +30,7 @@ void ft_free_node(t_command  *node)
 {
     if (node != NULL)
     {
-        free(node->data);
+        free(node->name);
 
         if (node->prev != NULL)
             node->prev->next = node->next;

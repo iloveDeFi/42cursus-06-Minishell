@@ -17,7 +17,7 @@ void ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*call
     
     while (current != NULL)
     {
-        callback(current->data);
+        callback(current->name);
     current = current->next;
     }
 }

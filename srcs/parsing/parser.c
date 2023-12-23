@@ -6,80 +6,11 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:44:27 by bat               #+#    #+#             */
-/*   Updated: 2023/12/23 11:14:54 by bat              ###   ########.fr       */
+/*   Updated: 2023/12/23 12:01:37 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void ft_handle_command_type_token(char *token, t_commandList *commandList, int token_index)
-{
-    t_command *newCommand = ft_create_node_for_command();
-    if (newCommand == NULL) 
-    {
-        perror("CHAOS, error allocating memory, newCommand is NULL");
-        // ft_destroy_single_command(newCommand);
-        // return error value not exit ?
-        exit(EXIT_FAILURE);
-    }
-    newCommand->name = ft_custom_strdup(token);
-    newCommand->tokenType = ft_define_token_type(token, token_index);
-    ft_appendToList(commandList, newCommand);
-}
-
-void ft_handle_argument_type_token(char *token,t_command *command)
-{
- 
-        ft_append_argument_to_command_node(command, token);
-        // ft_print_string_array(command->args);
-}
-
-char **ft_send_token_in_good_list(char *token, int token_index, t_token_type token_type, t_commandList *commandList) 
-{
-    t_command *newCommand;
-
-    newCommand = NULL;
-    
-    if (token_type == COMMAND_TYPE)
-    {
-        ft_handle_command_type_token(token, commandList, token_index);
-    }
-    else if (token_type == ARGUMENT_TYPE) 
-    {
-        ft_handle_argument_type_token(token, newCommand);
-    }
-    // ft_print_string_array(command->args);
-    return newCommand->args;
-}
-
-t_token_type ft_define_token_type(char *token, int tokenIndex) 
-{
-    if (tokenIndex == 0 && token[0] != '-') {
-        return COMMAND_TYPE;
-    } else if (token[0] == '-') {
-        return OPTION_TYPE;
-    } else if (strcmp(token, "|") == 0) {
-        return PIPE;
-    } else if (strcmp(token, "<<") == 0) {
-        return HEREDOC;
-    } else if (strcmp(token, "(") == 0) {
-        return LPR;
-    } else if (strcmp(token, ")") == 0) {
-        return RPR;
-    } else if (strcmp(token, "&&") == 0) {
-        return AND;
-    } else if (strcmp(token, "||") == 0) {
-        return OR;
-    } else if (strcmp(token, ">>") == 0) {
-        return APPEND;
-    } else if (strcmp(token, ">") == 0) {
-        return OUT;
-    } else if (strcmp(token, "<") == 0) {
-        return IN;
-    } else {
-        return ARGUMENT_TYPE;
-    }
-}
 
 int ft_split_arg(t_commandList *commandList, char *input) 
 {
@@ -97,17 +28,14 @@ int ft_split_arg(t_commandList *commandList, char *input)
     {
         t_token_type token_type = ft_define_token_type(token, token_index);
         ft_send_token_in_good_list(token, token_index, token_type, commandList);
-        //newCommand->args = ft_edit_args_argument_value(newCommand->args, token, newCommand->argCount);
-        // print_command(newCommand);
-        // print_command_list(commandList);
+        // ft_print_command(newCommand);
+        ft_print_command_list(commandList);
         token_index++;
         token = ft_strtok(NULL, " ");
     }
 
     return commandList->length;
 }
-
-
 
 int ft_launch_parsing(t_commandList *commandList, char *input ,t_env **envList)
 {
