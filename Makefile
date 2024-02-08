@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/01/22 00:19:58 by bat              ###   ########.fr        #
+#    Updated: 2024/02/08 11:20:18 by bbessard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,8 +114,13 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 # GLOBAL VARIABLES
 CC := gcc -g3 -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
-LDFLAGS := -L/usr/local/opt/readline/lib
-CPPFLAGS := -I/usr/local/opt/readline/include
+# LIB READLINE AT 42 SCHOOL
+LDFLAGS := -L/usr/lib
+#LDFLAGS := -L/usr/lib/libreadline.dylib
+CPPFLAGS := -I/usr/lib/libreadline.dylib
+# LIB READLINE AT HOME WITH BREW
+#LDFLAGS := -L/usr/local/opt/readline/lib
+#CPPFLAGS := -I/usr/local/opt/readline/include
 #LDFLAGS := -L/opt/homebrew/opt/readline/lib
 #CPPFLAGS := -I/opt/homebrew/opt/readline/include
 SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES)
