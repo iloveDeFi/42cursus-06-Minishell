@@ -3,22 +3,24 @@
 void ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token) 
 {
     t_command *command;
-    
-    command = (t_command *)malloc(sizeof(t_command));
 
-    if (command == NULL) 
-    {
-        perror("CHAOS, error allocating memory");
-        ft_destroy_command(commandList);
-        exit(EXIT_FAILURE);
-    }
+	if (!ft_stop_token_with_pipe_from_commandList(command))
+	{
+    	command = (t_command *)malloc(sizeof(t_command));
 
-    ft_init_new_node(commandList, command, token);
+    	if (command == NULL) 
+    	{
+    	    perror("CHAOS, error allocating memory");
+    	    ft_destroy_command(commandList);
+    	    exit(EXIT_FAILURE);
+    	}
 
-    ft_append_to_commandList(commandList, command);
+    	ft_init_new_node(commandList, command, token);
+		ft_append_to_commandList(commandList, command);
 
-    printf("Printing commandList at the end of ft_process_the_first_token_as_a_command:\n");
-    ft_print_commandList(commandList);
+    	printf("Printing commandList at the end of ft_process_the_first_token_as_a_command:\n");
+    	ft_print_commandList(commandList);
+	}
 }
 
 void ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token) 
@@ -69,23 +71,32 @@ void ft_process_token_as_an_argument(t_commandList *commandList, t_command *comm
 int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *input) 
 {
     char *token;
+	char *inputCopy[sizeof(input) + 1];
     int tokenIndex;
+	char *delimiters;
     
     tokenIndex = 0;
-    token = ft_strtok(input, " ");
+	delimiters = " ";
+
+	ft_strcpy(inputCopy, input);
+
+	if (ft_check_if_no_pipe_in_input(inputCopy))
+	{
+		delimiters = " |";
+		token = ft_strtok(input, " |");
+	}
+	else	
+		token = ft_strtok(input, " ");
 
     if (token == NULL) {
         perror("An error has occurred during input tokenization: Empty command\n");
         return 1;
     }
 
-    printf("Processing first token as a command\n");
-  
     ft_process_the_first_token_as_a_command(commandList, token);
-
     tokenIndex++;
 
-    while ((token = ft_strtok(NULL, " ")) != NULL) 
+    while (token != NULL) 
     {
         if (tokenIndex == 1 && ft_strcmp(commandList->tail->name, "cd") == 0) 
         {
@@ -95,6 +106,7 @@ int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *inp
         printf("Launch ft_process_token_as_an_argument with argument number %d: named %s\n", tokenIndex, token);
         ft_process_token_as_an_argument(commandList, commandList->tail, token);
         tokenIndex++;
+		
     }
     return commandList->length;
 }

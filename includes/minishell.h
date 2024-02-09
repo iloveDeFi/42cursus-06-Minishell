@@ -18,7 +18,8 @@
 
 # define MAX_ARGUMENTS 100
 # define MAX_PATH_LENGTH 4096
-# define  MAX_INPUT_SIZE 1024
+# define MAX_INPUT_SIZE 1024
+# define MAX_COMMANDS 10
 // File Descriptor
 # define STDIN 0
 # define STDOUT 1
@@ -59,15 +60,27 @@ typedef enum e_quote
     DOUBLE_QUOTE,
     ESCAPED        // backslash
 } t_quote_type;
+
 typedef enum Bool
 {
 	FALSE,
 	TRUE
 } t_Bool;
+
 typedef enum node_type {
     ENV_NODE,
     COMMAND_NODE
 } t_node_type;
+
+typedef struct s_execution_data 
+{
+    t_command *commands;
+    t_env *envList;
+    char **envp;
+    int pipes[MAX_COMMANDS - 1][2];
+    pid_t child_pids[MAX_COMMANDS];
+} t_execution_data;
+
 typedef struct s_command
 {
     char *name;
@@ -75,11 +88,13 @@ typedef struct s_command
     char **args;
     int argCount;
     char *redirectFile;
-    int fd[2]; // Pour la gestion des tubes
+    int pipe_fd[2];
+	pid_t child_pid;
     struct s_command *next;
     struct s_command *prev;
     t_token_type tokenType;
     t_quote_type quoteType;
+	struct s_execution_data *execution_data;
 } t_command;
 
 typedef struct s_commandList
@@ -87,6 +102,7 @@ typedef struct s_commandList
     int length;
     struct s_command *head;
     struct s_command *tail;
+	bool *has_pipe;
 }   t_commandList;
 
 typedef struct s_error
@@ -113,15 +129,6 @@ typedef struct s_redir
     struct s_redir *next;
     struct s_redir *prev;
 } t_redir;
-
-typedef struct s_execute
-{
-    int pfd[2]; // Descripteurs de fichier pour les tubes globaux
-    int *pid;
-    int *status;
-    int active;
-    struct s_execute *next;
-} t_execute;
 
 typedef struct s_mini
 {
@@ -210,8 +217,8 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-void            ft_execute_command_with_pipe(t_command *command, t_env *envList, char **envp);
-void            ft_execute_piped_commands(t_commandList *commandList, t_command *commands, int num_commands, t_env *envList, char **envp);
+void 			ft_execute_commands_with_pipe(t_execution_data *data);
+void 			ft_execute_piped_commands(t_command *commands, t_env *envList, char **envp);
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -301,10 +308,10 @@ int             ft_split_input_in_token_to_commandList(t_commandList *commandLis
 int             ft_parse_and_add_to_commandList(t_commandList *commandList, char *input);
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe
-void            ft_create_pipes(int pipes[2]);
-void            ft_create_pipes_array(int pipes[][2], int num_pipes);
-void            ft_close_pipes(int pipes[][2], int num_pipes);
-int             ft_count_piped_commands(t_command *start_command);
+void 			ft_create_pipes(int pipes[2]);
+void 			ft_create_pipes_array(int pipes[][2], int num_pipes);
+int 			ft_count_piped_commands(t_command *start_command);
+void 			ft_close_pipes(t_execution_data *data);
 // quote
 int			    ft_is_quote(char c);
 int			    ft_check_quotes_error(void);

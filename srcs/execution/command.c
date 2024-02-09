@@ -21,6 +21,7 @@ int ft_execute_single_command(t_command *command, t_commandList *commandList, t_
         }
     }
     else 
+
     {
         // Gérer d'autres types de commandes si nécessaire
     }
