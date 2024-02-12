@@ -22,8 +22,9 @@ void ft_execute_commands_with_pipe(t_execution_data *data)
     }
 }
 
-void ft_execute_piped_commands(t_command *commands, t_env *envList, char **envp) 
+void ft_execute_piped_commands(t_commandList *commandList, t_command *commands, t_env *envList, char **envp) 
 {
+	int i;
     t_execution_data data;
     data.commands = commands;
     data.envList = envList;
@@ -32,10 +33,12 @@ void ft_execute_piped_commands(t_command *commands, t_env *envList, char **envp)
     int num_commands = ft_count_piped_commands(commands);
 
     // Créer les pipes
-    for (int i = 0; i < num_commands - 1; i++) {
-        ft_create_pipes(data.pipes[i]);
-    }
-
+    i= 0; 
+	while (i < num_commands - 1)
+	{
+		ft_create_pipes(data.pipes[i]);
+		i++;
+	}
     // Lancer les processus enfants
     ft_launch_child_processes(&data);
 

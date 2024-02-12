@@ -74,11 +74,12 @@ typedef enum node_type {
 
 typedef struct s_execution_data 
 {
-    t_command *commands;
-    t_env *envList;
+    // t_command *commands;
+    // t_env *envList;
     char **envp;
     int pipes[MAX_COMMANDS - 1][2];
     pid_t child_pids[MAX_COMMANDS];
+	int pipe_index;
 } t_execution_data;
 
 typedef struct s_command
@@ -88,7 +89,7 @@ typedef struct s_command
     char **args;
     int argCount;
     char *redirectFile;
-    int pipe_fd[2];
+    // int pipe_fd[2];
 	pid_t child_pid;
     struct s_command *next;
     struct s_command *prev;
