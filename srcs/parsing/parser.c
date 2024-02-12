@@ -2,9 +2,11 @@
 
 void ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token) 
 {
+	// CHECK LOGIC WITH TOKEN && COMMANDLIST
     t_command *command;
 
-	if (!ft_stop_token_with_pipe_from_commandList(command))
+	command = NULL;
+	if (!ft_check_if_pipe_in_string(token))
 	{
     	command = (t_command *)malloc(sizeof(t_command));
 
@@ -68,25 +70,26 @@ void ft_process_token_as_an_argument(t_commandList *commandList, t_command *comm
 }
 
 
+
 int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *input) 
 {
     char *token;
-	char *inputCopy[sizeof(input) + 1];
+    char inputCopy[ft_strlen(input) + 1];
     int tokenIndex;
-	char *delimiters;
+    char *delimiters;
     
     tokenIndex = 0;
-	delimiters = " ";
+    delimiters = " ";
 
-	ft_strcpy(inputCopy, input);
+    ft_strcpy(inputCopy, input);
 
-	if (ft_check_if_no_pipe_in_input(inputCopy))
-	{
-		delimiters = " |";
-		token = ft_strtok(input, " |");
-	}
-	else	
-		token = ft_strtok(input, " ");
+    if (ft_check_if_pipe_in_string(inputCopy))
+    {
+        delimiters = " |";
+        token = ft_strtok(inputCopy, " |");  // Utiliser inputCopy ici
+    }
+    else    
+        token = ft_strtok(inputCopy, " ");
 
     if (token == NULL) {
         perror("An error has occurred during input tokenization: Empty command\n");
@@ -106,10 +109,10 @@ int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *inp
         printf("Launch ft_process_token_as_an_argument with argument number %d: named %s\n", tokenIndex, token);
         ft_process_token_as_an_argument(commandList, commandList->tail, token);
         tokenIndex++;
-		
     }
     return commandList->length;
 }
+
 
 int ft_parse_and_add_to_commandList(t_commandList *commandList, char *input) 
 {
@@ -142,9 +145,11 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 
         command = commandList->head;
 
-        if (ft_count_piped_commands(command) > 1)
+        if (ft_count_number_of_pipes(input) > 1)
         {
-            ft_execute_piped_commands(commandList, command, /*ft_count_piped_commands(command),*/ envList, envp);
+			if (ft_count_number_of_pipes(input) > 10)
+				perror("Please do not use more than 10 pipes.\n");
+            ft_execute_piped_commands(command, (ft_count_number_of_pipes(input) + 1));
         }
         
         else if (ft_execute_single_command(command, commandList, envList, envp) != 0) 

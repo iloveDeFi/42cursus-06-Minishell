@@ -4,15 +4,15 @@ void ft_create_pipes(t_command *command)
 {
     int pipe_index;
 	
-	pipe_index = command->execution_data->pipe_index;
+	pipe_index = command->pipe_index;
 
-    if (pipe(command->execution_data->pipes[pipe_index]) == -1) 
+    if (pipe(command->pipes[pipe_index]) == -1) 
     {
         perror("Error creating pipe");
         exit(EXIT_FAILURE);
     }
 	// Fermeture de l'extrémité de lecture inutilisée du pipe
-    close(command->execution_data->pipes[pipe_index][0]);
+    close(command->pipes[pipe_index][0]);
 }
 
 void ft_create_pipes_array(int pipes[][2], int num_pipes) 
@@ -31,25 +31,24 @@ void ft_create_pipes_array(int pipes[][2], int num_pipes)
     }
 }
 
-int ft_count_piped_commands(t_command *start_command) 
+int ft_count_number_of_pipes(char *input) 
 {
     int number_of_pipes; // Initialisation à 0, car aucune pipe n'a encore été rencontrée
-    t_command *current_command;
+	int i;
 
-	int number_of_pipes = 0;
-	t_command *current_command = start_command;
-    while (current_command->next != NULL) 
-    {
-        if (ft_stop_token_with_pipe_from_commandList(current_command->name)) // Utilisation de la fonction dédiée
-            number_of_pipes++;
-
-        current_command = current_command->next;
-    }
+	i = 0;
+	number_of_pipes = 0;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '|')
+			number_of_pipes += 1;
+		i++;
+	}
     return number_of_pipes;
 }
 
 
-void ft_close_pipes(t_execution_data *data) 
+void ft_close_pipes(t_command *data) 
 {
     int i;
 	
@@ -61,12 +60,18 @@ void ft_close_pipes(t_execution_data *data)
     }
 }
 
-bool ft_stop_token_with_pipe_from_commandList(char *token) 
+bool ft_check_if_pipe_in_char(char *token) 
 {
     return (ft_strcmp(token, "|") == 0);
 }
 
-int ft_check_if_pipe_in_input(char *inputCopy) 
+// TO DO HARDCODE STRSTR
+bool ft_check_if_pipe_in_string(char *token) 
 {
-    return (strchr(inputCopy, '|') != NULL);
+    return (strstr(token, "|") != NULL);
+}
+
+int ft_check_if_pipe_in_inputCopy(char *inputCopy) 
+{
+    return (ft_strchr(inputCopy, '|') != NULL);
 }

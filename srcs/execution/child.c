@@ -14,7 +14,7 @@ pid_t ft_create_child_process()
     return child_pid;
 }
 
-void ft_launch_child_processes(t_execution_data *data) 
+void ft_launch_child_processes(t_command *data) 
 {
     int i = 0;
 
@@ -40,33 +40,31 @@ void ft_execute_child_process(char *full_path, char **args, char **envp)
     }
 }
 
-void ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands, char *full_path, char **args, char **envp) 
+void ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands) 
 {
     int i;
 
     i = 0;
     while (i < num_commands)
     {
-        child_pids[i] = ft_create_child_process();
-         if (child_pids[i] == 0)
-        {
-            // Code du processus enfant ici
-            printf("Je suis le processus enfant avec PID : %d\n", getpid());
-            ft_execute_child_process(full_path, args, envp);
-            // Assurez-vous de sortir du bloc if après le traitement
-            exit(EXIT_SUCCESS);
-        }
-        i++;
-    }
-    i = 0;
-    while (i < num_commands)
-    {
-        ft_wait_for_child_process(child_pids[i]);
+        waitpid(child_pids[i], NULL, 0);
         i++;
     }
 }
 
-void ft_configure_child_process(t_execution_data *data, int index) 
+// void ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands) 
+// {
+//     int i;
+
+//     i = 0;
+//     while (i < num_commands)
+//     {
+//         ft_wait_for_child_process(child_pids[i]);
+//         i++;
+//     }
+// }
+
+void ft_configure_child_process(t_command *data, int index) 
 {
     if (index > 0) {
         // Rediriger l'entrée depuis le pipe précédent

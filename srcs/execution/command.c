@@ -47,7 +47,8 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList,
             perror("Erreur lors de la création du processus enfant");
             exit(EXIT_FAILURE);
         } else {
-            ft_wait_for_child_process(pid);
+			// send pid and number of commands TO DO CHECK
+            ft_wait_for_child_processes_to_end(&pid, commandList->length);
             free(full_path);
         }
     } else {
@@ -65,7 +66,7 @@ void ft_printCommand(t_command *command) {
         }
         printf("Argument Count: %d\n", command->argCount);
         printf("Redirect File: %s\n", command->redirectFile);
-        printf("Pipe File Descriptors: %d, %d\n", command->fd[0], command->fd[1]);
+        // printf("Pipe File Descriptors: %d, %d\n", command->fd[0], command->fd[1]);
         printf("Next Command: %p\n", (void *)command->next);
         printf("Previous Command: %p\n", (void *)command->prev);
         printf("Token Type: %d\n", command->tokenType);

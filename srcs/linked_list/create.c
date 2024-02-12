@@ -45,12 +45,16 @@ void ft_init_new_node(t_commandList *commandList, t_command *command, char *toke
     command->args[1] = NULL;
     command->argCount = 1;
     command->redirectFile = NULL;
-    command->fd[0] = -1;
-    command->fd[1] = -1;
     command->next = NULL;
     command->prev = NULL;
     command->tokenType = ft_allocate_token_type(token);
     command->quoteType = ft_check_and_allocate_quote_type(token);
+	command->envp = NULL;  // Vous pouvez initialiser envp avec les valeurs appropriées si nécessaire
+    command->commands = NULL;  // Initialiser à NULL car cela dépendra du contexte d'utilisation
+    command->envList = NULL;  // Initialiser à NULL si vous n'avez pas d'environnement spécifique à ce stade
+    ft_memset(command->pipes, 0, sizeof(command->pipes));  // Initialiser la matrice pipes avec zéros
+    ft_memset(command->child_pids, 0, sizeof(command->child_pids));  // Initialiser le tableau child_pids avec zéros
+    command->pipe_index = 0;
 }
 
 t_env *ft_create_node_for_export_argument(char *name, char *value)

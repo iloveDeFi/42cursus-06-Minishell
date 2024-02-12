@@ -55,10 +55,10 @@ typedef t_token_type (*TokenChecker)(char *);
 
 typedef enum e_quote 
 {
-    NORMAL,        // no quote
+    NORMAL,
     SINGLE_QUOTE,
     DOUBLE_QUOTE,
-    ESCAPED        // backslash
+    ESCAPED
 } t_quote_type;
 
 typedef enum Bool
@@ -72,16 +72,6 @@ typedef enum node_type {
     COMMAND_NODE
 } t_node_type;
 
-typedef struct s_execution_data 
-{
-    // t_command *commands;
-    // t_env *envList;
-    char **envp;
-    int pipes[MAX_COMMANDS - 1][2];
-    pid_t child_pids[MAX_COMMANDS];
-	int pipe_index;
-} t_execution_data;
-
 typedef struct s_command
 {
     char *name;
@@ -89,14 +79,20 @@ typedef struct s_command
     char **args;
     int argCount;
     char *redirectFile;
-    // int pipe_fd[2];
-	pid_t child_pid;
     struct s_command *next;
     struct s_command *prev;
     t_token_type tokenType;
     t_quote_type quoteType;
-	struct s_execution_data *execution_data;
+
+    // Data about execution
+	char **envp;
+    struct s_command *commands;
+    struct s_env *envList;
+    int pipes[MAX_COMMANDS - 1][2];
+    pid_t child_pids[MAX_COMMANDS];
+    int pipe_index;
 } t_command;
+
 
 typedef struct s_commandList
 {
@@ -183,11 +179,10 @@ int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
 // child
 pid_t           ft_create_child_process();
-void            ft_launch_child_processes(t_command *commands, int num_commands, int pipes[][2], pid_t child_pids[], t_env *envList, char **envp); // TO DO too much args
+void 			ft_launch_child_processes(t_command *data);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
-void            ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands, char *full_path, char **args, char **envp);
-void            ft_wait_for_child_process(pid_t pid);
-void            ft_configure_child_process(t_command *commands, int num_commands, int index, int pipes[][2], t_env *envList, char **envp); // TO DO too much args
+void 			ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands);
+void 			ft_configure_child_process(t_command *data, int index); 
 // command
 int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
 void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
@@ -218,8 +213,8 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-void 			ft_execute_commands_with_pipe(t_execution_data *data);
-void 			ft_execute_piped_commands(t_command *commands, t_env *envList, char **envp);
+void 			ft_execute_commands_with_pipe(t_command *data);
+void 			ft_execute_piped_commands(t_command *command, int num_commands);
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -296,8 +291,8 @@ void            ft_add_space_around_redirection(char *input);
 // expansion
 int             ft_is_valid_env_char(char c);
 char            *ft_get_env_var_value(char *var_name);
-int          ft_calculate_var_length(char *var_name, int g_exit_code);
-int          ft_calculate_new_length(char *cmd, int g_exit_code);
+int          	ft_calculate_var_length(char *var_name, int g_exit_code);
+int          	ft_calculate_new_length(char *cmd, int g_exit_code);
 void            ft_process_char(char *result, int *j, char *command, int *i);
 char            *ft_expand_single_env_var(char *var_name);
 char            *ft_expand_env_variables(char *command);
@@ -309,10 +304,13 @@ int             ft_split_input_in_token_to_commandList(t_commandList *commandLis
 int             ft_parse_and_add_to_commandList(t_commandList *commandList, char *input);
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe
-void 			ft_create_pipes(int pipes[2]);
+void 			ft_create_pipes(t_command *command);
 void 			ft_create_pipes_array(int pipes[][2], int num_pipes);
-int 			ft_count_piped_commands(t_command *start_command);
-void 			ft_close_pipes(t_execution_data *data);
+int 			ft_count_number_of_pipes(char *input); 
+void 			ft_close_pipes(t_command *data);
+bool 			ft_check_if_pipe_in_char(char *token);
+bool 			ft_check_if_pipe_in_string(char *token);
+int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // quote
 int			    ft_is_quote(char c);
 int			    ft_check_quotes_error(void);

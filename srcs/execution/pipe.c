@@ -1,50 +1,44 @@
 #include "minishell.h"
 
-void ft_execute_commands_with_pipe(t_execution_data *data) 
+void ft_execute_commands_with_pipe(t_command *data) 
 {
-    ft_create_pipes(data->commands->pipe_fd);
+	int i;
+    ft_create_pipes(data);
     ft_create_child_process();
 
-    if (data->commands->child_pid == 0) {
-        // Code du processus enfant
-        close(data->commands->pipe_fd[1]);  // Fermeture de l'extrémité d'écriture inutilisée du pipe
-        dup2(data->commands->pipe_fd[0], STDIN_FILENO);  // Redirection de l'entrée standard vers le pipe
-        close(data->commands->pipe_fd[0]);  // Fermeture du descripteur de fichier inutile
+	i = 0;
+    if (data->child_pids[i] == 0) {
+        // Child process code
+        close(data->pipes[data->pipe_index][1]);  // Close unused write end of the pipe
+        dup2(data->pipes[data->pipe_index][0], STDIN_FILENO);  // Redirect standard input to the pipe
+        close(data->pipes[data->pipe_index][0]);  // Close the file descriptor
         ft_execute_commands_with_pipe(data);
     } else {
-        // Code du processus parent
-        close(data->commands->pipe_fd[0]);  // Fermeture de l'extrémité de lecture inutilisée du pipe
-        dup2(data->commands->pipe_fd[1], STDOUT_FILENO);  // Redirection de la sortie standard vers le pipe
-        close(data->commands->pipe_fd[1]);  // Fermeture du descripteur de fichier inutile
-        execvp(data->commands->args[0], data->commands->args);  // Exécution de la commande
+        // Parent process code
+        close(data->pipes[data->pipe_index][0]);  // Close unused read end of the pipe
+        dup2(data->pipes[data->pipe_index][1], STDOUT_FILENO);  // Redirect standard output to the pipe
+        close(data->pipes[data->pipe_index][1]);  // Close the file descriptor
+        execvp(data->args[0], data->args);  // Execute the command
         perror("execvp");
         exit(EXIT_FAILURE);
     }
 }
 
-void ft_execute_piped_commands(t_commandList *commandList, t_command *commands, t_env *envList, char **envp) 
+void ft_execute_piped_commands(t_command *command, int num_commands) 
 {
-	int i;
-    t_execution_data data;
-    data.commands = commands;
-    data.envList = envList;
-    data.envp = envp;
+    int i;
 
-    int num_commands = ft_count_piped_commands(commands);
+    i = 0; 
+    while (i < num_commands - 1)
+    {
+        ft_create_pipes(command);
+        i++;
+    }
 
-    // Créer les pipes
-    i= 0; 
-	while (i < num_commands - 1)
-	{
-		ft_create_pipes(data.pipes[i]);
-		i++;
-	}
-    // Lancer les processus enfants
-    ft_launch_child_processes(&data);
+    ft_launch_child_processes(command);
 
-    // Fermer les descripteurs de fichiers des pipes dans le processus parent
-    ft_close_pipes(&data);
+    // Close file descriptors of pipes in the parent process
+    ft_close_pipes(command);
 
-    // Attendre que tous les processus enfants se terminent
-    ft_wait_for_child_processes_to_end(&data);
+    ft_wait_for_child_processes_to_end(command->child_pids, num_commands);
 }
