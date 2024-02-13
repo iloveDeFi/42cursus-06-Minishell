@@ -37,12 +37,12 @@ void ft_manage_history(t_mini *shell, const char *input)
     }
 }
 
-
 void ft_custom_prompt_msg(t_mini *shell) 
 {
     char *input;
 
-    if (shell->av != NULL) {
+    if (shell->av != NULL) 
+    {
         free(shell->av);
         shell->av = NULL; // Assurez-vous de mettre à NULL après la libération
     }
