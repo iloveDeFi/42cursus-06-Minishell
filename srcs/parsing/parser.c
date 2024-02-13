@@ -25,6 +25,7 @@ void ft_process_the_first_token_as_a_command(t_commandList *commandList, char *t
 	}
 }
 
+// TO DO HERE : MAYBE t_command *command accessible from commandList directly?
 void ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token) 
 {
     if (command == NULL || token == NULL) 
@@ -33,7 +34,6 @@ void ft_process_token_as_an_argument(t_commandList *commandList, t_command *comm
         return;
     }
 
-    // Copie des anciens arguments dans un nouveau tableau
     char **newArgs = (char **)malloc((command->argCount + 2) * sizeof(char *));
     if (newArgs == NULL) 
     {
@@ -86,13 +86,15 @@ int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *inp
     {
         delimiters = " |";
         token = ft_strtok(inputCopy, delimiters);
-
-        // Utiliser inputCopy ici pour le reste des tokens
-    }
+		while (token != NULL) 
+        {
+            // Traiter chaque sous-input
+            ft_process_sub_input_as_command(commandList, token);
+            token = ft_strtok(NULL, delimiters);
+        }
+	}
     else    
-    {
         token = ft_strtok(inputCopy, delimiters);
-    }
 
     if (token == NULL) 
     {
@@ -154,7 +156,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 
         if (ft_count_number_of_pipes(input) > 1)
         {
-			if (ft_count_number_of_pipes(input) > 10)
+			if (ft_count_number_of_pipes(input) > MAX_COMMANDS)
 				perror("Please do not use more than 10 pipes.\n");
             ft_execute_piped_commands(command, (ft_count_number_of_pipes(input) + 1));
         }

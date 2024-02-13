@@ -24,21 +24,42 @@ void ft_execute_commands_with_pipe(t_command *data)
     }
 }
 
-void ft_execute_piped_commands(t_command *command, int num_commands) 
+void ft_execute_piped_commands(t_command *command, int number_of_pipes) 
 {
     int i;
 
     i = 0; 
-    while (i < num_commands - 1)
+    while (i < number_of_pipes - 1)
     {
         ft_create_pipes(command);
+		command->pipe_index++;
         i++;
     }
 
-    ft_launch_child_processes(command);
+    ft_launch_child_processes(command, number_of_pipes);
 
     // Close file descriptors of pipes in the parent process
-    ft_close_pipes(command);
+    ft_close_pipes(command, number_of_pipes);
 
-    ft_wait_for_child_processes_to_end(command->child_pids, num_commands);
+    ft_wait_for_child_processes_to_end(command->child_pids, number_of_pipes);
+}
+
+void ft_process_sub_input_as_command(t_commandList *commandList, char *subInput) 
+{
+    char *token;
+    char subInputCopy[ft_strlen(subInput) + 1];
+    char *delimiters;
+	
+	delimiters = " ";
+    ft_strcpy(subInputCopy, subInput);
+    
+    // Traiter le premier token comme une commande
+    token = ft_strtok(subInputCopy, delimiters);
+    ft_process_the_first_token_as_a_command(commandList, token);
+
+    // Traiter les tokens suivants comme des arguments
+    while ((token = ft_strtok(NULL, delimiters)) != NULL) 
+    {
+        ft_process_token_as_an_argument(commandList, commandList->tail, token);
+    }
 }

@@ -48,14 +48,14 @@ int ft_count_number_of_pipes(char *input)
 }
 
 
-void ft_close_pipes(t_command *data) 
+void ft_close_pipes(t_command *command, int number_of_pipes) 
 {
     int i;
 	
 	i = 0;
-    while (i < MAX_COMMANDS - 1) {
-        close(data->pipes[i][0]);
-        close(data->pipes[i][1]);
+    while (i < number_of_pipes - 1) {
+        close(command->pipes[i][0]);
+        close(command->pipes[i][1]);
         i++;
     }
 }

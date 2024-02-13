@@ -91,6 +91,7 @@ typedef struct s_command
     int pipes[MAX_COMMANDS - 1][2];
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
+	int number_of_pipes;
 } t_command;
 
 
@@ -179,7 +180,7 @@ int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
 // child
 pid_t           ft_create_child_process();
-void 			ft_launch_child_processes(t_command *data);
+void 			ft_launch_child_processes(t_command *data, int number_of_pipes);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
 void 			ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands);
 void 			ft_configure_child_process(t_command *data, int index); 
@@ -215,6 +216,7 @@ char            *ft_lookfor_command_and_build_path(char *path, t_commandList *co
 // pipe
 void 			ft_execute_commands_with_pipe(t_command *data);
 void 			ft_execute_piped_commands(t_command *command, int num_commands);
+void ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -307,7 +309,7 @@ int             ft_launch_parsing_and_execution(t_commandList *commandList, char
 void 			ft_create_pipes(t_command *command);
 void 			ft_create_pipes_array(int pipes[][2], int num_pipes);
 int 			ft_count_number_of_pipes(char *input); 
-void 			ft_close_pipes(t_command *data);
+void 			ft_close_pipes(t_command *data, int number_of_pipes);
 bool 			ft_check_if_pipe_in_char(char *token);
 bool 			ft_check_if_pipe_in_string(char *token);
 int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
