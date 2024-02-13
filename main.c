@@ -31,6 +31,8 @@ char *ft_capture_input(void)
 }
 */
 
+//
+
 int main(int ac, char **av, char **envp)
 {
     t_mini shell;
