@@ -151,9 +151,8 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
     if (ft_parse_and_add_to_commandList(commandList, input) == 0 && commandList->head != NULL) 
     {
         ft_print_commandList(commandList);
-
+		
         command = commandList->head;
-
         if (ft_count_number_of_pipes(input) > 1)
         {
 			if (ft_count_number_of_pipes(input) > MAX_COMMANDS)
@@ -167,7 +166,6 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
             ft_destroy_command(commandList);
             return 1;
         }
-        
         return 0;
     } 
     else 
