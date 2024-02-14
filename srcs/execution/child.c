@@ -21,15 +21,19 @@ void ft_launch_child_processes(t_command *command, int number_of_pipes)
     while (i < number_of_pipes) 
 	{
         command->child_pids[i] = ft_create_child_process(/*command, i*/);
-
-        if (command->child_pids[i] == 0) {
+		if (command->child_pids[i] < 0) 
+		{
+            perror("fork error in ft_launch_child_processes\n");
+            exit(EXIT_FAILURE);
+		}
+        else if (command->child_pids[i] == 0) {
             // Processus enfant
-            ft_configure_child_process(command, i);
-            exit(EXIT_SUCCESS);
+            ft_configure_child_process(command, i, number_of_pipes);
+            ft_execute_commands_with_pipe(command, number_of_pipes);
         }
 
         i++;
-    }
+	}
 }
 
 void ft_execute_child_process(char *full_path, char **args, char **envp)
@@ -53,34 +57,22 @@ void ft_wait_for_child_processes_to_end(pid_t *child_pids, int number_of_pipes)
     }
 }
 
-// void ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands) 
-// {
-//     int i;
-
-//     i = 0;
-//     while (i < num_commands)
-//     {
-//         ft_wait_for_child_process(child_pids[i]);
-//         i++;
-//     }
-// }
-
-void ft_configure_child_process(t_command *data, int index) 
+void ft_configure_child_process(t_command *command, int index, int number_of_pipes) 
 {
+    // Rediriger l'entrée depuis le pipe précédent
     if (index > 0) {
-        // Rediriger l'entrée depuis le pipe précédent
-        dup2(data->pipes[index - 1][0], STDIN_FILENO);
+        dup2(command->pipes[index - 1][0], STDIN_FILENO);
+        close(command->pipes[index - 1][0]);
+        close(command->pipes[index - 1][1]);
     }
 
-    if (index < MAX_COMMANDS - 1) {
-        // Rediriger la sortie vers le pipe suivant
-        dup2(data->pipes[index][1], STDOUT_FILENO);
+    // Rediriger la sortie vers le pipe suivant
+    if (index < number_of_pipes - 1) {
+        dup2(command->pipes[index][1], STDOUT_FILENO);
+        close(command->pipes[index][0]);
+        close(command->pipes[index][1]);
     }
 
     // Fermer tous les descripteurs de fichiers des pipes
-    ft_close_pipes(data, index); // TO DO second argument should be number_of_pipes?
-
-    // Exécuter la commande avec pipe
-    ft_execute_commands_with_pipe(data);
+    ft_close_pipes(command, index, number_of_pipes);
 }
-

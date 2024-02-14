@@ -183,7 +183,7 @@ pid_t           ft_create_child_process();
 void 			ft_launch_child_processes(t_command *data, int number_of_pipes);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
 void 			ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands);
-void 			ft_configure_child_process(t_command *data, int index); 
+void 			ft_configure_child_process(t_command *command, int i, int number_of_pipes); 
 // command
 int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
 void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
@@ -214,9 +214,8 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-void 			ft_execute_commands_with_pipe(t_command *data);
-void 			ft_execute_piped_commands(t_command *command, int num_commands);
-void ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
+void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
+void		 	ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -309,7 +308,7 @@ int             ft_launch_parsing_and_execution(t_commandList *commandList, char
 void 			ft_create_pipes(t_command *command);
 void 			ft_create_pipes_array(int pipes[][2], int num_pipes);
 int 			ft_count_number_of_pipes(char *input); 
-void 			ft_close_pipes(t_command *data, int number_of_pipes);
+void 			ft_close_pipes(t_command *command, int index, int number_of_pipes);
 bool 			ft_check_if_pipe_in_char(char *token);
 bool 			ft_check_if_pipe_in_string(char *token);
 int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);

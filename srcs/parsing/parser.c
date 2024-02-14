@@ -88,8 +88,9 @@ int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *inp
         token = ft_strtok(inputCopy, delimiters);
 		while (token != NULL) 
         {
-            // Traiter chaque sous-input
-            ft_process_sub_input_as_command(commandList, token);
+            // All tokens are command here
+            ft_process_the_first_token_as_a_command(commandList, token);
+    		tokenIndex++;
             token = ft_strtok(NULL, delimiters);
         }
 	}
@@ -157,7 +158,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
         {
 			if (ft_count_number_of_pipes(input) > MAX_COMMANDS)
 				perror("Please do not use more than 10 pipes.\n");
-            ft_execute_piped_commands(command, (ft_count_number_of_pipes(input) + 1));
+            ft_execute_commands_with_pipe(command, (ft_count_number_of_pipes(input) + 1));
         }
         
         else if (ft_execute_single_command(command, commandList, envList, envp) != 0) 

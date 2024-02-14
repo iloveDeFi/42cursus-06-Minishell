@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// Pipes are init in t_command node initialization, then we create them here
 void ft_create_pipes(t_command *command)
 {
     int pipe_index;
@@ -10,24 +11,6 @@ void ft_create_pipes(t_command *command)
     {
         perror("Error creating pipe");
         exit(EXIT_FAILURE);
-    }
-	// Fermeture de l'extrémité de lecture inutilisée du pipe
-    close(command->pipes[pipe_index][0]);
-}
-
-void ft_create_pipes_array(int pipes[][2], int num_pipes) 
-{
-    int i;
-    
-    i = 0;
-    while (i < num_pipes)
-    {
-        if (pipe(pipes[i]) == -1) 
-        {
-            perror("Error creating pipe");
-            exit(EXIT_FAILURE);
-        }
-        i++;
     }
 }
 
@@ -48,14 +31,18 @@ int ft_count_number_of_pipes(char *input)
 }
 
 
-void ft_close_pipes(t_command *command, int number_of_pipes) 
+void ft_close_pipes(t_command *command, int index, int number_of_pipes) 
 {
     int i;
 	
 	i = 0;
-    while (i < number_of_pipes - 1) {
-        close(command->pipes[i][0]);
-        close(command->pipes[i][1]);
+    while (i < number_of_pipes) 
+	{
+		if (i != index)
+		{
+        	close(command->pipes[i][0]);
+        	close(command->pipes[i][1]);
+		}
         i++;
     }
 }
