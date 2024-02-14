@@ -69,59 +69,17 @@ void ft_process_token_as_an_argument(t_commandList *commandList, t_command *comm
     command->argCount++;
 }
 
-
 int ft_split_input_in_token_to_commandList(t_commandList *commandList, char *input) 
 {
-    char *token;
-    char inputCopy[ft_strlen(input) + 1];
-    int tokenIndex;
-    char *delimiters;
-    
-    tokenIndex = 0;
-    delimiters = " ";
+    char *delimiters = " ";
 
-    ft_strcpy(inputCopy, input);
-
-    if (ft_check_if_pipe_in_string(inputCopy))
+    if (ft_check_if_pipe_in_string(input))
     {
         delimiters = " |";
-        token = ft_strtok(inputCopy, delimiters);
-		while (token != NULL) 
-        {
-            // All tokens are command here
-            ft_process_the_first_token_as_a_command(commandList, token);
-    		tokenIndex++;
-            token = ft_strtok(NULL, delimiters);
-        }
-	}
-    else    
-        token = ft_strtok(inputCopy, delimiters);
-
-    if (token == NULL) 
-    {
-        perror("An error has occurred during input tokenization: Empty command\n");
-        return 1;
     }
 
-    ft_process_the_first_token_as_a_command(commandList, token);
-    tokenIndex++;
-
-    while ((token = ft_strtok(NULL, delimiters)) != NULL) 
-    {
-        if (tokenIndex == 1 && ft_strcmp(commandList->tail->name, "cd") == 0) 
-        {
-            ft_process_cd_argument(commandList->tail, token);
-            break;
-        }
-
-        printf("Launch ft_process_token_as_an_argument with argument number %d: named %s\n", tokenIndex, token);
-        ft_process_token_as_an_argument(commandList, commandList->tail, token);
-        tokenIndex++;
-    }
-
-    return commandList->length;
+    return ft_process_input_with_strtok(commandList, input, delimiters);
 }
-
 
 
 int ft_parse_and_add_to_commandList(t_commandList *commandList, char *input) 

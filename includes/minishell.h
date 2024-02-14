@@ -216,6 +216,11 @@ char            *ft_lookfor_command_and_build_path(char *path, t_commandList *co
 // pipe
 void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 void		 	ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
+// process
+int 			ft_process_input_with_strtok(t_commandList *commandList, char *input, char *delimiters);
+void			ft_process_token(t_commandList *commandList, t_command *command, char *token); 
+void			ft_process_first_token_as_command(t_commandList *commandList, char *token);
+void			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
