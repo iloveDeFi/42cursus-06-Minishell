@@ -48,7 +48,7 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList,
             exit(EXIT_FAILURE);
         } else {
 			// send pid and number of commands TO DO CHECK
-            ft_wait_for_child_processes_to_end(&pid, commandList->length);
+            ft_wait_for_all_child_processes_to_end(&pid, commandList->length);
             free(full_path);
         }
     } else {

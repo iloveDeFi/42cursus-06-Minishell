@@ -45,7 +45,7 @@ void ft_execute_child_process(char *full_path, char **args, char **envp)
     }
 }
 
-void ft_wait_for_child_processes_to_end(pid_t *child_pids, int number_of_pipes) 
+void ft_wait_for_all_child_processes_to_end(pid_t *child_pids, int number_of_pipes) 
 {
     int i;
 

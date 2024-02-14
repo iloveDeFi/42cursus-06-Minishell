@@ -182,7 +182,7 @@ int	            ft_execute_builtin(t_command *cmd, t_env *envList);
 pid_t           ft_create_child_process();
 void 			ft_launch_child_processes(t_command *data, int number_of_pipes);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
-void 			ft_wait_for_child_processes_to_end(pid_t *child_pids, int num_commands);
+void 			ft_wait_for_all_child_processes_to_end(pid_t *child_pids, int num_commands);
 void 			ft_configure_child_process(t_command *command, int i, int number_of_pipes); 
 // command
 int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
