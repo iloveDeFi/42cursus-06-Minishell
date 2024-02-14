@@ -1,7 +1,7 @@
  #include "minishell.h"
 
 // Fonction pour gérer l'affichage de chaque argument après l'expansion
-void ft_handle_argument(char *arg) 
+/* void ft_handle_argument(char *arg) 
 {
     char *expanded_arg;
     
@@ -87,11 +87,11 @@ int echo(char **args, int g_exit_code)
     }
 
     return 0;
-} 
+}  */
 
 
 
-/* int echo(t_command *cmd) 
+int echo(t_command *cmd) 
 {
     const char *message;
     int i;
@@ -120,4 +120,4 @@ int echo(char **args, int g_exit_code)
     if (!suppressNewline) 
         write(STDOUT_FILENO, "\n", 1);
     return 0;
-} */
+}

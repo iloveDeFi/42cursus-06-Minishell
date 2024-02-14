@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void ft_add_to_list(t_env **envList, t_env *new_node)
+/*void ft_add_to_list(t_env **envList, t_env *new_node)
 {
     t_env *current;
 
@@ -23,6 +23,27 @@ void ft_add_to_list(t_env **envList, t_env *new_node)
         current->next = new_node;
         new_node->prev = current;
     }
+}*/
+
+void ft_add_to_list(t_env **envlist, t_env *new_node) 
+{
+    t_env *current; 
+
+    if (!envlist || !new_node)
+        return;
+
+    if (!*envlist) 
+    {
+        *envlist = new_node;
+        return;
+    }
+
+    current = *envlist;
+    while (current->next != NULL) 
+    {
+        current = current->next; 
+    }
+    current->next = new_node;
 }
 
 // int	ft_add_envVar_to_list(t_env **envlist, t_env *new_node, t_command *command)

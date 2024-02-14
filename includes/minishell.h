@@ -150,7 +150,7 @@ void            ft_handle_argument(char *arg);
 void            ft_handle_space();
 void            ft_echo_args(char **args, int g_exit_code);
 void            print_error_message(char *message);
-int             echo(char **args, int g_exit_code);
+//int             echo(char **args, int g_exit_code);
 // env
 int 	        env(t_env *env_list);
 void            ft_display_envList(t_env *envList);
@@ -362,6 +362,11 @@ int             main(int ac, char **av, char **envp);
 void	        ft_exit_shell(t_mini *shell);
 
 
-//int echo(t_command *cmd);
+int echo(t_command *cmd);
+
+void ft_found_and_replace_usd(t_command *command, t_env *envList);
+char *ft_replace_usd_to_env(t_env *envList, char *usd);
+void replace_env_variables_in_command(t_command *command, t_env *envList);
+//int ft_split_string_export_argument(char *arg);
 
 #endif

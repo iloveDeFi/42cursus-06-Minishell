@@ -148,6 +148,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 
     if (ft_parse_and_add_to_commandList(commandList, input) == 0 && commandList->head != NULL) 
     {
+        
         ft_print_commandList(commandList);
 
         command = commandList->head;
