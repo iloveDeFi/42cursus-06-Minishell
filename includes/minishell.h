@@ -306,8 +306,8 @@ char            *ft_expand_env_variables(char *command);
 // parser
 void            ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token);
 void            ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token);
-int             ft_split_input_in_token_to_commandList(t_commandList *commandList, char *input);
-int             ft_parse_and_add_to_commandList(t_commandList *commandList, char *input);
+int             ft_split_input_in_token_with_delimiter(t_commandList *commandList, char *input);
+int             ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe
 void 			ft_create_pipes(t_command *command);
