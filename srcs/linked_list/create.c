@@ -72,6 +72,5 @@ t_env *ft_create_node_for_export_argument(char *name, char *value)
     new_node->value = ft_strdup(value);
     new_node->next = NULL;
     
-    
     return new_node;
 }

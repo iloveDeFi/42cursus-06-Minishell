@@ -64,16 +64,12 @@ void	ft_process_first_token_as_command(t_commandList *commandList, char *token)
             ft_destroy_command(commandList);
             exit(EXIT_FAILURE);
         }
-
         ft_init_new_node(commandList, command, token);
         ft_append_to_commandList(commandList, command);
-
-        printf("Printing commandList at the end of processFirstTokenAsCommand:\n");
-        ft_print_commandList(commandList);
     }
 }
 
-// Fonction pour traiter un token comme un argument
+// token will be the argument of the commandList->tail brother
 void	ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token) 
 {
     if (command == NULL || token == NULL) 
