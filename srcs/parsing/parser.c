@@ -12,36 +12,17 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 
     if (commandList->head != NULL) 
     {	
+		// TO DO CHECK HEAD OR TAIL
         command = commandList->head;
+		// TO DO ADD HANDLE REDIRECTION EXECUTION
 		ft_handle_pipes_execution(input, command);
-		ft_handle_command_execution();
-       
-        else if (ft_execute_single_command(command, commandList, envList, envp) != 0) 
-        {
-            perror("Error executing command\n");
-            ft_destroy_command(commandList);
-            return 1;
-        }
-        return 0;
+		ft_handle_command_execution(command, commandList, envList, envp);
     } 
     else 
     {
         perror("ft_parse_and_add_to_commandList failed. commandList problem.\n");
+		g_exit_code = 1;
         return 1;
     }
-}
-
-int ft_handle_pipes_execution(char *input, t_command *command)
-{
-	if (ft_count_number_of_pipes(input) > 1)
-    {
-		if (ft_count_number_of_pipes(input) > MAX_COMMANDS)
-			perror("Please do not use more than 10 pipes.\n");
-        ft_execute_commands_with_pipe(command, (ft_count_number_of_pipes(input) + 1));
-    }
-}
-
-int ft_handle_command_execution()
-{
-	ft_handle_command_execution();
+	return 0;
 }

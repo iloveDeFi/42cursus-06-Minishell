@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+int ft_handle_pipes_execution(char *input, t_command *command)
+{
+	if (ft_count_number_of_pipes(input) > 1)
+    {
+		if (ft_count_number_of_pipes(input) > MAX_COMMANDS)
+			perror("Please do not use more than 10 pipes.\n");
+        ft_execute_commands_with_pipe(command, (ft_count_number_of_pipes(input) + 1));
+    }
+	return 0;
+}
+
 void ft_execute_commands_with_pipe(t_command *command, int number_of_pipes)
 {
     if (number_of_pipes > 0) 

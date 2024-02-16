@@ -1,3 +1,14 @@
+// Voici quelques conventions courantes pour les codes de sortie dans les programmes C :
+
+// 0: Succès, pas d'erreur.
+// 1 (ou autre valeur non nulle) : Erreur générale.
+// 2 : Erreur de syntaxe dans les arguments de la ligne de commande.
+// 126 : Impossible d'exécuter le programme (problème de permissions).
+// 127 : Commande introuvable (exécution de exec a échoué).
+// 128 + signal : Si un programme se termine en raison d'un signal, le code 
+// de sortie sera 128 + numéro de signal. Par exemple, pour un programme terminé 
+// par le signal SIGSEGV, le code de sortie sera 128 + 11 = 139.
+
 // #include "minishell.h"
 
 

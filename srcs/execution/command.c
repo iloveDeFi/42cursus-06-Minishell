@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+int ft_handle_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp)
+{
+	if (ft_execute_single_command(command, commandList, envList, envp) != 0) 
+    {
+    	perror("Error executing command\n");
+    	ft_destroy_command(commandList);
+    	return 1;
+    }
+	else 
+		return 0;
+}
+
 int ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp) 
 {
     if (command) 

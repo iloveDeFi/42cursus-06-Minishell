@@ -224,7 +224,7 @@ void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 void		 	ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
 // process
 int 			ft_process_input_with_strtok(t_commandList *commandList, char *input, char *delimiters);
-void 			ft_process_token_or_argument(t_commandList *commandList, t_command *command, char *token, char *delimiters);
+t_command 		*ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token, char *delimiters);
 void 			ft_process_token(t_commandList *commandList, t_command *command, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 char 			**ft_allocate_and_copy_arguments(char **oldArgs, int argCount, char *newArg);
