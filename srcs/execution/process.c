@@ -2,7 +2,8 @@
 
 t_command *ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token, char *delimiters) 
 {
-    if (ft_strcmp(delimiters, " |") == 0)
+	// TO DO CODE STRSTR
+    if (strstr(delimiters, " |") != NULL)
     {
         if (*token == '|')
             return ft_create_and_init_new_command_in_commandList(commandList, NULL);
