@@ -175,6 +175,13 @@ int	            ft_unset(t_env **envList, t_command *cmd);
 
 // EXECUTION
 
+// argument 
+char 			**ft_allocate_memory_for_arguments(t_command *commandList, int argCount); 
+void 			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
+void			 ft_copy_new_argument(t_commandList *commandList, char **newArgs, int argCount, char *newArg);
+void 			ft_add_null_terminator(char **newArgs, int argCount);
+char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg); 
+
 // builtin
 int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);

@@ -8,7 +8,6 @@ char *ft_change_strtok_delimiter(char *input)
     {
         delimiters = " |";
     }
-
     return delimiters;
 }
 

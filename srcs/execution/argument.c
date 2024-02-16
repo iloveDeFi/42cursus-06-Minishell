@@ -40,7 +40,7 @@ void ft_add_null_terminator(char **newArgs, int argCount)
 
 char **ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg) 
 {
-    char **newArgs = ft_allocate_memory_for_arguments(argCount);
+    char **newArgs = ft_allocate_memory_for_arguments(commandList, argCount);
     ft_copy_existing_arguments(newArgs, oldArgs, argCount);
     ft_copy_new_argument(commandList, newArgs, argCount, newArg);
     ft_add_null_terminator(newArgs, argCount);
