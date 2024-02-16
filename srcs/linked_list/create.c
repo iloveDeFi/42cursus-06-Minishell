@@ -30,6 +30,23 @@ t_env	*ft_create_node_for_envList(char *var_array)
 	return NULL;
 }
 
+t_command *ft_create_new_command_in_commandList(t_commandList *commandList, char *name) 
+{
+    t_command *command = (t_command *)malloc(sizeof(t_command));
+
+    if (command == NULL) 
+    {
+        perror("CHAOS, error allocating memory");
+        ft_destroy_command(commandList);
+        exit(EXIT_FAILURE);
+    }
+
+    ft_init_new_node(commandList, command, name);
+    ft_append_to_commandList(commandList, command);
+
+    return command;
+}
+
 void ft_init_new_node(t_commandList *commandList, t_command *command, char *token)
 {
     command->name = ft_strdup(token);

@@ -1,42 +1,24 @@
 #include "minishell.h"
 
-int	ft_process_input_with_strtok(t_commandList *commandList, char *input, char *delimiters) 
+void ft_process_token_or_argument(t_commandList *commandList, t_command *command, char *token, char *delimiters) 
 {
-    char *token;
-    char inputCopy[ft_strlen(input) + 1];
-    int tokenIndex;
-
-    tokenIndex = 0;
-    ft_strcpy(inputCopy, input);
-
-    token = ft_strtok(inputCopy, delimiters);
-    while (token != NULL) 
+    if (ft_strcmp(delimiters, " |") == 0)
     {
-        ft_process_token(commandList, commandList->tail, token);
-        tokenIndex++;
-        token = ft_strtok(NULL, delimiters);
+        if (*token == '|')
+            command = ft_create_new_command_in_commandList(commandList, NULL);
+        else
+            ft_process_token_as_argument(commandList, command, token);
     }
-
-    return commandList->length;
+    else
+        ft_process_token(commandList, commandList->tail, token);
 }
 
-// Fonction pour traiter un seul token
-void	ft_process_token(t_commandList *commandList, t_command *command, char *token) 
+void ft_process_token(t_commandList *commandList, t_command *command, char *token) 
 {
-    if (command == NULL || token == NULL) 
-    {
-        perror("Erreur dans processToken : mauvaise entrée à traiter\n");
-        return;
-    }
-
     if (commandList->length == 0) 
-    {
-        // Premier token de la liste
         ft_process_first_token_as_command(commandList, token);
-    } 
     else 
     {
-        // Les tokens suivants sont des arguments
         if (ft_strcmp(commandList->tail->name, "cd") == 0) 
         {
             ft_process_cd_argument(commandList->tail, token);
@@ -49,28 +31,7 @@ void	ft_process_token(t_commandList *commandList, t_command *command, char *toke
     }
 }
 
-// Fonction pour traiter le premier token comme une commande
-void	ft_process_first_token_as_command(t_commandList *commandList, char *token) 
-{
-    t_command *command = NULL;
-
-    if (!ft_check_if_pipe_in_string(token)) 
-    {
-        command = (t_command *)malloc(sizeof(t_command));
-
-        if (command == NULL) 
-        {
-            perror("CHAOS, error allocating memory");
-            ft_destroy_command(commandList);
-            exit(EXIT_FAILURE);
-        }
-        ft_init_new_node(commandList, command, token);
-        ft_append_to_commandList(commandList, command);
-    }
-}
-
-// token will be the argument of the commandList->tail brother
-void	ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token) 
+void ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token) 
 {
     if (command == NULL || token == NULL) 
     {
@@ -78,7 +39,18 @@ void	ft_process_token_as_argument(t_commandList *commandList, t_command *command
         return;
     }
 
-    char **newArgs = (char **)malloc((command->argCount + 2) * sizeof(char *));
+    char **newArgs = ft_allocate_and_copy_arguments(command->args, command->argCount, token);
+
+    free(command->args);
+    command->args = newArgs;
+    command->argCount++;
+}
+
+// Fonction utilitaire pour allouer de la mémoire et copier les arguments
+char **ft_allocate_and_copy_arguments(char **oldArgs, int argCount, char *newArg) 
+{
+    char **newArgs = (char **)malloc((argCount + 2) * sizeof(char *));
+    
     if (newArgs == NULL) 
     {
         perror("CHAOS, erreur d'allocation mémoire dans processTokenAsArgument");
@@ -87,15 +59,15 @@ void	ft_process_token_as_argument(t_commandList *commandList, t_command *command
     }
 
     int i = 0;
-    while (i < command->argCount) 
+    while (i < argCount) 
     {
-        newArgs[i] = command->args[i];
+        newArgs[i] = oldArgs[i];
         i++;
     }
 
     // Ajout du nouveau token en tant que nouvel argument
-    newArgs[command->argCount] = ft_strdup(token);
-    if (newArgs[command->argCount] == NULL)
+    newArgs[argCount] = ft_strdup(newArg);
+    if (newArgs[argCount] == NULL)
     {
         perror("Erreur d'allocation mémoire dans processTokenAsArgument");
         ft_destroy_command(commandList);
@@ -103,12 +75,7 @@ void	ft_process_token_as_argument(t_commandList *commandList, t_command *command
     }
 
     // Ajout d'un pointeur NULL à la fin du tableau
-    newArgs[command->argCount + 1] = NULL;
+    newArgs[argCount + 1] = NULL;
 
-    // Libération de la mémoire de l'ancien tableau d'arguments
-    free(command->args);
-
-    // Mise à jour du pointeur vers le nouveau tableau d'arguments
-    command->args = newArgs;
-    command->argCount++;
+    return newArgs;
 }

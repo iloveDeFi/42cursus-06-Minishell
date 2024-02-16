@@ -198,6 +198,12 @@ void            ft_print_commandList(t_commandList *commandList);
 void            ft_destroy_command(t_commandList *commandList);
 void	        ft_destroy_current_shell(t_mini *mini);
 void            ft_destroy_commandList(t_commandList *commandList);
+// error
+int				ft_is_only_spaces(const char *str);
+void 			ft_handle_only_spaces(t_mini *shell);
+void 			ft_check_null_av_shell(t_mini *shell);
+void 			ft_check_empty_av_shell(t_mini *shell);
+int 			ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 // history
 void            ft_manage_history(t_mini *shell, const char *input);
 void            ft_custom_prompt_msg(t_mini *shell);
@@ -218,9 +224,11 @@ void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 void		 	ft_process_sub_input_as_command(t_commandList *commandList, char *subInput);
 // process
 int 			ft_process_input_with_strtok(t_commandList *commandList, char *input, char *delimiters);
-void			ft_process_token(t_commandList *commandList, t_command *command, char *token); 
-void			ft_process_first_token_as_command(t_commandList *commandList, char *token);
-void			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
+void 			ft_process_token_or_argument(t_commandList *commandList, t_command *command, char *token, char *delimiters);
+void 			ft_process_token(t_commandList *commandList, t_command *command, char *token);
+void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
+char 			**ft_allocate_and_copy_arguments(char **oldArgs, int argCount, char *newArg);
+
 // redirection
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -257,6 +265,7 @@ void            ft_delete_node(t_commandList **head, t_command *node);
 void            ft_free_envList(t_env *envList);
 // create
 t_env           *ft_create_node_for_envList(char *var_array);
+t_command 		*ft_create_new_command_in_commandList(t_commandList *commandList, char *name);
 void            ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
 t_env           *ft_create_node_for_export_argument(char *name, char *value);
 // duplicate
@@ -306,7 +315,6 @@ char            *ft_expand_env_variables(char *command);
 // parser
 void            ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token);
 void            ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token);
-int             ft_split_input_in_token_with_delimiter(t_commandList *commandList, char *input);
 int             ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe

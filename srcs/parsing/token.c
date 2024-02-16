@@ -1,38 +1,37 @@
 #include "minishell.h"
 
-t_token_type ft_checkType(TokenChecker checker, char *token) 
+char *ft_change_strtok_delimiter(t_commandList *commandList, char *input) 
 {
-    return checker(token);
+    char *delimiters = " ";
+
+    if (ft_check_if_pipe_in_string(input))
+    {
+        delimiters = " |";
+    }
+
+    return delimiters;
 }
 
-// t_token_type ft_allocate_token_type(char *token, int tokenIndex) 
-// {
-//     if (ft_checkType(ft_check_pipe, token)) return PIPE;
-//     if (ft_checkType(ft_check_heredoc, token)) return HEREDOC;
-//     if (ft_checkType(ft_check_lpr, token)) return LPR;
-//     if (ft_checkType(ft_check_rpr, token)) return RPR;
-//     if (ft_checkType(ft_check_and, token)) return AND;
-//     if (ft_checkType(ft_check_or, token)) return OR;
-//     if (ft_checkType(ft_check_append, token)) return APPEND;
-//     if (ft_checkType(ft_check_out, token)) return OUT;
-//     if (ft_checkType(ft_check_in, token)) return IN;
-//     if (ft_checkType(ft_check_not, token)) return NOT;
-//     if (ft_checkType(ft_check_end, token)) return END;
-//     if (ft_checkType(ft_check_command, token)) return COMMAND_TYPE;
-//     if (ft_checkType(ft_check_argument, token)) return ARGUMENT_TYPE;
-//     if (ft_checkType(ft_check_option, token)) return OPTION_TYPE;
-
-//     return UNKNOWN_TYPE;
-// }
-
-t_token_type ft_allocate_token_type(char *token) 
+int ft_tokenize_input_with_strtok(t_commandList *commandList, char *input, char *delimiters) 
 {
-    if (token[0] != '-') 
+    char *token;
+    char inputCopy[ft_strlen(input) + 1];
+    int tokenIndex;
+    char *ptr;
+    t_command *command;
+
+    tokenIndex = 0;
+    ft_strcpy(inputCopy, input);
+    ptr = inputCopy;
+    command = NULL;
+
+    token = ft_strtok(inputCopy, delimiters);
+    while (token != NULL) 
     {
-        return COMMAND_TYPE;
+        ft_process_token_or_argument(commandList, command, token, delimiters);
+        tokenIndex++;
+        token = ft_strtok(ptr, delimiters);
     }
-    else 
-    {
-        return ARGUMENT_TYPE;
-    }
+
+    return commandList->length;
 }
