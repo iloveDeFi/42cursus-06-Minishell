@@ -7,7 +7,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 
     ft_initialize_commandList(commandList);
 	ft_check_if_input_is_tokenizable(commandList, input);
-	delimiters = ft_change_strtok_delimiter(commandList, input);
+	delimiters = ft_change_strtok_delimiter(input);
 	ft_tokenize_input_with_strtok(commandList, input, delimiters);
 
 	command = commandList->head;

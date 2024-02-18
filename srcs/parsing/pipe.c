@@ -16,7 +16,7 @@ void ft_create_pipes(t_command *command)
 
 int ft_count_number_of_pipes(char *input) 
 {
-    int number_of_pipes; // Initialisation à 0, car aucune pipe n'a encore été rencontrée
+    int number_of_pipes;
 	int i;
 
 	i = 0;
@@ -52,7 +52,6 @@ bool ft_check_if_pipe_in_char(char *token)
     return (ft_strcmp(token, "|") == 0);
 }
 
-// TO DO HARDCODE STRSTR
 bool ft_check_if_pipe_in_string(char *token) 
 {
     return (strstr(token, "|") != NULL);

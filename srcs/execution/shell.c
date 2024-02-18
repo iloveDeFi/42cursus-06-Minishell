@@ -56,7 +56,7 @@ void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envL
     {
         // TO DO: ADD SIGNALS HERE
         ft_custom_prompt_msg(shell);
-        ft_check_empty_shell(shell);
+        ft_check_empty_av_shell(shell);
         ft_manage_history(shell, shell->av);
         ft_handle_only_spaces(shell);
 		ft_check_empty_av_shell(shell);

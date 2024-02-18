@@ -3,6 +3,10 @@
 void ft_handle_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
     int input_fd;
+
+	// TO DO 
+	// use command ?
+	(void)command;
 	
 	input_fd = open(redirection_info.filename, O_RDONLY);
     if (input_fd == -1) {
@@ -23,6 +27,10 @@ void ft_handle_output_redirection(t_redirection_info redirection_info, t_command
 {
     int output_fd;
 	
+	// TO DO 
+	// use command ?
+	(void)command;
+
 	output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (output_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en écriture");
@@ -40,6 +48,11 @@ void ft_handle_output_redirection(t_redirection_info redirection_info, t_command
 
 void ft_handle_append_redirection(t_redirection_info redirection_info, t_command *command)
 {
+
+	// TO DO 
+	// use command ?
+	(void)command;
+
     int output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (output_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en écriture (mode ajout)");
@@ -60,6 +73,10 @@ void ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_comman
     int pipe_fd[2];
     pid_t child_pid;
 
+	// TO DO 
+	// use command ?
+	(void)command;
+	
     if (pipe(pipe_fd) == -1) {
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
@@ -72,15 +89,15 @@ void ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_comman
     if (child_pid == 0) {
         close(pipe_fd[1]);
         dup2(pipe_fd[0], STDIN_FILENO);
-		// execute command in child
-        ft_execute_command(command);
+		// TO DO : ADD execution command in the child here 
+        // ft_execute_command(command);
         close(pipe_fd[0]);
         exit(EXIT_SUCCESS);
     } else {
 		// parent here
         close(pipe_fd[0]);
 		// Écrire le délimiteur dans le pipe
-        write(pipe_fd[1], redirection_info.delimiter, strlen(redirection_info.delimiter));
+        write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter));
         close(pipe_fd[1]);
         waitpid(child_pid, NULL, 0);
     }

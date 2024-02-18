@@ -37,7 +37,7 @@ t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandL
     if (command == NULL) 
     {
         perror("CHAOS, error allocating memory");
-        ft_destroy_command(commandList);
+        ft_destroy_commandList(commandList);
         exit(EXIT_FAILURE);
     }
     ft_init_new_node(commandList, command, name);
@@ -52,7 +52,7 @@ void ft_init_new_node(t_commandList *commandList, t_command *command, char *toke
     if (command->args == NULL) 
     {
         perror("CHAOS, error allocating memory");
-        ft_destroy_command(commandList);
+        ft_destroy_commandList(commandList);
         exit(EXIT_FAILURE);
     }
     command->args[0] = ft_strdup(token);
@@ -61,8 +61,8 @@ void ft_init_new_node(t_commandList *commandList, t_command *command, char *toke
     command->redirectFile = NULL;
     command->next = NULL;
     command->prev = NULL;
-    command->tokenType = ft_allocate_token_type(token);
-    command->quoteType = ft_check_and_allocate_quote_type(token);
+    // command->tokenType = ft_allocate_token_type(token);
+    // command->quoteType = ft_check_and_allocate_quote_type(token);
 	command->envp = NULL;  // Vous pouvez initialiser envp avec les valeurs appropriées si nécessaire
     command->commands = NULL;  // Initialiser à NULL car cela dépendra du contexte d'utilisation
     command->envList = NULL;  // Initialiser à NULL si vous n'avez pas d'environnement spécifique à ce stade

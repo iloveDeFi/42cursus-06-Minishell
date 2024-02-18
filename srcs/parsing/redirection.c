@@ -9,7 +9,7 @@ t_redirection_info ft_parse_output_redirection(char *input)
     redirection_info.filename = NULL;
     redirection_info.delimiter = NULL;
     redirection_info.type = OUTPUT_REDIRECTION;
-    output_sign = strstr(input, ">");
+    output_sign = ft_strstr(input, ">");
     if (output_sign != NULL) {
         output_sign++;
         while (*output_sign == ' ')
@@ -29,8 +29,8 @@ t_redirection_info ft_parse_output_redirection(char *input)
     return redirection_info;
 }
 
-t_redirection_info ft_parse_append_redirection(char *input) {
-    
+t_redirection_info ft_parse_append_redirection(char *input) 
+{    
 	char *append_sign;
 	size_t len;
 	t_redirection_info redirection_info;
@@ -38,7 +38,7 @@ t_redirection_info ft_parse_append_redirection(char *input) {
     redirection_info.delimiter = NULL;
     redirection_info.type = APPEND_REDIRECTION;
 
-    append_sign = strstr(input, ">>");
+    append_sign = ft_strstr(input, ">>");
     if (append_sign != NULL) {
         append_sign += 2; // Avance au-delà de ">>"
         while (*append_sign == ' ')
@@ -57,7 +57,8 @@ t_redirection_info ft_parse_append_redirection(char *input) {
     return redirection_info;
 }
 
-t_redirection_info ft_parse_input_redirection(char *input) {
+t_redirection_info ft_parse_input_redirection(char *input) 
+{
 	char *input_sign;
 	size_t len;
     t_redirection_info redirection_info;
@@ -65,7 +66,7 @@ t_redirection_info ft_parse_input_redirection(char *input) {
     redirection_info.delimiter = NULL;
     redirection_info.type = INPUT_REDIRECTION;
 
-    input_sign = strstr(input, "<");
+    input_sign = ft_strstr(input, "<");
     if (input_sign != NULL) {
         input_sign++; // Avance au-delà de "<"
         while (*input_sign == ' ')
@@ -92,7 +93,7 @@ t_redirection_info ft_parse_heredoc_redirection(char *input) {
     redirection_info.delimiter = NULL;
     redirection_info.type = HERE_DOC_REDIRECTION;
 
-    heredoc_sign = strstr(input, "<<");
+    heredoc_sign = ft_strstr(input, "<<");
     if (heredoc_sign != NULL) {
         heredoc_sign += 2; // Avance au-delà de "<<"
         while (*heredoc_sign == ' ')

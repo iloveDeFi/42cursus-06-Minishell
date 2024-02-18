@@ -5,7 +5,7 @@ int ft_handle_command_execution(t_command *command, t_commandList *commandList, 
 	if (ft_execute_single_command(command, commandList, envList, envp) != 0) 
     {
     	perror("Error executing command\n");
-    	ft_destroy_command(commandList);
+    	ft_destroy_commandList(commandList);
     	return 1;
     }
 	else 

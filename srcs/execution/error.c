@@ -1,4 +1,4 @@
-#include "minishell.h"asm
+#include "minishell.h"
 
 int ft_is_only_spaces(const char *str)
 {
@@ -15,7 +15,7 @@ int ft_is_only_spaces(const char *str)
 
 void ft_handle_only_spaces(t_mini *shell)
 {
-    if (is_only_spaces(shell->av))
+    if (ft_is_only_spaces(shell->av))
     {
         ft_destroy_current_shell(shell);
         return;
@@ -41,20 +41,23 @@ void ft_check_empty_av_shell(t_mini *shell)
 }
 
 int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
-{
+{	
+	char *delimiter;
+
+	delimiter = NULL;
     if (commandList == NULL)
     {
         perror("Hey commandList head is NULL, so input is not tokenizable\n");
         return 1;
     }
-    else if (ft_split_input_in_token_with_delimiter(commandList, input) > 0) 
+    else if (ft_tokenize_input_with_strtok(commandList, input, delimiter))
     {
         return 0;
     } 
     else 
     {
         perror("Parsing failed in ft_check_if_input_is_tokenizable");
-        ft_destroy_command(commandList);
+        ft_destroy_commandList(commandList);
         return 1;
     }
 }

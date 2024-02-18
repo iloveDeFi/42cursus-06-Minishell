@@ -38,43 +38,6 @@ void ft_initialize_commandList(t_commandList *commandList)
 //     }
 // }
 
-void ft_destroy_commandList(t_commandList *commandList) 
-{
-    if (commandList == NULL) {
-        fprintf(stderr, "Error: NULL pointer in ft_destroy_commandList\n");
-        return;
-    }
-
-    t_command *currentCommand = commandList->head;
-    t_command *nextCommand;
-
-    while (currentCommand != NULL) {
-        nextCommand = currentCommand->next;
-
-        // Libérer la mémoire associée à la commande
-        free(currentCommand->name);
-
-        // Supprimer la mémoire associée aux arguments de la commande (si nécessaire)
-        int i = 0;
-        while (currentCommand->args[i] != NULL) {
-            free(currentCommand->args[i]);
-            i++;
-        }
-        free(currentCommand->args);
-
-        free(currentCommand);
-
-        currentCommand = nextCommand;
-    }
-
-    // Réinitialiser la structure de la liste des commandes
-    commandList->head = NULL;
-    commandList->tail = NULL;
-    commandList->length = 0;
-}
-
-
-
 void ft_print_commandList(t_commandList *commandList) 
 {
     if (commandList == NULL || commandList->head == NULL) 

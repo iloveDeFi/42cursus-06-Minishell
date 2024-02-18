@@ -1,11 +1,16 @@
 #include "minishell.h"
 
-void ft_destroy_command(t_commandList *commandList)
+void ft_destroy_commandList(t_commandList *commandList)
 {
 	t_command	*current;
 	t_command	*next;
 	int i;
 
+	if (commandList == NULL) {
+        fprintf(stderr, "Error: NULL pointer in ft_destroy_commandList\n");
+        return;
+    }
+	
 	current = commandList->head;
 	while (current != NULL)
 	{
@@ -30,7 +35,7 @@ void	ft_destroy_current_shell(t_mini *mini)
 {
 	if (mini->commands != NULL)
 	{
-		ft_destroy_command(mini->commands);
+		ft_destroy_commandList(mini->commands);
 		free(mini->commands);
 		mini->commands = NULL;
 	}

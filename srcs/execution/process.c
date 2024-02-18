@@ -2,8 +2,7 @@
 
 t_command *ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token, char *delimiters) 
 {
-	// TO DO CODE STRSTR
-    if (strstr(delimiters, " |") != NULL)
+    if (ft_strstr(delimiters, " |") != NULL)
     {
         if (*token == '|')
             return ft_create_and_init_new_command_in_commandList(commandList, NULL);
@@ -18,6 +17,8 @@ t_command *ft_process_token_command_or_argument(t_commandList *commandList, t_co
 
 void ft_process_token(t_commandList *commandList, t_command *command, char *token) 
 {
+	command = commandList->tail; 
+	
     if (commandList->length == 0) 
         ft_process_first_token_as_command(commandList, token);
     else 
@@ -51,7 +52,7 @@ void ft_process_token_as_argument(t_commandList *commandList, t_command *command
         perror("Erreur dans processTokenAsArgument : mauvaise entrée à traiter\n");
         return;
     }
-    newArgs = ft_allocate_and_copy_arguments(command->args, command->argCount, token);
+    newArgs = ft_allocate_and_copy_arguments(commandList, command->args, command->argCount, token);
     free(command->args);
     command->args = newArgs;
     command->argCount++;
