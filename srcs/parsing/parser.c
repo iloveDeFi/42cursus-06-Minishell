@@ -10,19 +10,16 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 	delimiters = ft_change_strtok_delimiter(commandList, input);
 	ft_tokenize_input_with_strtok(commandList, input, delimiters);
 
-    if (commandList->head != NULL) 
-    {	
-		// TO DO CHECK HEAD OR TAIL
-        command = commandList->head;
-		// TO DO ADD HANDLE REDIRECTION EXECUTION
+	command = commandList->head;
+	while (command != NULL)
+	{
 		ft_handle_pipes_execution(input, command);
 		ft_handle_command_execution(command, commandList, envList, envp);
-    } 
-    else 
-    {
-        perror("ft_parse_and_add_to_commandList failed. commandList problem.\n");
-		g_exit_code = 1;
-        return 1;
-    }
+		// TO DO : Ajoutez une gestion appropriée des erreurs, 
+		// comme la vérification des permissions, la gestion des fichiers inexistants, etc.
+		ft_handle_redirection_execution(input, command);
+		command = command->next;
+	}
+    
 	return 0;
 }

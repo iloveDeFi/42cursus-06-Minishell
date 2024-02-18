@@ -72,6 +72,20 @@ typedef enum node_type {
     COMMAND_NODE
 } t_node_type;
 
+typedef enum {
+    NO_REDIRECTION = 0,
+    OUTPUT_REDIRECTION,     // '>'
+    APPEND_REDIRECTION,     // '>>'
+    INPUT_REDIRECTION,      // '<'
+    HERE_DOC_REDIRECTION    // '<<'
+} t_redirection_type;
+
+typedef struct {
+    char *filename;  // Nom du fichier pour les redirections
+    char *delimiter; // Délimiteur pour les redirections "<<" par exemple
+    t_redirection_type type; // Type de redirection : 1 pour '>', 2 pour '>>', 3 pour '<', 4 pour '<<', 0 si pas de redirection
+} t_redirection_info;
+
 typedef struct s_command
 {
     char *name;
