@@ -11,6 +11,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 	command = commandList->head;
 	while (command != NULL)
 	{
+		// TO DO : peut etre pas besoin de input dans ft_handle_pipes_execution() si info stockees dans structure?
 		ft_handle_pipes_execution(input, command);
 		ft_handle_command_execution(command, commandList, envList, envp);
 		// TO DO : ft_handle_error() Ajoutez une gestion appropriée des erreurs, 

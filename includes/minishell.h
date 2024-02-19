@@ -75,16 +75,16 @@ typedef enum node_type {
 
 typedef enum {
     NO_REDIRECTION = 0,
-    OUTPUT_REDIRECTION,     // '>'
-    APPEND_REDIRECTION,     // '>>'
-    INPUT_REDIRECTION,      // '<'
-    HERE_DOC_REDIRECTION    // '<<'
+    OUTPUT_REDIRECTION,     // '>' or 1
+    APPEND_REDIRECTION,     // '>>' or 2
+    INPUT_REDIRECTION,      // '<' or 3
+    HERE_DOC_REDIRECTION    // '<<' or 4
 } t_redirection_type;
 
 typedef struct {
-    char *filename;  // Nom du fichier pour les redirections
-    char *delimiter; // Délimiteur pour les redirections "<<" par exemple
-    t_redirection_type type; // Type de redirection : 1 pour '>', 2 pour '>>', 3 pour '<', 4 pour '<<', 0 si pas de redirection
+    char *filename;
+    char *delimiter; // example in earth sandwich with << as the bread
+    t_redirection_type type;
 } t_redirection_info;
 
 typedef struct s_command
@@ -96,11 +96,6 @@ typedef struct s_command
     char *redirectFile;
     struct s_command *next;
     struct s_command *prev;
-
-	// TO DO : delete tokenType first try?
-    // t_token_type tokenType;
-    //t_quote_type quoteType;
-
     // Data about pipes execution
 	char **envp;
     struct s_command *commands;
@@ -109,7 +104,6 @@ typedef struct s_command
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
 	int number_of_pipes;
-
 	// Data structure about redirection execution
 	t_redirection_info redirection_info;
 } t_command;
@@ -161,11 +155,9 @@ typedef struct s_mini
 } t_mini;
 
 // BUILT-IN
-
 // cd
 int	            cd(t_command *command);
 void            ft_process_cd_argument(t_command *command, char *arg);
-
 // echo
 void            ft_handle_argument(char *arg);
 void            ft_handle_space();
@@ -192,9 +184,7 @@ int             ft_export(t_env **envlist, t_command *cmd);
 int 	        pwd(void);
 // unset
 int	            ft_unset(t_env **envList, t_command *cmd);
-
 // EXECUTION
-
 // argument 
 char 			**ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount); 
 void 			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
@@ -215,7 +205,6 @@ int 			ft_handle_command_execution(t_command *command, t_commandList *commandLis
 int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
 void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
 void            ft_printCommand(t_command *command);
-
 // commandList
 void            ft_initialize_commandList(t_commandList *commandList);
 void            ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
@@ -250,9 +239,8 @@ int 			ft_handle_pipes_execution(char *input, t_command *command);
 void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 // process
 t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
-void 			ft_process_first_token_as_command(t_commandList *commandList, char *token);
+t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
-
 // redirection
 void 			ft_handle_input_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_handle_output_redirection(t_redirection_info redirection_info, t_command *command);
@@ -275,16 +263,13 @@ t_env           *create_node2(char *var, char *value);
 t_env           *ft_copy_env_list(t_env *src);
 void            free_split(char **arr);
 char 			*ft_strstr(const char *haystack, const char *needle);
-
 // LINKED LIST
-
 // add
 void            ft_add_to_list(t_env **envlist, t_env *new_node);
 int	            ft_add_envVar_to_list(t_env **envlist, t_env *new_node, t_command *command);
 void            ft_append_to_commandList(t_commandList *commandList, t_command *newNode);
 void            ft_append_to_list_arg(t_command *command, char *arg);
 void            ft_print_list(t_commandList *head, void (*printFunction)(void *data));
-
 // clean
 void            ft_free_list(t_commandList  *head);
 void	        ft_free_array(char **array);
@@ -297,7 +282,6 @@ void            ft_free_envList(t_env *envList);
 t_env           *ft_create_node_for_envList(char *var_array);
 t_command 		*ft_create_new_command_in_commandList(t_commandList *commandList, char *name);
 t_command 		*ft_create_and_init_new_command_in_commandList(t_commandList *commandList, char *name);
-void            ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
 t_env           *ft_create_node_for_export_argument(char *name, char *value);
 // duplicate
 t_env	        *ft_envlist_duplicate(t_env **envlist);
@@ -307,6 +291,12 @@ char            **ft_env_duplicate(char **envp);
 void	        ft_replace_in_list(t_env *new_node, t_env **envlist);
 void            ft_iterate_through_list_to_apply_function(t_commandList  *head, void (*callback)(void *data));
 int             ft_compareString(void *data, void *target);
+// init
+void 			ft_init_new_node_name(t_commandList *commandList, t_command *command, char *token);
+void 			ft_init_new_node_args(t_commandList *commandList, t_command *command, char *token);
+void 			ft_init_new_node_redirection_info(t_command *command);
+void 			ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
+void            ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
 // list
 int             ft_is_empty_list(t_commandList    *head);
 int	            ft_is_in_list(char	*var, t_env **envlist);
@@ -320,9 +310,7 @@ t_command       *ft_find_node(t_commandList  *head, void *target);
 void	        ft_swap_nodes(t_env *tmp);
 void            *ft_get_last_element_in_list(t_commandList *head);
 t_env           *ft_find_envVar(t_env *envList, const char *targetName);
-
 // PARSING
-
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
 const char      *ft_find_next_delimiter(const char *start, char delimiter);
@@ -356,59 +344,33 @@ bool 			ft_check_if_pipe_in_char(char *token);
 bool 			ft_check_if_pipe_in_string(char *token);
 int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // quote
-int			    ft_is_quote(char c);
-int			    ft_check_quotes_error(void);
-void            ft_follow_quotes_state(t_command *cmd);
-char            *ft_extract_quoted_argument(char *input);
-void		    ft_tokenize_with_quotes(char *input);
-void            ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type); 
-t_quote_type    ft_check_and_allocate_quote_type(char *token); 
-// char         *ft_strtrim_with_quotes(char *str); where are you ?
-// char         *ft_strtok_quoted(char *str, const char *delim); where are you ? 
+int			   	ft_is_quote(char c);
+int			   	ft_check_quotes_error(void);
+void           	ft_follow_quotes_state(t_command *cmd);
+char           	*ft_extract_quoted_argument(char *input);
+void		   	ft_tokenize_with_quotes(char *input);
+void           	ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type);
+t_quote_type   	ft_check_and_allocate_quote_type(char *token);
 // redirection
-t_redirection_info ft_parse_output_redirection(char *input);
-t_redirection_info ft_parse_append_redirection(char *input);
-t_redirection_info ft_parse_input_redirection(char *input);
-t_redirection_info ft_parse_heredoc_redirection(char *input);
-t_redirection_info ft_parse_all_redirection(char *input);
-// token_type_check1
-t_token_type    ft_check_pipe(char *token);
-t_token_type    ft_check_heredoc(char *token); 
-t_token_type    ft_check_lpr(char *token);
-t_token_type    ft_check_rpr(char *token); 
-t_token_type    ft_check_and(char *token);
-// token_type_check2
-t_token_type    ft_check_or(char *token);
-t_token_type    ft_check_append(char *token); 
-t_token_type    ft_check_out(char *token);
-t_token_type    ft_check_in(char *token);
-t_token_type    ft_check_not(char *token);
-// token_type_check3
-t_token_type    ft_check_end(char *token);
-t_token_type    ft_check_command(char *token); 
-t_token_type    ft_check_argument(char *token); 
-t_token_type    ft_check_option(char *token); 
-t_token_type    ft_check_unknown_type(char *token); 
+t_redirection_info	ft_parse_output_redirection(char *input);
+t_redirection_info 	ft_parse_append_redirection(char *input);
+t_redirection_info 	ft_parse_input_redirection(char *input);
+t_redirection_info 	ft_parse_heredoc_redirection(char *input);
+t_redirection_info 	ft_parse_all_redirection(char *input);
 // token
-char 	*ft_change_strtok_delimiter(char *input);
-int 	ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
+char 			*ft_change_strtok_delimiter(char *input);
+int 			ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // util TO DO CLEAN SI DEJA DANS LA LIBFT
-char            *ft_strcpy(char *dest, const char *src);
-char            *ft_strpbrk(const char *s1, const char *s2);
-char            *ft_custom_strdup(const char *str);
-char            *ft_strndup(const char *s, size_t n);
-
+char           	*ft_strcpy(char *dest, const char *src);
+char           		*ft_strpbrk(const char *s1, const char *s2);
+char           	*ft_custom_strdup(const char *str);
+char           	*ft_strndup(const char *s, size_t n);
 // GLOBAL
-
-extern int	    g_exit_code;
-void            rl_replace_line(const char *str, int i);
-
+extern int	   	g_exit_code;
+void           	srl_replace_line(const char *str, int i);
 // MAIN
-char            *ft_capture_input(void);
-int             main(int ac, char **av, char **envp);
-void	        ft_exit_shell(t_mini *shell);
-
-
-//int echo(t_command *cmd);
+char           	*ft_capture_input(void);
+int            	main(int ac, char **av, char **envp);
+void	       	ft_exit_shell(t_mini *shell);
 
 #endif

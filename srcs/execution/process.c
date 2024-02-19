@@ -12,22 +12,19 @@ t_command *ft_process_token(t_commandList *commandList, t_command *currentComman
         if (ft_strcmp(command->name, "cd") == 0) 
             ft_process_cd_argument(command, token);
         else 
-            ft_process_token_as_argument(commandList, command, token);
+            currentCommand = ft_process_first_token_as_command(commandList, token);
     }
     return command;
 }
 
-void ft_process_first_token_as_command(t_commandList *commandList, char *token) 
+t_command *ft_process_first_token_as_command(t_commandList *commandList, char *token) 
 {
-    t_command *newCommand;
-    
-    if (commandList == NULL || token == NULL) 
+	if (commandList == NULL || token == NULL) 
     {
         perror("Erreur dans ft_process_first_token_as_command : mauvaise entrée à traiter\n");
-        return;
+        return NULL;
     }
-    newCommand = ft_create_and_init_new_command_in_commandList(commandList, token);
-    commandList->head = newCommand; // head ou tail ?
+    return ft_create_and_init_new_command_in_commandList(commandList, token);
 }
 
 void ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token) 
