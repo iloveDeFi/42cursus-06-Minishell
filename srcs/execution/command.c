@@ -81,8 +81,8 @@ void ft_printCommand(t_command *command) {
         // printf("Pipe File Descriptors: %d, %d\n", command->fd[0], command->fd[1]);
         printf("Next Command: %p\n", (void *)command->next);
         printf("Previous Command: %p\n", (void *)command->prev);
-        printf("Token Type: %d\n", command->tokenType);
-        printf("Quote Type: %d\n", command->quoteType);
+        //printf("Token Type: %d\n", command->tokenType);
+        //printf("Quote Type: %d\n", command->quoteType);
     } else {
         printf("Command is NULL\n");
     }

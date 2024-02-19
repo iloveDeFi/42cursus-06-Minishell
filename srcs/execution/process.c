@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-t_command *ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token, char *delimiters) 
+t_command *ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token) 
 {
-    if (ft_strstr(delimiters, " |") != NULL)
+    if (ft_strstr(" | < << > >>", " |") != NULL)
     {
         if (*token == '|')
             return ft_create_and_init_new_command_in_commandList(commandList, NULL);

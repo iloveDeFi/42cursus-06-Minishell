@@ -42,15 +42,13 @@ void ft_check_empty_av_shell(t_mini *shell)
 
 int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
 {	
-	char *delimiter;
-
-	delimiter = NULL;
+	
     if (commandList == NULL)
     {
         perror("Hey commandList head is NULL, so input is not tokenizable\n");
         return 1;
     }
-    else if (ft_tokenize_input_with_strtok(commandList, input, delimiter))
+    else if (ft_tokenize_input_with_strtok(commandList, input))
     {
         return 0;
     } 

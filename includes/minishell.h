@@ -95,10 +95,12 @@ typedef struct s_command
     char *redirectFile;
     struct s_command *next;
     struct s_command *prev;
-    t_token_type tokenType;
-    t_quote_type quoteType;
 
-    // Data about execution
+	// TO DO : delete tokenType first try?
+    // t_token_type tokenType;
+    //t_quote_type quoteType;
+
+    // Data about pipes execution
 	char **envp;
     struct s_command *commands;
     struct s_env *envList;
@@ -106,6 +108,9 @@ typedef struct s_command
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
 	int number_of_pipes;
+
+	// Data structure about redirection execution
+	t_redirection_info redirection_info;
 } t_command;
 
 
@@ -244,7 +249,7 @@ char            *ft_lookfor_command_and_build_path(char *path, t_commandList *co
 int 			ft_handle_pipes_execution(char *input, t_command *command);
 void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 // process
-t_command 		*ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token, char *delimiters);
+t_command 		*ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token);
 void 			ft_process_token(t_commandList *commandList, t_command *command, char *token);
 void 			ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
@@ -387,7 +392,7 @@ t_token_type    ft_check_option(char *token);
 t_token_type    ft_check_unknown_type(char *token); 
 // token
 char 	*ft_change_strtok_delimiter(char *input);
-int 	ft_tokenize_input_with_strtok(t_commandList *commandList, char *input, char *delimiter);
+int 	ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // util TO DO CLEAN SI DEJA DANS LA LIBFT
 char            *ft_strcpy(char *dest, const char *src);
 char            *ft_strpbrk(const char *s1, const char *s2);
