@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 # define MAX_ARGUMENTS 100
 # define MAX_PATH_LENGTH 4096
@@ -200,7 +201,6 @@ void 			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount)
 void			 ft_copy_new_argument(t_commandList *commandList, char **newArgs, int argCount, char *newArg);
 void 			ft_add_null_terminator(char **newArgs, int argCount);
 char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg); 
-
 // builtin
 int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
@@ -249,8 +249,7 @@ char            *ft_lookfor_command_and_build_path(char *path, t_commandList *co
 int 			ft_handle_pipes_execution(char *input, t_command *command);
 void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 // process
-t_command 		*ft_process_token_command_or_argument(t_commandList *commandList, t_command *currentCommand, char *token);
-void 			ft_process_token(t_commandList *commandList, t_command *command, char *token);
+t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
 void 			ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 

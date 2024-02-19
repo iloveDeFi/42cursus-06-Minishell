@@ -2,13 +2,10 @@
 
 int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp) 
 {
-	// char *delimiters;
     t_command *command;
 
     ft_initialize_commandList(commandList);
 	ft_check_if_input_is_tokenizable(commandList, input);
-	// NOPE NEW STRTOK 
-	// delimiters = ft_change_strtok_delimiter(input);
 	ft_tokenize_input_with_strtok(commandList, input);
 
 	command = commandList->head;
