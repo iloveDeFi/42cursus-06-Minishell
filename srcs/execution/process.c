@@ -2,24 +2,21 @@
 
 t_command *ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token) 
 {
-    t_command *command;
-    
-    command = currentCommand;
     if (commandList->length == 0) 
-        ft_process_first_token_as_command(commandList, token);
+        return ft_process_first_token_as_command(commandList, token);
     else 
     {
-        if (ft_strcmp(command->name, "cd") == 0) 
-            ft_process_cd_argument(command, token);
+        if (ft_strcmp(currentCommand->name, "cd") == 0) 
+            ft_process_cd_argument(currentCommand, token);
         else 
-            currentCommand = ft_process_first_token_as_command(commandList, token);
+            ft_process_token_as_argument(commandList, currentCommand, token);
     }
-    return command;
+    return currentCommand;
 }
 
 t_command *ft_process_first_token_as_command(t_commandList *commandList, char *token) 
 {
-	if (commandList == NULL || token == NULL) 
+    if (commandList == NULL || token == NULL) 
     {
         perror("Erreur dans ft_process_first_token_as_command : mauvaise entrée à traiter\n");
         return NULL;
@@ -33,10 +30,19 @@ void ft_process_token_as_argument(t_commandList *commandList, t_command *command
 
     if (command == NULL || token == NULL) 
     {
-        perror("Erreur dans processTokenAsArgument : mauvaise entrée à traiter\n");
+        perror("Erreur dans ft_process_token_as_argument : mauvaise entrée à traiter\n");
         return;
     }
+
     newArgs = ft_allocate_and_copy_arguments(commandList, command->args, command->argCount, token);
+    if (newArgs == NULL) 
+    {
+        free(command->name);
+        free(command->args);
+        perror("Erreur dans ft_allocate_and_copy_arguments : mauvaise entrée à traiter\n");
+        return;
+    }
+
     free(command->args);
     command->args = newArgs;
     command->argCount++;

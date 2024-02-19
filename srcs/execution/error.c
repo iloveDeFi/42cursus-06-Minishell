@@ -33,29 +33,32 @@ void ft_check_null_av_shell(t_mini *shell)
 
 void ft_check_empty_av_shell(t_mini *shell)
 {
-	if ((ft_strcmp(shell->av, "") == 0))
-	{
-		perror("Hey, the shell argv is an empty string\n");
-		exit(EXIT_FAILURE);
-	}
+    if (shell->av == NULL || shell->av[0] == '\0')
+    {
+        perror("Hey, the shell argv is an empty string or a null pointer\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
 int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
-{	
-	
-    if (commandList == NULL)
+{
+	int tokenCount;
+
+    if (commandList == NULL) 
     {
-        perror("Hey commandList head is NULL, so input is not tokenizable\n");
+        perror("Error: commandList is NULL in ft_check_if_input_is_tokenizable\n");
         return 1;
     }
-    else if (ft_tokenize_input_with_strtok(commandList, input))
+	tokenCount = ft_tokenize_input_with_strtok(commandList, input);
+	if (tokenCount > 0) 
     {
-        return 0;
+        return 0; // Input is tokenizable
     } 
     else 
     {
-        perror("Parsing failed in ft_check_if_input_is_tokenizable");
+        perror("Error: Parsing failed in ft_check_if_input_is_tokenizable\n");
         ft_destroy_commandList(commandList);
-        return 1;
+        return 1; // Parsing failed
     }
 }
+

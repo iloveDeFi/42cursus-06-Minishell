@@ -45,6 +45,10 @@ void ft_execute_child_process(char *full_path, char **args, char **envp)
     }
 }
 
+// TO DO : Gestion des processus : Dans ft_wait_for_all_child_processes_to_end, 
+// assurez-vous de boucler correctement pour attendre tous les processus enfants. 
+// Vous utilisez actuellement waitpid avec un seul PID, mais dans le cas des pipes, 
+// vous devrez attendre tous les processus enfants.
 void ft_wait_for_all_child_processes_to_end(pid_t *child_pids, int number_of_pipes) 
 {
     int i;

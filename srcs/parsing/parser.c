@@ -4,19 +4,27 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 {
     t_command *command;
 
+	if (commandList == NULL) {
+        perror("Error: Invalid pointer to commandList in ft_launch_parsing_and_execution()\n");
+        return -1; // Ou un code d'erreur approprié
+    }
+
     ft_initialize_commandList(commandList);
-	ft_check_if_input_is_tokenizable(commandList, input);
+	if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
+	{
+        perror("Error in ft_check_if_input_is_tokenizable\n");
+        return -1; // TO DO : change g_exit_code value
+    }
 	ft_tokenize_input_with_strtok(commandList, input);
 
 	command = commandList->head;
 	while (command != NULL)
 	{
-		// TO DO : peut etre pas besoin de input dans ft_handle_pipes_execution() si info stockees dans structure?
-		ft_handle_pipes_execution(input, command);
-		ft_handle_command_execution(command, commandList, envList, envp);
-		// TO DO : ft_handle_error() Ajoutez une gestion appropriée des erreurs, 
+		// TO DO : ft_handle_error() Ajoutez une gestion appropriée des erreurs,
 		// comme la vérification des permissions, la gestion des fichiers inexistants, etc.
-		ft_handle_redirection_execution(input, command);
+		ft_handle_pipes_execution(command); // TO DO : renvoie valeur erreur si fail
+		ft_handle_command_execution(command, commandList, envList, envp); // TO DO : renvoie valeur erreur si fail
+		ft_handle_redirection_execution(command); // TO DO : renvoie valeur erreur si fail
 		command = command->next;
 	}
     

@@ -73,7 +73,7 @@ typedef enum node_type {
     COMMAND_NODE
 } t_node_type;
 
-typedef enum {
+typedef enum e_redirection_type {
     NO_REDIRECTION = 0,
     OUTPUT_REDIRECTION,     // '>' or 1
     APPEND_REDIRECTION,     // '>>' or 2
@@ -81,7 +81,9 @@ typedef enum {
     HERE_DOC_REDIRECTION    // '<<' or 4
 } t_redirection_type;
 
-typedef struct {
+// NEXT && PREV POINTERS ?
+typedef struct s_redirection_info 
+{
     char *filename;
     char *delimiter; // example in earth sandwich with << as the bread
     t_redirection_type type;
@@ -108,7 +110,6 @@ typedef struct s_command
 	t_redirection_info redirection_info;
 } t_command;
 
-
 typedef struct s_commandList
 {
     int length;
@@ -134,14 +135,6 @@ typedef struct s_env
     struct s_env *prev;
 } t_env;
 
-typedef struct s_redir
-{
-    char *file_name;
-    int redirection_type;
-    struct s_redir *next;
-    struct s_redir *prev;
-} t_redir;
-
 typedef struct s_mini
 {
     char *av;
@@ -155,6 +148,7 @@ typedef struct s_mini
 } t_mini;
 
 // BUILT-IN
+
 // cd
 int	            cd(t_command *command);
 void            ft_process_cd_argument(t_command *command, char *arg);
@@ -184,7 +178,9 @@ int             ft_export(t_env **envlist, t_command *cmd);
 int 	        pwd(void);
 // unset
 int	            ft_unset(t_env **envList, t_command *cmd);
+
 // EXECUTION
+
 // argument 
 char 			**ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount); 
 void 			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
@@ -235,7 +231,7 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-int 			ft_handle_pipes_execution(char *input, t_command *command);
+int 			ft_handle_pipes_execution(t_command *command);
 void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
 // process
 t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
@@ -246,7 +242,7 @@ void 			ft_handle_input_redirection(t_redirection_info redirection_info, t_comma
 void 			ft_handle_output_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_handle_append_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_handle_redirection_execution(char *input, t_command *command);
+void 			ft_handle_redirection_execution(t_command *command);
 // shell
 void            ft_exit_shell(t_mini *shell);
 void            ft_initialize_environment(t_env **envList, char **env);
@@ -263,7 +259,9 @@ t_env           *create_node2(char *var, char *value);
 t_env           *ft_copy_env_list(t_env *src);
 void            free_split(char **arr);
 char 			*ft_strstr(const char *haystack, const char *needle);
+
 // LINKED LIST
+
 // add
 void            ft_add_to_list(t_env **envlist, t_env *new_node);
 int	            ft_add_envVar_to_list(t_env **envlist, t_env *new_node, t_command *command);
@@ -310,7 +308,9 @@ t_command       *ft_find_node(t_commandList  *head, void *target);
 void	        ft_swap_nodes(t_env *tmp);
 void            *ft_get_last_element_in_list(t_commandList *head);
 t_env           *ft_find_envVar(t_env *envList, const char *targetName);
+
 // PARSING
+
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
 const char      *ft_find_next_delimiter(const char *start, char delimiter);
@@ -365,10 +365,14 @@ char           	*ft_strcpy(char *dest, const char *src);
 char           		*ft_strpbrk(const char *s1, const char *s2);
 char           	*ft_custom_strdup(const char *str);
 char           	*ft_strndup(const char *s, size_t n);
+
 // GLOBAL
+
 extern int	   	g_exit_code;
 void           	srl_replace_line(const char *str, int i);
+
 // MAIN
+
 char           	*ft_capture_input(void);
 int            	main(int ac, char **av, char **envp);
 void	       	ft_exit_shell(t_mini *shell);

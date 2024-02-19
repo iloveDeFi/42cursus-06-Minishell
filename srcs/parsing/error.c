@@ -1,5 +1,54 @@
 #include "minishell.h"
 
+// Gestion des erreurs : Dans vos fonctions de gestion des erreurs, telle que ft_handle_pipes_execution, 
+// ft_execute_single_command, et ft_handle_redirection_execution, vous pourriez ajouter une gestion plus 
+// détaillée des erreurs. Actuellement, vous utilisez perror dans certaines parties du code,
+//  mais vous pourriez remplacer cela par des appels à ft_handle_error pour une gestion centralisée des erreurs.
+
+// Gestion des erreurs : Vous avez mentionné TO DO : ft_handle_error(), mais dans le code actuel, 
+// vous utilisez principalement perror pour afficher les messages d'erreur. Vous pourriez vouloir 
+// remplacer les perror par des appels à ft_handle_error pour centraliser 
+// la gestion des erreurs dans une fonction dédiée.
+
+// void ft_handle_error(const char *error_message, t_mini *shell)
+// {
+//     perror(error_message);
+    
+//     if (shell != NULL)
+//     {
+//         if (shell->error != NULL)
+//         {
+//             // Ajoutez l'erreur à la liste des erreurs dans la structure shell
+//             t_error *new_error = (t_error *)malloc(sizeof(t_error));
+//             if (new_error != NULL)
+//             {
+//                 new_error->error = TRUE;
+//                 new_error->error_name = ft_custom_strdup(error_message);
+//                 new_error->prev = NULL;
+//                 new_error->next = shell->error;
+//                 if (shell->error->next != NULL)
+//                     shell->error->next->prev = new_error;
+//                 shell->error->next = new_error;
+//             }
+//             else
+//             {
+//                 perror("Error: Memory allocation failure in ft_handle_error()\n");
+//                 // Gérez la situation de mémoire insuffisante, peut-être exit(EXIT_FAILURE);
+//             }
+//         }
+//         else
+//         {
+//             perror("Error: Invalid pointer to error list in ft_handle_error()\n");
+//             // Gérez la situation d'erreur, peut-être exit(EXIT_FAILURE);
+//         }
+//     }
+//     else
+//     {
+//         perror("Error: Invalid pointer to shell in ft_handle_error()\n");
+//         // Gérez la situation d'erreur, peut-être exit(EXIT_FAILURE);
+//     }
+// }
+
 int	ft_check_if_its_any_white_space(char c)
 {
     if (c == ' ' || c == '\t' || c == '\r'

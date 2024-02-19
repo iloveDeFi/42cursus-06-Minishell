@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-// Pipes are init in t_command node initialization, then we create them here
+// Pipes are init in t_command node initialization, then we create them here BEFORE execution
 void ft_create_pipes(t_command *command)
 {
     int pipe_index;

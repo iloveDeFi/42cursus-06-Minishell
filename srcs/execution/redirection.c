@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+// TO DO : Assurez-vous d'ajouter des appels close appropriés après avoir 
+// effectué les opérations nécessaires sur les fichiers.
+
+// Gestion des fichiers inexistants : Ajoutez une vérification pour s'assurer que les fichiers auxquels 
+// vous essayez d'accéder existent réellement avant de les ouvrir.
+
 void ft_handle_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
     int input_fd;
@@ -103,11 +109,11 @@ void ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_comman
     }
 }
 
-void ft_handle_redirection_execution(char *input, t_command *command) 
+void ft_handle_redirection_execution(t_command *command) 
 {
     t_redirection_info redirection_info;
 	
-	redirection_info = ft_parse_all_redirection(input);
+	redirection_info = ft_parse_all_redirection(command->name);
 
 	if (redirection_info.type != NO_REDIRECTION)
 	{

@@ -8,24 +8,24 @@ void ft_exit_shell(t_mini *shell)
             free(shell->av);
         if (shell->commands != NULL)
             ft_destroy_commandList(shell->commands);
-        // free(shell);
     }
 }
+
+
 // TO DO RECHECK FUNCTION
 void ft_initialize_environment(t_env **envList, char **env)
 {
-    int i;
-    char **var_array;
-    t_env *new_envList_node;
+	int i;
+	char **var_array;
+	t_env *new_envList_node;
 
-    if (!envList)
+    i = 0;
+    var_array = ft_env_duplicate(env);
+    if (!envList || !var_array)
     {
-        perror("Error: Invalid pointer to envList");
+        perror("Error: Invalid pointer or memory allocation failure in ft_initialize_environment()");
         exit(EXIT_FAILURE);
     }
-    i = 0;
-    *envList = NULL;
-    var_array = ft_env_duplicate(env);
     while (var_array[i])
     {
         new_envList_node = ft_create_node_for_envList(var_array[i]);
@@ -34,6 +34,7 @@ void ft_initialize_environment(t_env **envList, char **env)
     }
     ft_free_array(var_array);
 }
+
 
 void ft_initialize_minishell(t_mini *shell)
 {
@@ -59,14 +60,13 @@ void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envL
         ft_check_empty_av_shell(shell);
         ft_manage_history(shell, shell->av);
         ft_handle_only_spaces(shell);
-		ft_check_empty_av_shell(shell);
-        ft_launch_parsing_and_execution(commandList, shell->av, envList, envp);
+        ft_check_empty_av_shell(shell);
+
+        if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
+        {
+            perror("Error executing minishell in ft_execute_minishell\n");
+            break;  // Quit the loop if an error occurs during execution
+        }
         ft_destroy_current_shell(shell);
     }
 }
-
-
-
-
-
-

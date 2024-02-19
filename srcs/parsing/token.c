@@ -6,7 +6,7 @@ int ft_tokenize_input_with_strtok(t_commandList *commandList, char *input)
     char inputCopy[ft_strlen(input) + 1];
     int tokenIndex;
     char *ptr;
-	t_command *currentCommand;
+    t_command *currentCommand;
 
     tokenIndex = 0;
     ft_strcpy(inputCopy, input);
@@ -18,8 +18,8 @@ int ft_tokenize_input_with_strtok(t_commandList *commandList, char *input)
         currentCommand = ft_process_token(commandList, currentCommand, token);
         tokenIndex++;
         while (*ptr && (isspace(*ptr) || *ptr == '|' || *ptr == '<' || *ptr == '>'))
-			ptr++; 
-		token = ft_strtok(ptr, " | < << > >>");
+            ptr++; 
+        token = ft_strtok(ptr, " | < << > >>");
     }
     return commandList->length;
 }
