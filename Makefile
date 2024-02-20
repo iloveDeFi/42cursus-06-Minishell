@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+         #
+#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/02/08 11:24:50 by bbessard         ###   ########.fr        #
+#    Updated: 2024/02/20 11:54:23 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,7 @@ MAIN_FILE := main.c
 # MINISHELL_FILES := $(wildcard $(SRCS_DIRECTORY)/minishell/*.c)
 PARSING_FILES := $(wildcard $(SRCS_DIRECTORY)/parsing/*.c)
 EXECUTING_FILES := $(wildcard $(SRCS_DIRECTORY)/execution/*.c)
-BUILTIN_FILES := $(wildcard $(SRCS_DIRECTORY)/builtin/*.c)
+BUILTIN_FILES := $(wildcard $(SRCS_DIRECTORY)/execution/builtin/*.c)
 LINKED_LIST_FILES := $(wildcard $(SRCS_DIRECTORY)/linked_list/*.c)
 
 INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)

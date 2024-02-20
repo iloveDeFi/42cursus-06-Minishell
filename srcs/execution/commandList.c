@@ -11,6 +11,7 @@ void ft_initialize_commandList(t_commandList *commandList)
     commandList->head = NULL;
     commandList->tail = NULL;
     commandList->length = 0;
+    printf("commandlist ok\n");
 }
 
 // void ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp) 

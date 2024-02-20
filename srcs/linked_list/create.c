@@ -32,6 +32,7 @@ t_env	*ft_create_node_for_envList(char *var_array)
 
 t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandList, char *name) 
 {
+    printf("enter create init new command\n");
     t_command *command = (t_command *)malloc(sizeof(t_command));
 
     if (command == NULL) 
@@ -41,6 +42,8 @@ t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandL
         exit(EXIT_FAILURE);
     }
     ft_init_new_node(commandList, command, name);
+    printf("init new node\n");
+	ft_print_commandList(commandList);
     return command;
 }
 

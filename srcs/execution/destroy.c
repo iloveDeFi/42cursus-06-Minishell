@@ -37,7 +37,7 @@ void	ft_destroy_current_shell(t_mini *mini)
     {
         ft_destroy_commandList(mini->commands);
     }
-    if (mini->av != NULL)
+    if (mini->av == NULL)
     {
         free(mini->av);
     }

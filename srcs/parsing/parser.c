@@ -10,11 +10,11 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
     }
 
     ft_initialize_commandList(commandList);
-	if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
+	/*if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
 	{
         perror("Error in ft_check_if_input_is_tokenizable\n");
         return -1; // TO DO : change g_exit_code value
-    }
+    }*/
 	ft_tokenize_input_with_strtok(commandList, input);
 
 	command = commandList->head;
@@ -30,4 +30,3 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
     
 	return 0;
 }
-//

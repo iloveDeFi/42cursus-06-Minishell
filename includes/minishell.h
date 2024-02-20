@@ -377,4 +377,5 @@ char           	*ft_capture_input(void);
 int            	main(int ac, char **av, char **envp);
 void	       	ft_exit_shell(t_mini *shell);
 
+
 #endif

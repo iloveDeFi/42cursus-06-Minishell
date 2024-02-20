@@ -51,7 +51,33 @@ void ft_initialize_minishell(t_mini *shell)
     shell->commands = NULL;
 }
 
-void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
+/* void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
+{
+    while (1)
+    {
+        // TO DO: ADD SIGNALS HERE
+        ft_custom_prompt_msg(shell);
+        if (shell->av == NULL)
+        {
+            printf("stop shell\n");
+            break;
+        }
+        ft_manage_history(shell, shell->av);
+        if (ft_check_if_only_spaces(shell->av) == TRUE)
+        {
+            ft_destroy_current_shell(shell);
+            continue;
+        }
+        else if (ft_strcmp(shell->av, "") != 0)
+        {
+            ft_launch_parsing_and_execution(commandList, shell->av, envList, envp);
+            ft_destroy_current_shell(shell);
+        }
+        ft_destroy_current_shell(shell);
+    }
+} */
+
+ void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
 {
     while (1)
     {
@@ -60,7 +86,7 @@ void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envL
         ft_check_empty_av_shell(shell);
         ft_manage_history(shell, shell->av);
         ft_handle_only_spaces(shell);
-        ft_check_empty_av_shell(shell);
+        //ft_check_empty_av_shell(shell);
 
         if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
         {

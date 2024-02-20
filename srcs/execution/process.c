@@ -2,20 +2,32 @@
 
 t_command *ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token) 
 {
+    printf("enter processtoken\n");
     if (commandList->length == 0) 
+    {    
+        printf("hey\n");
         return ft_process_first_token_as_command(commandList, token);
+    }
+    
     else 
     {
         if (ft_strcmp(currentCommand->name, "cd") == 0) 
+        {    
+            printf("ok\n");
             ft_process_cd_argument(currentCommand, token);
-        else 
+        }
+        else
+        {   
+            printf("la\n");
             ft_process_token_as_argument(commandList, currentCommand, token);
+        }
     }
     return currentCommand;
 }
 
 t_command *ft_process_first_token_as_command(t_commandList *commandList, char *token) 
 {
+    printf("enter process as command\n");
     if (commandList == NULL || token == NULL) 
     {
         perror("Erreur dans ft_process_first_token_as_command : mauvaise entrée à traiter\n");
