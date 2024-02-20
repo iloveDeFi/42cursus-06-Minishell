@@ -1,7 +1,7 @@
  #include "minishell.h"
 
 // Fonction pour gérer l'affichage de chaque argument après l'expansion
-void ft_handle_argument(char *arg) 
+/* void ft_handle_argument(char *arg) 
 {
     char *expanded_arg;
     
@@ -16,16 +16,16 @@ void ft_handle_argument(char *arg)
     write(STDOUT_FILENO, expanded_arg, ft_strlen(expanded_arg));
 
     free(expanded_arg);
-}
+} */
 
 // Fonction pour gérer l'affichage de l'espace entre les arguments
-void ft_handle_space() 
+/* void ft_handle_space() 
 {
     write(STDOUT_FILENO, " ", 1);
-}
+} */
 
 // Fonction principale pour l'affichage des arguments de la commande echo
-void ft_echo_args(char **args, int g_exit_code) 
+/* void ft_echo_args(char **args, int g_exit_code) 
 {
     if (args == NULL) 
         return;
@@ -87,7 +87,7 @@ int echo(char **args, int g_exit_code)
     }
 
     return 0;
-} 
+}  */
 
 
 
@@ -121,3 +121,32 @@ int echo(char **args, int g_exit_code)
         write(STDOUT_FILENO, "\n", 1);
     return 0;
 } */
+
+int	echo(t_command *cmd)
+{
+	int			i;
+	int			suppressnewline;
+
+	i = 1;
+	suppressnewline = 0;
+	if (cmd == NULL || cmd->args == NULL)
+	{
+		write(STDERR_FILENO, "An error occurred: not enough arguments\n", 41);
+		return (1);
+	}
+	if (cmd->args[1] != NULL && strcmp(cmd->args[1], "-n") == 0)
+	{
+		suppressnewline = 1;
+		i++;
+	}
+	while (cmd->args[i] != NULL)
+	{
+		write(STDOUT_FILENO, cmd->args[i], strlen(cmd->args[i]));
+		if (cmd->args[i + 1] != NULL)
+			write(STDOUT_FILENO, " ", 1);
+		i++;
+	}
+	if (!suppressnewline)
+		write(STDOUT_FILENO, "\n", 1);
+	return (0);
+}

@@ -15,7 +15,8 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
         perror("Error in ft_check_if_input_is_tokenizable\n");
         return -1; // TO DO : change g_exit_code value
     }*/
-	ft_tokenize_input_with_strtok(commandList, input);
+    ft_tokenize_input_with_strtok(commandList, input);
+    replace_env_variables_in_command(commandList->head, envList);
 
 	command = commandList->head;
 	while (command != NULL)
@@ -24,7 +25,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 		// comme la vérification des permissions, la gestion des fichiers inexistants, etc.
 		ft_handle_pipes_execution(command); // TO DO : renvoie valeur erreur si fail
 		ft_handle_command_execution(command, commandList, envList, envp); // TO DO : renvoie valeur erreur si fail
-		ft_handle_redirection_execution(command); // TO DO : renvoie valeur erreur si fail
+		//ft_handle_redirection_execution(command); // TO DO : renvoie valeur erreur si fail
 		command = command->next;
 	}
     

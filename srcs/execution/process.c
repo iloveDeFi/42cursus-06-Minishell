@@ -2,7 +2,7 @@
 
 t_command *ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token) 
 {
-    printf("enter processtoken\n");
+    //printf("enter processtoken\n");
     if (commandList->length == 0) 
     {    
         printf("hey\n");

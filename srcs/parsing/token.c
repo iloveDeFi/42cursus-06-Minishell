@@ -19,9 +19,9 @@ int ft_tokenize_input_with_strtok(t_commandList *commandList, char *input)
         currentCommand = ft_process_token(commandList, currentCommand, token);
         token = ft_strtok(NULL, " | < << > >>");
         //tokenIndex++;
-         /* while (*ptr && (isspace(*ptr) || *ptr == '|' || *ptr == '<' || *ptr == '>'))
+        /* while (*ptr && (isspace(*ptr) || *ptr == '|' || *ptr == '<' || *ptr == '>'))
             ptr++; 
-        token = ft_strtok(ptr, " | < << > >>");*/
+        token = ft_strtok(ptr, " | < << > >>"); */
     } 
     return commandList->length;
 }
