@@ -29,7 +29,7 @@ int	ft_execute_builtin(t_command *cmd, t_env *envList)
 	else if (ft_strcmp(cmd->name, "env") == 0)
 	{
 		printf("Dans ft_execute_bulitin je vais print la envList\n");
-		ft_display_envList(envList);
+		ft_display_envlist(envList);
 		return 0;
 	}
 	else if (ft_strcmp(cmd->name, "pwd") == 0)

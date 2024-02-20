@@ -48,7 +48,7 @@ void ft_init_new_node(t_commandList *commandList, t_command *command, char *toke
     command->next = NULL;
     command->prev = NULL;
     command->tokenType = ft_allocate_token_type(token);
-    command->quoteType = ft_check_and_allocate_quote_type(token);
+    //command->quoteType = ft_check_and_allocate_quote_type(token);
 	command->envp = NULL;  // Vous pouvez initialiser envp avec les valeurs appropriées si nécessaire
     command->commands = NULL;  // Initialiser à NULL car cela dépendra du contexte d'utilisation
     command->envList = NULL;  // Initialiser à NULL si vous n'avez pas d'environnement spécifique à ce stade

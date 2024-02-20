@@ -32,6 +32,7 @@
 # define PWD "pwd"
 # define UNSET "unset"
 
+
 typedef enum e_token_type
 {
 	PIPE,     // |
@@ -153,9 +154,9 @@ void            print_error_message(char *message);
 //int             echo(char **args, int g_exit_code);
 // env
 int 	        env(t_env *env_list);
-void            ft_display_envList(t_env *envList);
+void            ft_display_envlist(t_env *envList);
 // exit
-int             ft_search_exit_arg_in_envList(t_command *command, t_env *envList);
+int             ft_search_exit_arg_in_envlist(t_command *command, t_env *envList);
 int             ft_check_exit_arg_value(char *value);
 int	            ft_exit(t_command *command, t_env *envList);
 // export_util
@@ -368,5 +369,8 @@ void ft_found_and_replace_usd(t_command *command, t_env *envList);
 char *ft_replace_usd_to_env(t_env *envList, char *usd);
 void replace_env_variables_in_command(t_command *command, t_env *envList);
 //int ft_split_string_export_argument(char *arg);
+int is_quote(char c);
+char *extract_single_quote_token(char *input, char **end_ptr);
+char *extract_double_quote_token(char *input, char **end_ptr);
 
 #endif
