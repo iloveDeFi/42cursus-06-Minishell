@@ -61,3 +61,15 @@ int ft_check_if_pipe_in_inputCopy(char *inputCopy)
 {
     return (ft_strchr(inputCopy, '|') != NULL);
 }
+
+// int ft_check_too_many_piipes()
+// {
+// 	if (ft_count_number_of_pipes(command->name) > 1)
+//     {
+// 		if (ft_count_number_of_pipes(command->name) > MAX_COMMANDS)
+// 		{
+// 			perror("Please do not use more than 10 pipes.\n");
+// 			g_exit_code = ERROR_TOO_MANY_PIPES;
+// 		}
+// 	}
+// }

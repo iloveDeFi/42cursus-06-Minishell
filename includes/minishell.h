@@ -21,6 +21,11 @@
 # define MAX_PATH_LENGTH 4096
 # define MAX_INPUT_SIZE 1024
 # define MAX_COMMANDS 10
+# define ERROR_TOO_MANY_PIPES 421
+# define ERROR_IN_PIPE_EXEC 422
+# define ERROR_IN_COMMAND_EXEC 423
+# define ERROR_IN_REDIRECTION_EXEC 424
+# define ERROR_IN_ERROR_BEFORE_EXEC 425
 // File Descriptor
 # define STDIN 0
 # define STDOUT 1
@@ -99,6 +104,7 @@ typedef struct s_command
     struct s_command *next;
     struct s_command *prev;
     // Data about pipes execution
+	bool has_pipe;
 	char **envp;
     struct s_command *commands;
     struct s_env *envList;
@@ -107,7 +113,11 @@ typedef struct s_command
     int pipe_index;
 	int number_of_pipes;
 	// Data structure about redirection execution
+	bool has_redirection_input;
+	bool has_redirection_output;
 	t_redirection_info redirection_info;
+	// Data strucutre about token type
+	// t_token_type token_type;
 } t_command;
 
 typedef struct s_commandList
@@ -331,6 +341,12 @@ int          	ft_calculate_new_length(char *cmd, int g_exit_code);
 void            ft_process_char(char *result, int *j, char *command, int *i);
 char            *ft_expand_single_env_var(char *var_name);
 char            *ft_expand_env_variables(char *command);
+// handle
+// void 			ft_handle_error(); TO DO SOON
+int				ft_handle_pipes(t_commandList *commandList, t_command *command);
+int				ft_handle_redirection(t_commandList *commandList, t_command *command);
+int				ft_handle_command(t_commandList *commandList, t_command *command, t_envList *envList, char **envp);
+
 // parser
 void            ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token);
 void            ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token);
