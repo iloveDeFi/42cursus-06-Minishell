@@ -8,15 +8,20 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
         perror("Error: Invalid pointer to commandList in ft_launch_parsing_and_execution()\n");
         return -1; // Ou un code d'erreur approprié
     }
-
     ft_initialize_commandList(commandList);
 	/*if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
 	{
         perror("Error in ft_check_if_input_is_tokenizable\n");
         return -1; // TO DO : change g_exit_code value
     }*/
+	if (!ft_check_quotes(input))
+	{
+		printf(">\n");
+		return 0;
+	}
+	ft_remove_quotes(input);
     ft_tokenize_input_with_strtok(commandList, input);
-    replace_env_variables_in_command(commandList->head, envList);
+	ft_found_and_replace_usd(commandList->head, envList);
 
 	command = commandList->head;
 	while (command != NULL)
