@@ -77,7 +77,7 @@ void ft_printCommand(t_command *command) {
             printf("  Argument %d: %s\n", i, command->args[i]);
         }
         printf("Argument Count: %d\n", command->argCount);
-        printf("Redirect File: %s\n", command->redirectFile);
+        printf("Redirect File: %s\n", command->redirection_info->redirectFile);
         // printf("Pipe File Descriptors: %d, %d\n", command->fd[0], command->fd[1]);
         printf("Next Command: %p\n", (void *)command->next);
         printf("Previous Command: %p\n", (void *)command->prev);

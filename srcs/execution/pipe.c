@@ -8,9 +8,9 @@
 int ft_launch_pipe(t_command *command)
 {
     ft_create_pipes(command);
-    ft_launch_child_processes(command, number_of_pipes);
-    ft_close_pipes(command, command->pipe_index, number_of_pipes);
-	ft_wait_for_all_child_processes_to_end(command->child_pids, number_of_pipes);
+    ft_launch_child_processes(command, command->number_of_pipes);
+    ft_close_pipes(command, command->pipe_index, command->number_of_pipes);
+	ft_wait_for_all_child_processes_to_end(command->child_pids, command->number_of_pipes);
 
     // Processus parent
     // Rediriger la sortie vers le dernier pipe
