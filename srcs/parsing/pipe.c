@@ -31,7 +31,7 @@ int ft_count_number_of_pipes(char *input)
 }
 
 
-void ft_close_pipes(t_command *command, int index, int number_of_pipes) 
+void ft_close_pipes(t_command *command) 
 {
     int i;
 	

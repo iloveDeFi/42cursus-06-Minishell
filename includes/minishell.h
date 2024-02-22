@@ -100,14 +100,12 @@ typedef struct s_command
     void *data;
     char **args;
     int argCount;
-    char *redirectFile;
     struct s_command *next;
     struct s_command *prev;
-    // Data about pipes execution
-	bool has_pipe;
 	char **envp;
-    struct s_command *commands;
     struct s_env *envList;
+	// Data about pipes execution
+	bool has_pipe;
     int pipes[MAX_COMMANDS - 1][2];
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;

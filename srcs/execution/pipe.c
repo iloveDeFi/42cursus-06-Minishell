@@ -3,15 +3,15 @@
 // TO DO : Vous utilisez ft_execute_commands_with_pipe qui lance des processus enfants, 
 // mais vous ne gérez pas explicitement la fermeture des descripteurs de fichiers dans le processus parent. 
 // Assurez-vous de fermer les descripteurs de fichiers dans le processus parent après avoir terminé d'utiliser les pipes.
-void ft_execute_commands_with_pipe(t_command *command, int number_of_pipes)
+
+//Initialisez ou créez des pipes pour cette commande (pipe(currentCommand->pipes[currentCommand->pipe_index]
+int ft_launch_pipe(t_command *command)
 {
-    if (number_of_pipes > 0) 
-	{
-        ft_create_pipes(command);
-        ft_launch_child_processes(command, number_of_pipes);
-        ft_close_pipes(command, command->pipe_index, number_of_pipes);
-		ft_wait_for_all_child_processes_to_end(command->child_pids, number_of_pipes);
-    }
+    ft_create_pipes(command);
+    ft_launch_child_processes(command, number_of_pipes);
+    ft_close_pipes(command, command->pipe_index, number_of_pipes);
+	ft_wait_for_all_child_processes_to_end(command->child_pids, number_of_pipes);
+
     // Processus parent
     // Rediriger la sortie vers le dernier pipe
     if (command->pipe_index > 0) 
@@ -29,4 +29,5 @@ void ft_execute_commands_with_pipe(t_command *command, int number_of_pipes)
     execvp(command->args[0], command->args);
     perror("execvp");
     exit(EXIT_FAILURE);
+	return 0;
 }

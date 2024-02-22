@@ -6,7 +6,7 @@
 // Gestion des fichiers inexistants : Ajoutez une vérification pour s'assurer que les fichiers auxquels 
 // vous essayez d'accéder existent réellement avant de les ouvrir.
 
-void ft_handle_input_redirection(t_redirection_info redirection_info, t_command *command)
+void ft_process_input_execution(t_redirection_info redirection_info, t_command *command)
 {
     int input_fd;
 
@@ -29,7 +29,7 @@ void ft_handle_input_redirection(t_redirection_info redirection_info, t_command 
     close(input_fd);
 }
 
-void ft_handle_output_redirection(t_redirection_info redirection_info, t_command *command)
+void ft_process_output_execution(t_redirection_info redirection_info, t_command *command)
 {
     int output_fd;
 	
@@ -52,7 +52,7 @@ void ft_handle_output_redirection(t_redirection_info redirection_info, t_command
     close(output_fd);
 }
 
-void ft_handle_append_redirection(t_redirection_info redirection_info, t_command *command)
+void ft_process_append_execution(t_redirection_info redirection_info, t_command *command)
 {
 
 	// TO DO 
@@ -74,7 +74,7 @@ void ft_handle_append_redirection(t_redirection_info redirection_info, t_command
     close(output_fd);
 }
 
-void ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_command *command) 
+void ft_process_here_doc_execution(t_redirection_info redirection_info, t_command *command) 
 {
     int pipe_fd[2];
     pid_t child_pid;
@@ -109,7 +109,7 @@ void ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_comman
     }
 }
 
-void ft_handle_redirection_execution(t_command *command) 
+void ft_launch_redirection_execution(t_command *command) 
 {
     t_redirection_info redirection_info;
 	
