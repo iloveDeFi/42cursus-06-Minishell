@@ -5,7 +5,7 @@
 // Assurez-vous de fermer les descripteurs de fichiers dans le processus parent après avoir terminé d'utiliser les pipes.
 
 //Initialisez ou créez des pipes pour cette commande (pipe(currentCommand->pipes[currentCommand->pipe_index]
-int ft_launch_pipe(t_command *command)
+int ft_pipe_execution(t_command *command)
 {
     ft_create_pipes(command);
     ft_launch_child_processes(command, command->number_of_pipes);

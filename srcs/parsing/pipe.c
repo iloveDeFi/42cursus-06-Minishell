@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+void ft_pipe_parsing(t_command *commandList, t_command *currentCommand)
+{
+	currentCommand->pipes[];
+	currentCommand->child_pids[];
+	currentCommand->pipe_index;
+	currentCommand->number_of_pipes;
+}
+
 // Pipes are init in t_command node initialization, then we create them here BEFORE execution
 void ft_create_pipes(t_command *command)
 {

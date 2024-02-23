@@ -9,7 +9,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
         return 1;
     }
 
-    ft_initialize_commandList(commandList);
+    ft_initialize_commandList(&commandList);
 
 	// if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
 	// {
@@ -17,17 +17,18 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
     //     return -1; // TO DO : change g_exit_code value
     // }
 	
-	if (ft_tokenize_input_with_strtok(commandList, input) > 1)
+	if (ft_tokenize_input_with_strtok(&commandList, input) > 1)
 	{
-		replace_env_variables_in_command(commandList->head, envList);
+		// TO DO check this function
+		// ft_replace_env_variables_in_command(commandList->head, envList);
 
 		command = commandList->head;
 		while (command != NULL)
 		{
 			// ft_handle_error(); TO DO SOON
-			ft_handle_pipe(commandList, command);
-			ft_handle_redirection(commandList, command);
-			ft_handle_command(commandList, command, envList, envp);
+			ft_pipe_execution(commandList, command);
+			ft_redirection_execution(commandList, command);
+			ft_command_execution(commandList, command, envList, envp);
 			command = command->next;
 		}
 
