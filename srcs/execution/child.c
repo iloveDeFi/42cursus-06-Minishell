@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+void	ft_initialize_child_processes(t_command *currentCommand)
+{
+	int i;
+
+	i = 0;
+	while (i < MAX_COMMANDS)
+	{
+		// PID invalid by defaut
+		currentCommand->child_pids[i] = -1;
+		i++;
+	}
+}
+
 pid_t ft_create_child_process() 
 {
     pid_t child_pid;
@@ -10,7 +23,6 @@ pid_t ft_create_child_process()
         perror("Error forking process while creting child process\n");
         exit(EXIT_FAILURE);
     }
-
     return child_pid;
 }
 

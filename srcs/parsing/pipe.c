@@ -1,11 +1,21 @@
 #include "minishell.h"
 
-void ft_pipe_parsing(t_command *commandList, t_command *currentCommand)
+// TO DO : clarify init in node and create here when token pipe detected
+// Pipes are init in t_command node initialization, then we create them here BEFORE execution
+void ft_initialze_pipes(t_command *currentCommand)
 {
-	currentCommand->pipes[];
-	currentCommand->child_pids[];
-	currentCommand->pipe_index;
-	currentCommand->number_of_pipes;
+	int i;
+
+	i = 0;
+	while (i < MAX_COMMANDS - 1)
+	{
+		if (pipe(currentCommand->pipes[i]) == -1) {
+    	// Gestion de l'erreur lors de la création des pipes
+    	perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
+    	exit(EXIT_FAILURE);
+		}
+		i++;
+	}
 }
 
 // Pipes are init in t_command node initialization, then we create them here BEFORE execution
@@ -31,7 +41,7 @@ int ft_count_number_of_pipes(char *input)
 	number_of_pipes = 0;
 	while (input[i] != '\0')
 	{
-		if (input[i] == '|')
+		if (input[i] == '|' && input[i + 1] != '|')
 			number_of_pipes += 1;
 		i++;
 	}

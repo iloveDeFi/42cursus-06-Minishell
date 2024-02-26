@@ -104,18 +104,15 @@ typedef struct s_command
     struct s_command *prev;
 	char **envp;
     struct s_env *envList;
-	// Data about pipes execution
+	// About pipes execution
 	bool has_pipe;
     int pipes[MAX_COMMANDS - 1][2];
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
 	int number_of_pipes;
-	// Data structure about redirection execution
-	bool has_redirection_input;
-	bool has_redirection_output;
+	// About redirection execution
+	bool has_redirection;
 	t_redirection_info redirection_info;
-	// Data strucutre about token type
-	// t_token_type token_type;
 } t_command;
 
 typedef struct s_commandList
