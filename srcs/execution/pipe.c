@@ -5,15 +5,23 @@
 // Assurez-vous de fermer les descripteurs de fichiers dans le processus parent après avoir terminé d'utiliser les pipes.
 
 //Initialisez ou créez des pipes pour cette commande (pipe(currentCommand->pipes[currentCommand->pipe_index]
-int ft_pipe_execution(t_command *command)
+int ft_launch_pipe_execution(t_command *command)
 {
-    ft_create_pipes(command);
+	int read_fd;
+	int write_fd;
+
+	// // TO DO choose between MAX_COMMANDS and pipe_index
+	// // Accéder au descripteur de fichier de lecture du pipe_index
+	read_fd = command->pipes[command->pipe_index][0];
+	// // Accéder au descripteur de fichier d'écriture du pipe_index;
+	write_fd = command->pipes[command->pipe_index][1];
+    ft_initialize_pipes(command);
     ft_launch_child_processes(command, command->number_of_pipes);
     ft_close_pipes(command, command->pipe_index, command->number_of_pipes);
 	ft_wait_for_all_child_processes_to_end(command->child_pids, command->number_of_pipes);
 
     // Processus parent
-    // Rediriger la sortie vers le dernier pipe
+    // Redirect output to last pipe
     if (command->pipe_index > 0) 
 	{
 		if (dup2(command->pipes[command->pipe_index - 1][0], STDIN_FILENO) == -1) 

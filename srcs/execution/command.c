@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_handle_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp)
+int ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp)
 {
 	if (ft_execute_single_command(command, commandList, envList, envp) != 0) 
     {
@@ -64,7 +64,8 @@ void ft_execute_external_command(t_command *command, t_commandList *commandList,
             free(full_path);
         }
     } else {
-        fprintf(stderr, "Command not found in PATH: %s\n", command->name);
+        perror("Command not found in PATH in ft_execute_external_command\n");
+        printf("Command not found in PATH: %s\n", command->name);
     }
 }
 
@@ -77,7 +78,8 @@ void ft_printCommand(t_command *command) {
             printf("  Argument %d: %s\n", i, command->args[i]);
         }
         printf("Argument Count: %d\n", command->argCount);
-        printf("Redirect File: %s\n", command->redirection_info->redirectFile);
+        printf("Redirect file is : %s\n", command->redirection_info.filename);
+        printf("Redirect delimiter is : %s\n", command->redirection_info.delimiter);
         // printf("Pipe File Descriptors: %d, %d\n", command->fd[0], command->fd[1]);
         printf("Next Command: %p\n", (void *)command->next);
         printf("Previous Command: %p\n", (void *)command->prev);

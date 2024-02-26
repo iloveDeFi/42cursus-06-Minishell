@@ -9,7 +9,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
         return 1;
     }
 	
-    ft_initialize_commandList(&commandList);
+    ft_initialize_commandList(commandList);
 
 	// if (ft_check_if_input_is_tokenizable(commandList, input) != 0) 
 	// {
@@ -17,24 +17,25 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
     //     return -1; // TO DO : change g_exit_code value
     // }
 	
-	if (ft_tokenize_input_with_strtok(&commandList, input) > 1)
+	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
 	{
 		// TO DO check this function
 		// ft_replace_env_variables_in_command(commandList->head, envList);
 
 		command = commandList->head;
+		command->number_of_pipes = ft_count_number_of_pipes(input);
 		while (command != NULL)
 		{
 			// ft_handle_error(); TO DO SOON
-			ft_pipe_execution(commandList, command);
-			ft_redirection_execution(commandList, command);
-			ft_command_execution(commandList, command, envList, envp);
+			ft_launch_pipe_execution(command);
+			ft_launch_redirection_execution(command);
+			ft_launch_command_execution(command, commandList, envList, envp);
 			command = command->next;
 		}
 
 	 	ft_destroy_commandList(commandList);
-		return 0;
 	}
-		else
-			perror("Hey, no token from input with strtok.\n");
+	else
+		perror("Hey, no token from input with strtok in ft_launch_parsing_and_execution.\n");
+	return 0;
 }

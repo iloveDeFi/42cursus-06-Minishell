@@ -41,7 +41,7 @@ void ft_launch_child_processes(t_command *command, int number_of_pipes)
         else if (command->child_pids[i] == 0) {
             // Processus enfant
             ft_configure_child_process(command, i, number_of_pipes);
-            ft_execute_commands_with_pipe(command, number_of_pipes);
+            ft_launch_pipe_execution(command);
         }
 
         i++;

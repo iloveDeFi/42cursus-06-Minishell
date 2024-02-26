@@ -7,8 +7,8 @@ int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
                 currentCommand->has_pipe = TRUE;
 				currentCommand->pipe_index = currentCommand->number_of_pipes;
         		currentCommand->number_of_pipes++;
-				ft_initialize_pipes(&currentCommand);
-				ft_initialize_child_processes(&currentCommand);
+				ft_initialize_pipes(currentCommand);
+				ft_initialize_child_processes(currentCommand);
 				total_pipes++;
             }
 			return 1;

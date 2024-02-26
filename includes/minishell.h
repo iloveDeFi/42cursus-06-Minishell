@@ -163,7 +163,7 @@ void            ft_handle_space();
 void            ft_echo_args(char **args, int g_exit_code);
 void            print_error_message(char *message);
 //int             echo(char **args, int g_exit_code);
-int	echo(t_command *cmd);
+int				echo(t_command *cmd);
 // env
 int 	        env(t_env *env_list);
 void            ft_display_envList(t_env *envList);
@@ -197,13 +197,14 @@ char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldA
 int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
 // child
+void			ft_initialize_child_processes(t_command *currentCommand);
 pid_t           ft_create_child_process();
 void 			ft_launch_child_processes(t_command *data, int number_of_pipes);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
 void 			ft_wait_for_all_child_processes_to_end(pid_t *child_pids, int num_commands);
 void 			ft_configure_child_process(t_command *command, int i, int number_of_pipes); 
 // command
-int 			ft_handle_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
+int 			ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
 int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
 void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
 void            ft_printCommand(t_command *command);
@@ -237,18 +238,17 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-int 			ft_handle_pipes_execution(t_command *command);
-void 			ft_execute_commands_with_pipe(t_command *command, int number_of_pipes);
+int 			ft_launch_pipe_execution(t_command *command);
 // process
 t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
 t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 // redirection
-void 			ft_handle_input_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_handle_output_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_handle_append_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_handle_heredoc_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_handle_redirection_execution(t_command *command);
+void 			ft_process_input_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_process_output_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_process_append_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void            ft_exit_shell(t_mini *shell);
 void            ft_initialize_environment(t_env **envList, char **env);
@@ -337,19 +337,17 @@ void            ft_process_char(char *result, int *j, char *command, int *i);
 char            *ft_expand_single_env_var(char *var_name);
 char            *ft_expand_env_variables(char *command);
 // handle
-// void 			ft_handle_error(); TO DO SOON
-int				ft_handle_pipes(t_commandList *commandList, t_command *command);
-int				ft_handle_redirection(t_commandList *commandList, t_command *command);
-int				ft_handle_command(t_commandList *commandList, t_command *command, t_envList *envList, char **envp);
-
+// void 			ft_handle_error(); TO DO SOON;
+int 			ft_handle_pipe(t_commandList *commandList, t_command *command);
+int 			ft_handle_redirection(t_commandList *commandList, t_command *command);
+int 			ft_handle_command(t_commandList *commandList, t_command *command, t_env *envList, char **envp);
 // parser
 void            ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token);
 void            ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token);
 int             ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe
-void 			ft_create_pipes(t_command *command);
-void 			ft_create_pipes_array(int pipes[][2], int num_pipes);
+void 			ft_initialize_pipes(t_command *currentCommand);
 int 			ft_count_number_of_pipes(char *input); 
 void 			ft_close_pipes(t_command *command, int index, int number_of_pipes);
 bool 			ft_check_if_pipe_in_char(char *token);
@@ -370,8 +368,10 @@ t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_heredoc_redirection(char *input);
 t_redirection_info 	ft_parse_all_redirection(char *input);
 // token
-char 			*ft_change_strtok_delimiter(char *input);
-int 			ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
+int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
+// type
+int 			ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes);
+int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);
 // util TO DO CLEAN SI DEJA DANS LA LIBFT
 char           	*ft_strcpy(char *dest, const char *src);
 char           		*ft_strpbrk(const char *s1, const char *s2);

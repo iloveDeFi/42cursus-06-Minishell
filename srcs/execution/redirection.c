@@ -6,7 +6,7 @@
 // Gestion des fichiers inexistants : Ajoutez une vérification pour s'assurer que les fichiers auxquels 
 // vous essayez d'accéder existent réellement avant de les ouvrir.
 
-void ft_process_input_execution(t_redirection_info redirection_info, t_command *command)
+void ft_process_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
     int input_fd;
 
@@ -29,7 +29,7 @@ void ft_process_input_execution(t_redirection_info redirection_info, t_command *
     close(input_fd);
 }
 
-void ft_process_output_execution(t_redirection_info redirection_info, t_command *command)
+void ft_process_output_redirection(t_redirection_info redirection_info, t_command *command)
 {
     int output_fd;
 	
@@ -52,7 +52,7 @@ void ft_process_output_execution(t_redirection_info redirection_info, t_command 
     close(output_fd);
 }
 
-void ft_process_append_execution(t_redirection_info redirection_info, t_command *command)
+void ft_process_append_redirection(t_redirection_info redirection_info, t_command *command)
 {
 
 	// TO DO 
@@ -74,7 +74,7 @@ void ft_process_append_execution(t_redirection_info redirection_info, t_command 
     close(output_fd);
 }
 
-void ft_process_here_doc_execution(t_redirection_info redirection_info, t_command *command) 
+void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command) 
 {
     int pipe_fd[2];
     pid_t child_pid;
@@ -118,18 +118,18 @@ void ft_launch_redirection_execution(t_command *command)
 	if (redirection_info.type != NO_REDIRECTION)
 	{
 		if (redirection_info.type == OUTPUT_REDIRECTION) {
-        	ft_handle_output_redirection(redirection_info, command);
+        	ft_process_output_redirection(redirection_info, command);
    		} else if (redirection_info.type == APPEND_REDIRECTION) {
-        	ft_handle_append_redirection(redirection_info, command);
+        	ft_process_append_redirection(redirection_info, command);
     	} else if (redirection_info.type == INPUT_REDIRECTION) {
-        	ft_handle_input_redirection(redirection_info, command);
+        	ft_process_input_redirection(redirection_info, command);
     	} else if (redirection_info.type == HERE_DOC_REDIRECTION) {
-        	ft_handle_heredoc_redirection(redirection_info, command);
+        	ft_process_here_doc_redirection(redirection_info, command);
    		}
     	else if (redirection_info.type == NO_REDIRECTION)
 			return;
 		else {
-        	perror("Unexpected value in ft_handle_redirection_execution\n");
+        	perror("Unexpected value in ft_process_redirection_execution\n");
         	exit(EXIT_FAILURE);
     	}
 	}

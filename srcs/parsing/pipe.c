@@ -2,34 +2,21 @@
 
 // TO DO : clarify init in node and create here when token pipe detected
 // Pipes are init in t_command node initialization, then we create them here BEFORE execution
-void ft_initialze_pipes(t_command *currentCommand)
+void ft_initialize_pipes(t_command *currentCommand)
 {
 	int i;
 
 	i = 0;
-	while (i < MAX_COMMANDS - 1)
+	// 1 per pipes pair bro
+	while (i < currentCommand->number_of_pipes - 1)
 	{
-		if (pipe(currentCommand->pipes[i]) == -1) {
-    	// Gestion de l'erreur lors de la création des pipes
+		if (pipe(currentCommand->pipes[i]) == -1) 
+		{
     	perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
     	exit(EXIT_FAILURE);
 		}
 		i++;
 	}
-}
-
-// Pipes are init in t_command node initialization, then we create them here BEFORE execution
-void ft_create_pipes(t_command *command)
-{
-    int pipe_index;
-	
-	pipe_index = command->pipe_index;
-
-    if (pipe(command->pipes[pipe_index]) == -1) 
-    {
-        perror("Error creating pipe");
-        exit(EXIT_FAILURE);
-    }
 }
 
 int ft_count_number_of_pipes(char *input) 
@@ -49,7 +36,7 @@ int ft_count_number_of_pipes(char *input)
 }
 
 
-void ft_close_pipes(t_command *command) 
+void ft_close_pipes(t_command *command, int index, int number_of_pipes) 
 {
     int i;
 	
@@ -80,7 +67,7 @@ int ft_check_if_pipe_in_inputCopy(char *inputCopy)
     return (ft_strchr(inputCopy, '|') != NULL);
 }
 
-// int ft_check_too_many_piipes()
+// int ft_check_too_many_pipes()
 // {
 // 	if (ft_count_number_of_pipes(command->name) > 1)
 //     {
