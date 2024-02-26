@@ -111,6 +111,7 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
 
 void ft_launch_redirection_execution(t_command *command) 
 {
+	printf("enter in ft_launch_redirection_execution\n");
     t_redirection_info redirection_info;
 	
 	redirection_info = ft_parse_all_redirection(command->name);

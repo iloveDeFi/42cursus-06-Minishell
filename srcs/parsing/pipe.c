@@ -21,6 +21,7 @@ void ft_initialize_pipes(t_command *currentCommand)
 
 int ft_count_number_of_pipes(char *input) 
 {
+	printf("enter in ft_count_number_of_pipe\n");
     int number_of_pipes;
 	int i;
 

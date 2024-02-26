@@ -2,6 +2,7 @@
 
 int ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp)
 {
+	printf("enter in ft_launch_command_execution\n");
 	if (ft_execute_single_command(command, commandList, envList, envp) != 0) 
     {
     	perror("Error executing command\n");
