@@ -174,7 +174,12 @@ void ft_found_and_replace_usd(t_command *command, t_env *envList)
     {
         if (command->args[i][0] == '$') 
         {
-            if (command->args[i][1] != '\0') 
+            if (command->args[i][1] == '?')
+			{
+				free(command->args[i]);
+				command->args[i] = ft_itoa(g_exit_code);
+			}
+            else if (command->args[i][1] != '\0') 
                 command->args[i] = ft_replace_usd_to_env(envList, command->args[i]);
         }
         i++;

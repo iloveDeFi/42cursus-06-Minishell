@@ -395,4 +395,7 @@ void ft_found_and_replace_usd(t_command *command, t_env *envList);
 char *ft_replace_usd_to_env(t_env *envList, char *usd);
 void replace_env_variables_in_command(t_command *command, t_env *envList);
 
+void ft_remove_quotes(char *str);
+bool ft_check_quotes(char *input);
+
 #endif
