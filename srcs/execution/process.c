@@ -4,11 +4,7 @@ t_command *ft_process_token(t_commandList *commandList, t_command *currentComman
 {
     //printf("enter processtoken\n");
     if (commandList->length == 0) 
-    {    
-        printf("hey\n");
         return ft_process_first_token_as_command(commandList, token);
-    }
-    
     else 
     {
         if (ft_strcmp(currentCommand->name, "cd") == 0) 

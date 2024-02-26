@@ -2,6 +2,7 @@
 
 int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
 {
+	printf("enter in ft_token_is_pipe\n");
 	if (ft_strcmp(token, "|") == 0) {
             if (currentCommand != NULL) {
                 currentCommand->has_pipe = TRUE;
@@ -16,27 +17,27 @@ int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
 	return 0;
 }
 
-int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex)
+int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex) 
 {
-	if (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") || ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>")== 0) 
+    printf("enter in ft_token_is_redirection\n");
+	char *nextToken;
+
+    if (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0) 
 	{
-            if (currentCommand != NULL) {
-                currentCommand->has_redirection = TRUE;
-				// TO DO : Capturez le nom du fichier de redirection dans le token suivant et enregistrez-le dans currentCommand->redirectFile.
-                // Gérez la redirection d'entrée ici (par exemple, lisez le nom du fichier)
-				// Goal next token gonna be the filename currentCommand;
-    			token = ft_strtok(NULL, " ");
-				if (token != NULL) {
-					currentCommand->redirection_info.filename = token;
-       		 		tokenIndex++;
-    			} else {
-					perror("Error, filename is missing after redirection.\n");
-        			exit(EXIT_FAILURE);
-   			 	}
-    		token = ft_strtok(NULL, " ");
-    		tokenIndex++;
+        if (currentCommand != NULL) {
+            currentCommand->has_redirection = TRUE;
+            // Gérez la redirection d'entrée ici (par exemple, lisez le nom du fichier)
+            // Goal next token gonna be the filename currentCommand;
+            nextToken = ft_strtok(NULL, " ");
+            if (nextToken != NULL) {
+                currentCommand->redirection_info.filename = nextToken;
+                (*tokenIndex)++;
+            } else {
+                perror("Error, filename is missing after redirection.\n");
+                exit(EXIT_FAILURE);
             }
-			return 1;
-	}
-	return 0;
+        }
+        return 1;
+    }
+    return 0;
 }

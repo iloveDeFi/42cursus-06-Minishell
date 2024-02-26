@@ -32,7 +32,7 @@ t_env	*ft_create_node_for_envList(char *var_array)
 
 t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandList, char *name) 
 {
-    printf("enter create init new command\n");
+    printf("enter ft_create_and_init_new_command_in_commandList\n");
     t_command *command = (t_command *)malloc(sizeof(t_command));
 
     if (command == NULL) 
@@ -43,11 +43,11 @@ t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandL
     }
     ft_init_new_node(commandList, command, name);
 	ft_append_to_commandList(commandList, command);
-    printf("init new node\n");
 	ft_print_commandList(commandList);
     return command;
 }
 
+// TO DO : avoid to us strdup
 t_env *ft_create_node_for_export_argument(char *name, char *value)
 {
     t_env *new_node;

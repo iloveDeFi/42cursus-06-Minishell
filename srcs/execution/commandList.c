@@ -52,7 +52,7 @@ void ft_print_commandList(t_commandList *commandList)
     
     current = commandList->head;
 
-    printf("Command List:\n");
+    printf("Enter ft_print_commandList and command list contains :\n");
 
     while (current != NULL) 
     {
