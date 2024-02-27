@@ -85,7 +85,7 @@ t_redirection_info ft_parse_append_redirection(char *input)
     return redirection_info;
 }
 
-t_redirection_info ft_parse_heredoc_redirection(char *input) {
+t_redirection_info ft_parse_here_doc_redirection(char *input) {
 	char *heredoc_sign;
 	size_t len;
     t_redirection_info redirection_info;
@@ -134,7 +134,7 @@ t_redirection_info ft_parse_all_redirection(char *input)
 		redirection_info = temp_info;
 	}
 
-	temp_info = ft_parse_heredoc_redirection(input);
+	temp_info = ft_parse_here_doc_redirection(input);
 	if (temp_info.type != NO_REDIRECTION) {
 		redirection_info = temp_info;
 	}

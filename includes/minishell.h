@@ -362,11 +362,13 @@ char           	*ft_extract_quoted_argument(char *input);
 void		   	ft_tokenize_with_quotes(char *input);
 void           	ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type);
 t_quote_type   	ft_check_and_allocate_quote_type(char *token);
+void            ft_remove_quotes(char *str);
+bool            ft_check_quotes(char *input);
 // redirection
 t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
 t_redirection_info 	ft_parse_input_redirection(char *input);
-t_redirection_info 	ft_parse_heredoc_redirection(char *input);
+t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 t_redirection_info 	ft_parse_all_redirection(char *input);
 // token
 int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
@@ -395,8 +397,5 @@ void	       	ft_exit_shell(t_mini *shell);
 void ft_found_and_replace_usd(t_command *command, t_env *envList);
 char *ft_replace_usd_to_env(t_env *envList, char *usd);
 void replace_env_variables_in_command(t_command *command, t_env *envList);
-
-void ft_remove_quotes(char *str);
-bool ft_check_quotes(char *input);
 
 #endif

@@ -33,8 +33,7 @@ void ft_process_output_redirection(t_redirection_info redirection_info, t_comman
 {
     int output_fd;
 	
-	// TO DO 
-	// use command ?
+	// TO DO use command ?
 	(void)command;
 
 	output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -55,8 +54,7 @@ void ft_process_output_redirection(t_redirection_info redirection_info, t_comman
 void ft_process_append_redirection(t_redirection_info redirection_info, t_command *command)
 {
 
-	// TO DO 
-	// use command ?
+	// TO DO use command ?
 	(void)command;
 
     int output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -79,8 +77,7 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
     int pipe_fd[2];
     pid_t child_pid;
 
-    // TO DO 
-    // use command ?
+    // TO DO use command ?
     (void)command;
 
     if (pipe(pipe_fd) == -1) {
@@ -105,7 +102,7 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
 
         // Écrire le délimiteur dans le pipe
 		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
-		printf("BUG strlen is : %s\n", redirection_info.delimiter);
+		printf("BUG strlen of redirection_info.delimiter is : %s\n", redirection_info.delimiter);
         if (write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
             perror("Erreur lors de l'écriture dans le pipe");
             close(pipe_fd[1]);
@@ -116,7 +113,6 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
         waitpid(child_pid, NULL, 0);
     }
 }
-
 
 void ft_launch_redirection_execution(t_command *command) 
 {
