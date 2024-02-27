@@ -86,7 +86,6 @@ typedef enum e_redirection_type {
     HERE_DOC_REDIRECTION    // '<<' or 4
 } t_redirection_type;
 
-// NEXT && PREV POINTERS ?
 typedef struct s_redirection_info 
 {
     char *filename;
@@ -135,7 +134,6 @@ typedef struct s_env
 {
     char *name;
     char *value;
-    // char **g_env;
     struct s_env *next;
     struct s_env *prev;
 } t_env;
@@ -143,7 +141,6 @@ typedef struct s_env
 typedef struct s_mini
 {
     char *av;
-    // int numberOfCommands;
     // int status;
     int fd_history;
     int stdin_fd;
@@ -231,6 +228,8 @@ int             ft_open_inputrc(const char *inputrc_path);
 void            ft_write_inputrc_content(int fd);
 void            ft_close_inputrc(int fd, char *inputrc_path);
 void            ft_write_inputrc();
+// manager
+void            ft_launch_error_manager(t_commandList *commandList, t_command *command, char *input, t_env *envList);
 // parent
 void 			ft_configure_parent_process(t_command *command, int index, int number_of_pipes);
 // path
