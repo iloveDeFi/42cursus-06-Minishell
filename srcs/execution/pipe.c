@@ -23,9 +23,24 @@ void ft_launch_pipe_execution(t_command *command)
     ft_configure_parent_process(command, command->pipe_index, command->number_of_pipes);
 
     // Exécuter la dernière commande
-    if (execvp(command->args[0], command->args) == -1)
+    pid_t child_pid = fork();
+
+    if (child_pid < 0)
     {
-        perror("execvp");
+        perror("Error forking process while executing last command\n");
         exit(EXIT_FAILURE);
+    }
+    else if (child_pid == 0)
+    {
+        // Processus fils
+        ft_configure_child_process(command, command->pipe_index, command->number_of_pipes);
+        execve(command->args[0], command->args, command->envp);
+        perror("execve");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        // Processus parent
+        waitpid(child_pid, NULL, 0);
     }
 }

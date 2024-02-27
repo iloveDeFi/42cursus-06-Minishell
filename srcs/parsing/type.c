@@ -26,11 +26,12 @@ int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIn
 	{
         if (currentCommand != NULL) {
             currentCommand->has_redirection = TRUE;
-            // Gérez la redirection d'entrée ici (par exemple, lisez le nom du fichier)
             // Goal next token gonna be the filename currentCommand;
             nextToken = ft_strtok(NULL, " ");
             if (nextToken != NULL) {
                 currentCommand->redirection_info.filename = nextToken;
+				// Gonna use this for << earth sandwich
+                currentCommand->redirection_info.delimiter = nextToken;
                 (*tokenIndex)++;
             } else {
                 perror("Error, filename is missing after redirection.\n");

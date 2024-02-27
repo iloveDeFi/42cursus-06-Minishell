@@ -79,10 +79,10 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
     int pipe_fd[2];
     pid_t child_pid;
 
-	// TO DO 
-	// use command ?
-	(void)command;
-	
+    // TO DO 
+    // use command ?
+    (void)command;
+
     if (pipe(pipe_fd) == -1) {
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
@@ -95,19 +95,28 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
     if (child_pid == 0) {
         close(pipe_fd[1]);
         dup2(pipe_fd[0], STDIN_FILENO);
-		// TO DO : ADD execution command in the child here 
+        // TO DO : ADD execution command in the child here 
         // ft_execute_command(command);
         close(pipe_fd[0]);
         exit(EXIT_SUCCESS);
     } else {
-		// parent here
+        // parent here
         close(pipe_fd[0]);
-		// Écrire le délimiteur dans le pipe
-        write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter));
+
+        // Écrire le délimiteur dans le pipe
+		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
+		printf("BUG strlen is : %s\n", redirection_info.delimiter);
+        if (write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
+            perror("Erreur lors de l'écriture dans le pipe");
+            close(pipe_fd[1]);
+            exit(EXIT_FAILURE);
+        }
+
         close(pipe_fd[1]);
         waitpid(child_pid, NULL, 0);
     }
 }
+
 
 void ft_launch_redirection_execution(t_command *command) 
 {

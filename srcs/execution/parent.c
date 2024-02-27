@@ -2,6 +2,8 @@
 
 void ft_configure_parent_process(t_command *command, int index, int number_of_pipes)
 {
+	// TO DO use number of pipes;
+	(void)number_of_pipes;
     // Redirect output to last pipe
     if (index > 0)
     {
