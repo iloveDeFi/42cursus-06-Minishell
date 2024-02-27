@@ -231,6 +231,8 @@ int             ft_open_inputrc(const char *inputrc_path);
 void            ft_write_inputrc_content(int fd);
 void            ft_close_inputrc(int fd, char *inputrc_path);
 void            ft_write_inputrc();
+// parent
+void 			ft_configure_parent_process(t_command *command, int index, int number_of_pipes);
 // path
 char            *ft_build_full_path(t_commandList *commandList); 
 void            ft_execute_command_with_relative_path(t_command *command);
@@ -238,7 +240,7 @@ void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
 // pipe
-int 			ft_launch_pipe_execution(t_command *command);
+void 			ft_launch_pipe_execution(t_command *command);
 // process
 t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
 t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);

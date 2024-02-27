@@ -4,8 +4,8 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 {
     t_command *command;
 
-	if (commandList == NULL) {
-        perror("Error: Invalid pointer to commandList in ft_launch_parsing_and_execution()\n");
+	if (commandList == NULL || input == NULL) {
+        perror("Error: Invalid pointer to commandList or null input in ft_launch_parsing_and_execution()\n");
         return 1;
     }
 	

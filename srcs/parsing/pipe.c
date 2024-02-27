@@ -8,6 +8,7 @@ void ft_initialize_pipes(t_command *currentCommand)
 
 	i = 0;
 	// 1 per pipes pair bro
+	// TO O : SHOUL I USE MAX_COMMANDS ?
 	while (i < currentCommand->number_of_pipes - 1)
 	{
 		if (pipe(currentCommand->pipes[i]) == -1) 
