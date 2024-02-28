@@ -13,8 +13,8 @@ void ft_initialize_pipes(t_command *currentCommand)
 	{
 		if (pipe(currentCommand->pipes[i]) == -1) 
 		{
-    	perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
-    	exit(EXIT_FAILURE);
+    		perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
+    		exit(EXIT_FAILURE);
 		}
 		i++;
 	}
@@ -37,15 +37,14 @@ int ft_count_number_of_pipes(char *input)
     return number_of_pipes;
 }
 
-
-void ft_close_pipes(t_command *command, int index, int number_of_pipes) 
+void ft_close_pipes(t_command *command) 
 {
     int i;
 	
 	i = 0;
-    while (i < number_of_pipes) 
+    while (i < command->number_of_pipes) 
 	{
-		if (i != index)
+		if (i != command->pipe_index)
 		{
         	close(command->pipes[i][0]);
         	close(command->pipes[i][1]);

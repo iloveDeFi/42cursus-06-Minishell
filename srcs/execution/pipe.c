@@ -8,22 +8,22 @@ void ft_launch_pipe_execution(t_command *command)
     printf("enter in ft_launch_pipe_execution\n");
     int read_fd;
     int write_fd;
+	pid_t child_pid;
 
     // Accéder au descripteur de fichier de lecture du pipe_index
     read_fd = command->pipes[command->pipe_index][0];
     // Accéder au descripteur de fichier d'écriture du pipe_index
     write_fd = command->pipes[command->pipe_index][1];
-
     ft_initialize_pipes(command);
-    ft_launch_child_processes(command, command->number_of_pipes);
-    ft_close_pipes(command, command->pipe_index, command->number_of_pipes);
-    ft_wait_for_all_child_processes_to_end(command->child_pids, command->number_of_pipes);
+    ft_launch_child_processes(command);
+    ft_close_pipes(command);
+    ft_wait_for_all_child_processes_to_end(command);
 
     // Processus parent
-    ft_configure_parent_process(command, command->pipe_index, command->number_of_pipes);
+    ft_configure_parent_process(command);
 
     // Exécuter la dernière commande
-    pid_t child_pid = fork();
+    child_pid = fork();
 
     if (child_pid < 0)
     {
@@ -33,9 +33,9 @@ void ft_launch_pipe_execution(t_command *command)
     else if (child_pid == 0)
     {
         // Processus fils
-        ft_configure_child_process(command, command->pipe_index, command->number_of_pipes);
+        ft_configure_child_process(command);
         execve(command->args[0], command->args, command->envp);
-        perror("execve");
+        perror("execve in ft_launch_pipe_execution\n");
         exit(EXIT_FAILURE);
     }
     else
