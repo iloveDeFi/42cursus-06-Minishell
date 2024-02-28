@@ -105,7 +105,7 @@ typedef struct s_command
     struct s_env *envList;
 	// About pipes execution
 	bool has_pipe;
-    int pipes[MAX_COMMANDS - 1][2];
+    int pipes[MAX_COMMANDS][2];
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
 	int number_of_pipes;
@@ -195,7 +195,7 @@ int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
 // child
 void			ft_initialize_child_processes(t_command *currentCommand);
-pid_t           ft_create_child_process();
+pid_t           ft_create_child_process(t_command *command);
 void 			ft_launch_child_processes(t_command *data);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
 void 			ft_wait_for_all_child_processes_to_end(t_command *command);

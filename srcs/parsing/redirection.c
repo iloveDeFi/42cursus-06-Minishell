@@ -2,6 +2,7 @@
 
 t_redirection_info ft_parse_input_redirection(char *input) 
 {
+	printf("enter in ft_parse_input_redirection\n");
 	char *input_sign;
 	size_t len;
     t_redirection_info redirection_info;
@@ -30,7 +31,8 @@ t_redirection_info ft_parse_input_redirection(char *input)
 
 // TO DO CHECK FREE AVEC STRDUP
 t_redirection_info ft_parse_output_redirection(char *input) 
-{    
+{
+	printf("enter in ft_parse_output_redirection\n");    
 	char *output_sign;
 	size_t len;
 	t_redirection_info redirection_info;
@@ -59,6 +61,7 @@ t_redirection_info ft_parse_output_redirection(char *input)
 
 t_redirection_info ft_parse_append_redirection(char *input) 
 {    
+	printf("enter in ft_parse_append_redirection\n");
 	char *append_sign;
 	size_t len;
 	t_redirection_info redirection_info;
@@ -85,7 +88,9 @@ t_redirection_info ft_parse_append_redirection(char *input)
     return redirection_info;
 }
 
-t_redirection_info ft_parse_here_doc_redirection(char *input) {
+t_redirection_info ft_parse_here_doc_redirection(char *input) 
+{
+	printf("enter in ft_parse_here_doc_redirection\n");
 	char *heredoc_sign;
 	size_t len;
     t_redirection_info redirection_info;
@@ -114,6 +119,7 @@ t_redirection_info ft_parse_here_doc_redirection(char *input) {
 
 t_redirection_info ft_parse_all_redirection(char *input)
 {
+	printf("enter in ft_parse_all_redirection\n");
 	t_redirection_info redirection_info;
 	t_redirection_info temp_info;
 
@@ -138,6 +144,9 @@ t_redirection_info ft_parse_all_redirection(char *input)
 	if (temp_info.type != NO_REDIRECTION) {
 		redirection_info = temp_info;
 	}
-
+	// TO DO : clean printf about redirection info 
+	printf("From ft_parse_all_redirection Filename: %s\n", redirection_info.filename);
+    printf("Delimiter: %s\n", redirection_info.delimiter);
+    printf("Type: %d\n", redirection_info.type);
 	return redirection_info;
 }

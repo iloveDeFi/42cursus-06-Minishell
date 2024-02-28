@@ -7,15 +7,16 @@ void ft_initialize_pipes(t_command *currentCommand)
 	int i;
 
 	i = 0;
-	// 1 per pipes pair bro
-	// TO DO : SHOUL I USE MAX_COMMANDS ?
-	while (i < currentCommand->number_of_pipes - 1)
+	
+	// TO DO < ou <= ?
+	while (i < currentCommand->number_of_pipes)
 	{
 		if (pipe(currentCommand->pipes[i]) == -1) 
 		{
     		perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
     		exit(EXIT_FAILURE);
 		}
+		currentCommand->pipe_index++;
 		i++;
 	}
 }

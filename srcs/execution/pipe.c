@@ -10,9 +10,7 @@ void ft_launch_pipe_execution(t_command *command)
     int write_fd;
 	pid_t child_pid;
 
-    // Accéder au descripteur de fichier de lecture du pipe_index
     read_fd = command->pipes[command->pipe_index][0];
-    // Accéder au descripteur de fichier d'écriture du pipe_index
     write_fd = command->pipes[command->pipe_index][1];
     ft_initialize_pipes(command);
     ft_launch_child_processes(command);
