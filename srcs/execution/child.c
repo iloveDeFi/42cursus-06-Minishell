@@ -21,7 +21,7 @@ pid_t ft_create_child_process(t_command *command)
 
 	i = 0;
 
-	while (command->child_pids[i] < currentCommand->number_of_pipes + 1)
+	while (i < currentCommand->number_of_pipes + 1)
 	{
 		command->child_pids[i] = fork();
 		if (command->child_pids[i] < 0)
@@ -30,6 +30,7 @@ pid_t ft_create_child_process(t_command *command)
         	exit(EXIT_FAILURE);
     	}
 		return command->child_pids[i];
+		i++;
 	}
 }
 
@@ -38,7 +39,7 @@ void ft_launch_child_processes(t_command *command)
     int i;
 	
 	i = 0;
-    while (i < command->number_of_pipes) 
+    while (i < command->number_of_pipes + 1) 
 	{
         command->child_pids[i] = ft_create_child_process(command);
 		if (command->child_pids[i] < 0) 
@@ -70,7 +71,7 @@ void ft_wait_for_all_child_processes_to_end(t_command *command)
     int i;
 
     i = 0;
-    while (i < command->number_of_pipes)
+    while (i < command->number_of_pipes + 1)
     {
         waitpid(command->child_pids[i], NULL, 0);
         i++;
@@ -86,11 +87,12 @@ void ft_configure_child_process(t_command *command)
         close(command->pipes[command->pipe_index - 1][1]);
     }
 
-    // Rediriger la sortie vers le pipe suivant
+    // Rediriger la sortie vers le pipe suivant 
+	// TO DO : ( pipe_index + 1?)
     if (command->pipe_index < command->number_of_pipes - 1) {
-        dup2(command->pipes[command->pipe_index + 1][1], STDOUT_FILENO);
-        close(command->pipes[command->pipe_index + 1][0]);
-        close(command->pipes[command->pipe_index + 1][1]);
+        dup2(command->pipes[command->pipe_index][1], STDOUT_FILENO);
+        close(command->pipes[command->pipe_index][0]);
+        close(command->pipes[command->pipe_index][1]);
     }
     ft_close_pipes(command);
 }
