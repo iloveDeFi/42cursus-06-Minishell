@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 08:51:22 by bbessard          #+#    #+#             */
-/*   Updated: 2022/11/05 15:25:10 by bbessard         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:23:04 by julienbelda      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strrchr(const char *s, int c)
 
 	result = NULL;
 	while (*s != '\0')
-	{	
+	{
 		if (*s == (char)c)
 			result = (char *)(s);
 		s++;
