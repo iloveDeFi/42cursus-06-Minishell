@@ -8,6 +8,7 @@
 
 void ft_process_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
+	printf("enter in ft_process_input_redirection\n");
     int input_fd;
 
 	// TO DO 
@@ -31,6 +32,7 @@ void ft_process_input_redirection(t_redirection_info redirection_info, t_command
 
 void ft_process_output_redirection(t_redirection_info redirection_info, t_command *command)
 {
+	printf("enter in ft_process_output_redirection\n");
     int output_fd;
 	
 	// TO DO use command ?
@@ -53,7 +55,7 @@ void ft_process_output_redirection(t_redirection_info redirection_info, t_comman
 
 void ft_process_append_redirection(t_redirection_info redirection_info, t_command *command)
 {
-
+	printf("enter in ft_process_append_redirection\n");
 	// TO DO use command ?
 	(void)command;
 
@@ -74,6 +76,7 @@ void ft_process_append_redirection(t_redirection_info redirection_info, t_comman
 
 void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command) 
 {
+	printf("enter in ft_process_here_doc_redirection\n");
     int pipe_fd[2];
     pid_t child_pid;
 
@@ -139,4 +142,5 @@ void ft_launch_redirection_execution(t_command *command)
         	exit(EXIT_FAILURE);
     	}
 	}
+	ft_free_redirection_info(&redirection_info);
 }

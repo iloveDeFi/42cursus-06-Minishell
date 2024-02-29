@@ -17,6 +17,7 @@ int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
 	return 0;
 }
 
+// DO NOT handle commands without spaces as separator i.e. commande>output.txt
 int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex) 
 {
     printf("enter in ft_token_is_redirection\n");
@@ -34,8 +35,9 @@ int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIn
                 currentCommand->redirection_info.delimiter = nextToken;
                 (*tokenIndex)++;
             } else {
-                perror("Error, filename is missing after redirection.\n");
-                exit(EXIT_FAILURE);
+    			fprintf(stderr, "Error: Filename is missing after redirection in ft_token_is_redirection.\n");
+                g_exit_code = 426;
+				// No need to exit(EXIT_FAILURE);
             }
         }
         return 1;

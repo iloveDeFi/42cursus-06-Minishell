@@ -26,6 +26,7 @@
 # define ERROR_IN_COMMAND_EXEC 423
 # define ERROR_IN_REDIRECTION_EXEC 424
 # define ERROR_IN_ERROR_BEFORE_EXEC 425
+# define ERROR_NO_HERE_DOC_FILENAME 426
 // File Descriptor
 # define STDIN 0
 # define STDOUT 1
@@ -219,6 +220,8 @@ void 			ft_handle_only_spaces(t_mini *shell);
 void 			ft_check_null_av_shell(t_mini *shell);
 void 			ft_check_empty_av_shell(t_mini *shell);
 int 			ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
+// free
+void			ft_free_redirection_info(t_redirection_info *redirection_info);
 // history
 void            ft_manage_history(t_mini *shell, const char *input);
 void            ft_custom_prompt_msg(t_mini *shell);

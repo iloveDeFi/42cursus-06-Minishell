@@ -148,5 +148,6 @@ t_redirection_info ft_parse_all_redirection(char *input)
 	printf("From ft_parse_all_redirection Filename: %s\n", redirection_info.filename);
     printf("Delimiter: %s\n", redirection_info.delimiter);
     printf("Type: %d\n", redirection_info.type);
-	return redirection_info;
+	ft_free_redirection_info(&redirection_info);
+	return temp_info;
 }
