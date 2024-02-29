@@ -2,17 +2,24 @@
 
 int	ft_tokenize_input_with_strtok(t_commandList *commandList, char *input)
 {
-	char		*token;
-	char		inputcopy[ft_strlen(input) + 1];
-	t_command	*currentcommand;
+    char *token;
+    int tokenIndex;
+    char inputCopy[ft_strlen(input) + 1];
+    t_command *currentCommand;
+    
+    tokenIndex = 0;
+    ft_strcpy(inputCopy, input);
+    currentCommand = NULL;
+	token = ft_strtok(inputCopy, " ");
 
-	ft_strcpy(inputcopy, input);
-	currentcommand = NULL;
-	token = ft_strtok(inputcopy, " | < << > >>");
-	while (token != NULL)
-	{
-		currentcommand = ft_process_token(commandList, currentcommand, token);
-		token = ft_strtok(NULL, " | < << > >>");
-	}
-	return (commandList->length);
+	 while (token != NULL) 
+	 {
+		// ft_handle_error(); TO DO SOON
+        ft_token_is_pipe(token, currentCommand);
+		ft_token_is_redirection(token, currentCommand, &tokenIndex);
+		currentCommand = ft_process_token(commandList, currentCommand, token);
+        token = ft_strtok(NULL, " ");
+        tokenIndex++;
+    }
+    return commandList->length;
 }
