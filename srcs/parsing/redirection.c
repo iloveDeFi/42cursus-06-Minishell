@@ -128,26 +128,27 @@ t_redirection_info ft_parse_here_doc_redirection(char *input)
 t_redirection_info ft_parse_all_redirection(t_command *command)
 {
 	printf("enter in ft_parse_all_redirection\n");
-	
+
 	t_redirection_info temp_info;
 
 	temp_info = ft_parse_output_redirection(command->name);
 	if (temp_info.type != NO_REDIRECTION) {
-		redirection_info = temp_info;
+		command->redirection_info = temp_info;
 	}
 	temp_info = ft_parse_append_redirection(command->name);
 	if (temp_info.type != NO_REDIRECTION) {
-		redirection_info = temp_info;
+		command->redirection_info = temp_info;
 	}
 	temp_info = ft_parse_input_redirection(command->name);
 	if (temp_info.type != NO_REDIRECTION) {
-		redirection_info = temp_info;
+		command->redirection_info = temp_info;
 	}
 	temp_info = ft_parse_here_doc_redirection(command->name);
 	if (temp_info.type != NO_REDIRECTION) {
-		redirection_info = temp_info;
+		command->redirection_info = temp_info;
 	}
-	return temp_info;
+	ft_free_redirection_info(&temp_info);
+	return command->redirection_info;
 	// TO DO function below to free properly
 	// ft_free_redirection_info(&redirection_info);
 }

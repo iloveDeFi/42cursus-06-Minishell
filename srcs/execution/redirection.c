@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// 
 void ft_process_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");
@@ -69,45 +70,46 @@ void ft_process_append_redirection(t_redirection_info redirection_info, t_comman
     close(output_fd);
 }
 
+// TO DO : loop with i 
 void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command) 
 {
 	printf("enter in ft_process_here_doc_redirection\n");
 	int i;
 
 	i = 0;
-    if (pipe(command->pipes) == -1) {
+    if (pipe(command->pipes[i]) == -1) {
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
     }
     command->child_pids[i] = fork();
-    if (command->child_pid[i] == -1) {
+    if (command->child_pids[i] == -1) {
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);
     }
-    if (command->child_pid[i] == 0) {
-        close(pipe_fd[1]);
-        dup2(pipe_fd[0], STDIN_FILENO);
+    if (command->child_pids[i] == 0) {
+        close(command->pipes[i][1]);
+        dup2(command->pipes[i][0], STDIN_FILENO);
         // TO DO : ADD execution command in the child here 
         // ft_execute_command(command);
-        close(pipe_fd[0]);
+        close(command->pipes[i][0]);
         exit(EXIT_SUCCESS);
     } else {
         // parent here
-        close(pipe_fd[0]);
+        close(command->pipes[i][0]);
 
         // Écrire le délimiteur dans le pipe
 		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
 		printf("BUG strlen of redirection_info.delimiter is : %s\n", redirection_info.delimiter);
 		if (redirection_info.delimiter != NULL)
 		{
-			if (write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
+			if (write(command->pipes[i][1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
             	perror("Erreur lors de l'écriture dans le pipe");
-            	close(pipe_fd[1]);
+            	close(command->pipes[i][1]);
             	exit(EXIT_FAILURE);
 			}
         }
-        close(pipe_fd[1]);
-        waitpid(child_pid, NULL, 0);
+        close(command->pipes[i][1]);
+        waitpid(command->child_pids[i], NULL, 0);
     }
 }
 
