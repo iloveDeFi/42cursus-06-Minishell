@@ -21,6 +21,12 @@ t_redirection_info ft_parse_input_redirection(char *input)
             len = ft_strlen(redirection_info.filename);
             while (len > 0 && redirection_info.filename[len - 1] == ' ')
                 redirection_info.filename[--len] = '\0';
+				// Vérifier si le fichier existe avant de continuer
+            if (!ft_check_if_file_exists(redirection_info.filename)) {
+                fprintf(stderr, "Error: The file %s does not exist.\n", redirection_info.filename);
+                free(redirection_info.filename);
+                exit(EXIT_FAILURE);
+			}	
         } else {
             perror("Erreur d'allocation mémoire pour le nom du fichier cible de la redirection d'entrée");
             exit(EXIT_FAILURE);
@@ -29,7 +35,6 @@ t_redirection_info ft_parse_input_redirection(char *input)
     return redirection_info;
 }
 
-// TO DO CHECK FREE AVEC STRDUP
 t_redirection_info ft_parse_output_redirection(char *input) 
 {
 	printf("enter in ft_parse_output_redirection\n");    

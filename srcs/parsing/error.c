@@ -49,6 +49,11 @@
 //     }
 // }
 
+int ft_check_if_file_exists(const char *filename) 
+{
+    return access(filename, F_OK) != -1;
+}
+
 int	ft_check_if_its_any_white_space(char c)
 {
     if (c == ' ' || c == '\t' || c == '\r'

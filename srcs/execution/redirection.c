@@ -1,11 +1,5 @@
 #include "minishell.h"
 
-// TO DO : Assurez-vous d'ajouter des appels close appropriés après avoir 
-// effectué les opérations nécessaires sur les fichiers.
-
-// Gestion des fichiers inexistants : Ajoutez une vérification pour s'assurer que les fichiers auxquels 
-// vous essayez d'accéder existent réellement avant de les ouvrir.
-
 void ft_process_input_redirection(t_redirection_info redirection_info, t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");

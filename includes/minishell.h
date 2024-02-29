@@ -328,6 +328,7 @@ const char      *ft_find_closing_quote(const char *start);
 void            ft_process_word(const char *start, const char *end);
 void            ft_strtok_for_quotes(const char *input);
 // error
+int 			ft_check_if_file_exists(const char *filename);
 int	            ft_check_if_its_any_white_space(char c);
 t_Bool          ft_check_if_only_spaces(const char *str);
 void            ft_initialization_of_errors(t_mini *shell);
