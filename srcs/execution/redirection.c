@@ -50,10 +50,11 @@ void ft_process_output_redirection(t_redirection_info redirection_info, t_comman
 void ft_process_append_redirection(t_redirection_info redirection_info, t_command *command)
 {
 	printf("enter in ft_process_append_redirection\n");
+	int output_fd;
 	// TO DO use command ?
 	(void)command;
 
-    int output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    output_fd = open(redirection_info.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (output_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en écriture (mode ajout)");
         exit(EXIT_FAILURE);
@@ -71,22 +72,19 @@ void ft_process_append_redirection(t_redirection_info redirection_info, t_comman
 void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command) 
 {
 	printf("enter in ft_process_here_doc_redirection\n");
-    int pipe_fd[2];
-    pid_t child_pid;
+	int i;
 
-    // TO DO use command ?
-    (void)command;
-
-    if (pipe(pipe_fd) == -1) {
+	i = 0;
+    if (pipe(command->pipes) == -1) {
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
     }
-    child_pid = fork();
-    if (child_pid == -1) {
+    command->child_pids[i] = fork();
+    if (command->child_pid[i] == -1) {
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);
     }
-    if (child_pid == 0) {
+    if (command->child_pid[i] == 0) {
         close(pipe_fd[1]);
         dup2(pipe_fd[0], STDIN_FILENO);
         // TO DO : ADD execution command in the child here 
@@ -100,12 +98,14 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
         // Écrire le délimiteur dans le pipe
 		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
 		printf("BUG strlen of redirection_info.delimiter is : %s\n", redirection_info.delimiter);
-        if (write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
-            perror("Erreur lors de l'écriture dans le pipe");
-            close(pipe_fd[1]);
-            exit(EXIT_FAILURE);
+		if (redirection_info.delimiter != NULL)
+		{
+			if (write(pipe_fd[1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
+            	perror("Erreur lors de l'écriture dans le pipe");
+            	close(pipe_fd[1]);
+            	exit(EXIT_FAILURE);
+			}
         }
-
         close(pipe_fd[1]);
         waitpid(child_pid, NULL, 0);
     }
@@ -116,7 +116,7 @@ void ft_launch_redirection_execution(t_command *command)
 	printf("enter in ft_launch_redirection_execution\n");
     t_redirection_info redirection_info;
 	
-	redirection_info = ft_parse_all_redirection(command->name);
+	redirection_info = ft_parse_all_redirection(command);
 
 	if (redirection_info.type != NO_REDIRECTION)
 	{

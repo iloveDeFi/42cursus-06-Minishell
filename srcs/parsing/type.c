@@ -27,6 +27,7 @@ int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIn
 	{
         if (currentCommand != NULL) {
             currentCommand->has_redirection = TRUE;
+			currentCommand->redirection_info.type = NO_REDIRECTION;
             // Goal next token gonna be the filename currentCommand;
             nextToken = ft_strtok(NULL, " ");
             if (nextToken != NULL) {

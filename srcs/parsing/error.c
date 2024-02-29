@@ -49,6 +49,7 @@
 //     }
 // }
 
+// Return 0 if file exists and user has access rights ; 1 otherwise
 int ft_check_if_file_exists(const char *filename) 
 {
     return access(filename, F_OK) != -1;

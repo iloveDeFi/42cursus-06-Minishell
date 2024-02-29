@@ -373,7 +373,7 @@ t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
 t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_here_doc_redirection(char *input);
-t_redirection_info 	ft_parse_all_redirection(char *input);
+t_redirection_info 	ft_parse_all_redirection(t_command *command);
 // token
 int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // type
