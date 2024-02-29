@@ -45,6 +45,7 @@ void ft_close_pipes(t_command *command)
 	i = 0;
     while (i < command->number_of_pipes) 
 	{
+		// Hey, do not close the pipe used by the current process
 		if (i != command->pipe_index)
 		{
         	close(command->pipes[i][0]);
