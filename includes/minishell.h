@@ -130,6 +130,7 @@ typedef struct s_env
 {
     char *name;
     char *value;
+    int flag[100];
     // char **g_env;
     struct s_env *next;
     struct s_env *prev;
@@ -386,5 +387,12 @@ void replace_env_variables_in_command(t_command *command, t_env *envList);
 
 void ft_remove_quotes(char *str);
 bool ft_check_quotes(char *input);
+
+void	init_termios(void);
+void	signals_handle_input(int sig);
+void	signals_handle_execution(int sig);
+void	signals_init(void (*signals_handle)(int));
+extern void rl_replace_line(const char *bob, int test);
+int	check_tab(t_env *envList, int i);
 
 #endif

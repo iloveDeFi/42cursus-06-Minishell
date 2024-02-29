@@ -226,3 +226,4 @@ void replace_env_variables_in_command(t_command *command, t_env *envList)
         i++;
     }
 }
+

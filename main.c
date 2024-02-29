@@ -17,6 +17,7 @@ int main(int ac, char **av, char **envp)
     envList = NULL;
     ft_initialize_minishell(&shell);
     ft_initialize_environment(&envList, envp);
+    init_termios();
     ft_execute_minishell(&commandList, &shell, envList, envp);
     ft_free_envList(envList);
     ft_exit_shell(&shell);

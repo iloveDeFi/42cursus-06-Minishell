@@ -47,7 +47,9 @@ void ft_custom_prompt_msg(t_mini *shell)
         shell->av = NULL; // Assurez-vous de mettre à NULL après la libération
     }
 
+    signals_init(signals_handle_input);
     input = readline("\033[1;35mminishell$ \033[0m");
+    signals_init(signals_handle_execution);
 
     // Vérifiez si l'utilisateur a appuyé sur Ctrl+D pour éviter de copier une chaîne NULL
     if (input != NULL) 

@@ -19,10 +19,10 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 		printf(">\n");
 		return 0;
 	}
-	ft_remove_quotes(input);
+    ft_remove_quotes(input);
     ft_tokenize_input_with_strtok(commandList, input);
 	ft_found_and_replace_usd(commandList->head, envList);
-
+	//ft_remove_quotes(input);
 	command = commandList->head;
 	while (command != NULL)
 	{
