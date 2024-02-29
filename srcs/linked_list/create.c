@@ -34,7 +34,7 @@ t_command	*ft_create_init_new_command_commandlist(t_commandList *commandlist, \
 	if (command == NULL)
 	{
 		perror("CHAOS, error allocating memory");
-		ft_destroy_commandlist(commandlist);
+		ft_destroy_commandList(commandlist);
 		exit(EXIT_FAILURE);
 	}
 	ft_init_new_node(commandlist, command, name);

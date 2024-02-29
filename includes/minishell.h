@@ -170,11 +170,11 @@ int             ft_execute_single_command(t_command *command, t_commandList *com
 void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
 void            ft_printCommand(t_command *command);
 // commandList
-void			ft_initialize_commandlist(t_commandList *commandList);
+void			ft_initialize_commandList(t_commandList *commandList);
 void			ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
-void			ft_print_commandlist(t_commandList *commandList);
+void			ft_print_commandList(t_commandList *commandList);
 // destroy
-void			ft_destroy_commandlist(t_commandList *commandList);
+void			ft_destroy_commandList(t_commandList *commandList);
 void			ft_destroy_current_shell(t_mini *mini);
 // error
 int				ft_is_only_spaces(const char *str);
@@ -290,15 +290,7 @@ bool 			ft_check_if_pipe_in_char(char *token);
 bool 			ft_check_if_pipe_in_string(char *token);
 int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // quote
-int			   	ft_is_quote(char c);
-int			   	ft_check_quotes_error(void);
-void           	ft_follow_quotes_state(t_command *cmd);
-char           	*ft_extract_quoted_argument(char *input);
-void		   	ft_tokenize_with_quotes(char *input);
-void           	ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type);
-t_quote_type   	ft_check_and_allocate_quote_type(char *token);
-void            ft_remove_quotes(char *str);
-bool            ft_check_quotes(char *input);
+
 // redirection
 t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
@@ -326,5 +318,14 @@ void	       	ft_exit_shell(t_mini *shell);
 void ft_found_and_replace_usd(t_command *command, t_env *envList);
 char *ft_replace_usd_to_env(t_env *envList, char *usd);
 void replace_env_variables_in_command(t_command *command, t_env *envList);
+
+void	ft_init_termios(void);
+void	ft_signals_handle_input(int sig);
+void	ft_signals_handle_execution(int sig);
+void	ft_signals_init(void (*signals_handle)(int));
+void	ft_remove_quotes(char *input);
+bool	ft_check_quotes(char *input);
+
+extern void		rl_replace_line(const char *bob, int test);
 
 #endif

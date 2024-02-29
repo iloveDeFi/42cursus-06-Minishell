@@ -16,6 +16,7 @@ int ft_launch_child_processes(t_command *command)
 {
 	int	i;
 
+    i = 0;
     while (i < command->number_of_pipes + 1)
     {
         command->child_pids[i] = fork();

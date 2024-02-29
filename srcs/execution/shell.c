@@ -7,7 +7,7 @@ void	ft_exit_shell(t_mini *shell)
 		if (shell->av != NULL)
 			free(shell->av);
 		if (shell->commands != NULL)
-			ft_destroy_commandlist(shell->commands);
+			ft_destroy_commandList(shell->commands);
 	}
 }
 

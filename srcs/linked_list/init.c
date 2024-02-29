@@ -7,7 +7,7 @@ void	ft_init_new_node_name(t_commandList *commandList, \
 	if (command->name == NULL)
 	{
 		perror("CHAOS, error allocating memory");
-		ft_destroy_commandlist(commandList);
+		ft_destroy_commandList(commandList);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -19,7 +19,7 @@ void	ft_init_new_node_args(t_commandList *commandList, \
 	if (command->args == NULL)
 	{
 		perror("CHAOS, error allocating memory");
-		ft_destroy_commandlist(commandList);
+		ft_destroy_commandList(commandList);
 		exit(EXIT_FAILURE);
 	}
 	command->args[0] = ft_strdup(token);
@@ -29,7 +29,7 @@ void	ft_init_new_node_args(t_commandList *commandList, \
 		free(command->name);
 		free(command->args);
 		perror("CHAOS, error allocating memory");
-		ft_destroy_commandlist(commandList);
+		ft_destroy_commandList(commandList);
 		exit(EXIT_FAILURE);
 	}
 	command->argCount = 1;

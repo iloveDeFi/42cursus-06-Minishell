@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_initialize_commandlist(t_commandList *commandList)
+void	ft_initialize_commandList(t_commandList *commandList)
 {
 	if (commandList == NULL)
 	{

@@ -11,9 +11,12 @@ int	ft_launch_parsing_and_execution(t_commandList *commandList, \
         return 1;
     }
     ft_initialize_commandList(commandList);
-	// TO DO : custom error manager
-	// ft_launch_error_manager(commandList, command, input, envList);
-
+	if (!ft_check_quotes(input))
+	{
+		printf(">\n");
+		return 0;
+	}
+	ft_remove_quotes(input);
 	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
 	{
 		command = commandList->head;
