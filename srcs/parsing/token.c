@@ -8,11 +8,11 @@ int	ft_tokenize_input_with_strtok(t_commandList *commandList, char *input)
 
 	ft_strcpy(inputcopy, input);
 	currentcommand = NULL;
-	token = ft_strtok(inputcopy, " | < << > >>\"");
+	token = ft_strtok(inputcopy, " | < << > >>");
 	while (token != NULL)
 	{
 		currentcommand = ft_process_token(commandList, currentcommand, token);
-		token = ft_strtok(NULL, " | < << > >>\"");
+		token = ft_strtok(NULL, " | < << > >>");
 	}
 	return (commandList->length);
 }
