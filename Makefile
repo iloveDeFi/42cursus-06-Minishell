@@ -6,7 +6,7 @@
 #    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/02/20 11:54:23 by julienbelda      ###   ########.fr        #
+#    Updated: 2024/02/28 16:44:27 by julienbelda      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,12 +115,12 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 CC := gcc -g3 -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
 # LIB READLINE AT 42 SCHOOL
-LDFLAGS := -L/usr/lib
+#LDFLAGS := -L/usr/lib
 #LDFLAGS := -L/usr/lib/libreadline.dylib
-CPPFLAGS := -I/usr/lib/libreadline.dylib
+#CPPFLAGS := -I/usr/lib/libreadline.dylib
 # LIB READLINE AT HOME WITH BREW
-#LDFLAGS := -L/usr/local/opt/readline/lib
-#CPPFLAGS := -I/usr/local/opt/readline/include
+LDFLAGS := -L/usr/local/opt/readline/lib
+CPPFLAGS := -I/usr/local/opt/readline/include
 #LDFLAGS := -L/opt/homebrew/opt/readline/lib
 #CPPFLAGS := -I/opt/homebrew/opt/readline/include
 SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES)

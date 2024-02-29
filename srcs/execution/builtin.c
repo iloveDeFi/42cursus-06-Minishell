@@ -25,13 +25,12 @@ int	ft_execute_builtin(t_command *cmd, t_env *envList)
 	if (ft_strcmp(cmd->name, "exit") == 0)
 		return (ft_exit(cmd, envList));
 	else if (ft_strcmp(cmd->name, "echo") == 0)
-		//return (echo(cmd->args, g_exit_code));
 		return (echo(cmd));
 	else if (ft_strcmp(cmd->name, "env") == 0)
 	{
 		printf("Dans ft_execute_bulitin je vais print la envList\n");
-		ft_display_envList(envList);
-		return 0;
+		ft_display_envlist(envList);
+		return (0);
 	}
 	else if (ft_strcmp(cmd->name, "pwd") == 0)
 		return (pwd());

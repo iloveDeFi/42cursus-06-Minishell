@@ -6,7 +6,7 @@ char **ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount
     if (newArgs == NULL) 
     {
         perror("CHAOS, erreur d'allocation mémoire dans processTokenAsArgument");
-        ft_destroy_commandList(commandList);
+        ft_destroy_commandlist(commandList);
         exit(EXIT_FAILURE);
     }
     return newArgs;
@@ -28,7 +28,7 @@ void ft_copy_new_argument(t_commandList *commandList, char **newArgs, int argCou
     if (newArgs[argCount] == NULL)
     {
         perror("Erreur d'allocation mémoire dans processTokenAsArgument");
-        ft_destroy_commandList(commandList);
+        ft_destroy_commandlist(commandList);
         exit(EXIT_FAILURE);
     }
 }
