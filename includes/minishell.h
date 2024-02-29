@@ -377,7 +377,7 @@ t_redirection_info 	ft_parse_all_redirection(t_command *command);
 // token
 int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // type
-int 			ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes);
+int 			ft_token_is_pipe(char *token, t_command *currentCommand);
 int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);
 // util TO DO CLEAN SI DEJA DANS LA LIBFT
 char           	*ft_strcpy(char *dest, const char *src);

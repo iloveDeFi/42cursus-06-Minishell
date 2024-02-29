@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
+int ft_token_is_pipe(char *token, t_command *currentCommand)
 {
 	printf("enter in ft_token_is_pipe\n");
 	if (ft_strcmp(token, "|") == 0) {
@@ -10,7 +10,6 @@ int ft_token_is_pipe(char *token, t_command *currentCommand, int *total_pipes)
         		currentCommand->number_of_pipes++;
 				ft_initialize_pipes(currentCommand);
 				ft_initialize_child_processes(currentCommand);
-				total_pipes++;
             }
 			return 1;
 	}
