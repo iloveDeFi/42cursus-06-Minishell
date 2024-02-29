@@ -30,7 +30,8 @@ void	ft_process_token_as_argument(t_commandList *commandList, \
 
 	if (command == NULL || token == NULL)
 		return ;
-	newargs = ft_allocate_and_copy_arguments(commandList, command->args, command->argCount, token);
+	newargs = ft_allocate_and_copy_arguments(commandList, command->args, \
+		command->argCount, token);
 	if (newargs == NULL)
 	{
 		free(command->name);

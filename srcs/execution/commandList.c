@@ -10,7 +10,6 @@ void	ft_initialize_commandlist(t_commandList *commandList)
 	commandList->head = NULL;
 	commandList->tail = NULL;
 	commandList->length = 0;
-	printf("commandlist ok\n");
 }
 
 /* void	ft_print_commandlist(t_commandList *commandList)
