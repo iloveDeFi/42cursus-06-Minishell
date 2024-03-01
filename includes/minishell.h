@@ -248,10 +248,10 @@ t_command 		*ft_process_token(t_commandList *commandList, t_command *currentComm
 t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 // redirection
-void 			ft_process_input_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_output_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_append_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_process_input_redirection(t_command *command);
+void 			ft_process_output_redirection(t_command *command);
+void 			ft_process_append_redirection(t_command *command);
+void 			ft_process_here_doc_redirection(t_command *command);
 void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void            ft_exit_shell(t_mini *shell);
@@ -373,7 +373,7 @@ t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
 t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_here_doc_redirection(char *input);
-t_redirection_info 	ft_parse_all_redirection(t_command *command);
+t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
 int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // type
