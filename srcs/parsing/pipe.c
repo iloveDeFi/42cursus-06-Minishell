@@ -4,21 +4,20 @@
 // Pipes are init in t_command node initialization, then we create them here BEFORE execution
 void ft_initialize_pipes(t_command *currentCommand)
 {
-	int i;
+    int i;
 
 	i = 0;
-	
-	// TO DO < ou <= ?
-	while (i < currentCommand->number_of_pipes)
-	{
-		if (pipe(currentCommand->pipes[i]) == -1) 
-		{
-    		perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
-    		exit(EXIT_FAILURE);
-		}
-		currentCommand->pipe_index++;
-		i++;
-	}
+    currentCommand->pipe_index = 0; // Assurez-vous que pipe_index est initialisé à zéro.
+
+    while (i < currentCommand->number_of_pipes)
+    {
+        if (pipe(currentCommand->pipes[i]) == -1) 
+        {
+            perror("Erreur lors de la création des pipes dans ft_initialize_pipes\n");
+            exit(EXIT_FAILURE);
+        }
+        i++;
+    }
 }
 
 int ft_count_number_of_pipes(char *input) 

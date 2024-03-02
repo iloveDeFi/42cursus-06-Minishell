@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// 
 void ft_process_input_redirection(t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");
@@ -108,6 +107,10 @@ void ft_process_here_doc_redirection(t_command *command)
             	exit(EXIT_FAILURE);
 			}
         }
+		else {
+			perror("Error delimiteur is NULL in ft_process_here_doc_redirection");
+        	exit(EXIT_FAILURE);
+		}
         close(command->pipes[i][1]);
         waitpid(command->child_pids[i], NULL, 0);
     }
