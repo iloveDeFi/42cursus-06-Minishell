@@ -4,10 +4,6 @@ void ft_process_input_redirection(t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");
     int input_fd;
-
-	// TO DO 
-	// use command ?
-	(void)command;
 	
 	input_fd = open(command->redirection_info.filename, O_RDONLY);
     if (input_fd == -1) {
@@ -29,9 +25,6 @@ void ft_process_output_redirection(t_command *command)
 	printf("enter in ft_process_output_redirection\n");
     int output_fd;
 	
-	// TO DO use command ?
-	(void)command;
-
 	output_fd = open(command->redirection_info.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (output_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en écriture");
@@ -51,8 +44,6 @@ void ft_process_append_redirection(t_command *command)
 {
 	printf("enter in ft_process_append_redirection\n");
 	int output_fd;
-	// TO DO use command ?
-	(void)command;
 
     output_fd = open(command->redirection_info.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (output_fd == -1) {
@@ -80,7 +71,7 @@ void ft_process_here_doc_redirection(t_command *command)
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
     }
-    command->child_pids[i] = fork();
+    command->child_pids[i] = ft_fork_process();
     if (command->child_pids[i] == -1) {
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);
@@ -94,27 +85,20 @@ void ft_process_here_doc_redirection(t_command *command)
         exit(EXIT_SUCCESS);
     } else {
         // parent here
-        close(command->pipes[i][0]);
-
         // Écrire le délimiteur dans le pipe
 		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
 		printf("BUG strlen of redirection_info.delimiter is : %s\n", command->redirection_info.delimiter);
-		if (command->redirection_info.delimiter != NULL)
-		{
-			if (write(command->pipes[i][1], command->redirection_info.delimiter, ft_strlen(command->redirection_info.delimiter)) == -1) {
-            	perror("Erreur lors de l'écriture dans le pipe");
-            	close(command->pipes[i][1]);
-            	exit(EXIT_FAILURE);
-			}
-        }
+		if (command->redirection_info.delimiter != NULL) {
+			close(command->pipes[i][0]);
+        	close(command->pipes[i][1]);
+        	waitpid(command->child_pids[i], NULL, 0);
+    	}
 		else {
-			perror("Error delimiteur is NULL in ft_process_here_doc_redirection");
+			perror("Error of of redirection_info.delimiter in ft_process_here_doc_redirection\n");
         	exit(EXIT_FAILURE);
 		}
-        close(command->pipes[i][1]);
-        waitpid(command->child_pids[i], NULL, 0);
-    }
-}
+	}
+}	
 
 void ft_launch_redirection_execution(t_command *command) 
 {

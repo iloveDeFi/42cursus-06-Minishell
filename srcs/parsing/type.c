@@ -30,14 +30,13 @@ int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIn
             // Goal next token gonna be the filename currentCommand;
             nextToken = ft_strtok(NULL, " ");
             if (nextToken != NULL) {
-                currentCommand->redirection_info.filename = nextToken;
-				// Gonna use this for << earth sandwich
-                currentCommand->redirection_info.delimiter = nextToken;
+                currentCommand->redirection_info.filename = ft_strdup(nextToken);
+                currentCommand->redirection_info.delimiter = ft_strdup(nextToken);
                 (*tokenIndex)++;
+				free(nextToken);
             } else {
     			fprintf(stderr, "Error: Filename is missing after redirection in ft_token_is_redirection.\n");
                 g_exit_code = 426;
-				// No need to exit(EXIT_FAILURE);
             }
         }
         return 1;
