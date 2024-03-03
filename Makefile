@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
+#    By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/02/20 11:54:23 by julienbelda      ###   ########.fr        #
+#    Updated: 2024/03/03 23:58:32 by thomas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@
 #LINKED_LISTS_FILES = 	1_linkedList.c \
 						2_linkedList.c \
 						3_linkedList.c
-						
+
 #INCLUDES_FILES = 		minishell.h
 
 # GLOBAL VARIABLES
@@ -68,11 +68,11 @@ $(addprefix $(SRCS_DIRECTORY)/signals/, $(SIGNALS_FILES))
 
 #%.o: %.c
 #	$(CC) $(CFLAGS) -c $< -o $@
-	
+
 #all: $(NAME)
 
 #$(NAME): $(OBJS) libft/libft.a
-#	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./srcs/libft -lft -lreadline 
+#	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./srcs/libft -lft -lreadline
 #libft/libft.a:
 #	@make -C $(LIBFT_FOLDER)
 
@@ -82,7 +82,7 @@ $(addprefix $(SRCS_DIRECTORY)/signals/, $(SIGNALS_FILES))
 #clean:
 #	$(RM) $(OBJS)
 #	@make -C $(LIBFT_FOLDER) clean
-	
+
 #fclean: clean
 #	${RM} $(NAME)
 #	${RM} $(LIBFT_ARCHIVES)
@@ -113,7 +113,7 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 
 # GLOBAL VARIABLES
 CC := gcc -g3 -fsanitize=address
-CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
+CFLAGS :=  -O3 -g -I$(HEADER_DIRECTORY) # -Wall -Wextra -Werror # TODO remove comment
 # LIB READLINE AT 42 SCHOOL
 LDFLAGS := -L/usr/lib
 #LDFLAGS := -L/usr/lib/libreadline.dylib

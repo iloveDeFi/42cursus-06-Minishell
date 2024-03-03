@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
+#    By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 17:04:37 by bbessard          #+#    #+#              #
-#    Updated: 2023/11/01 19:24:58 by bat              ###   ########.fr        #
+#    Updated: 2024/03/03 23:58:36 by thomas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT_DIR   = libft/
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = #-Wall -Wextra -Werror -O3 # TODO remove comment
 
 RM = rm -f
 
@@ -37,7 +37,7 @@ $(wildcard *.c)
 
 OBJ = $(SRC:.c=.o)
 
-$(NAME): $(OBJ) 
+$(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
 all: $(NAME)
@@ -50,4 +50,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean git norminette re 
+.PHONY: all clean fclean git norminette re
