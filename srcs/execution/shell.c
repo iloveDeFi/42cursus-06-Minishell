@@ -85,7 +85,8 @@ void ft_initialize_minishell(t_mini *shell)
 		ft_custom_prompt_msg(shell);
 		if (shell->av && !ft_is_only_spaces(shell->av)) // If the input is not only spaces
 		{
-			ft_manage_history(shell, shell->av);
+			// ft_manage_history(shell, shell->av); // we just need to call the add_history function
+			add_history(shell->av);
 			if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
 			{
 				perror("Error executing minishell in ft_execute_minishell\n");
