@@ -68,12 +68,6 @@ typedef enum e_quote
     ESCAPED
 } t_quote_type;
 
-typedef enum Bool
-{
-	FALSE,
-	TRUE
-} t_Bool;
-
 typedef enum node_type {
     ENV_NODE,
     COMMAND_NODE
@@ -125,7 +119,7 @@ typedef struct s_commandList
 
 typedef struct s_error
 {
-    t_Bool error;
+    bool error;
     char *error_name;
     struct s_error *next;
     struct s_error *prev;
@@ -332,7 +326,7 @@ void            ft_strtok_for_quotes(const char *input);
 // error
 int 			ft_check_if_file_exists(const char *filename);
 int	            ft_check_if_its_any_white_space(char c);
-t_Bool          ft_check_if_only_spaces(const char *str);
+bool          ft_check_if_only_spaces(const char *str);
 void            ft_initialization_of_errors(t_mini *shell);
 void            ft_add_space_around_redirection(char *input);
 // expansion

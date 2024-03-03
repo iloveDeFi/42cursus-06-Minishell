@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-/*int ft_is_quote(char c) 
+/*int ft_is_quote(char c)
 {
     if (c == '\'' || c == '"')
         return (1);
@@ -38,7 +38,7 @@ void ft_tokenize_with_quotes(char *input)
             printf("Token : \"%s\"\n", starting_token);
             starting_token = ++current_char;
         }
-        else 
+        else
             current_char++;
     }
     printf("Token : \"%s\"\n", starting_token);
@@ -80,24 +80,24 @@ void ft_follow_quotes_state(t_command *cmd) {
 }*/
 
 // Fonction pour extraire un argument entre guillemets
-char *ft_extract_quoted_argument(char *input) 
+char *ft_extract_quoted_argument(char *input)
 {
     char *start = strchr(input, '"');
     char *end = strchr(start + 1, '"');
 
     // Vérifier si les guillemets sont présents et sont correctement positionnés
-    if (start != NULL && end != NULL && start < end) 
+    if (start != NULL && end != NULL && start < end)
     {
         size_t arg_length = end - start - 1;
         char *argument = malloc(arg_length + 1);
 
-        if (argument != NULL) 
+        if (argument != NULL)
         {
             strncpy(argument, start + 1, arg_length);
             argument[arg_length] = '\0';
             return argument;
-        } 
-        else 
+        }
+        else
         {
             perror("CHAOS, error allocating memory");
             exit(EXIT_FAILURE);
@@ -107,26 +107,26 @@ char *ft_extract_quoted_argument(char *input)
     return NULL; // Aucun argument trouvé entre guillemets
 }
 
-void ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type) 
+void ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type)
 {
-    if (*quote_type == NORMAL) 
+    if (*quote_type == NORMAL)
     {
-        if (current_char == '\'') 
+        if (current_char == '\'')
         {
             *quote_type = SINGLE_QUOTE;
-        } else if (current_char == '"') 
+        } else if (current_char == '"')
         {
             *quote_type = DOUBLE_QUOTE;
         }
-    } else if (*quote_type == SINGLE_QUOTE) 
+    } else if (*quote_type == SINGLE_QUOTE)
     {
-        if (current_char == '\'') 
+        if (current_char == '\'')
         {
             *quote_type = NORMAL;
         }
-    } else if (*quote_type == DOUBLE_QUOTE) 
+    } else if (*quote_type == DOUBLE_QUOTE)
     {
-        if (current_char == '"') 
+        if (current_char == '"')
         {
             *quote_type = NORMAL;
         } else if (current_char == '\\') {
@@ -139,7 +139,7 @@ void ft_check_char_for_quote_type(char current_char, t_quote_type *quote_type)
     // printf("Current char: %c, Quote type: %d\n", current_char, *quote_type);
 }
 
-t_quote_type ft_check_and_allocate_quote_type(char *token) 
+t_quote_type ft_check_and_allocate_quote_type(char *token)
 {
     t_quote_type quote_type;
     int i;
@@ -152,46 +152,46 @@ t_quote_type ft_check_and_allocate_quote_type(char *token)
     quote_type = NORMAL;
 
     while (i < tokenSize)
-    {   
+    {
         ft_check_char_for_quote_type(current_char, &quote_type);
         i++;
     }
     return quote_type;
 }
 
-void ft_remove_quotes(char *str) 
+void ft_remove_quotes(char *str)
 {
     char *src;
     char *dst;
 
     src = str;
     dst = str;
-    while (*src) 
+    while (*src)
     {
-        if (*src != '\'' && *src != '"') 
+        if (*src != '\'' && *src != '"')
             *dst++ = *src;
         src++;
     }
     *dst = '\0';
 }
 
-bool    ft_check_quotes(char *input) 
+bool    ft_check_quotes(char *input)
 {
     int single_quotes = 0;
     int double_quotes = 0;
 
-    while (*input) 
+    while (*input)
     {
-        if (*input == '\'') 
+        if (*input == '\'')
             single_quotes++;
-        else if (*input == '"') 
+        else if (*input == '"')
             double_quotes++;
         input++;
     }
 
-    if (single_quotes % 2 == 0 && double_quotes % 2 == 0) 
+    if (single_quotes % 2 == 0 && double_quotes % 2 == 0)
         return true;
-    else 
+    else
     {
         g_exit_code = 1;
         return false;

@@ -83,7 +83,7 @@ void ft_initialize_minishell(t_mini *shell)
 	{
 		// TO DO: ADD SIGNALS HERE
 		ft_custom_prompt_msg(shell);
-		if (shell->av && !ft_is_only_spaces(shell->av))
+		if (shell->av && !ft_is_only_spaces(shell->av)) // If the input is not only spaces
 		{
 			ft_manage_history(shell, shell->av);
 			if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
@@ -94,7 +94,6 @@ void ft_initialize_minishell(t_mini *shell)
 			}
 		}
 		// ft_check_empty_av_shell(shell);
-
 		ft_destroy_current_shell(shell);
 	}
 }

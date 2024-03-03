@@ -5,7 +5,7 @@ int ft_token_is_pipe(char *token, t_command *currentCommand)
 	printf("enter in ft_token_is_pipe\n");
 	if (ft_strcmp(token, "|") == 0) {
             if (currentCommand != NULL) {
-                currentCommand->has_pipe = TRUE;
+                currentCommand->has_pipe = true;
 				currentCommand->pipe_index = currentCommand->number_of_pipes;
         		currentCommand->number_of_pipes++;
 				ft_initialize_pipes(currentCommand);
@@ -17,15 +17,15 @@ int ft_token_is_pipe(char *token, t_command *currentCommand)
 }
 
 // DO NOT handle commands without spaces as separator i.e. commande>output.txt
-int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex) 
+int ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex)
 {
     printf("enter in ft_token_is_redirection\n");
 	char *nextToken;
 
-    if (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0) 
+    if (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0)
 	{
         if (currentCommand != NULL) {
-            currentCommand->has_redirection = TRUE;
+            currentCommand->has_redirection = true;
 			currentCommand->redirection_info.type = ft_parse_all_redirection(token);
             // Goal next token gonna be the filename currentCommand;
             nextToken = ft_strtok(NULL, " ");

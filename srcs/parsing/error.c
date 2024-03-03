@@ -1,19 +1,19 @@
 #include "minishell.h"
 
-// Gestion des erreurs : Dans vos fonctions de gestion des erreurs, telle que ft_handle_pipes_execution, 
-// ft_execute_single_command, et ft_handle_redirection_execution, vous pourriez ajouter une gestion plus 
+// Gestion des erreurs : Dans vos fonctions de gestion des erreurs, telle que ft_handle_pipes_execution,
+// ft_execute_single_command, et ft_handle_redirection_execution, vous pourriez ajouter une gestion plus
 // détaillée des erreurs. Actuellement, vous utilisez perror dans certaines parties du code,
 //  mais vous pourriez remplacer cela par des appels à ft_handle_error pour une gestion centralisée des erreurs.
 
-// Gestion des erreurs : Vous avez mentionné TO DO : ft_handle_error(), mais dans le code actuel, 
-// vous utilisez principalement perror pour afficher les messages d'erreur. Vous pourriez vouloir 
-// remplacer les perror par des appels à ft_handle_error pour centraliser 
+// Gestion des erreurs : Vous avez mentionné TO DO : ft_handle_error(), mais dans le code actuel,
+// vous utilisez principalement perror pour afficher les messages d'erreur. Vous pourriez vouloir
+// remplacer les perror par des appels à ft_handle_error pour centraliser
 // la gestion des erreurs dans une fonction dédiée.
 
 // void ft_handle_error(const char *error_message, t_mini *shell)
 // {
 //     perror(error_message);
-    
+
 //     if (shell != NULL)
 //     {
 //         if (shell->error != NULL)
@@ -50,7 +50,7 @@
 // }
 
 // Return 0 if file exists and user has access rights ; 1 otherwise
-int ft_check_if_file_exists(const char *filename) 
+int ft_check_if_file_exists(const char *filename)
 {
     return access(filename, F_OK) != -1;
 }
@@ -63,18 +63,18 @@ int	ft_check_if_its_any_white_space(char c)
     return (0);
 }
 
-t_Bool ft_check_if_only_spaces(const char *str) 
+bool ft_check_if_only_spaces(const char *str)
 {
-    if (str == NULL) 
-        return FALSE;
+    if (str == NULL)
+        return false;
     int i = 0;
-    while (str[i] != '\0') 
+    while (str[i] != '\0')
     {
-        if (str[i] != ' ') 
-            return FALSE;
+        if (str[i] != ' ')
+            return false;
         i++;
     }
-    return TRUE;
+    return true;
 }
 
 void ft_initialization_of_errors(t_mini *shell)
@@ -82,7 +82,7 @@ void ft_initialization_of_errors(t_mini *shell)
     if (shell != NULL) {
         shell->error = malloc(sizeof(t_error));
         if (shell->error != NULL) {
-            shell->error->error = FALSE;
+            shell->error->error = false;
             shell->error->error_name = NULL;
             shell->error->next = NULL;
             shell->error->prev = NULL;
@@ -90,7 +90,7 @@ void ft_initialization_of_errors(t_mini *shell)
     }
 }
 
-void ft_add_space_around_redirection(char *input) 
+void ft_add_space_around_redirection(char *input)
 {
     char *src;
     char modifiedInput[2000];
@@ -98,14 +98,14 @@ void ft_add_space_around_redirection(char *input)
 
     src = input;
     dest = modifiedInput;
-    while (*src != '\0') 
+    while (*src != '\0')
     {
-        if ((*src == '>' || *src == '<') && *(src + 1) != *src) 
+        if ((*src == '>' || *src == '<') && *(src + 1) != *src)
         {
             *dest++ = ' ';  // Ajouter un espace avant l'opérateur
             *dest++ = *src; // Copier l'opérateur
             *dest++ = ' ';  // Ajouter un espace après l'opérateur
-        } else 
+        } else
         {
             *dest++ = *src; // Copier le caractère actuel
         }
