@@ -1,16 +1,16 @@
 #include "minishell.h"
 
-int ft_is_only_spaces(const char *str)
+bool ft_is_only_spaces(const char *str)
 {
     while (*str)
     {
         if (*str != ' ')
         {
-            return 1;
+            return false;
         }
         str++;
     }
-    return 0;
+    return true;
 }
 
 void ft_handle_only_spaces(t_mini *shell)
@@ -24,7 +24,7 @@ void ft_handle_only_spaces(t_mini *shell)
 
 void ft_check_null_av_shell(t_mini *shell)
 {
-	if (shell->av == NULL) 
+	if (shell->av == NULL)
     {
         perror("av == NULL\n");
 		exit(EXIT_FAILURE);
@@ -40,21 +40,21 @@ void ft_check_empty_av_shell(t_mini *shell)
     }
 }
 
-int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
+int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input)
 {
 	int tokenCount;
 
-    if (commandList == NULL) 
+    if (commandList == NULL)
     {
         perror("Error: commandList is NULL in ft_check_if_input_is_tokenizable\n");
         return 1;
     }
 	tokenCount = ft_tokenize_input_with_strtok(commandList, input);
-	if (tokenCount > 0) 
+	if (tokenCount > 0)
     {
         return 0; // Input is tokenizable
-    } 
-    else 
+    }
+    else
     {
         perror("Error: Parsing failed in ft_check_if_input_is_tokenizable\n");
         ft_destroy_commandList(commandList);

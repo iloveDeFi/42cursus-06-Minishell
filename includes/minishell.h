@@ -55,12 +55,12 @@ typedef enum e_token_type
     COMMAND_TYPE,
     ARGUMENT_TYPE,
     OPTION_TYPE,
-    UNKNOWN_TYPE  
+    UNKNOWN_TYPE
 } t_token_type;
 
 typedef t_token_type (*TokenChecker)(char *);
 
-typedef enum e_quote 
+typedef enum e_quote
 {
     NORMAL,
     SINGLE_QUOTE,
@@ -87,7 +87,7 @@ typedef enum e_redirection_type {
     HERE_DOC_REDIRECTION    // '<<' or 4
 } t_redirection_type;
 
-typedef struct s_redirection_info 
+typedef struct s_redirection_info
 {
     char *filename;
     char *delimiter; // example in earth sandwich with << as the bread
@@ -185,12 +185,12 @@ int	            ft_unset(t_env **envList, t_command *cmd);
 
 // EXECUTION
 
-// argument 
-char 			**ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount); 
+// argument
+char 			**ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount);
 void 			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
 void			 ft_copy_new_argument(t_commandList *commandList, char **newArgs, int argCount, char *newArg);
 void 			ft_add_null_terminator(char **newArgs, int argCount);
-char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg); 
+char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg);
 // builtin
 int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
@@ -200,22 +200,22 @@ pid_t           ft_create_child_process(t_command *command);
 int 			ft_launch_child_processes(t_command *data);
 void            ft_execute_child_process(char *full_path, char **args, char **envp);
 void 			ft_wait_for_all_child_processes_to_end(t_command *command);
-void 			ft_configure_child_process(t_command *command); 
+void 			ft_configure_child_process(t_command *command);
 // command
 int 			ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
-int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
-void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
+int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
+void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp);
 void            ft_printCommand(t_command *command);
 // commandList
 void            ft_initialize_commandList(t_commandList *commandList);
-void            ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
+void            ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf
 void            ft_print_commandList(t_commandList *commandList);
 // destroy
 void            ft_destroy_commandList(t_commandList *commandList);
 void	        ft_destroy_current_shell(t_mini *mini);
 void            ft_destroy_commandList(t_commandList *commandList);
 // error
-int				ft_is_only_spaces(const char *str);
+bool				ft_is_only_spaces(const char *str);
 void 			ft_handle_only_spaces(t_mini *shell);
 void 			ft_check_null_av_shell(t_mini *shell);
 void 			ft_check_empty_av_shell(t_mini *shell);
@@ -238,7 +238,7 @@ void            ft_launch_error_manager(t_commandList *commandList, t_command *c
 // parent
 void 			ft_configure_parent_process(t_command *command);
 // path
-char            *ft_build_full_path(t_commandList *commandList); 
+char            *ft_build_full_path(t_commandList *commandList);
 void            ft_execute_command_with_relative_path(t_command *command);
 void            ft_execute_command_with_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
@@ -355,7 +355,7 @@ int             ft_check_if_input_is_tokenizable(t_commandList *commandList, cha
 int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
 // pipe
 void 			ft_initialize_pipes(t_command *currentCommand);
-int 			ft_count_number_of_pipes(char *input); 
+int 			ft_count_number_of_pipes(char *input);
 void 			ft_close_pipes(t_command *command);
 bool 			ft_check_if_pipe_in_char(char *token);
 bool 			ft_check_if_pipe_in_string(char *token);

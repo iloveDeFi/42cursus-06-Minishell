@@ -4,7 +4,7 @@ void ft_process_input_redirection(t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");
     int input_fd;
-	
+
 	input_fd = open(command->redirection_info.filename, O_RDONLY);
     if (input_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en lecture");
@@ -24,7 +24,7 @@ void ft_process_output_redirection(t_command *command)
 {
 	printf("enter in ft_process_output_redirection\n");
     int output_fd;
-	
+
 	output_fd = open(command->redirection_info.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (output_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en écriture");
@@ -60,8 +60,8 @@ void ft_process_append_redirection(t_command *command)
     close(output_fd);
 }
 
-// TO DO : loop with i 
-void ft_process_here_doc_redirection(t_command *command) 
+// TO DO : loop with i
+void ft_process_here_doc_redirection(t_command *command)
 {
 	printf("enter in ft_process_here_doc_redirection\n");
 	int i;
@@ -71,7 +71,7 @@ void ft_process_here_doc_redirection(t_command *command)
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
     }
-    command->child_pids[i] = ft_fork_process();
+    // command->child_pids[i] = ft_fork_process();
     if (command->child_pids[i] == -1) {
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);
@@ -79,14 +79,14 @@ void ft_process_here_doc_redirection(t_command *command)
     if (command->child_pids[i] == 0) {
         close(command->pipes[i][1]);
         dup2(command->pipes[i][0], STDIN_FILENO);
-        // TO DO : ADD execution command in the child here 
+        // TO DO : ADD execution command in the child here
         // ft_execute_command(command);
         close(command->pipes[i][0]);
         exit(EXIT_SUCCESS);
     } else {
         // parent here
         // Écrire le délimiteur dans le pipe
-		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
+		// TO DO : CORRECT BUG because redirection_info.delimiter is null
 		printf("BUG strlen of redirection_info.delimiter is : %s\n", command->redirection_info.delimiter);
 		if (command->redirection_info.delimiter != NULL) {
 			close(command->pipes[i][0]);
@@ -98,9 +98,9 @@ void ft_process_here_doc_redirection(t_command *command)
         	exit(EXIT_FAILURE);
 		}
 	}
-}	
+}
 
-void ft_launch_redirection_execution(t_command *command) 
+void ft_launch_redirection_execution(t_command *command)
 {
 	printf("enter in ft_launch_redirection_execution\n");
 
