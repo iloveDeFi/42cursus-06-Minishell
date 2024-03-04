@@ -30,6 +30,7 @@ int ft_execute_single_command(t_command *command, t_env *envList, char **envp)
         else 
         {
             printf("External command detected. Command: %s\n", command->name);
+			// TO DO : fork hre
             ft_execute_external_command(command, envp, envList);
         }
     }
