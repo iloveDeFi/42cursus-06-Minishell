@@ -49,14 +49,6 @@ void ft_init_new_node(t_commandList *commandList, t_command *command, char *toke
     command->prev = NULL;
     command->envp = NULL;
     command->envList = NULL;
-	// info about pipes
-	command->has_pipe = FALSE;
-    ft_memset(command->pipes, 0, sizeof(command->pipes));
-    ft_memset(command->child_pids, 0, sizeof(command->child_pids));
-    command->pipe_index = 0;
-    command->number_of_pipes = 0;
-	// info about redirection
-	command->has_redirection = FALSE;
 	command->redirection_info.filename = NULL;
     command->redirection_info.delimiter = NULL;
 	ft_init_new_node_redirection_info(command);

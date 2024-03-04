@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-char *ft_build_full_path(t_commandList *commandList) 
+char *ft_build_full_path(t_command *command) 
 {
     char *path;
     
     path = getenv("PATH");
-    return ft_lookfor_command_and_build_path(path, commandList);
+    return ft_lookfor_command_and_build_path(path, command);
 }
 
 void ft_execute_command_with_absolute_path(t_command *command)
@@ -41,6 +41,7 @@ void ft_execute_command_with_absolute_path(t_command *command)
 
 void ft_execute_command_with_relative_path(t_command *command) 
 {
+	printf("Enter in ft_execute_command_with_relative_path\n");
     char *current_path;
     char *full_path;
     char *path_ptr;
@@ -106,7 +107,7 @@ void ft_execute_command_with_path(t_command *command)
     } 
 }
 
-char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList) 
+char *ft_lookfor_command_and_build_path(char *path, t_command *command) 
 {
     char *token;
     char fullPath[MAX_PATH_LENGTH];
@@ -114,32 +115,47 @@ char *ft_lookfor_command_and_build_path(char *path, t_commandList *commandList)
     // Faites une copie du chemin d'origine
     char *originalPath = ft_strdup(path);
 
+    // Utilisez un pointeur pour parcourir la liste des commandes
+    t_command *currentCommand = command;
+
     token = ft_strtok((char *)originalPath, ":");
     while (token != NULL) 
     {
-        t_command *currentCommand = commandList->head; // Réinitialisez le pointeur ici
+        // Réinitialisez le pointeur pour chaque itération du chemin
+        currentCommand = command;
 
         while (currentCommand != NULL) 
         {
+            // Construisez le chemin complet de la commande
             ft_strcpy(fullPath, token);
             ft_strcat(fullPath, "/");
             ft_strcat(fullPath, currentCommand->name);
+
+            // Vérifiez si le chemin est exécutable
             if (access(fullPath, X_OK) == 0) 
             {
                 printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
-                
+
                 // Réinitialisez le chemin après utilisation
                 free(originalPath);
+
+                // Retournez le chemin complet trouvé
                 return ft_strdup(fullPath);
             }
+
+            // Passez à la prochaine commande
             currentCommand = currentCommand->next;
         }
+
         // Passez au jeton suivant
         token = ft_strtok(NULL, ":");
     }
 
     // Restaurez le chemin d'origine après utilisation
     free(originalPath);
+
+    // Aucun chemin complet n'a été trouvé
     printf("Commandes non trouvées dans ft_lookfor_command_and_build_path\n");
     return NULL;
 }
+

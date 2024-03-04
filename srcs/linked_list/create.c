@@ -43,7 +43,6 @@ t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandL
     }
     ft_init_new_node(commandList, command, name);
 	ft_append_to_commandList(commandList, command);
-	ft_print_commandList(commandList);
     return command;
 }
 

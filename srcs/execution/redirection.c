@@ -60,46 +60,6 @@ void ft_process_append_redirection(t_command *command)
     close(output_fd);
 }
 
-// TO DO : loop with i 
-void ft_process_here_doc_redirection(t_command *command) 
-{
-	printf("enter in ft_process_here_doc_redirection\n");
-	int i;
-
-	i = 0;
-    if (pipe(command->pipes[i]) == -1) {
-        perror("Erreur lors de la création du pipe");
-        exit(EXIT_FAILURE);
-    }
-    command->child_pids[i] = fork();
-    if (command->child_pids[i] == -1) {
-        perror("Erreur lors du fork");
-        exit(EXIT_FAILURE);
-    }
-    if (command->child_pids[i] == 0) {
-        close(command->pipes[i][1]);
-        dup2(command->pipes[i][0], STDIN_FILENO);
-        // TO DO : ADD execution command in the child here 
-        // ft_execute_command(command);
-        close(command->pipes[i][0]);
-        exit(EXIT_SUCCESS);
-    } else {
-        // parent here
-        // Écrire le délimiteur dans le pipe
-		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
-		printf("BUG strlen of redirection_info.delimiter is : %s\n", command->redirection_info.delimiter);
-		if (command->redirection_info.delimiter != NULL) {
-			close(command->pipes[i][0]);
-        	close(command->pipes[i][1]);
-        	waitpid(command->child_pids[i], NULL, 0);
-    	}
-		else {
-			perror("Error of of redirection_info.delimiter in ft_process_here_doc_redirection\n");
-        	exit(EXIT_FAILURE);
-		}
-	}
-}	
-
 void ft_launch_redirection_execution(t_command *command) 
 {
 	printf("enter in ft_launch_redirection_execution\n");
