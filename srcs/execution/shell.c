@@ -48,8 +48,7 @@ void	ft_initialize_minishell(t_mini *shell)
 	shell->commands = NULL;
 }
 
-void	ft_execute_minishell(t_commandList *commandList, \
-	t_mini *shell, t_env *envList, char **envp)
+void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 {
     while (1)
     {
@@ -60,7 +59,7 @@ void	ft_execute_minishell(t_commandList *commandList, \
         ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
 
-        if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
+        if (ft_launch_parsing_and_execution( shell->av, envList, envp) != 0)
         {
             perror("Error executing minishell in ft_execute_minishell\n");
             break;  // Quit the loop if an error occurs during execution

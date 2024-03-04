@@ -20,7 +20,7 @@ t_command	*ft_process_first_token_as_command(t_commandList *commandList, \
 {
 	if (commandList == NULL || token == NULL)
 		return (NULL);
-	return (ft_create_init_new_command_commandlist(commandList, token));
+	return (ft_create_init_new_command_commandList(commandList, token));
 }
 
 void	ft_process_token_as_argument(t_commandList *commandList, \

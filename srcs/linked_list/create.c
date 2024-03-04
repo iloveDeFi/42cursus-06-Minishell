@@ -25,7 +25,7 @@ t_env	*ft_create_node_for_envlist(char *var_array)
 	return (NULL);
 }
 
-t_command	*ft_create_init_new_command_commandlist(t_commandList *commandlist, \
+t_command	*ft_create_init_new_command_commandList(t_commandList *commandList, 
 	char *name)
 {
 	t_command	*command;
@@ -37,7 +37,7 @@ t_command	*ft_create_init_new_command_commandlist(t_commandList *commandlist, \
         exit(EXIT_FAILURE);
     }
     ft_init_new_node(commandList, command, name);
-	ft_append_to_commandList(commandList, command);
+	//ft_append_to_commandList(commandList, command);
     return command;
 }
 
