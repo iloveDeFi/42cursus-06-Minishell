@@ -169,7 +169,11 @@ int	            ft_unset(t_env **envList, t_command *cmd);
 // EXECUTION
 
 // argument 
-char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg); 
+char 			**ft_allocate_and_copy_arguments(t_command *command, char **oldArgs, int argCount, char *newArg);
+void		 	ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
+void 			ft_copy_new_argument(t_command *command, char **newArgs, int argCount, char *newArg);
+void 			ft_add_null_terminator(char **newArgs, int argCount);
+char 			**ft_allocate_and_copy_arguments(t_command *command, char **oldArgs, int argCount, char *newArg);
 // builtin
 int	            ft_is_builtin(t_command *cmd);
 int	            ft_execute_builtin(t_command *cmd, t_env *envList);
@@ -178,25 +182,17 @@ void 			ft_configure_child_process(t_command *command, t_env *envList);
 void 			ft_execute_child_process(t_command *command, char *full_path, char **args, char **envp);
 void 			ft_configure_parent_process(t_command *command);
 // command
-int 			ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
 int             ft_execute_single_command(t_command *command, t_env *envList, char **envp); 
-void            ft_execute_external_command(t_command *command, char **envp, t_env *envList); 
+void			ft_execute_external_command(char **env, struct s_command *cmd);
 void			ft_exec_external_code(t_command *command);
-void			ft_execution(t_command *command);
-// commandList
-void            ft_initialize_commandList(t_commandList *commandList);
-void            ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
-void            ft_print_commandList(t_commandList *commandList);
+void			ft_launch_execution(t_command *command);
 // destroy
-void            ft_destroy_commandList(t_commandList *commandList);
 void	        ft_destroy_current_shell(t_mini *mini);
-void            ft_destroy_commandList(t_commandList *commandList);
 // error
 int				ft_is_only_spaces(const char *str);
 void 			ft_handle_only_spaces(t_mini *shell);
 void 			ft_check_null_av_shell(t_mini *shell);
 void 			ft_check_empty_av_shell(t_mini *shell);
-int 			ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 // free
 void			ft_free_redirection_info(t_redirection_info *redirection_info);
 // heredoc
@@ -204,30 +200,24 @@ void 			ft_process_here_doc_redirection(t_command *command);
 int				ft_eof_is_in_string(char *here, char *eof);
 int				ft_isword(char *here, char *eof, int index);
 // history
-void            ft_manage_history(t_mini *shell, const char *input);
 void            ft_custom_prompt_msg(t_mini *shell);
-// inputrc
-char            *ft_create_inputrc_path();
-int             ft_open_inputrc(const char *inputrc_path);
-void            ft_write_inputrc_content(int fd);
-void            ft_close_inputrc(int fd, char *inputrc_path);
-void            ft_write_inputrc();
-// manager
-void            ft_launch_error_manager(t_commandList *commandList, t_command *command, char *input, t_env *envList);
-// parent
-void 			ft_configure_parent_process(t_command *command);
+// multi
+void			ft_handle_exit_status(int exit_status);
+void			ft_launch_command(t_mini *shell, struct s_command *command);
+void			ft_setup_fd(struct s_command *command, int *fd_pipe_read_tmp, int *fd_pipe);
+void			ft_close_fd(struct s_command *command, int *fd_pipe_read_tmp, int *fd_pipe);
+void			ft_execute_multi_commands(t_mini *mini);				
 // path
 char            *ft_build_full_path(t_command *command); 
+void            ft_execute_command_with_absolute_path(t_command *command);
 void            ft_execute_command_with_relative_path(t_command *command);
 void            ft_execute_command_with_path(t_command *command);
-void            ft_execute_command_with_absolute_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_command *command);
-// pipe
-void 			ft_launch_pipe_execution(t_command *command);
+char			**ft_split_path(char **env);
 // process
-t_command 		*ft_process_token(t_commandList *commandList, t_command *currentCommand, char *token);
-t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);
-void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
+t_command 		*ft_process_token(t_command *currentCommand, char *token);
+t_command		*ft_process_first_token_as_command(char *token);
+void 			ft_process_token_as_argument(t_command *command, char *token);
 // redirection
 void 			ft_process_input_redirection(t_command *command);
 void 			ft_process_output_redirection(t_command *command);
@@ -238,16 +228,8 @@ void 			ft_launch_redirection_execution(t_command *command);
 void            ft_exit_shell(t_mini *shell);
 void            ft_initialize_environment(t_env **envList, char **env);
 void            ft_initialize_minishell(t_mini *shell);
-void            ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp);
-// signal
-void            ft_receive_signal_from_user(int signal_num);
-void            ft_handle_signal_execution(int signal_num);
-void            ft_init_signals(void(*signals_handle)(int));
-void            ft_init_terminal_settings(void);
-// tool_exec TO DO CLEAN IF NOT USED
-char            *ft_strjoin_free(char const *s1, char const *s2, int free_s1);
-t_env           *create_node2(char *var, char *value);
-t_env           *ft_copy_env_list(t_env *src);
+void            ft_execute_minishell(t_mini *shell, t_env *envList, char **envp);
+// tool_exec
 void            free_split(char **arr);
 char 			*ft_strstr(const char *haystack, const char *needle);
 

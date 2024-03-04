@@ -38,7 +38,6 @@ void ft_execute_command_with_absolute_path(t_command *command)
     }
 }
 
-
 void ft_execute_command_with_relative_path(t_command *command) 
 {
 	printf("Enter in ft_execute_command_with_relative_path\n");

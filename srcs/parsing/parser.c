@@ -1,28 +1,21 @@
 #include "minishell.h"
 
-int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp) 
+int ft_launch_parsing(t_mini *shell) 
 {
-    t_command *command;
-
-    command = NULL;
-	if (commandList == NULL || input == NULL) {
-        perror("Error: Invalid pointer to commandList or null input in ft_launch_parsing_and_execution()\n");
-        return 1;
-    }
-    ft_initialize_commandList(commandList);
-	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
+	if (shell->av == NULL)
 	{
-		command = commandList->head;
-		while (command != NULL)
-		{
-			ft_launch_redirection_execution(command);
-			ft_launch_command_execution(command, commandList, envList, envp);
-			command = command->next;
-		}
-
-	 	ft_destroy_commandList(commandList);
+		perror("av == NULL\n");
+		exit(EXIT_FAILURE);
 	}
-	else
-		perror("Hey, no token from input with strtok in ft_launch_parsing_and_execution.\n");
-	return 0;
+	if (shell->av[0] == '\0')
+	{
+		perror("Hey, the shell argv is an empty string or a null pointer\n");
+		exit(EXIT_FAILURE);
+	}
+	if (ft_is_only_spaces(shell->av))
+	{
+		ft_destroy_current_shell(shell);
+		return 0;
+	}
+	return 1;
 }

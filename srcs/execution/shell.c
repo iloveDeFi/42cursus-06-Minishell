@@ -6,8 +6,8 @@ void ft_exit_shell(t_mini *shell)
     {
         if (shell->av != NULL)
             free(shell->av);
-        if (shell->commands != NULL)
-            ft_destroy_commandList(shell->commands);
+        if (shell->cmd != NULL)
+            ft_destroy_commandList(shell->cmd);
     }
 }
 
@@ -46,36 +46,10 @@ void ft_initialize_minishell(t_mini *shell)
     shell->stdin_fd = dup(STDIN_FILENO);
     shell->stdout_fd = dup(STDOUT_FILENO);
     shell->error = NULL;
-    shell->commands = NULL;
+    shell->cmd = NULL;
 }
 
-/* void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
-{
-    while (1)
-    {
-        // TO DO: ADD SIGNALS HERE
-        ft_custom_prompt_msg(shell);
-        if (shell->av == NULL)
-        {
-            printf("stop shell\n");
-            break;
-        }
-        ft_manage_history(shell, shell->av);
-        if (ft_check_if_only_spaces(shell->av) == TRUE)
-        {
-            ft_destroy_current_shell(shell);
-            continue;
-        }
-        else if (ft_strcmp(shell->av, "") != 0)
-        {
-            ft_launch_parsing_and_execution(commandList, shell->av, envList, envp);
-            ft_destroy_current_shell(shell);
-        }
-        ft_destroy_current_shell(shell);
-    }
-} */
-
- void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
+ void ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 {
     while (1)
     {
@@ -85,12 +59,8 @@ void ft_initialize_minishell(t_mini *shell)
 		add_history(shell->av);
         ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
-
-        if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
-        {
-            perror("Error executing minishell in ft_execute_minishell\n");
-            break;  // Quit the loop if an error occurs during execution
-        }
+		ft_launch_parsing(shell);
+		ft_launch_execution(shell);
         ft_destroy_current_shell(shell);
     }
 }

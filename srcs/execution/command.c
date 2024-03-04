@@ -124,30 +124,3 @@ void	ft_launch_execution(t_command *command)
 //         printf("Command not found in PATH: %s\n", command->name);
 //     }
 // }
-
-void	ft_execute_multi_commands(t_mini *mini)
-{
-	int					fd_pipe_read_tmp;
-	int					fd_pipe[2];
-	int					exit_status;
-	pid_t				pid;
-	struct s_command 	*cmd;
-
-	cmd = ms->cmd;
-	fd_pipe_read_tmp = 0;
-	while (cmd)
-	{
-		pipe(fd_pipe);
-		fork_pid = fork();
-		if (fork_pid == 0)
-		{
-			prepare_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
-			ft_run_cmd(ms, cmd);
-		}
-		close_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
-		cmd = cmd->next;
-	}
-	while (waitpid(-1, &exit_status, 0) > 0)
-		;
-	handle_exit_status(exit_status);
-}
