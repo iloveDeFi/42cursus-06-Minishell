@@ -17,6 +17,7 @@ t_command *ft_process_token(t_commandList *commandList, t_command *currentComman
             printf("la\n");
             ft_process_token_as_argument(commandList, currentCommand, token);
         }
+
     }
     return currentCommand;
 }

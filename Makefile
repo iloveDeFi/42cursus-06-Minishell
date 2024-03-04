@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
+#    By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/02/20 11:54:23 by julienbelda      ###   ########.fr        #
+#    Updated: 2024/03/04 16:32:16 by jbelda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,7 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 
 # GLOBAL VARIABLES
 CC := gcc -g3 -fsanitize=address
-CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
+CFLAGS :=  -O3 -g -I$(HEADER_DIRECTORY)#-Wall -Wextra -Werror
 # LIB READLINE AT 42 SCHOOL
 LDFLAGS := -L/usr/lib
 #LDFLAGS := -L/usr/lib/libreadline.dylib

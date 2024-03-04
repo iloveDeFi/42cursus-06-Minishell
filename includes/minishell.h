@@ -259,7 +259,7 @@ void 			ft_launch_redirection_execution(t_command *command);
 void            ft_exit_shell(t_mini *shell);
 void            ft_initialize_environment(t_env **envList, char **env);
 void            ft_initialize_minishell(t_mini *shell);
-void            ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp);
+void            ft_execute_minishell(t_mini *shell, t_env *envList, char **envp);
 // signal
 void            ft_receive_signal_from_user(int signal_num);
 void            ft_handle_signal_execution(int signal_num);
@@ -352,7 +352,7 @@ int 			ft_handle_command(t_commandList *commandList, t_command *command, t_env *
 void            ft_process_the_first_token_as_a_command(t_commandList *commandList, char *token);
 void            ft_process_token_as_an_argument(t_commandList *commandList, t_command *command, char *token);
 int             ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
-int             ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_env *envList, char **envp);
+int             ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp);
 // pipe
 void 			ft_initialize_pipes(t_command *currentCommand);
 int 			ft_count_number_of_pipes(char *input); 
@@ -377,7 +377,7 @@ t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
-int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
+char **			ft_tokenize_input_with_strtok(char *input);
 // type
 int 			ft_token_is_pipe(char *token, t_command *currentCommand);
 int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);

@@ -6,7 +6,6 @@ int main(int ac, char **av, char **envp)
 {
     t_mini shell;
     t_env *envList;
-    t_commandList commandList;
 
     (void)av;
     if (ac > 1)
@@ -17,7 +16,7 @@ int main(int ac, char **av, char **envp)
     envList = NULL;
     ft_initialize_minishell(&shell);
     ft_initialize_environment(&envList, envp);
-    ft_execute_minishell(&commandList, &shell, envList, envp);
+    ft_execute_minishell(&shell, envList, envp);
     ft_free_envList(envList);
     ft_exit_shell(&shell);
     return 0;

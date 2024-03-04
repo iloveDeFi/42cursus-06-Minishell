@@ -40,7 +40,7 @@ void ft_check_empty_av_shell(t_mini *shell)
     }
 }
 
-int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
+/* int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input) 
 {
 	int tokenCount;
 
@@ -61,4 +61,4 @@ int ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input)
         return 1; // Parsing failed
     }
 }
-
+ */
