@@ -4,22 +4,29 @@
 // Pipes are init in t_command node initialization, then we create them here BEFORE execution
 void ft_initialize_pipes(t_command *currentCommand)
 {
-	int i;
+    printf("enter initialize pipes\n");
+    int i;
 
-	i = 0;
-	
-	// TO DO < ou <= ?
-	while (i < currentCommand->number_of_pipes)
-	{
-		if (pipe(currentCommand->pipes[i]) == -1) 
-		{
-    		perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
-    		exit(EXIT_FAILURE);
-		}
-		currentCommand->pipe_index++;
-		i++;
-	}
+    i = 0;
+
+    while (i < currentCommand->number_of_pipes)
+    {
+        if (pipe(currentCommand->pipes[i]) == -1) 
+        {
+            perror("Erreur lors de la création des pipes dans ft_initialze_pipes\n");
+            exit(EXIT_FAILURE);
+        }
+        else
+        {
+            printf("Pipe %d created with descriptors: read_fd = %d, write_fd = %d\n", i, currentCommand->pipes[i][0], currentCommand->pipes[i][1]);
+        }
+        
+        currentCommand->pipe_index++;
+        i++;
+    }
+    printf("Pipe index: %d\n", currentCommand->pipe_index);
 }
+
 
 int ft_count_number_of_pipes(char *input) 
 {
@@ -35,12 +42,15 @@ int ft_count_number_of_pipes(char *input)
 			number_of_pipes += 1;
 		i++;
 	}
+	printf("Number of pipes: %d\n", number_of_pipes);
     return number_of_pipes;
 }
 
 void ft_close_pipes(t_command *command) 
 {
-    int i;
+    printf("enter close pipe\n");
+	
+	int i;
 	
 	i = 0;
     while (i < command->number_of_pipes) 
@@ -50,6 +60,7 @@ void ft_close_pipes(t_command *command)
 		{
         	close(command->pipes[i][0]);
         	close(command->pipes[i][1]);
+			printf("Closed pipe %d\n", i);
 		}
         i++;
     }

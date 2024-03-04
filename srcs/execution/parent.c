@@ -14,3 +14,18 @@ void ft_configure_parent_process(t_command *command)
         close(command->pipes[command->pipe_index - 1][1]);
     }
 }
+
+/* void ft_configure_parent_process(t_command *command)
+{
+    if (command->pipe_index > 1)
+    {
+        if (dup2(command->pipes[command->pipe_index - 2][0], STDIN_FILENO) == -1)
+        {
+            perror("dup2");
+            exit(EXIT_FAILURE);
+        }
+        close(command->pipes[command->pipe_index - 2][0]);
+        close(command->pipes[command->pipe_index - 2][1]);
+    }
+} */
+

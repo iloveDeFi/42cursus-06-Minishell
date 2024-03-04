@@ -5,10 +5,11 @@ int	ft_launch_parsing_and_execution(t_commandList *commandList, \
 {
 	t_command	*command;
 
-    command = NULL;
-	if (commandList == NULL || input == NULL) {
+    //command = NULL;
+	if (commandList == NULL || input == NULL)
+	{
         perror("Error: Invalid pointer to commandList or null input in ft_launch_parsing_and_execution()\n");
-        return 1;
+        return -1;
     }
     ft_initialize_commandList(commandList);
 	if (!ft_check_quotes(input))
@@ -20,11 +21,13 @@ int	ft_launch_parsing_and_execution(t_commandList *commandList, \
 	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
 	{
 		command = commandList->head;
-		command->number_of_pipes = ft_count_number_of_pipes(input);
+		//command->number_of_pipes = ft_count_number_of_pipes(input);
+		ft_found_and_replace_usd(commandList->head, envList);
 		while (command != NULL)
 		{
-			ft_launch_pipe_execution(command);
-			// ft_launch_redirection_execution(command);
+			//ft_launch_redirection_execution(command);
+			if (command->number_of_pipes > 0)
+				ft_launch_pipe_execution(command);
 			ft_launch_command_execution(command, commandList, envList, envp);
 			command = command->next;
 		}

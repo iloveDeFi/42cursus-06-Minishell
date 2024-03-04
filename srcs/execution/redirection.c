@@ -86,20 +86,25 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);
     }
-    if (command->child_pids[i] == 0) {
+    if (command->child_pids[i] == 0)
+    {
+        printf("77\n");
         close(command->pipes[i][1]);
         dup2(command->pipes[i][0], STDIN_FILENO);
         // TO DO : ADD execution command in the child here 
-        // ft_execute_command(command);
+        //ft_execute_command(command);
         close(command->pipes[i][0]);
         exit(EXIT_SUCCESS);
-    } else {
+    }
+    else 
+    {
+        printf("la\n");
         // parent here
         close(command->pipes[i][0]);
 
         // Écrire le délimiteur dans le pipe
 		// TO DO : CORRECT BUG because redirection_info.delimiter is null 
-		printf("BUG strlen of redirection_info.delimiter is : %s\n", redirection_info.delimiter);
+		//printf("BUG strlen of redirection_info.delimiter is : %s\n", redirection_info.delimiter);
 		if (redirection_info.delimiter != NULL)
 		{
 			if (write(command->pipes[i][1], redirection_info.delimiter, ft_strlen(redirection_info.delimiter)) == -1) {
@@ -116,11 +121,13 @@ void ft_process_here_doc_redirection(t_redirection_info redirection_info, t_comm
 void ft_launch_redirection_execution(t_command *command) 
 {
 	printf("enter in ft_launch_redirection_execution\n");
+    //ft_init_new_node_redirection_info(command);
+
     t_redirection_info redirection_info;
 	
 	redirection_info = ft_parse_all_redirection(command);
-
-	if (redirection_info.type != NO_REDIRECTION)
+    
+    if (redirection_info.type != NO_REDIRECTION)
 	{
 		if (redirection_info.type == OUTPUT_REDIRECTION) {
         	ft_process_output_redirection(redirection_info, command);
@@ -134,9 +141,9 @@ void ft_launch_redirection_execution(t_command *command)
     	else if (redirection_info.type == NO_REDIRECTION)
 			return;
 		else {
-        	perror("Unexpected value in ft_process_redirection_execution\n");
+        	//perror("Unexpected value in ft_process_redirection_execution\n");
         	exit(EXIT_FAILURE);
     	}
 	}
-	ft_free_redirection_info(&redirection_info);
+    //ft_free_redirection_info(&redirection_info);
 }

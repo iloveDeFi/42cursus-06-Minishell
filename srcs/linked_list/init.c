@@ -37,6 +37,7 @@ void	ft_init_new_node_args(t_commandList *commandList, \
 
 void	ft_init_new_node_redirection_info(t_command *command)
 {
+	printf("noderedirection\n");
 	command->redirection_info.filename = NULL;
 	command->redirection_info.delimiter = NULL;
 	command->redirection_info.type = NO_REDIRECTION;

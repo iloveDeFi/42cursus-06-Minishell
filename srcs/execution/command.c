@@ -15,8 +15,9 @@ int ft_launch_command_execution(t_command *command, t_commandList *commandList, 
 
 int	ft_execute_single_command(t_command *command, t_commandList *commandList, \
 	t_env *envList, char **envp)
-{
-	if (command)
+{   
+    printf("enter single command\n");
+    if (command)
 	{
 		if (ft_is_builtin(command))
 		{
@@ -37,6 +38,8 @@ int	ft_execute_single_command(t_command *command, t_commandList *commandList, \
 void	ft_execute_external_command(t_command *command, \
 	t_commandList *commandList, char **envp)
 {
+    
+    printf("execute external\n");
     char *full_path;
     pid_t pid;
     
@@ -48,13 +51,17 @@ void	ft_execute_external_command(t_command *command, \
 
         if (pid == 0) 
         {
+            
             ft_execute_child_process(full_path, command->args, envp);
-        } else if (pid == -1) 
+        }
+        else if (pid == -1) 
         {
             perror("Erreur lors de la création du processus enfant");
             exit(EXIT_FAILURE);
-        } else {
-			// send pid and number of commands TO DO CHECK
+        } 
+        else
+        {
+            // send pid and number of commands TO DO CHECK
             ft_wait_for_all_child_processes_to_end(command);
             free(full_path);
         }

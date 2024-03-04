@@ -76,6 +76,7 @@ typedef struct s_command
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
 	int number_of_pipes;
+    int num_child_processes;
 	// About redirection execution
 	bool has_redirection;
 	t_redirection_info redirection_info;
@@ -213,7 +214,7 @@ void 			ft_process_token_as_argument(t_commandList *commandList, t_command *comm
 void 			ft_process_input_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_process_output_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_process_append_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command);
+//void 			ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command);
 void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void			ft_exit_shell(t_mini *shell);
@@ -327,5 +328,7 @@ void	ft_remove_quotes(char *input);
 bool	ft_check_quotes(char *input);
 
 extern void		rl_replace_line(const char *bob, int test);
+void ft_wait_for_all_child_processes_to_end_pipe(t_command *command);
+
 
 #endif
