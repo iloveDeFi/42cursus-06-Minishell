@@ -18,7 +18,7 @@ int ft_launch_child_processes(t_command *command)
 
     while (i < command->number_of_pipes + 1)
     {
-        command->child_pids[i] = fork();
+        // command->child_pids[i] = fork();
         if (command->child_pids[i] < 0)
         {
             perror("Error forking process while creating child process\n");
@@ -36,6 +36,7 @@ int ft_launch_child_processes(t_command *command)
 
 void ft_execute_child_process(char *full_path, char **args, char **envp)
 {
+	// TO DO : if (access(token->cmd, X_OK) == 0) {} ??
     if (execve(full_path, args, envp) == -1) 
     {
         perror("Erreur lors de l'exécution de la commande");

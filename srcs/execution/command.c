@@ -41,27 +41,33 @@ int ft_execute_single_command(t_command *command, t_commandList *commandList, t_
     return  (0);
 }
 
+// Execute the external command in a child process
 void ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp) 
 {
     char *full_path;
-    pid_t pid;
+	int status;
+	int i;
     
+	(void)envp;
+	i = 0;
+	// TO DO : full_path not necessary ?
     full_path = ft_build_full_path(/*command->name, */commandList);
 
     if (full_path != NULL) 
     {
-        pid = fork();
+        command->child_pids[i] = fork();
 
-        if (pid == 0) 
+        if (command->child_pids[i] == 0) 
         {
-            ft_execute_child_process(full_path, command->args, envp);
-        } else if (pid == -1) 
+			ft_launch_child_processes(command);
+        } else if (command->child_pids[i] == -1) 
         {
             perror("Erreur lors de la création du processus enfant");
             exit(EXIT_FAILURE);
         } else {
-			// send pid and number of commands TO DO CHECK
-            ft_wait_for_all_child_processes_to_end(command);
+			waitpid(command->child_pids[i], &status, 0);
+			if (WIFEXITED(status))
+				g_exit_code = WEXITSTATUS(status);
             free(full_path);
         }
     } else {
