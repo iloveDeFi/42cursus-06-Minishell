@@ -35,7 +35,7 @@ int	ft_execute_single_command(t_command *command, t_commandList *commandList, \
 	return (0);
 }
 
-void	ft_execute_external_command(t_command *command, \
+/* void	ft_execute_external_command(t_command *command, \
 	t_commandList *commandList, char **envp)
 {
     
@@ -43,7 +43,7 @@ void	ft_execute_external_command(t_command *command, \
     char *full_path;
     pid_t pid;
     
-    full_path = ft_build_full_path(/*command->name, */commandList);
+    full_path = ft_build_full_path(commandList);
 
     if (full_path != NULL) 
     {
@@ -66,6 +66,47 @@ void	ft_execute_external_command(t_command *command, \
             free(full_path);
         }
     } else {
+        perror("Command not found in PATH in ft_execute_external_command\n");
+        printf("Command not found in PATH: %s\n", command->name);
+    }
+} */
+
+void	ft_execute_external_command(t_command *command, \
+	t_commandList *commandList, char **envp)
+{
+    
+    printf("execute external\n");
+    char *full_path;
+    pid_t pid;
+    int statuts;
+    (void)envp;
+    
+    full_path = ft_build_full_path(commandList);
+
+    if (full_path != NULL) 
+    {
+        pid = fork();        
+
+        if (pid == 0) 
+        {
+            ft_configure_child_process(command);
+            ft_execute_child_process(full_path, command->args, command->envp);
+        }
+        else if (pid == -1) 
+        {
+            perror("Erreur lors de la création du processus enfant");
+            exit(EXIT_FAILURE);
+        } 
+        else
+        {
+            waitpid(pid, &statuts, 0);
+            if (WIFEXITED(statuts))
+                g_exit_code = WEXITSTATUS(statuts);
+            free(full_path);
+        }
+    }
+    else
+    {
         perror("Command not found in PATH in ft_execute_external_command\n");
         printf("Command not found in PATH: %s\n", command->name);
     }

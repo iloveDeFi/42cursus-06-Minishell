@@ -14,15 +14,16 @@ void	ft_initialize_child_processes(t_command *currentCommand)
     printf("Number of child pids created: %d\n", i);
 }
 
-/* int ft_launch_child_processes(t_command *command) 
+ /* int ft_launch_child_processes(t_command *command) 
 {
     (printf("child process\n"));
 	int	i;
 
+
     i = 0;
     while (i < command->number_of_pipes + 1)
     {
-        command->child_pids[i] = fork();
+        //command->child_pids[i] = fork();
         if (command->child_pids[i] < 0)
         {
             perror("Error forking process while creating child process\n");
@@ -41,9 +42,9 @@ void	ft_initialize_child_processes(t_command *currentCommand)
     }
     printf("\n");
 	return 0;
-} */
+}  */
 
-int ft_launch_child_processes(t_command *command) {
+/* int ft_launch_child_processes(t_command *command) {
     printf("child process\n");
     int i;
 
@@ -70,10 +71,16 @@ int ft_launch_child_processes(t_command *command) {
             command->num_child_processes++; // Incrémenter le nombre de processus fils liés aux pipes
         }
     }
+    printf("Child PIDs: ");
+    for (int j = 0; j < command->number_of_pipes + 1; j++) {
+        printf("%d ", command->child_pids[j]);
+    }
+    printf("\n");
+	return 0;
     // Parent process continues here
     return 0;
 }
-
+ */
 
 
 
@@ -112,7 +119,7 @@ void ft_wait_for_all_child_processes_to_end(t_command *command)
     }
 
     // Redirect output to next pipe
-    if (command->pipe_index < command->number_of_pipes) {
+    if (command->pipe_index < command->number_of_pipes - 1) {
         printf("Redirecting input from pipe %d\n", command->pipe_index - 1);
         dup2(command->pipes[command->pipe_index][1], STDOUT_FILENO);
         close(command->pipes[command->pipe_index][0]);
