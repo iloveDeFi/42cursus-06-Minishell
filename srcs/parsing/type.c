@@ -8,8 +8,9 @@ int ft_token_is_pipe(char *token, t_command *currentCommand)
                 currentCommand->has_pipe = TRUE;
 				currentCommand->pipe_index = currentCommand->number_of_pipes;
         		currentCommand->number_of_pipes++;
-				ft_initialize_pipes(currentCommand);
-				ft_initialize_child_processes(currentCommand);
+				// BIG ERROR pipes are all open when init with pipe() by defaut
+				// ft_initialize_pipes(currentCommand);
+				// ft_initialize_child_processes(currentCommand);
             }
 			return 1;
 	}

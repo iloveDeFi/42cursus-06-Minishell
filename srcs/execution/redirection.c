@@ -71,7 +71,7 @@ void ft_process_here_doc_redirection(t_command *command)
         perror("Erreur lors de la création du pipe");
         exit(EXIT_FAILURE);
     }
-    command->child_pids[i] = ft_fork_process();
+    command->child_pids[i] = fork();
     if (command->child_pids[i] == -1) {
         perror("Erreur lors du fork");
         exit(EXIT_FAILURE);

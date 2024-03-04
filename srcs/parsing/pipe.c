@@ -1,13 +1,12 @@
 #include "minishell.h"
 
-// TO DO : clarify init in node and create here when token pipe detected
-// Pipes are init in t_command node initialization, then we create them here BEFORE execution
 void ft_initialize_pipes(t_command *currentCommand)
 {
+	printf("enter in ft_initialize_pipes\n");
     int i;
 
 	i = 0;
-    currentCommand->pipe_index = 0; // Assurez-vous que pipe_index est initialisé à zéro.
+    currentCommand->pipe_index = 0;
 
     while (i < currentCommand->number_of_pipes)
     {
@@ -16,6 +15,8 @@ void ft_initialize_pipes(t_command *currentCommand)
             perror("Erreur lors de la création des pipes dans ft_initialize_pipes\n");
             exit(EXIT_FAILURE);
         }
+		currentCommand->pipe_index++;
+		printf("Pipe_index is : %d\n", currentCommand->number_of_pipes);
         i++;
     }
 }
@@ -39,6 +40,7 @@ int ft_count_number_of_pipes(char *input)
 
 void ft_close_pipes(t_command *command) 
 {
+	printf("enter in ft_close_pipes\n");
     int i;
 	
 	i = 0;
@@ -54,20 +56,20 @@ void ft_close_pipes(t_command *command)
     }
 }
 
-bool ft_check_if_pipe_in_char(char *token) 
-{
-    return (ft_strcmp(token, "|") == 0);
-}
+// bool ft_check_if_pipe_in_char(char *token) 
+// {
+//     return (ft_strcmp(token, "|") == 0);
+// }
 
-bool ft_check_if_pipe_in_string(char *token) 
-{
-    return (strstr(token, "|") != NULL);
-}
+// bool ft_check_if_pipe_in_string(char *token) 
+// {
+//     return (strstr(token, "|") != NULL);
+// }
 
-int ft_check_if_pipe_in_inputCopy(char *inputCopy) 
-{
-    return (ft_strchr(inputCopy, '|') != NULL);
-}
+// int ft_check_if_pipe_in_inputCopy(char *inputCopy) 
+// {
+//     return (ft_strchr(inputCopy, '|') != NULL);
+// }
 
 // int ft_check_too_many_pipes()
 // {

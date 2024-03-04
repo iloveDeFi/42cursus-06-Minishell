@@ -106,6 +106,8 @@ typedef struct s_command
     struct s_env *envList;
 	// About pipes execution
 	bool has_pipe;
+	int fd_read;
+	int fd_write;
     int pipes[MAX_COMMANDS][2];
     pid_t child_pids[MAX_COMMANDS];
     int pipe_index;
@@ -222,8 +224,6 @@ void 			ft_check_empty_av_shell(t_mini *shell);
 int 			ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 // free
 void			ft_free_redirection_info(t_redirection_info *redirection_info);
-// heredoc
-pid_t 			ft_fork_process();
 // history
 void            ft_manage_history(t_mini *shell, const char *input);
 void            ft_custom_prompt_msg(t_mini *shell);
