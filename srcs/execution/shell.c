@@ -77,6 +77,100 @@ void ft_initialize_minishell(t_mini *shell)
 	}
 } */
 
+t_command get_first_command(t_commandList *commandList)
+{
+	t_command *command;
+
+	command = commandList->head;
+	if (command == NULL)
+	{
+		perror("Error: commandList is empty in get_first_command\n");
+		exit(EXIT_FAILURE);
+	}
+	return *command;
+}
+
+// #define RED "\033[0;31m"
+// #define RESET "\033[0m"
+
+void test_execute_cmd(t_command *command)
+{
+}
+void test_execute_cmds(t_command *command)
+{
+}
+
+void test_fill_commandList(t_commandList *commandList, char *input)
+{
+	t_command *command;
+
+	// if (ft_tokenize_input_with_strtok(commandList, input)) //  >= 1)  // ? TODO check if >.. ?
+	// {
+
+	// }
+	// ft_add_to_commandList(commandList, command);
+}
+
+
+void test_execute(t_commandList *commandList) // ! TODO replace commandList with command...
+{
+	// check if the next cmd is NULL
+	// printf("\033[0;31m");
+	t_command *command;
+
+	command = commandList->head;
+	// print all the commands :
+	while (command != NULL)
+	{
+		printf("\tcommand->cmd = %s\n", command->name);
+		command = command->next;
+	}
+	// if(command->next == NULL)
+	// {
+	// printf("1\n");
+	// // test_execute_cmd(commandList->head);
+	// 	// printf("1\n");
+	// }
+	// else
+	// {
+	// 	// printf(RED+"2\n"+RESET);
+
+	// 	// test_execute_cmds(commandList->head);
+	// }
+}
+
+void test_parse(t_commandList *commandList, char *input)
+{
+	// t_command *command;
+
+    // command = NULL;
+	// if (commandList == NULL || input == NULL) { // ? TODO is it really necessary?
+    //     perror("Error: Invalid pointer to commandList or null input in ft_launch_parsing_and_execution()\n");
+    //     return 1;
+    // }
+    ft_initialize_commandList(commandList);
+	// TO DO : custom error manager
+	// ft_launch_error_manager(commandList, command, input, envList);
+
+	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
+	{
+		// command = commandList->head;
+		// command->number_of_pipes = ft_count_number_of_pipes(input);
+		// while (command != NULL)
+		// {
+		// 	ft_launch_pipe_execution(command);
+		// 	ft_launch_redirection_execution(command);
+		// 	ft_launch_command_execution(command, commandList, envList, envp);
+		// 	command = command->next;
+		// }
+
+	 	// ft_destroy_commandList(commandList);
+	}
+	else
+		perror("Hey, no token from input with strtok in ft_launch_parsing_and_execution.\n");
+	return 0;
+}
+
  void ft_execute_minishell(t_commandList *commandList, t_mini *shell, t_env *envList, char **envp)
 {
 	while (1)
@@ -87,12 +181,15 @@ void ft_initialize_minishell(t_mini *shell)
 		{
 			// ft_manage_history(shell, shell->av); // we just need to call the add_history function
 			add_history(shell->av);
-			if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
-			{
-				perror("Error executing minishell in ft_execute_minishell\n");
-				// ? TODO free something?
-				break;  // Quit the loop if an error occurs during execution
-			}
+			test_parse(commandList, shell->av);
+			test_execute(commandList);
+
+			// if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
+			// {
+			// 	perror("Error executing minishell in ft_execute_minishell\n");
+			// 	// ? TODO free something?
+			// 	break;  // Quit the loop if an error occurs during execution
+			// }
 		}
 		// ft_check_empty_av_shell(shell);
 		ft_destroy_current_shell(shell);
