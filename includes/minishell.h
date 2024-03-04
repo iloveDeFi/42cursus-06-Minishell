@@ -39,11 +39,34 @@
 # define PWD "pwd"
 # define UNSET "unset"
 
-typedef enum Bool
+typedef enum e_token_type
 {
-	FALSE,
-	TRUE
-}	t_Bool;
+	PIPE,     // |
+	HEREDOC,  // <<
+	LPR,      // (
+	RPR,      // )
+	AND,      // &&
+	OR,       // ||
+	APPEND,   // >>
+	OUT,      // >
+	IN,       // <
+	NOT,      // string
+	END,      // end of cmd
+    COMMAND_TYPE,
+    ARGUMENT_TYPE,
+    OPTION_TYPE,
+    UNKNOWN_TYPE  
+} t_token_type;
+
+typedef t_token_type (*TokenChecker)(char *);
+
+typedef enum e_quote 
+{
+    NORMAL,
+    SINGLE_QUOTE,
+    DOUBLE_QUOTE,
+    ESCAPED
+} t_quote_type;
 
 typedef enum e_redirection_type {
     NO_REDIRECTION = 0,
@@ -55,46 +78,41 @@ typedef enum e_redirection_type {
 
 typedef struct s_redirection_info 
 {
-	char *filename;
-	char *delimiter; // example in earth sandwich with << as the bread
-	t_redirection_type type;
-}	t_redirection_info;
+    char *filename;
+    char *delimiter;
+    t_redirection_type type;
+} t_redirection_info;
+
+typedef struct s_commandList
+{
+    int length;
+    struct s_command *head;
+    struct s_command *tail;
+	bool *has_pipe;
+}   t_commandList;
 
 typedef struct s_command
 {
     char *name;
     void *data;
     char **args;
-    int argCount;
+	int argCount;
+	char **envp;
     struct s_command *next;
     struct s_command *prev;
-	char **envp;
     struct s_env *envList;
-	// About pipes execution
-	bool has_pipe;
-    int pipes[MAX_COMMANDS][2];
-    pid_t child_pids[MAX_COMMANDS];
-    int pipe_index;
-	int number_of_pipes;
-	// About redirection execution
-	bool has_redirection;
+	int fdread;
+	int fdwrite;
+	char *end_of_file;
 	t_redirection_info redirection_info;
+	t_commandList commandList;
 } t_command;
-
-typedef struct s_commandList
-{
-	int					length;
-	struct s_command	*head;
-	struct s_command	*tail;
-	bool				*has_pipe;
-}   t_commandList;
 
 typedef struct s_error
 {
-	t_Bool				error;
-	char				*error_name;
-	struct s_error		*next;
-	struct s_error		*prev;
+    char *error_name;
+    struct s_error *next;
+    struct s_error *prev;
 } t_error;
 
 typedef struct s_env
@@ -148,27 +166,21 @@ int				pwd(void);
 // unset
 int				ft_unset(t_env **envList, t_command *cmd);
 // EXECUTION
-// Arguments
-char			**ft_allocate_memory_for_arguments(t_commandList *commandList, int argCount);
-void			ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
-void			ft_copy_new_argument(t_commandList *commandList, char **newArgs, int argCount, char *newArg);
-void			ft_add_null_terminator(char **newArgs, int argCount);
-char			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg);
+
+// argument 
+char 			**ft_allocate_and_copy_arguments(t_commandList *commandList, char **oldArgs, int argCount, char *newArg); 
 // builtin
 int				ft_is_builtin(t_command *cmd);
 int				ft_execute_builtin(t_command *cmd, t_env *envList);
 // child
-void			ft_initialize_child_processes(t_command *currentCommand);
-pid_t           ft_create_child_process(t_command *command);
-int 			ft_launch_child_processes(t_command *data);
-void            ft_execute_child_process(char *full_path, char **args, char **envp);
-void 			ft_wait_for_all_child_processes_to_end(t_command *command);
-void 			ft_configure_child_process(t_command *command); 
+void 			ft_configure_child_process(t_command *command, t_env *envList);
+void 			ft_execute_child_process(t_command *command, char *full_path, char **args, char **envp);
+void 			ft_configure_parent_process(t_command *command);
 // command
 int 			ft_launch_command_execution(t_command *command, t_commandList *commandList, t_env *envList, char **envp);
-int             ft_execute_single_command(t_command *command, t_commandList *commandList, t_env *envList, char **envp); 
-void            ft_execute_external_command(t_command *command, t_commandList *commandList, char **envp); 
-void            ft_printCommand(t_command *command);
+int             ft_execute_single_command(t_command *command, t_env *envList, char **envp); 
+void            ft_execute_external_command(t_command *command, char **envp, t_env *envList); 
+void			ft_exec_external_code(t_command *command);
 // commandList
 void			ft_initialize_commandList(t_commandList *commandList);
 void			ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
@@ -184,6 +196,10 @@ void 			ft_check_empty_av_shell(t_mini *shell);
 int 			ft_check_if_input_is_tokenizable(t_commandList *commandList, char *input);
 // free
 void			ft_free_redirection_info(t_redirection_info *redirection_info);
+// heredoc
+void 			ft_process_here_doc_redirection(t_command *command);
+int				ft_eof_is_in_string(char *here, char *eof);
+int				ft_isword(char *here, char *eof, int index);
 // history
 void			ft_manage_history(t_mini *shell, const char *input);
 void			ft_custom_prompt_msg(t_mini *shell);
@@ -198,11 +214,11 @@ void            ft_launch_error_manager(t_commandList *commandList, t_command *c
 // parent
 void 			ft_configure_parent_process(t_command *command);
 // path
-char			*ft_build_full_path(t_commandList *commandList); 
-void			ft_execute_command_with_relative_path(t_command *command);
-void			ft_execute_command_with_path(t_command *command);
-void			ft_execute_command_with_absolute_path(t_command *command);
-char			*ft_lookfor_command_and_build_path(char *path, t_commandList *commandList);
+char            *ft_build_full_path(t_command *command); 
+void            ft_execute_command_with_relative_path(t_command *command);
+void            ft_execute_command_with_path(t_command *command);
+void            ft_execute_command_with_absolute_path(t_command *command);
+char            *ft_lookfor_command_and_build_path(char *path, t_command *command);
 // pipe
 void 			ft_launch_pipe_execution(t_command *command);
 // process
@@ -210,10 +226,10 @@ t_command 		*ft_process_token(t_commandList *commandList, t_command *currentComm
 t_command		*ft_process_first_token_as_command(t_commandList *commandList, char *token);
 void 			ft_process_token_as_argument(t_commandList *commandList, t_command *command, char *token);
 // redirection
-void 			ft_process_input_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_output_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_append_redirection(t_redirection_info redirection_info, t_command *command);
-void 			ft_process_here_doc_redirection(t_redirection_info redirection_info, t_command *command);
+void 			ft_process_input_redirection(t_command *command);
+void 			ft_process_output_redirection(t_command *command);
+void 			ft_process_append_redirection(t_command *command);
+void 			ft_process_here_doc_redirection(t_command *command);
 void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void			ft_exit_shell(t_mini *shell);
@@ -262,7 +278,7 @@ void            ft_strtok_for_quotes(const char *input);
 // error
 int 			ft_check_if_file_exists(const char *filename);
 int	            ft_check_if_its_any_white_space(char c);
-t_Bool          ft_check_if_only_spaces(const char *str);
+bool         	ft_check_if_only_spaces(const char *str);
 void            ft_initialization_of_errors(t_mini *shell);
 void            ft_add_space_around_redirection(char *input);
 // expansion
@@ -296,7 +312,7 @@ t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
 t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_here_doc_redirection(char *input);
-t_redirection_info 	ft_parse_all_redirection(t_command *command);
+t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
 int 				ft_tokenize_input_with_strtok(t_commandList *commandList, char *input);
 // type

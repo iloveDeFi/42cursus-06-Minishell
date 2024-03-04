@@ -30,17 +30,15 @@ t_command	*ft_create_init_new_command_commandlist(t_commandList *commandlist, \
 {
 	t_command	*command;
 
-	command = (t_command *)malloc(sizeof(t_command));
-	if (command == NULL)
-	{
-		perror("CHAOS, error allocating memory");
-		ft_destroy_commandList(commandlist);
-		exit(EXIT_FAILURE);
-	}
-	ft_init_new_node(commandlist, command, name);
-	ft_append_to_commandlist(commandlist, command);
-	//ft_print_commandlist(commandlist);
-	return (command);
+    if (command == NULL) 
+    {
+        perror("CHAOS, error allocating memory");
+        ft_destroy_commandList(commandList);
+        exit(EXIT_FAILURE);
+    }
+    ft_init_new_node(commandList, command, name);
+	ft_append_to_commandList(commandList, command);
+    return command;
 }
 
 t_env	*ft_create_node_for_export_argument(char *name, char *value)

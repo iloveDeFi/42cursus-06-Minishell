@@ -11,7 +11,7 @@ void	ft_exit_shell(t_mini *shell)
 	}
 }
 
-void	ft_initialize_environment(t_env **envList, char **env)
+void ft_initialize_environment(t_env **envList, char **env)
 {
 	int		i;
 	char	**var_array;
@@ -51,18 +51,20 @@ void	ft_initialize_minishell(t_mini *shell)
 void	ft_execute_minishell(t_commandList *commandList, \
 	t_mini *shell, t_env *envList, char **envp)
 {
-	while (1)
-	{
-		ft_custom_prompt_msg(shell);
-		ft_check_empty_av_shell(shell);
-		ft_manage_history(shell, shell->av);
-		ft_handle_only_spaces(shell);
-		if (ft_launch_parsing_and_execution(commandList, \
-			shell->av, envList, envp) != 0)
-		{
-			perror("Error executing minishell in ft_execute_minishell\n");
-			break ;
-		}
-		ft_destroy_current_shell(shell);
-	}
+    while (1)
+    {
+        // TO DO: ADD SIGNALS HERE
+        ft_custom_prompt_msg(shell);
+        ft_check_empty_av_shell(shell);
+		add_history(shell->av);
+        ft_handle_only_spaces(shell);
+        //ft_check_empty_av_shell(shell);
+
+        if (ft_launch_parsing_and_execution(commandList, shell->av, envList, envp) != 0)
+        {
+            perror("Error executing minishell in ft_execute_minishell\n");
+            break;  // Quit the loop if an error occurs during execution
+        }
+        ft_destroy_current_shell(shell);
+    }
 }
