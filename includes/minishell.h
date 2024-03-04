@@ -83,30 +83,28 @@ typedef struct s_redirection_info
     t_redirection_type type;
 } t_redirection_info;
 
-typedef struct s_commandList
-{
-    int length;
-    struct s_command *head;
-    struct s_command *tail;
-	bool *has_pipe;
-}   t_commandList;
-
 typedef struct s_command
 {
     char *name;
-    void *data;
     char **args;
 	int argCount;
 	char **envp;
     struct s_command *next;
-    struct s_command *prev;
     struct s_env *envList;
 	int fdread;
 	int fdwrite;
 	char *end_of_file;
 	t_redirection_info redirection_info;
-	t_commandList commandList;
 } t_command;
+
+typedef struct s_token_lst {
+	char				*word;
+	int					type;
+	int					red;
+	int					quote;
+	struct s_token_lst	*next;
+	struct s_token_lst	*previous;
+} t_token_lst;
 
 typedef struct s_error
 {
@@ -130,7 +128,8 @@ typedef struct s_mini
     int fd_history;
     int stdin_fd;
     int stdout_fd;
-    t_commandList *commands;
+	struct s_token		*token;
+	struct s_command	*cmd;
     t_error *error;
 } t_mini;
 
@@ -183,6 +182,7 @@ int 			ft_launch_command_execution(t_command *command, t_commandList *commandLis
 int             ft_execute_single_command(t_command *command, t_env *envList, char **envp); 
 void            ft_execute_external_command(t_command *command, char **envp, t_env *envList); 
 void			ft_exec_external_code(t_command *command);
+void			ft_execution(t_command *command);
 // commandList
 void            ft_initialize_commandList(t_commandList *commandList);
 void            ft_execute_command_list(t_commandList *commandList, t_env *envList, char **envp); // TO DO t_global wtf 
@@ -365,6 +365,7 @@ char           	*ft_strcpy(char *dest, const char *src);
 char           		*ft_strpbrk(const char *s1, const char *s2);
 char           	*ft_custom_strdup(const char *str);
 char           	*ft_strndup(const char *s, size_t n);
+void			ft_putstr_fd(char *s, int fd);
 
 // GLOBAL
 

@@ -159,3 +159,17 @@ char *ft_lookfor_command_and_build_path(char *path, t_command *command)
     return NULL;
 }
 
+char	**ft_split_path(char **env)
+{
+	char	*path;
+	char	**splited_path;
+
+	path = getenv("PATH");
+	if (path[0] == '\0')
+	{
+		free(path);
+		return (NULL);
+	}
+	splited_path = ft_split(path + 5, ':');
+	return (splited_path);
+}

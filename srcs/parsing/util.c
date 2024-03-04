@@ -72,3 +72,9 @@ char *ft_strndup(const char *s, size_t n)
     new_str[len] = '\0';
     return new_str;
 }
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (*s)
+		ft_putchar_fd(*s++, fd);
+}

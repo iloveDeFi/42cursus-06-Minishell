@@ -1,17 +1,18 @@
 #include "minishell.h"
 
-void free_split(char **arr)
+void	ft_free_split(char **arr)
 {
-    if (arr == NULL)
+	int i;
+	
+	if (arr == NULL)
         return;
-
-    int i = 0;
-    while (arr[i] != NULL) {
-        free(arr[i]);
-        i++;
-    }
-
-    free(arr);
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
 t_env *ft_copy_env_list(t_env *src)
