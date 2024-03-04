@@ -10,7 +10,10 @@ char *ft_build_full_path(t_commandList *commandList)
 
 void ft_execute_command_with_absolute_path(t_command *command)
 {
-    pid_t child_pid = fork();
+	int status;
+    pid_t child_pid;
+
+	child_pid = fork();
 
     if (child_pid == -1)
     {
@@ -20,7 +23,7 @@ void ft_execute_command_with_absolute_path(t_command *command)
 
     if (child_pid == 0)
     {
-        // Code du processus fils
+		// TO DO : excve prend le fullpath ?
         if (execve(command->name, command->args, NULL) == -1)
         {
             perror("Error executing absolute path");
@@ -30,10 +33,7 @@ void ft_execute_command_with_absolute_path(t_command *command)
     else
     {
         // Code du processus parent
-        // Attendre que le processus fils se termine
-        int status;
         waitpid(child_pid, &status, 0);
-        
         // Vous pouvez ajouter d'autres traitements ici, si nécessaire
     }
 }

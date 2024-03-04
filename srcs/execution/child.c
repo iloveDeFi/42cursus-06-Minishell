@@ -69,12 +69,11 @@ void	ft_configure_child_process(t_command *command)
 		dup2(command->fdread, STDIN_FILENO);
 	if (command->fdwrite >= 3)
 		dup2(command->fdwrite, STDOUT_FILENO);
-	if (is_builtins(command) == 1)
-		exec_builtins(command);
-	else if (is_builtins(command) == 127)
-		g_exit_code = 127;
+	if (ft_is_builtin(command))
+	// TO DO : add envList
+		ft_execute_builtin(command);
 	else
-		exec_external_code(command);
+	ft_exec_external_code(command)
 	if (command->fdread >= 3)
 		close(command->fdread);
 	if (command->fdwrite >= 3)
@@ -83,6 +82,28 @@ void	ft_configure_child_process(t_command *command)
 	dup2(init_stdin, STDIN_FILENO);
 	close(init_stdout);
 	close(init_stdin);
+}
+
+void	ft_exec_external_code(t_command *command)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == -1)
+		perror("Error with fork");
+	if (pid == 0)
+	{
+		ft_exec_external_command(command);
+		perror("execve");
+		exit(errno);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_code = WEXITSTATUS(status);
+	}
 }
 
 // void ft_configure_child_process(t_command *command) 

@@ -5,6 +5,7 @@ int	ft_is_builtin(t_command *cmd)
 	if (!cmd->name)
 	{
 		ft_putstr_fd("command not found\n", 2);
+		g_exit_code = 127;
 		return (127);
 	}
 	if (ft_strcmp(cmd->name, "cd") == 0

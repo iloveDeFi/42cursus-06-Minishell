@@ -68,17 +68,6 @@ typedef enum e_quote
     ESCAPED
 } t_quote_type;
 
-typedef enum Bool
-{
-	FALSE,
-	TRUE
-} t_Bool;
-
-typedef enum node_type {
-    ENV_NODE,
-    COMMAND_NODE
-} t_node_type;
-
 typedef enum e_redirection_type {
     NO_REDIRECTION = 0,
     OUTPUT_REDIRECTION,     // '>' or 1
@@ -90,7 +79,7 @@ typedef enum e_redirection_type {
 typedef struct s_redirection_info 
 {
     char *filename;
-    char *delimiter; // example in earth sandwich with << as the bread
+    char *delimiter;
     t_redirection_type type;
 } t_redirection_info;
 
@@ -99,21 +88,12 @@ typedef struct s_command
     char *name;
     void *data;
     char **args;
-    int argCount;
+	char **envp;
     struct s_command *next;
     struct s_command *prev;
-	char **envp;
     struct s_env *envList;
-	// About pipes execution
-	bool has_pipe;
-	int fd_read;
-	int fd_write;
-    int pipes[MAX_COMMANDS][2];
-    pid_t child_pids[MAX_COMMANDS];
-    int pipe_index;
-	int number_of_pipes;
-	// About redirection execution
-	bool has_redirection;
+	int fdread;
+	int fdwrite;
 	t_redirection_info redirection_info;
 } t_command;
 
@@ -127,7 +107,6 @@ typedef struct s_commandList
 
 typedef struct s_error
 {
-    t_Bool error;
     char *error_name;
     struct s_error *next;
     struct s_error *prev;

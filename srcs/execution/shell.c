@@ -11,8 +11,6 @@ void ft_exit_shell(t_mini *shell)
     }
 }
 
-
-// TO DO RECHECK FUNCTION
 void ft_initialize_environment(t_env **envList, char **env)
 {
 	int i;
@@ -84,7 +82,7 @@ void ft_initialize_minishell(t_mini *shell)
         // TO DO: ADD SIGNALS HERE
         ft_custom_prompt_msg(shell);
         ft_check_empty_av_shell(shell);
-        ft_manage_history(shell, shell->av);
+		add_history(shell->av);
         ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
 
