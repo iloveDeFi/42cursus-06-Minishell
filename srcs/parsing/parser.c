@@ -76,11 +76,26 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 		}
 		if (ft_strcmp(tokens[tokenIndex + 1], "|") == 0)
 		{
+			printf("tokens = %s\n", *tokens);
+			printf("token = %s\n", token );
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
 			tokens += arg_len + 2;
 			arg_len = 0;
 			tokenIndex = 0;
 			continue;
+		}
+		else if(ft_strcmp(tokens[tokenIndex + 1], "<") == 0)
+		{
+			printf("tokens = %s\n", *tokens);
+			printf("token = %s\n", token);
+			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
+			tokens += arg_len + 1;
+			printf("ju = %s\n", tokens[tokenIndex]);
+			printf("bat = %s\n", tokens[tokenIndex + 1]);
+			r_left(*first_command, token, &tokens[tokenIndex], &tokens[tokenIndex + 1]);
+			arg_len = 0;
+			tokenIndex = 0;
+			continue;	
 		}
 		tokenIndex++;
 		arg_len++;
@@ -122,6 +137,7 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 // ---------------- For one command ----------------
 static void	ft_execute_external_in_fork(t_command *cmd, char **envp)
 {
+	printf("ft_execute_external_in_fork\n");
 	pid_t	fork_pid;
 	int     exit_code;
 
@@ -164,9 +180,13 @@ void	ft_execute_cmd(t_command *cmd, char **envp, t_env *envList)
 static void	prepare_fds(t_command *cmd, int *fd_pipe_read_tmp,
 				int *fd_pipe)
 {
+	printf("prepare_fds\n");
 	close(fd_pipe[0]);
 	if (cmd->fdread == 0)
 		cmd->fdread = *fd_pipe_read_tmp;
+	printf("cmd->name %s\n", cmd->name);
+	printf("cmd->args[0] %s\n", cmd->args[0]);
+	printf("cmd->args[1] %s\n", cmd->args[1]);
 	dup2(cmd->fdread, 0);
 	if (cmd->fdwrite >= 3)
 		close(fd_pipe[1]);
@@ -207,6 +227,7 @@ static void	handle_exit_status(int exit_status)
 
 void	ft_execute_cmds(t_command *cmd, char **envp, t_env *envList)
 {
+	printf("ft_execute_cmds\n");
 	int					fd_pipe_read_tmp;
 	int					fd_pipe[2];
 	int					exit_status;
@@ -250,8 +271,9 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
     tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
 	//ft_initialize_commandList(command);
 	ft_parse_tokens(&first_command, tokens);
-    ft_token_is_a_quotes(input);
-    ft_remove_quotes(input);
+	//ft_parse_all_redirection(*tokens);
+    //ft_token_is_a_quotes(input);
+    //ft_remove_quotes(input);
     ft_found_and_replace_usd(first_command, envList);
 	if (first_command->next == NULL) // There is only one command (-> need to fork)
 		ft_execute_cmd(first_command, envp, envList);

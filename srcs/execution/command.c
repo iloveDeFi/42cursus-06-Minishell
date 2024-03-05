@@ -60,7 +60,8 @@ int	ft_execute_single_command(t_command *command, t_env *envList, char **envp)
 
 void	ft_execute_external_command(t_command *cmd, char **env)
 {
-	char	filepath[MAX_PATH_LENGTH];
+	printf("ft_execute_external_command\n");
+    char	filepath[MAX_PATH_LENGTH];
 	char	**splited_path;
 	int		i;
 
@@ -93,7 +94,8 @@ void	ft_execute_external_command(t_command *cmd, char **env)
 
 void	ft_exec_external_code(t_command *command)
 {
-	pid_t	pid;
+	printf("ft_exec_external_code\n");
+    pid_t	pid;
 	int		status;
 
 	pid = fork();

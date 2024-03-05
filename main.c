@@ -7,7 +7,6 @@ int	main(int ac, char **av, char **envp)
 	t_mini			shell;
 	t_env			*envlist;
 
-
 	(void)av;
 	if (ac > 1)
 	{

@@ -301,7 +301,7 @@ t_redirection_info	ft_parse_output_redirection(char *input);
 t_redirection_info 	ft_parse_append_redirection(char *input);
 t_redirection_info 	ft_parse_input_redirection(char *input);
 t_redirection_info 	ft_parse_here_doc_redirection(char *input);
-t_redirection_type 	ft_parse_all_redirection(char *token);
+//t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
 char ** 				ft_tokenize_input_with_strtok(char *input);
 // type
@@ -339,7 +339,9 @@ extern void		rl_replace_line(const char *bob, int test);
 
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
+int ft_tokenize_redirection(char *tokens);
 
 int ft_token_is_a_quotes(char *input);
-
+void	r_left(t_command *new, char *token, char **tokens, char **tok);
+char	*get_filename(t_command *new, char **tokens, char **tok);
 #endif
