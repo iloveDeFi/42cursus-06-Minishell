@@ -8,7 +8,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 
 	i = 0;
 	command = (t_command *)malloc(sizeof(t_command));
-	printf("%s\n", tokens[0]);
+	// printf("%s\n", tokens[0]);
 	command->name = ft_strdup(tokens[0]);
 	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
 	while(i < arg_len + 1)
@@ -21,14 +21,14 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	command->next = NULL;
 	command->fdread = 0;
 	command->fdwrite = 1;
-	printf("arg_len = %d\n", arg_len);
-	printf("name = %s\n", command->name);
+	// printf("arg_len = %d\n", arg_len);
+	// printf("name = %s\n", command->name);
 	i = 0;
-	while(command->args[i] != NULL)
-	{
-		printf("args = %s\n", command->args[i]);
-		i++;
-	}
+	// while(command->args[i] != NULL)
+	// {
+	// 	printf("args = %s\n", command->args[i]);
+	// 	i++;
+	// }
 	return command;
 }
 
@@ -40,7 +40,6 @@ void ft_append_to_command(t_command **first_command, t_command *new_command)
 	if (*first_command == NULL)
 	{
 		*first_command = new_command;
-		printf("1 %s\n", (*first_command)->name);
 		return;
 	}
 	while (current_command->next != NULL)
@@ -65,7 +64,7 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	while (tokens[tokenIndex] != NULL)
 	{
 		token = tokens[tokenIndex];
-		printf("token = %s\n", token );
+		// printf("token = %s\n", token );
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
