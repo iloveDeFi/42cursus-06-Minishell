@@ -97,14 +97,14 @@ typedef struct s_command
 	t_redirection_info redirection_info;
 } t_command;
 
-typedef struct s_token_lst {
+typedef struct s_token {
 	char				*word;
 	int					type;
 	int					red;
 	int					quote;
-	struct s_token_lst	*next;
-	struct s_token_lst	*previous;
-} t_token_lst;
+	struct s_token	*next;
+	struct s_token	*previous;
+} t_token;
 
 typedef struct s_error
 {
