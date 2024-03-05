@@ -1,14 +1,22 @@
 #include "minishell.h"
 
-void	ft_exit_shell(t_mini *shell)
+void	ft_custom_prompt_msg(t_mini *shell)
 {
-    if (shell != NULL)
-    {
-        if (shell->av != NULL)
-            free(shell->av);
-        // if (shell->cmd != NULL)
-        //     ft_destroy_commandList(shell->cmd);
-    }
+	char	*input;
+
+	if (shell->av != NULL)
+	{
+		free(shell->av);
+		shell->av = NULL;
+	}
+	ft_signals_init(ft_signals_handle_input);
+	input = readline("\033[1;35mminishell$ \033[0m");
+	ft_signals_init(ft_signals_handle_execution);
+	if (input != NULL)
+	{
+		shell->av = ft_strdup(input);
+		free(input);
+	}
 }
 
 void ft_initialize_environment(t_env **envList, char **env)
@@ -60,7 +68,7 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
         if (shell->av && !ft_is_only_spaces(shell->av))
         {
 		    add_history(shell->av);
-            if (ft_launch_parsing_and_execution( shell->av, envList, envp) != 0)
+            if (ft_launch_parsing_and_execution(shell, shell->av, envList, envp) != 0)
             {
                 perror("Error executing minishell in ft_execute_minishell\n");
                 break;  // Quit the loop if an error occurs during execution
