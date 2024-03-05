@@ -2,7 +2,7 @@
 
 int	ft_is_builtin(t_command *cmd)
 {
-    printf("ft_is_builtin\n");
+	printf("ft_is_builtin\n");
 	if (!cmd->name)
 	{
 		ft_putstr_fd("command not found\n", 2);

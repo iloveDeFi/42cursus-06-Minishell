@@ -53,19 +53,23 @@ int	ft_execute_single_command(t_command *command, t_env *envList, char **envp)
         	perror("Command not found in PATH in ft_execute_external_command\n");
         	printf("Command not found in PATH: %s\n", command->name);
     	}
-        ft_execute_external_command(envp, command);
+        ft_execute_external_command(envp, command); // revese the order of the arguments
     	}
 		return 0;
 }
 
-void	ft_execute_external_command(char **env, struct s_command *cmd)
+void	ft_execute_external_command(t_command *cmd, char **env)
 {
 	char	filepath[MAX_PATH_LENGTH];
 	char	**splited_path;
 	int		i;
 
+	// char *argv[2];
+	// argv[0] = "ls";
+	// argv[1] = NULL;
+	// execve("/usr/bin/ls",argv, NULL);
 	if (access(cmd->name, X_OK) == 0)
-		execve(cmd->name, cmd->args, env);
+		execve(cmd->name, cmd->args, NULL); // ! TODO do not works with env (and it should)
 	splited_path = ft_split_path(env);
 	i = 0;
 	while (splited_path && splited_path[i] != NULL)
@@ -75,7 +79,7 @@ void	ft_execute_external_command(char **env, struct s_command *cmd)
 		ft_strcat(filepath, cmd->name);
 		if (access(filepath, X_OK) == 0)
 		{
-			execve(filepath, cmd->args, env);
+			execve(filepath, cmd->args, NULL);  // ! TODO do not works with env
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -97,7 +101,7 @@ void	ft_exec_external_code(t_command *command)
 		perror("Error with fork");
 	if (pid == 0)
 	{
-		ft_execute_external_command(command->envp, command);
+		ft_execute_external_command(command->envp, command); // revese the order of the arguments
 		perror("execve");
 		exit(errno);
 	}

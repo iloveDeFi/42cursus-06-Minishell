@@ -54,15 +54,17 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
     {
         // TO DO: ADD SIGNALS HERE
         ft_custom_prompt_msg(shell);
-        ft_check_empty_av_shell(shell);
-		add_history(shell->av);
-        ft_handle_only_spaces(shell);
+        ft_check_empty_av_shell(shell); // TODO remove that when signals are added
+        // ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
-
-        if (ft_launch_parsing_and_execution( shell->av, envList, envp) != 0)
+        if (shell->av && !ft_is_only_spaces(shell->av))
         {
-            perror("Error executing minishell in ft_execute_minishell\n");
-            break;  // Quit the loop if an error occurs during execution
+		    add_history(shell->av);
+            if (ft_launch_parsing_and_execution( shell->av, envList, envp) != 0)
+            {
+                perror("Error executing minishell in ft_execute_minishell\n");
+                break;  // Quit the loop if an error occurs during execution
+            }
         }
         ft_destroy_current_shell(shell);
     }

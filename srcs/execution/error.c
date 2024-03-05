@@ -1,16 +1,16 @@
 #include "minishell.h"
 
-int	ft_is_only_spaces(const char *str)
+bool	ft_is_only_spaces(const char *str)
 {
 	while (*str)
 	{
 		if (*str != ' ')
 		{
-			return (1);
+			return (false);
 		}
 		str++;
 	}
-	return (0);
+	return (true);
 }
 
 void	ft_handle_only_spaces(t_mini *shell)

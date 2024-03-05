@@ -182,13 +182,13 @@ void 			ft_execute_child_process(t_command *command, char *full_path, char **arg
 void 			ft_configure_parent_process(t_command *command);
 // command
 int             ft_execute_single_command(t_command *command, t_env *envList, char **envp);
-void			ft_execute_external_command(char **env, struct s_command *cmd);
+void			ft_execute_external_command(struct s_command *cmd, char **env);
 void			ft_exec_external_code(t_command *command);
 void			ft_launch_execution(t_command *command);
 // destroy
 void	        ft_destroy_current_shell(t_mini *mini);
 // error
-int				ft_is_only_spaces(const char *str);
+bool				ft_is_only_spaces(const char *str);
 void 			ft_handle_only_spaces(t_mini *shell);
 void 			ft_check_null_av_shell(t_mini *shell);
 void 			ft_check_empty_av_shell(t_mini *shell);
