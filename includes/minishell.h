@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include <ctype.h>
 # include <sys/wait.h>
+# include <sys/param.h>
 
 # define MAX_ARGUMENTS 100
 # define MAX_PATH_LENGTH 4096
@@ -138,7 +139,7 @@ typedef struct s_mini
 
 // cd
 int				cd(t_command *command);
-void			ft_process_cd_argument(t_command *command, char *arg);
+// void			ft_process_cd_argument(t_command *command, char *arg);
 // echo
 void            ft_handle_argument(char *arg);
 void            ft_handle_space();
@@ -152,7 +153,7 @@ void			ft_display_envlist(t_env *envList);
 // exit
 int				ft_search_exit_arg_in_envList(t_command *command, t_env *envList);
 int				ft_check_exit_arg_value(char *value);
-int				ft_exit(t_command *command, t_env *envList);
+void			ft_exit(t_command *command);
 // export_util
 void			ft_split_string_export_argument(const char *arg, char **name, char **value);
 // export

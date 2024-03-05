@@ -26,7 +26,7 @@ int	ft_execute_builtin(t_command *cmd, t_env *envList)
 	if (ft_strcmp(cmd->name, "cd") == 0)
 		return (cd(cmd));
 	if (ft_strcmp(cmd->name, "exit") == 0)
-		return (ft_exit(cmd, envList));
+		ft_exit(cmd);
 	else if (ft_strcmp(cmd->name, "echo") == 0)
 		return (echo(cmd));
 	else if (ft_strcmp(cmd->name, "env") == 0)

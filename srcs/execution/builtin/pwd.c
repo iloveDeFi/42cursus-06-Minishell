@@ -2,9 +2,9 @@
 
 int	pwd(void)
 {
-	char	path[PATH_MAX];
+	char	path[MAXPATHLEN];
 
-	if (getcwd(path, PATH_MAX) != NULL)
+	if (getcwd(path, MAXPATHLEN) != NULL)
 	{
 		printf("%s\n", path);
 		return (EXIT_SUCCESS);

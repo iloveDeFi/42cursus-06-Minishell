@@ -14,6 +14,8 @@ void	ft_display_envlist(t_env *envList)
 
 int	env(t_env *envList)
 {
+	if (!envList)
+		return (EXIT_FAILURE);
 	ft_display_envlist(envList);
 	return (0);
 }

@@ -11,6 +11,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	// printf("%s\n", tokens[0]);
 	command->name = ft_strdup(tokens[0]);
 	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
+	command->argCount = 0;
 	while(i < arg_len + 1)
 	{
 		command->args[i] = ft_strdup(tokens[i]);
@@ -29,6 +30,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	// 	printf("args = %s\n", command->args[i]);
 	// 	i++;
 	// }
+	printf("argCount = %d\n", command->argCount);
 	return command;
 }
 
@@ -193,7 +195,7 @@ static void	ft_run_cmd(t_command *cmd, char **envp, t_env *envList)
 {
 	if (!ft_is_builtin(cmd))
 		ft_execute_external_command(cmd, envp);
-	exit(ft_execute_builtin(cmd, envp));
+	exit(ft_execute_builtin(cmd, envList));
 }
 
 static void	handle_exit_status(int exit_status)

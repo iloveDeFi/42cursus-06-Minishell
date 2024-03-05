@@ -27,14 +27,14 @@ int	ft_check_variable_definition(char *arg)
 		if (count > 1)
 		{
 			perror("Invalid variable definition. Use only one equal sign\n");
-			exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 		}
 		found++;
 	}
 	if (equals == NULL || equals == arg || *equals == '\0')
 	{
 		perror("Invalid variable definition. Use VARIABLE=value format.\n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 	}
 	return (0);
 }
@@ -45,23 +45,22 @@ int	ft_check_export_args(t_command *command)
     char	*arg;
 	int		i;
 
-	if (command->argCount > 1)
+	if (command->args[1] == NULL || command->args[2] != NULL)
 	{
 		perror("Hey, export takes only one argument!\n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 	}
-	i = 0;
 	arg = command->args[1];
 	if ((!ft_is_alpha(arg[0])) && arg[0] != '_')
 	{
 		perror("Export variable must start by a letter or _ \n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 	}
 	i = 1;
 	while (arg[i] != '\0')
 	{
 		if (!ft_is_alpha(arg[i]) && arg[i] != '_')
-			exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 		i++;
 	}
 	return (0);
@@ -74,7 +73,7 @@ void	ft_print_exported_vars(t_env *envList)
 	current = envList;
 	while (current != NULL)
 	{
-		printf("%s=%s\n", current->name, current->value);
+		printf("declare -x %s=%s\n", current->name, current->value);
 		current = current->next;
 	}
 }
@@ -86,12 +85,12 @@ int	ft_export(t_env **envList, t_command *cmd)
 	char	*name;
 	char	*value;
 
-	if (ft_strcmp(cmd->name, "export") == 0 && cmd->argCount == 1)
+	if (ft_strcmp(cmd->name, "export") == 0 && cmd->args[1] == NULL)
 	{
 		ft_print_exported_vars(*envList);
 		return (0);
 	}
-	ft_check_variable_definition(cmd->args[0]);
+	ft_check_variable_definition(cmd->args[1]);
 	ft_check_export_args(cmd);
 	ft_split_string_export_argument(cmd->args[1], &name, &value);
 	newvar = ft_create_node_for_export_argument(name, value);
