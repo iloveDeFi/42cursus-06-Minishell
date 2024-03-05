@@ -69,7 +69,7 @@ void	ft_execute_external_command(t_command *cmd, char **env)
 	// argv[1] = NULL;
 	// execve("/usr/bin/ls",argv, NULL);
 	if (access(cmd->name, X_OK) == 0)
-		execve(cmd->name, cmd->args, NULL); // ! TODO do not works with env (and it should)
+		execve(cmd->name, cmd->args, env);
 	splited_path = ft_split_path(env);
 	i = 0;
 	while (splited_path && splited_path[i] != NULL)
@@ -79,7 +79,7 @@ void	ft_execute_external_command(t_command *cmd, char **env)
 		ft_strcat(filepath, cmd->name);
 		if (access(filepath, X_OK) == 0)
 		{
-			execve(filepath, cmd->args, NULL);  // ! TODO do not works with env
+			execve(filepath, cmd->args, env);
 			exit(EXIT_FAILURE);
 		}
 		i++;
