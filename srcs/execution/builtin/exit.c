@@ -88,9 +88,8 @@ void	ft_exit(t_command *command)
 		exit_status = ft_atoi(command->args[1]);
 	else
 	{
-		ft_putstr_fd(command->args[1], STDERR_FILENO);
-		ft_putstr_fd(" :numeric argument required\n", STDERR_FILENO);
-		exit(255);
+		perror("exit\n");
+		exit(EXIT_FAILURE);
 	}
 	if (exit_status < 0)
 		exit_status = -exit_status;

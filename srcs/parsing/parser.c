@@ -6,7 +6,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	t_command *command;
 	int i;
 
-	i = 0;
+    i = 0;
 	command = (t_command *)malloc(sizeof(t_command));
 	// printf("%s\n", tokens[0]);
 	command->name = ft_strdup(tokens[0]);
@@ -15,8 +15,9 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	while(i < arg_len + 1)
 	{
 		command->args[i] = ft_strdup(tokens[i]);
-		command->argCount++;
 		i++;
+        command->argCount = i;
+        //pritnf("command->argCount = %d\n", command->argCount);
 	}
 	command->args[i] = NULL;
 	command->next = NULL;
@@ -70,7 +71,7 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	while (tokens[tokenIndex] != NULL)
 	{
 		token = tokens[tokenIndex];
-		// // printf("token = %s\n", token );
+		printf("token = %s\n", token );
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
@@ -81,16 +82,181 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 		}
 		if (ft_strcmp(tokens[tokenIndex + 1], "|") == 0)
 		{
+			printf("tokens = %s\n", *tokens);
+			printf("token = %s\n", token );
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
 			tokens += arg_len + 2;
 			arg_len = 0;
 			tokenIndex = 0;
 			continue;
 		}
+		else if(ft_strcmp(tokens[tokenIndex + 1], "<") == 0)
+		{
+			printf("tokens = %s\n", *tokens);
+			printf("token = %s\n", token);
+			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
+			tokens += arg_len + 1;
+			printf("ju = %s\n", tokens[tokenIndex]);
+			printf("bat = %s\n", tokens[tokenIndex + 1]);
+			r_left(*first_command, token, &tokens[tokenIndex], &tokens[tokenIndex + 1]);
+			arg_len = 0;
+			tokenIndex = 0;
+			continue;	
+		}
 		tokenIndex++;
 		arg_len++;
 	}
 }
+
+// void ft_process_tokens(t_command **command, char **tokens)
+// {
+//     char *token;
+//     int arg_len;
+//     int tokenIndex;
+
+//     if (tokens == NULL)
+//         return;
+
+//     arg_len = 0;
+//     tokenIndex = 0;
+//     char **currentToken = tokens; // Pointeur temporaire pour itérer sur tokens
+//     while (*currentToken != NULL)
+//     {
+//         token = *currentToken;
+//         printf("token = %s\n", token );
+//         if (ft_strcmp(token, "|") == 0 || *(currentToken + 1) == NULL)
+//         {
+//             ft_append_to_command(command, ft_create_new_command(tokens, arg_len));
+//             printf("tokens = %s\n", *currentToken);
+//             currentToken += arg_len + 1;
+//             arg_len = 0;
+//             tokenIndex = 0;
+//             continue;
+
+//         }
+//         currentToken++;
+//         arg_len++;
+//         printf("currentToken = %s\n", *currentToken);
+//     }
+// }
+
+// ---------------- For one command ----------------
+static void	ft_execute_external_in_fork(t_command *cmd, char **envp)
+{
+	printf("ft_execute_external_in_fork\n");
+	pid_t	fork_pid;
+	int     exit_code;
+
+	fork_pid = fork();
+	if (fork_pid == 0)
+		ft_execute_external_command(cmd, envp);
+	waitpid(fork_pid, &exit_code, 0);
+	if (WIFEXITED(exit_code))
+		g_exit_code = WEXITSTATUS(exit_code);
+	if (WIFSIGNALED(exit_code))
+		g_exit_code = 128 + WTERMSIG(exit_code);
+}
+
+void	ft_execute_cmd(t_command *cmd, char **envp, t_env *envList)
+{
+	int		original_stdin;
+	int		original_stdout;
+
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	if (cmd->fdread >= 3)
+		dup2(cmd->fdread, STDIN_FILENO);
+	if (cmd->fdwrite >= 3)
+		dup2(cmd->fdwrite, STDOUT_FILENO);
+	if (ft_is_builtin(cmd))
+		g_exit_code = ft_execute_builtin(cmd, envList);
+	else
+		ft_execute_external_in_fork(cmd, envp);
+	if (cmd->fdread >= 3)
+		close(cmd->fdread);
+	if (cmd->fdwrite >= 3)
+		close(cmd->fdwrite);
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdout);
+	close(original_stdin);
+}
+
+// ---------------- For multiple commands ----------------
+static void	prepare_fds(t_command *cmd, int *fd_pipe_read_tmp,
+				int *fd_pipe)
+{
+	printf("prepare_fds\n");
+	close(fd_pipe[0]);
+	if (cmd->fdread == 0)
+		cmd->fdread = *fd_pipe_read_tmp;
+	printf("cmd->name %s\n", cmd->name);
+	printf("cmd->args[0] %s\n", cmd->args[0]);
+	printf("cmd->args[1] %s\n", cmd->args[1]);
+	dup2(cmd->fdread, 0);
+	if (cmd->fdwrite >= 3)
+		close(fd_pipe[1]);
+	else if (!cmd->next)
+		cmd->fdwrite = 1;
+	else
+		cmd->fdwrite = fd_pipe[1];
+	dup2(cmd->fdwrite, 1);
+}
+
+static void	close_fds(t_command *cmd, int *fd_pipe_read_tmp,
+				int *fd_pipe)
+{
+	close(fd_pipe[1]);
+	if (*fd_pipe_read_tmp >= 3)
+		close(*fd_pipe_read_tmp);
+	if (cmd->fdwrite >= 3)
+		close(cmd->fdwrite);
+	if (cmd->fdread >= 3)
+		close(cmd->fdread);
+	*fd_pipe_read_tmp = fd_pipe[0];
+}
+
+static void	ft_run_cmd(t_command *cmd, char **envp, t_env *envList)
+{
+	if (!ft_is_builtin(cmd))
+		ft_execute_external_command(cmd, envp);
+	exit(ft_execute_builtin(cmd, envList));
+}
+
+static void	handle_exit_status(int exit_status)
+{
+	if (WIFEXITED(exit_status))
+		g_exit_code = WEXITSTATUS(exit_status);
+	if (WIFSIGNALED(exit_status))
+		g_exit_code = 128 + WTERMSIG(exit_status);
+}
+
+void	ft_execute_cmds(t_command *cmd, char **envp, t_env *envList)
+{
+	printf("ft_execute_cmds\n");
+	int					fd_pipe_read_tmp;
+	int					fd_pipe[2];
+	int					exit_status;
+	pid_t				fork_pid;
+
+	fd_pipe_read_tmp = 0;
+	while (cmd)
+	{
+		pipe(fd_pipe);
+		fork_pid = fork();
+		if (fork_pid == 0)
+		{
+			prepare_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
+			ft_run_cmd(cmd, envp, envList);
+		}
+		close_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
+		cmd = cmd->next;
+	}
+	while (waitpid(-1, &exit_status, 0) > 0)
+		;
+	handle_exit_status(exit_status);
+}
+
 
 // ---------------- Parse and launch command/s ----------------
 
@@ -102,9 +268,19 @@ int ft_launch_parsing_and_execution(t_mini *shell, char *input, t_env *envList, 
 	char **tokens;
 	int i = 0;
 
-	tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
+	   if(!ft_check_quotes(input))
+    {
+        printf(">\n");
+        return 0;
+    }
+    //ft_remove_quotes(input);
+    tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
 	//ft_initialize_commandList(command);
 	ft_parse_tokens(&first_command, tokens);
+	//ft_parse_all_redirection(*tokens);
+    //ft_token_is_a_quotes(input);
+    //ft_remove_quotes(input);
+    ft_found_and_replace_usd(first_command, envList);
 	if (first_command->next == NULL) // There is only one command (-> need to fork)
 		ft_execute_single_command(first_command, envp, envList);
 	else

@@ -33,8 +33,9 @@ int	ft_check_variable_definition(char *arg)
 	}
 	if (equals == NULL || equals == arg || *equals == '\0')
 	{
-		perror("Invalid variable definition. Use VARIABLE=value format.\n");
-		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
+		printf("equals = %s\n", equals);
+        perror("Invalid variable definition. Use VARIABLE=value format.\n");
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
@@ -45,7 +46,7 @@ int	ft_check_export_args(t_command *command)
     char	*arg;
 	int		i;
 
-	if (command->args[1] == NULL || command->args[2] != NULL)
+	if (command->argCount > 2)
 	{
 		perror("Hey, export takes only one argument!\n");
 		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
