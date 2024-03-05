@@ -52,7 +52,7 @@ void	ft_execute_multi_commands(t_mini *mini)
 
 	cmd = mini->cmd;
 	fd_pipe_read_tmp = 0;
-	while (cmd)
+	while (mini->cmd)
 	{
 		pipe(fd_pipe);
 		pid = fork();
