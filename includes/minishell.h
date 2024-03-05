@@ -206,6 +206,7 @@ void            ft_execute_command_with_path(t_command *command);
 char            *ft_lookfor_command_and_build_path(char *path, t_command *command);
 char			**ft_split_path(char **env);
 // process
+void            ft_process_cd_argument(t_command *currentCommand, char *token);
 void	        ft_process_command(t_command *command, char **envp, t_env *envList);
 t_command       *ft_process_token_as_command(t_command *currentCommand, char *token); 
 void            ft_process_token_as_argument(t_command *command, char *token);
@@ -222,7 +223,7 @@ void            ft_initialize_minishell(t_mini *shell);
 void            ft_execute_minishell(t_mini *shell, t_env *envList, char **envp);
 // signal
 // single
-void	        ft_execute_single_command(t_command *cmd, char **envp, t_env *envList);
+void 	        ft_execute_single_command(t_command *cmd,  char **envp, t_env *envList);
 void	        ft_execute_external_command(t_command *cmd, char **env);
 void	        ft_exec_external_code(t_command *command);
 void	        ft_execute_external_in_fork(t_command *cmd, char **envp);

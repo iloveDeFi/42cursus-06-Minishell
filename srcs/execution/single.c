@@ -68,7 +68,7 @@ void	ft_exec_external_code(t_command *command)
 		perror("Error with fork");
 	if (pid == 0)
 	{
-		ft_execute_external_command(command->envp, command); // revese the order of the arguments
+		ft_execute_external_command(command, command->envp); // revese the order of the arguments
 		perror("execve");
 		exit(errno);
 	}

@@ -21,9 +21,9 @@ int	cd(t_command *command)
 	return (0);
 }
 
-// void	ft_process_cd_argument(t_command *command, char *arg)
-// {
-// 	command->args = malloc(2 * sizeof(char *));
-// 	command->args[0] = ft_strdup(arg);
-// 	command->args[1] = NULL;
-// }
+void	ft_process_cd_argument(t_command *command, char *arg)
+{
+	command->args = malloc(2 * sizeof(char *));
+	command->args[0] = ft_strdup(arg);
+	command->args[1] = NULL;
+}

@@ -155,7 +155,7 @@ char	*get_filename(t_command *new, char **tokens, char **tok)
 	j++;
 	while (isspace(*tokens[j]))
 		j++;
-	if (tokens[j] == '\0')
+	if (tokens[j] == NULL)
 	{
 		fprintf(stderr, "Missing filename for redirection.\n");
 		return (NULL);

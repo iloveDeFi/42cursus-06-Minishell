@@ -11,13 +11,12 @@ void	ft_remove_quotes(char *input)
 	len = ft_strlen(input);
 	while (i < len)
 	{
-		if (input[i] != '"' && input[i] != '\'')
+		if (input[i] != '"')
 		{
-			input[j] = input[i];
+			input[j++] = input[i];
             printf("input[j] = %c\n", input[j]);
 		}
         i++;
-        j++;
         printf("i = %d\n", i);
 	}
 	input[j] = '\0';
