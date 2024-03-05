@@ -3,13 +3,19 @@
 void ft_process_input_redirection(t_command *command)
 {
 	printf("enter in ft_process_input_redirection\n");
-    int input_fd;
+    int input_fd = 0;
 
-	// TO DO 
-	// use command ?
 	(void)command;
-	
+	printf("command->redirection_info.type : %d\n", command->redirection_info.type);
+	printf("command->redirection_info.filename : %s\n", command->redirection_info.filename);
+	printf("1) input_fd : %d\n", input_fd);
+	//if (access(command->redirection_info.filename, R_OK) == 0) 
+	//{
 	input_fd = open(command->redirection_info.filename, O_RDONLY);
+		// }
+	write(1, "helo", 4);
+	printf("enter in ft_profseffen");
+
     if (input_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier en lecture");
         exit(EXIT_FAILURE);
@@ -132,13 +138,13 @@ void ft_launch_redirection_execution(t_command *command)
         	ft_process_here_doc_redirection(command);
    		} else {
         	perror("Unexpected value in ft_launch_redirection_execution\n");
-            ft_free_redirection_info(&command->redirection_info);
+            //ft_free_redirection_info(&command->redirection_info);
         	exit(EXIT_FAILURE);
     	}
 	}
     else if (command->redirection_info.type == NO_REDIRECTION)
     {
-        ft_free_redirection_info(&command->redirection_info);
+        //ft_free_redirection_info(&command->redirection_info);
         return;
     }
 	ft_free_redirection_info(&command->redirection_info);

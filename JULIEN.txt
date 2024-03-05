@@ -1,0 +1,4 @@
+enter in ft_launch_command_execution
+Built-in found. Launch execute builtin of command: echo
+"Hello, Minishell!" >
+[1;35mminishell$ [0m

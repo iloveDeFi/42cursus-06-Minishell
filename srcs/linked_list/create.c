@@ -34,7 +34,6 @@ t_command *ft_create_and_init_new_command_in_commandList(t_commandList *commandL
 {
     printf("enter ft_create_and_init_new_command_in_commandList\n");
     t_command *command = (t_command *)malloc(sizeof(t_command));
-
     if (command == NULL) 
     {
         perror("CHAOS, error allocating memory");
