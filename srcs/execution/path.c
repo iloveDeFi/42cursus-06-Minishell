@@ -110,25 +110,25 @@ char *ft_lookfor_command_and_build_path(char *path, t_command *command)
     char *originalPath = ft_strdup(path);
 
     // Utilisez un pointeur pour parcourir la liste des commandes
-    t_command *currentCommand = command;
+    //t_command *currentCommand = command;
 
     token = ft_strtok((char *)originalPath, ":");
     while (token != NULL) 
     {
         // Réinitialisez le pointeur pour chaque itération du chemin
-        currentCommand = command;
+        
 
-        while (currentCommand != NULL) 
+        while (command != NULL) 
         {
             // Construisez le chemin complet de la commande
             ft_strcpy(fullPath, token);
             ft_strcat(fullPath, "/");
-            ft_strcat(fullPath, currentCommand->name);
+            ft_strcat(fullPath, command->name);
 
             // Vérifiez si le chemin est exécutable
             if (access(fullPath, X_OK) == 0) 
             {
-                printf("Command '%s' found: %s\n", currentCommand->name, fullPath);
+                printf("Command '%s' found: %s\n", command->name, fullPath);
 
                 // Réinitialisez le chemin après utilisation
                 free(originalPath);
@@ -138,7 +138,7 @@ char *ft_lookfor_command_and_build_path(char *path, t_command *command)
             }
 
             // Passez à la prochaine commande
-            currentCommand = currentCommand->next;
+            command = command->next;
         }
 
         // Passez au jeton suivant

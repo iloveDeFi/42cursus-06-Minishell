@@ -48,7 +48,7 @@ void	ft_initialize_minishell(t_mini *shell)
     shell->cmd = NULL;
 }
 
- void ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
+void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 {
     while (1)
     {
@@ -58,8 +58,12 @@ void	ft_initialize_minishell(t_mini *shell)
 		add_history(shell->av);
         ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
-		ft_launch_parsing(shell);
-		ft_launch_execution(shell);
+
+        if (ft_launch_parsing_and_execution( shell->av, envList, envp) != 0)
+        {
+            perror("Error executing minishell in ft_execute_minishell\n");
+            break;  // Quit the loop if an error occurs during execution
+        }
         ft_destroy_current_shell(shell);
     }
 }
