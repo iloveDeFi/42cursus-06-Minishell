@@ -193,10 +193,10 @@ int				ft_eof_is_in_string(char *here, char *eof);
 int				ft_isword(char *here, char *eof, int index);
 // multi
 void			ft_handle_exit_status(int exit_status);
-void			ft_launch_command(t_mini *shell, struct s_command *command);
+void			ft_launch_command(t_command *command);
 void			ft_setup_fd(struct s_command *command, int *fd_pipe_read_tmp, int *fd_pipe);
 void			ft_close_fd(struct s_command *command, int *fd_pipe_read_tmp, int *fd_pipe);
-void			ft_execute_multi_commands(t_mini *mini);
+void			ft_execute_multi_commands(t_command *cmd);
 // path
 char            *ft_build_full_path(t_command *command);
 void            ft_execute_command_with_absolute_path(t_command *command);
