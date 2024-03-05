@@ -69,8 +69,6 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	{
 		token = tokens[tokenIndex];
 		// // printf("token = %s\n", token );
-		// ft_parse_all_redirection(tokens[tokenIndex]); 
-		// printf("token type = %d\n", (*first_command)->redirection_info.type);
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
