@@ -80,7 +80,6 @@ void	ft_execute_external_command(t_command *command, \
     pid_t pid;
     int statuts;
     (void)envp;
-    
     full_path = ft_build_full_path(commandList);
 
     if (full_path != NULL) 
@@ -90,7 +89,8 @@ void	ft_execute_external_command(t_command *command, \
         if (pid == 0) 
         {
             ft_configure_child_process(command);
-            ft_execute_child_process(full_path, command->args, command->envp);
+            //ft_execute_child_process(full_path, command->args, command->envp);
+            execve(full_path, command->args, command->envp);
         }
         else if (pid == -1) 
         {

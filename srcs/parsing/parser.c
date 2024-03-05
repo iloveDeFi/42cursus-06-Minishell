@@ -27,7 +27,7 @@ int	ft_launch_parsing_and_execution(t_commandList *commandList, \
 		{
 			ft_launch_redirection_execution(command);
 			//if (command->number_of_pipes > 0)
-				//ft_launch_pipe_execution(command);
+			//ft_launch_pipe_execution(command);
 			ft_launch_command_execution(command, commandList, envList, envp);
 			command = command->next;
 		}
