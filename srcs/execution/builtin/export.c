@@ -33,7 +33,8 @@ int	ft_check_variable_definition(char *arg)
 	}
 	if (equals == NULL || equals == arg || *equals == '\0')
 	{
-		perror("Invalid variable definition. Use VARIABLE=value format.\n");
+		printf("equals = %s\n", equals);
+        perror("Invalid variable definition. Use VARIABLE=value format.\n");
 		exit(EXIT_FAILURE);
 	}
 	return (0);
@@ -45,7 +46,7 @@ int	ft_check_export_args(t_command *command)
     char	*arg;
 	int		i;
 
-	if (command->argCount > 1)
+	if (command->argCount > 2)
 	{
 		perror("Hey, export takes only one argument!\n");
 		exit(EXIT_FAILURE);
@@ -91,7 +92,7 @@ int	ft_export(t_env **envList, t_command *cmd)
 		ft_print_exported_vars(*envList);
 		return (0);
 	}
-	ft_check_variable_definition(cmd->args[0]);
+	ft_check_variable_definition(cmd->args[1]);
 	ft_check_export_args(cmd);
 	ft_split_string_export_argument(cmd->args[1], &name, &value);
 	newvar = ft_create_node_for_export_argument(name, value);

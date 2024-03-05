@@ -6,7 +6,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	t_command *command;
 	int i;
 
-	i = 0;
+    i = 0;
 	command = (t_command *)malloc(sizeof(t_command));
 	// printf("%s\n", tokens[0]);
 	command->name = ft_strdup(tokens[0]);
@@ -14,8 +14,9 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	while(i < arg_len + 1)
 	{
 		command->args[i] = ft_strdup(tokens[i]);
-		command->argCount++;
 		i++;
+        command->argCount = i;
+        //pritnf("command->argCount = %d\n", command->argCount);
 	}
 	command->args[i] = NULL;
 	command->next = NULL;
@@ -193,7 +194,7 @@ static void	ft_run_cmd(t_command *cmd, char **envp, t_env *envList)
 {
 	if (!ft_is_builtin(cmd))
 		ft_execute_external_command(cmd, envp);
-	exit(ft_execute_builtin(cmd, envp));
+	exit(ft_execute_builtin(cmd, envList));
 }
 
 static void	handle_exit_status(int exit_status)
@@ -240,9 +241,16 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
 	char **tokens;
 	int i = 0;
 
-	tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
-	//ft_initialize_commandList(command);
+	   if(!ft_check_quotes(input))
+    {
+        printf(">\n");
+        return 0;
+    }
+    ft_remove_quotes(input);
+    tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
+	//ft_initialize_commandList(command);    
 	ft_parse_tokens(&first_command, tokens);
+    ft_found_and_replace_usd(first_command, envList);
 	if (first_command->next == NULL) // There is only one command (-> need to fork)
 		ft_execute_cmd(first_command, envp, envList);
 	else

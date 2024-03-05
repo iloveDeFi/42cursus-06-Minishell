@@ -9,7 +9,7 @@ static void	ft_handle_exit_status(int exit_status)
 static void	ft_launch_command(t_mini *shell, struct s_command *command)
 {
 	if (!ft_is_builtin(command))
-		ft_execute_external_command(command->envp, command);
+		ft_execute_external_command(command, command->envp);
 	exit(ft_execute_builtin(command, command->envList));
 }
 

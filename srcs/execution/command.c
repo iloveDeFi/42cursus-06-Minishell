@@ -53,7 +53,7 @@ int	ft_execute_single_command(t_command *command, t_env *envList, char **envp)
         	perror("Command not found in PATH in ft_execute_external_command\n");
         	printf("Command not found in PATH: %s\n", command->name);
     	}
-        ft_execute_external_command(envp, command); // revese the order of the arguments
+        ft_execute_external_command(command, envp); // revese the order of the arguments
     	}
 		return 0;
 }
@@ -101,7 +101,7 @@ void	ft_exec_external_code(t_command *command)
 		perror("Error with fork");
 	if (pid == 0)
 	{
-		ft_execute_external_command(command->envp, command); // revese the order of the arguments
+		ft_execute_external_command(command, command->envp); // revese the order of the arguments
 		perror("execve");
 		exit(errno);
 	}
