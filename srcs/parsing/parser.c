@@ -2,6 +2,7 @@
 
 t_command *    ft_create_new_command(char **tokens, int arg_len)
 {
+    printf("ft_create_new_command\n");
     t_command *command;
     int i;
 
@@ -52,13 +53,16 @@ void ft_process_tokens(t_command **command, char **tokens)
     int arg_len;
     int tokenIndex;
 
+    if (tokens == NULL) 
+        return;
+
     arg_len = 0;
     tokenIndex = 0;
     while (tokens[tokenIndex] != NULL)
     {
         token = tokens[tokenIndex];
         printf("token = %s\n", token );
-        if (ft_strcmp(token, "|") == 0 || tokens[tokenIndex+1] == NULL)
+        if (ft_strcmp(*tokens, "|") == 0 || tokens[tokenIndex + 1] == NULL)
         {
             ft_append_to_command(command, ft_create_new_command(tokens, arg_len));
             tokens += arg_len + 1;
@@ -71,6 +75,38 @@ void ft_process_tokens(t_command **command, char **tokens)
     }
 }
 
+// void ft_process_tokens(t_command **command, char **tokens)
+// {
+//     char *token;
+//     int arg_len;
+//     int tokenIndex;
+
+//     if (tokens == NULL) 
+//         return;
+
+//     arg_len = 0;
+//     tokenIndex = 0;
+//     char **currentToken = tokens; // Pointeur temporaire pour itérer sur tokens
+//     while (*currentToken != NULL)
+//     {
+//         token = *currentToken;
+//         printf("token = %s\n", token );
+//         if (ft_strcmp(token, "|") == 0 || *(currentToken + 1) == NULL)
+//         {
+//             ft_append_to_command(command, ft_create_new_command(tokens, arg_len));
+//             printf("tokens = %s\n", *currentToken);
+//             currentToken += arg_len + 1;
+//             arg_len = 0;
+//             tokenIndex = 0;
+//             continue;
+            
+//         }
+//         currentToken++;
+//         arg_len++;
+//         printf("currentToken = %s\n", *currentToken);
+//     }
+// }
+
 
 int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp) 
 {
@@ -81,11 +117,11 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
     tokens = ft_tokenize_input_with_strtok(input);
     //ft_initialize_commandList(command);
     ft_process_tokens(&first_command, tokens);
-    if (first_command->next != NULL)
-    {
-        printf("first_command->name = %s\n", first_command->name);
-        exec_cmd(first_command, envList);
-    }
+    // if (first_command->next != NULL)
+    // {
+    //     printf("first_command->name = %s\n", first_command->name);
+    //     exec_cmd(first_command, envList);
+    // }
         
     return 0;
 }
