@@ -248,7 +248,6 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
 	else
 	{
 		ft_execute_cmds(first_command, envp, envList);
-
 	}
 
 	return 0;
