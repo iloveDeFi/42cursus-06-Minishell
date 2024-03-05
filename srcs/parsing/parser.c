@@ -24,6 +24,7 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	command->redirection_info.filename = NULL;
 	command->redirection_info.delimiter = NULL;
 	command->redirection_info.type = NO_REDIRECTION;
+	printf("-- command->redirection_info.type = NO_REDIRECTION : %d\n", command->redirection_info.type);
 	// printf("arg_len = %d\n", arg_len);
 	// printf("name = %s\n", command->name);
 	i = 0;
@@ -67,9 +68,9 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	while (tokens[tokenIndex] != NULL)
 	{
 		token = tokens[tokenIndex];
-		// printf("token = %s\n", token );
-		ft_parse_all_redirection(token); // added by bat
-		printf("token type = %d\n", (*first_command)->redirection_info.type);
+		// // printf("token = %s\n", token );
+		// ft_parse_all_redirection(tokens[tokenIndex]); 
+		// printf("token type = %d\n", (*first_command)->redirection_info.type);
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
