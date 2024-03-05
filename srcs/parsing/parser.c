@@ -21,6 +21,9 @@ t_command *    ft_create_new_command(char **tokens, int arg_len)
 	command->next = NULL;
 	command->fdread = 0;
 	command->fdwrite = 1;
+	command->redirection_info.filename = NULL;
+	command->redirection_info.delimiter = NULL;
+	command->redirection_info.type = NO_REDIRECTION;
 	// printf("arg_len = %d\n", arg_len);
 	// printf("name = %s\n", command->name);
 	i = 0;
@@ -65,6 +68,8 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	{
 		token = tokens[tokenIndex];
 		// printf("token = %s\n", token );
+		ft_parse_all_redirection(token); // added by bat
+		printf("token type = %d\n", (*first_command)->redirection_info.type);
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
@@ -193,7 +198,7 @@ static void	ft_run_cmd(t_command *cmd, char **envp, t_env *envList)
 {
 	if (!ft_is_builtin(cmd))
 		ft_execute_external_command(cmd, envp);
-	exit(ft_execute_builtin(cmd, envp));
+	exit(ft_execute_builtin(cmd, envList));
 }
 
 static void	handle_exit_status(int exit_status)
