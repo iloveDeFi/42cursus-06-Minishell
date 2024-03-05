@@ -72,7 +72,7 @@ int ft_exit(t_command *command, t_env *envList)
 	} 
 	else 
 	{
-		perror("Exit failed. Take your mass gainer shaker\n");
+		perror("exit\n");
 		exit(EXIT_FAILURE);
 	}
 }

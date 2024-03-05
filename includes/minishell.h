@@ -340,4 +340,6 @@ extern void		rl_replace_line(const char *bob, int test);
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
 
+int ft_token_is_a_quotes(char *input);
+
 #endif

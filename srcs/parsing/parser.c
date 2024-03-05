@@ -65,7 +65,7 @@ void ft_parse_tokens(t_command **first_command, char **tokens)
 	while (tokens[tokenIndex] != NULL)
 	{
 		token = tokens[tokenIndex];
-		// printf("token = %s\n", token );
+		printf("token = %s\n", token );
 		if (tokens[tokenIndex + 1] == NULL)
 		{
 			ft_append_to_command(first_command, ft_create_new_command(tokens, arg_len));
@@ -246,10 +246,12 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
         printf(">\n");
         return 0;
     }
-    ft_remove_quotes(input);
+    //ft_remove_quotes(input);
     tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
-	//ft_initialize_commandList(command);    
+	//ft_initialize_commandList(command);
 	ft_parse_tokens(&first_command, tokens);
+    ft_token_is_a_quotes(input);
+    ft_remove_quotes(input);
     ft_found_and_replace_usd(first_command, envList);
 	if (first_command->next == NULL) // There is only one command (-> need to fork)
 		ft_execute_cmd(first_command, envp, envList);
