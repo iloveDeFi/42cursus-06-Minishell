@@ -1,19 +1,19 @@
 #include "minishell.h"
 
-static void	ft_handle_exit_status(int exit_status)
+void	ft_handle_exit_status(int exit_status)
 {
 	if (WIFEXITED(exit_status))
 		g_exit_code = WEXITSTATUS(exit_status);
 }
 
-static void	ft_launch_command(t_mini *shell, struct s_command *command)
+void	ft_launch_command(struct s_command *command)
 {
 	if (!ft_is_builtin(command))
-		ft_execute_external_command(command->envp, command);
+		ft_execute_external_command(command, command->envp);
 	exit(ft_execute_builtin(command, command->envList));
 }
 
-static void	ft_setup_fd(struct s_command *command, int *fd_pipe_read_tmp,
+void	ft_setup_fd(struct s_command *command, int *fd_pipe_read_tmp,
 				int *fd_pipe)
 {
 	close(fd_pipe[0]);
@@ -29,7 +29,7 @@ static void	ft_setup_fd(struct s_command *command, int *fd_pipe_read_tmp,
 	dup2(command->fdwrite, 1);
 }
 
-static void	ft_close_fd(struct s_command *command, int *fd_pipe_read_tmp,
+void	ft_close_fd(struct s_command *command, int *fd_pipe_read_tmp,
 				int *fd_pipe)
 {
 	close(fd_pipe[1]);
@@ -42,15 +42,13 @@ static void	ft_close_fd(struct s_command *command, int *fd_pipe_read_tmp,
 	*fd_pipe_read_tmp = fd_pipe[0];
 }
 
-void	ft_execute_multi_commands(t_mini *mini)
+void	ft_execute_multi_commands(t_command *cmd)
 {
 	int					fd_pipe_read_tmp;
 	int					fd_pipe[2];
 	int					exit_status;
 	pid_t				pid;
-	struct s_command 	*cmd;
 
-	cmd = mini->cmd;
 	fd_pipe_read_tmp = 0;
 	while (cmd)
 	{
@@ -59,7 +57,7 @@ void	ft_execute_multi_commands(t_mini *mini)
 		if (pid == 0)
 		{
 			ft_setup_fd(cmd, &fd_pipe_read_tmp, fd_pipe);
-			ft_launch_command(mini, cmd);
+			ft_launch_command(cmd);
 		}
 		ft_close_fd(cmd, &fd_pipe_read_tmp, fd_pipe);
 		cmd = cmd->next;

@@ -35,12 +35,12 @@
 // 	command->argCount = 1;
 // }
 
-void	ft_init_new_node_redirection_info(t_command *command)
-{
-	command->redirection_info.filename = NULL;
-	command->redirection_info.delimiter = NULL;
-	command->redirection_info.type = NO_REDIRECTION;
-}
+// void	ft_init_new_node_redirection_info(t_command *command)
+// {
+// 	command->redirection_info.filename = NULL;
+// 	command->redirection_info.delimiter = NULL;
+// 	command->redirection_info.type = NO_REDIRECTION;
+// }
 
 // void	ft_init_new_node(t_commandList *commandList, \
 // 	t_command *command, char *token)
