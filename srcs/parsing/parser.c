@@ -53,7 +53,7 @@ void ft_process_tokens(t_command **command, char **tokens)
     int arg_len;
     int tokenIndex;
 
-    if (tokens == NULL) 
+    if (tokens == NULL)
         return;
 
     arg_len = 0;
@@ -81,7 +81,7 @@ void ft_process_tokens(t_command **command, char **tokens)
 //     int arg_len;
 //     int tokenIndex;
 
-//     if (tokens == NULL) 
+//     if (tokens == NULL)
 //         return;
 
 //     arg_len = 0;
@@ -99,7 +99,7 @@ void ft_process_tokens(t_command **command, char **tokens)
 //             arg_len = 0;
 //             tokenIndex = 0;
 //             continue;
-            
+
 //         }
 //         currentToken++;
 //         arg_len++;
@@ -108,11 +108,12 @@ void ft_process_tokens(t_command **command, char **tokens)
 // }
 
 
-int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp) 
+int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
 {
     t_command *first_command = NULL;
 
     char **tokens;
+    int i = 0;
 
     tokens = ft_tokenize_input_with_strtok(input);
     //ft_initialize_commandList(command);
@@ -122,7 +123,7 @@ int ft_launch_parsing_and_execution(char *input, t_env *envList, char **envp)
     //     printf("first_command->name = %s\n", first_command->name);
     //     exec_cmd(first_command, envList);
     // }
-        
+
     return 0;
 }
 

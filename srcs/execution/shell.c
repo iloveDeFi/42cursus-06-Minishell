@@ -2,12 +2,12 @@
 
 void	ft_exit_shell(t_mini *shell)
 {
-    if (shell != NULL) 
+    if (shell != NULL)
     {
         if (shell->av != NULL)
             free(shell->av);
-        if (shell->cmd != NULL)
-            ft_destroy_commandList(shell->cmd);
+        // if (shell->cmd != NULL)
+        //     ft_destroy_commandList(shell->cmd);
     }
 }
 
@@ -35,7 +35,7 @@ void ft_initialize_environment(t_env **envList, char **env)
 
 void	ft_initialize_minishell(t_mini *shell)
 {
-    if (shell == NULL) 
+    if (shell == NULL)
     {
         perror("Error initializing mini shell");
         exit(EXIT_FAILURE);

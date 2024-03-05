@@ -22,23 +22,23 @@ void	ft_add_to_list(t_env **envList, t_env *new_node)
 	}
 }
 
-void	ft_append_to_commandlist(t_commandList *commandList, t_command *newNode)
-{
-	if (commandList == NULL || newNode == NULL)
-	{
-		perror("ft_append_to_list: Invalid commandList or newCommand.\n");
-		exit(EXIT_FAILURE);
-	}
-	newNode->next = NULL;
-	if (commandList->head == NULL)
-	{
-		commandList->head = newNode;
-		commandList->tail = newNode;
-	}
-	else
-	{
-		commandList->tail = newNode;
-		commandList->tail->next = NULL;
-	}
-	commandList->length++;
-}
+// void	ft_append_to_commandlist(t_commandList *commandList, t_command *newNode)
+// {
+// 	if (commandList == NULL || newNode == NULL)
+// 	{
+// 		perror("ft_append_to_list: Invalid commandList or newCommand.\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	newNode->next = NULL;
+// 	if (commandList->head == NULL)
+// 	{
+// 		commandList->head = newNode;
+// 		commandList->tail = newNode;
+// 	}
+// 	else
+// 	{
+// 		commandList->tail = newNode;
+// 		commandList->tail->next = NULL;
+// 	}
+// 	commandList->length++;
+// }

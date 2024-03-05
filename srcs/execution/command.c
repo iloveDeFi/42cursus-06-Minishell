@@ -1,30 +1,30 @@
 #include "minishell.h"
 
-int	ft_execute_single_command(t_command *command, t_env *envList, char **envp) 
+int	ft_execute_single_command(t_command *command, t_env *envList, char **envp)
 {
 	char *full_path;
 	int status;
 	pid_t pid;
 
-    if (command) 
+    if (command)
     {
-        if (ft_is_builtin(command)) 
+        if (ft_is_builtin(command))
         {
             printf("Built-in found. Launch execute builtin of command: %s\n", command->name);
             ft_execute_builtin(command, envList);
-        } 
-        else if (command->name[0] == '.' || command->name[0] == '/') 
+        }
+        else if (command->name[0] == '.' || command->name[0] == '/')
         {
             printf("Relative or absolute path detected. Command: %s\n", command->name);
             ft_execute_command_with_path(command);
-        } 
-        else 
+        }
+        else
         {
             printf("External command detected. Command: %s\n", command->name);
 			full_path = ft_build_full_path(command);
 		}
 
-    	if (full_path != NULL) 
+    	if (full_path != NULL)
     	{
         	pid = fork();
 
@@ -38,11 +38,11 @@ int	ft_execute_single_command(t_command *command, t_env *envList, char **envp)
             	ft_configure_child_process(command, envList);
 				ft_execute_child_process(command, full_path, command->args, command->envp);
         	}
-        	else if (pid == -1) 
+        	else if (pid == -1)
         	{
            		perror("Erreur lors de la création du processus enfant");
             	exit(EXIT_FAILURE);
-        	} 	
+        	}
 			else {
 				waitpid(pid, &status, 0);
 				if (WIFEXITED(status))
@@ -109,10 +109,10 @@ void	ft_exec_external_code(t_command *command)
 	}
 }
 
-void	ft_launch_execution(t_command *command)
-{
-	if (!command->next)
-		ft_execute_single_command(command);
-	else
-		ft_execute_multi_commands(command);
-}
+// void	ft_launch_execution(t_command *command)
+// {
+// 	if (!command->next)
+// 		ft_execute_single_command(command);
+// 	else
+// 		ft_execute_multi_commands(command);
+// }
