@@ -1,62 +1,66 @@
 #include "minishell.h"
 
-static bool	ft_parse_input_redirection(char *filename, int *fdread)
-{
-	// TODO check if is a string and not a pipe, a redirection, ...
-	if (filename == NULL || ft_strcmp(filename, "|") == 0)
-	{
-		ft_putstr_fd("minishell: parse error near <\n", STDERR_FILENO);
-				g_exit_code = 258;
-				return false;
-	}
-	*fdread = open(filename, O_RDONLY);
-	return (true);
+static bool ft_open_file(char *filename, int *fd, int flags, mode_t mode) {
+    *fd = open(filename, flags, mode);
+    if (*fd == -1) {
+        perror("minishell: open error");
+        g_exit_code = 258;
+        return false;
+    }
+    return true;
 }
 
-static bool	ft_parse_output_redirection(char *filename, int *fdwrite)
-{
-	// TODO check if is a string and not a pipe, a redirection, ...
-	if (filename == NULL || ft_strcmp(filename, "|") == 0)
-	{
-		ft_putstr_fd("minishell: parse error near >\n", STDERR_FILENO);
-				g_exit_code = 258;
-				return false;
-	}
-	*fdwrite = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	return (true);
+static bool ft_parse_input_redirection(char *filename, int *fdread) {
+    if (filename == NULL || ft_strcmp(filename, "|") == 0) {
+        ft_putstr_fd("minishell: parse error near <\n", STDERR_FILENO);
+        g_exit_code = 258;
+        return false;
+    }
+    return ft_open_file(filename, fdread, O_RDONLY, 0);
 }
 
-static bool	ft_parse_append_redirection(char *filename, int *fdwrite)
-{
-	// TODO check if is a string and not a pipe, a redirection, ...
-	if (filename == NULL || ft_strcmp(filename, "|") == 0)
-	{
-		ft_putstr_fd("minishell: parse error near >>\n", STDERR_FILENO);
-				g_exit_code = 258;
-				return false;
-	}
-	*fdwrite = open(filename, O_APPEND | O_CREAT | O_WRONLY, 0644);
-	return (true);
+static bool ft_parse_output_redirection(char *filename, int *fdwrite, int flags) {
+    if (filename == NULL || ft_strcmp(filename, "|") == 0) {
+        ft_putstr_fd("minishell: parse error near >\n", STDERR_FILENO);
+        g_exit_code = 258;
+        return false;
+    }
+    return ft_open_file(filename, fdwrite, flags, 0644);
 }
 
-bool	ft_parse_all_redirection(char *redir, char *filename, int *fdread, int *fdwrite)
-{
-	if (ft_strcmp(redir, "<") == 0)
-		return (ft_parse_input_redirection(filename, fdread));
-	else if (ft_strcmp(redir, ">") == 0)
-		return (ft_parse_output_redirection(filename, fdwrite));
-	else if (ft_strcmp(redir, ">>") == 0)
-		return (ft_parse_append_redirection(filename, fdwrite));
-	return true;
+static bool ft_parse_heredoc_redirection(char *filename, int *fdwrite) {
+    if (filename == NULL || ft_strcmp(filename, "|") == 0) {
+        ft_putstr_fd("minishell: parse error near <<\n", STDERR_FILENO);
+        g_exit_code = 258;
+        return false;
+    }
+    *fdwrite = open(".heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);
+    if (*fdwrite == -1) {
+        perror("minishell: open error");
+        g_exit_code = 258;
+        return false;
+    }
+    // TODO: Implement heredoc logic here
+    return true;
 }
 
-
-bool	ft_is_redirection(char *token)
-{
-	if (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0)
-		return true;
-	return false;
+bool ft_parse_all_redirection(char *redir, char *filename, int *fdread, int *fdwrite) {
+    if (ft_strcmp(redir, "<") == 0)
+        return ft_parse_input_redirection(filename, fdread);
+    else if (ft_strcmp(redir, ">") == 0)
+        return ft_parse_output_redirection(filename, fdwrite, O_CREAT | O_WRONLY | O_TRUNC);
+    else if (ft_strcmp(redir, ">>") == 0)
+        return ft_parse_output_redirection(filename, fdwrite, O_CREAT | O_WRONLY | O_APPEND);
+    else if (ft_strcmp(redir, "<<") == 0)
+        return ft_parse_heredoc_redirection(filename, fdread);
+    return true;
 }
+
+bool ft_is_redirection(char *token) {
+    return (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 ||
+            ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0);
+}
+
 
 
 
