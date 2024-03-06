@@ -67,6 +67,7 @@ void	ft_initialize_minishell(t_mini *shell)
 
 void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 {
+	t_command	*cmd;
     while (1)
     {
         // TO DO: ADD SIGNALS HERE
@@ -77,11 +78,15 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
         if (shell->av && !ft_is_only_spaces(shell->av))
         {
 		    add_history(shell->av);
-            if (ft_launch_parsing_and_execution(shell, shell->av, envList, envp) != 0)
-            {
-                perror("Error executing minishell in ft_execute_minishell\n");
-                break;  // Quit the loop if an error occurs during execution
-            }
+			cmd = ft_parser(shell->av, envList);
+			if (cmd != NULL)
+				ft_execute(cmd, envList, envp);
+			// TODO probably some free to do here
+            // if (ft_launch_parsing_and_execution(shell, shell->av, envList, envp) != 0)
+            // {
+            //     perror("Error executing minishell in ft_execute_minishell\n");
+            //     break;  // Quit the loop if an error occurs during execution
+            // }
         }
         ft_destroy_current_shell(shell);
     }

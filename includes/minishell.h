@@ -54,45 +54,45 @@ typedef enum e_token_type
 	IN,       // <
 	NOT,      // string
 	END,      // end of cmd
-    COMMAND_TYPE,
-    ARGUMENT_TYPE,
-    OPTION_TYPE,
-    UNKNOWN_TYPE
+	COMMAND_TYPE,
+	ARGUMENT_TYPE,
+	OPTION_TYPE,
+	UNKNOWN_TYPE
 } t_token_type;
 
 typedef t_token_type (*TokenChecker)(char *);
 
 typedef enum e_quote
 {
-    NORMAL,
-    SINGLE_QUOTE,
-    DOUBLE_QUOTE,
-    ESCAPED
+	NORMAL,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	ESCAPED
 } t_quote_type;
 
 typedef enum e_redirection_type {
-    NO_REDIRECTION = 0,
-    OUTPUT_REDIRECTION,     // '>' or 1
-    APPEND_REDIRECTION,     // '>>' or 2
-    INPUT_REDIRECTION,      // '<' or 3
-    HERE_DOC_REDIRECTION    // '<<' or 4
+	NO_REDIRECTION = 0,
+	OUTPUT_REDIRECTION,     // '>' or 1
+	APPEND_REDIRECTION,     // '>>' or 2
+	INPUT_REDIRECTION,      // '<' or 3
+	HERE_DOC_REDIRECTION    // '<<' or 4
 } t_redirection_type;
 
 typedef struct s_redirection_info
 {
-    char *filename;
-    char *delimiter;
-    t_redirection_type type;
+	char *filename;
+	char *delimiter;
+	t_redirection_type type;
 } t_redirection_info;
 
 typedef struct s_command
 {
-    char *name;
-    char **args;
+	char *name;
+	char **args;
 	int argCount;
 	char **envp;
-    struct s_command *next;
-    struct s_env *envList;
+	struct s_command *next;
+	struct s_env *envList;
 	int fdread;
 	int fdwrite;
 	char *end_of_file;
@@ -110,29 +110,29 @@ typedef struct s_command
 
 typedef struct s_error
 {
-    char *error_name;
-    struct s_error *next;
-    struct s_error *prev;
+	char *error_name;
+	struct s_error *next;
+	struct s_error *prev;
 } t_error;
 
 typedef struct s_env
 {
-    char *name;
-    char *value;
-    struct s_env *next;
-    struct s_env *prev;
+	char *name;
+	char *value;
+	struct s_env *next;
+	struct s_env *prev;
 } t_env;
 
 typedef struct s_mini
 {
-    char *av;
-    // int status;
-    int fd_history;
-    int stdin_fd;
-    int stdout_fd;
+	char *av;
+	// int status;
+	int fd_history;
+	int stdin_fd;
+	int stdout_fd;
 	// struct s_token		*token;
 	struct s_command	*cmd;
-    t_error *error;
+	t_error *error;
 } t_mini;
 
 // BUILT-IN
@@ -168,6 +168,10 @@ int				pwd(void);
 int				ft_unset(t_env **envList, t_command *cmd);
 
 // EXECUTION
+void			ft_execute(t_command *cmd, t_env *envList, char **envp);
+void			ft_execute_cmds(t_command *cmd, char **envp, t_env *envList);
+void			ft_execute_cmd(t_command *cmd, char **envp, t_env *envList);
+
 
 // argument
 char 			**ft_allocate_and_copy_arguments(t_command *command, char **oldArgs, int argCount, char *newArg);
@@ -208,7 +212,7 @@ char			**ft_split_path(char **env);
 // process
 void            ft_process_cd_argument(t_command *currentCommand, char *token);
 void	        ft_process_command(t_command *command, char **envp, t_env *envList);
-t_command       *ft_process_token_as_command(t_command *currentCommand, char *token); 
+t_command       *ft_process_token_as_command(t_command *currentCommand, char *token);
 void            ft_process_token_as_argument(t_command *command, char *token);
 // redirection
 void 			ft_process_input_redirection(t_command *command);
@@ -226,7 +230,7 @@ void            ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 void 	        ft_execute_single_command(t_command *cmd,  char **envp, t_env *envList);
 void	        ft_execute_external_command(t_command *cmd, char **env);
 void	        ft_exec_external_code(t_command *command);
-void	        ft_execute_external_in_fork(t_command *cmd, char **envp);
+// void	        ft_execute_external_in_fork(t_command *cmd, char **envp);
 // LINKED LIST
 // add
 void			ft_add_to_list(t_env **envlist, t_env *new_node);
@@ -253,6 +257,8 @@ t_env			*ft_find_envVar(t_env *envList, const char *targetName);
 
 // PARSING
 
+t_command       *ft_parser(char * input, t_env *envList);
+
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
 const char      *ft_find_next_delimiter(const char *start, char delimiter);
@@ -263,7 +269,7 @@ void            ft_strtok_for_quotes(const char *input);
 int 			ft_check_if_file_exists(const char *filename);
 int	            ft_check_if_its_any_white_space(char c);
 bool         	ft_check_if_only_spaces(const char *str);
-void            ft_initialization_of_errors(t_mini *shell);
+void			ft_initialization_of_errors(t_mini *shell);
 void            ft_add_space_around_redirection(char *input);
 // expansion
 int             ft_is_valid_env_char(char c);

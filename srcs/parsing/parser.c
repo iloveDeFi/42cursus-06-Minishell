@@ -185,139 +185,74 @@ bool ft_parse_tokens(t_command **first_command, char **tokens)
 //     }
 // }
 
-// ---------------- For one command ----------------
-
-void	ft_execute_cmd(t_command *cmd, char **envp, t_env *envList)
-{
-	int		original_stdin;
-	int		original_stdout;
-
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
-	if (cmd->fdread >= 3)
-		dup2(cmd->fdread, STDIN_FILENO);
-	if (cmd->fdwrite >= 3)
-		dup2(cmd->fdwrite, STDOUT_FILENO);
-	if (ft_is_builtin(cmd))
-		g_exit_code = ft_execute_builtin(cmd, envList);
-	else
-		ft_execute_external_in_fork(cmd, envp);
-	if (cmd->fdread >= 3)
-		close(cmd->fdread);
-	if (cmd->fdwrite >= 3)
-		close(cmd->fdwrite);
-	dup2(original_stdin, STDIN_FILENO);
-	dup2(original_stdout, STDOUT_FILENO);
-	close(original_stdout);
-	close(original_stdin);
-}
-
-// ---------------- For multiple commands ----------------
-static void	prepare_fds(t_command *cmd, int *fd_pipe_read_tmp,
-				int *fd_pipe)
-{
-	close(fd_pipe[0]);
-	if (cmd->fdread == 0)
-		cmd->fdread = *fd_pipe_read_tmp;
-	dup2(cmd->fdread, 0);
-	if (cmd->fdwrite >= 3)
-		close(fd_pipe[1]);
-	else if (!cmd->next)
-		cmd->fdwrite = 1;
-	else
-		cmd->fdwrite = fd_pipe[1];
-	dup2(cmd->fdwrite, 1);
-}
-
-static void	close_fds(t_command *cmd, int *fd_pipe_read_tmp,
-				int *fd_pipe)
-{
-	close(fd_pipe[1]);
-	if (*fd_pipe_read_tmp >= 3)
-		close(*fd_pipe_read_tmp);
-	if (cmd->fdwrite >= 3)
-		close(cmd->fdwrite);
-	if (cmd->fdread >= 3)
-		close(cmd->fdread);
-	*fd_pipe_read_tmp = fd_pipe[0];
-}
-
-static void	ft_run_cmd(t_command *cmd, char **envp, t_env *envList)
-{
-	if (!ft_is_builtin(cmd))
-		ft_execute_external_command(cmd, envp);
-	exit(ft_execute_builtin(cmd, envList));
-}
-
-static void	handle_exit_status(int exit_status)
-{
-	if (WIFEXITED(exit_status))
-		g_exit_code = WEXITSTATUS(exit_status);
-	if (WIFSIGNALED(exit_status))
-		g_exit_code = 128 + WTERMSIG(exit_status);
-}
-
-void	ft_execute_cmds(t_command *cmd, char **envp, t_env *envList)
-{
-	printf("ft_execute_cmds\n");
-	int					fd_pipe_read_tmp;
-	int					fd_pipe[2];
-	int					exit_status;
-	pid_t				fork_pid;
-
-	fd_pipe_read_tmp = 0;
-	while (cmd)
-	{
-		pipe(fd_pipe);
-		fork_pid = fork();
-		if (fork_pid == 0)
-		{
-			prepare_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
-			ft_run_cmd(cmd, envp, envList);
-		}
-		close_fds(cmd, &fd_pipe_read_tmp, fd_pipe);
-		cmd = cmd->next;
-	}
-	while (waitpid(-1, &exit_status, 0) > 0)
-		;
-	handle_exit_status(exit_status);
-}
 
 
 // ---------------- Parse and launch command/s ----------------
 
-// ? TODO : rename in ft_parsing and create a function ft_execution
-int ft_launch_parsing_and_execution(t_mini *shell, char *input, t_env *envList, char **envp)
+// // ? TODO : rename in ft_parsing and create a function ft_execution
+// int ft_launch_parsing_and_execution(t_mini *shell, char *input, t_env *envList, char **envp)
+// {
+// 	t_command *first_command = NULL;
+
+// 	char **tokens;
+// 	int i = 0;
+
+// 	   if(!ft_check_quotes(input))
+//     {
+//         printf(">\n");
+//         return 0;
+//     }
+// 	ft_remove_quotes(input);
+//     //ft_remove_quotes(input);
+//     tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
+// 	//ft_initialize_commandList(command);
+// 	if (!ft_parse_tokens(&first_command, tokens))
+// 	{
+// 		// ? TODO something to free?
+// 		return 1;
+// 	}
+// 	//ft_parse_all_redirection(*tokens);
+//     ft_token_is_a_quotes(input);
+
+//     ft_found_and_replace_usd(first_command, envList); // ! it was making my minishell crash
+// 	if (first_command->next == NULL) // There is only one command (-> need to fork)
+// 		ft_execute_cmd(first_command, envp, envList);
+// 	else
+// 	{
+// 		ft_execute_cmds(first_command, envp, envList);
+// 	}
+
+// 	return 0;
+// }
+
+t_command *ft_parser(char * input, t_env *envList) // ! TODO check global variable before the execuction part
 {
 	t_command *first_command = NULL;
-
 	char **tokens;
-	int i = 0;
 
-	   if(!ft_check_quotes(input))
+	if(!ft_check_quotes(input))
     {
         printf(">\n");
-        return 0;
+        return NULL;
     }
 	ft_remove_quotes(input);
-    //ft_remove_quotes(input);
     tokens = ft_tokenize_input_with_strtok(input); // TODO rename this function
-	//ft_initialize_commandList(command);
 	if (!ft_parse_tokens(&first_command, tokens))
 	{
 		// ? TODO something to free?
 		return 1;
 	}
 	//ft_parse_all_redirection(*tokens);
+	// ? TODO should the replace usd / quotes be done in the tokenize function instead?
     ft_token_is_a_quotes(input);
-
     ft_found_and_replace_usd(first_command, envList); // ! it was making my minishell crash
-	if (first_command->next == NULL) // There is only one command (-> need to fork)
-		ft_execute_cmd(first_command, envp, envList);
-	else
-	{
-		ft_execute_cmds(first_command, envp, envList);
-	}
-
-	return 0;
+	// if (first_command->next == NULL) // There is only one command (-> need to fork)
+	// 	ft_execute_cmd(first_command, envp, envList);
+	// else
+	// {
+	// 	ft_execute_cmds(first_command, envp, envList);
+	// }
+	return first_command;
 }
+
+
