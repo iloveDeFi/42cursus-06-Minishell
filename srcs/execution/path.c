@@ -157,6 +157,7 @@ char	**ft_split_path(char **env)
 {
 	char	*path;
 	char	**splited_path;
+    (void)env;
 
 	path = getenv("PATH");
 	if (path[0] == '\0')

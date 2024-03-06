@@ -1,10 +1,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include "../srcs/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <signal.h>
@@ -108,6 +108,12 @@ typedef struct s_command
 // 	struct s_token	*previous;
 // } t_token;
 
+typedef struct t_token
+{
+	char *word;
+	char is_in_quote;
+} t_token;
+
 typedef struct s_error
 {
 	char *error_name;
@@ -122,6 +128,9 @@ typedef struct s_env
 	struct s_env *next;
 	struct s_env *prev;
 } t_env;
+
+
+
 
 typedef struct s_mini
 {
@@ -195,7 +204,7 @@ void	        ft_free_split(char **arr);
 // heredoc
 void 			ft_process_here_doc_redirection(t_command *command);
 int				ft_eof_is_in_string(char *here, char *eof);
-int				ft_isword(char *here, char *eof, int index);
+int				ft_find_word(char *here, char *eof, int index);
 // multi
 void			ft_handle_exit_status(int exit_status);
 void			ft_launch_command(t_command *command);
@@ -259,10 +268,15 @@ void			ft_init_new_node_redirection_info(t_command *command);
 // void			ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
 // node
 t_env			*ft_find_envVar(t_env *envList, const char *targetName);
+// sort
+t_env 			*ft_insert_sorted(t_env *head, t_env *new_node);
+t_env 			*ft_sort_list(t_env *head);
+void			ft_print_exported_vars(t_env *env_list);
 
 // PARSING
 t_command		*ft_parser(char * input, t_env *envList);
-bool	ft_parse_tokens(t_command **commands, char **tokens);
+bool			ft_parse_tokens(t_command **commands, t_token **tokens);
+void			ft_free_tokens(t_token **tokens);
 
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
@@ -309,7 +323,7 @@ int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 //t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
-char ** 		ft_tokenize_input_with_strtok(char *input);
+t_token			**ft_tokenize(char *input);
 // type
 int 			ft_token_is_pipe(char *token, t_command *currentCommand);
 int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);
@@ -323,11 +337,13 @@ void			ft_putstr_fd(char *s, int fd);
 // GLOBAL
 
 extern int		g_exit_code;
-void			srl_replace_line(const char *str, int i);
+//extern void			srl_replace_line(const char *str, int i);
+void        rl_replace_line(const char *text, int clear_undo);
+
 
 // MAIN
 void	       	ft_exit_shell(t_mini *shell);
-void            ft_found_and_replace_usd(t_command *command, t_env *envList);
+void            ft_found_and_replace_usd(t_token **tokens, t_env *envList);
 char            *ft_replace_usd_to_env(t_env *envList, char *usd);
 void            replace_env_variables_in_command(t_command *command, t_env *envList);
 
@@ -338,14 +354,17 @@ void	        ft_signals_init(void (*signals_handle)(int));
 void	ft_remove_quotes(char *input);
 bool	        ft_check_quotes(char *input);
 
-extern void		rl_replace_line(const char *helllo, int test);
+
 
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
 int             ft_tokenize_redirection(char *tokens);
+int 	ft_tokenize_redirection(char *tokens);
 
-int ft_token_is_a_quotes(char *input);
+int 	ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
 char	*get_filename(t_command *new, char **tokens, char **tok);
 int check_tab(char **args, int i);
+;
+
 #endif

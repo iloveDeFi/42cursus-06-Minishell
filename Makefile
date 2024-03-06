@@ -6,7 +6,7 @@
 #    By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/03/06 19:39:10 by jbelda           ###   ########.fr        #
+#    Updated: 2024/03/06 23:11:39 by jbelda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,10 +114,11 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 
 # GLOBAL VARIABLES
 CC := gcc -g3 -fsanitize=address
-CFLAGS :=-O3 -g -I$(HEADER_DIRECTORY)  #-Wall -Wextra -Werror
+CFLAGS :=-Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
 # LIB READLINE AT 42 SCHOOL
-LDFLAGS := -L/usr/lib
-CPPFLAGS := -I/usr/lib/libreadline.dylib
+LDFLAGS := -L $(HOME)/.brew/Cellar/readline/8.2.10/lib -I $(HOME)/.brew/Cellar/readline/8.2.10/include
+#LDFLAGS := $(HOME)/.brew/opt/readline/lib
+#CPPFLAGS := -I$(HOME)/.brew/opt/readline/include
 #LDFLAGS := -L/usr/lib/libreadline.dylib
 # LIB READLINE AT HOME WITH BREW
 ##CPPFLAGS := -I/usr/local/opt/readline/include

@@ -2,6 +2,7 @@
 
 void ft_remove_quotes(char *input)
 {
+    printf("entering ft_remove_quotes\n");
     int i;
     int j;
 
@@ -46,19 +47,19 @@ bool	ft_check_quotes(char *input)
 	}
 }
 
-int ft_token_is_a_quotes(char *input)
-{
-    int i;
+// int ft_token_is_a_quotes(char *input)
+// {
+//     int i;
 
-    i = 0;
-    while (input[i])
-    {
-        if (input[i] == '"' || input[i] == '\'')
-        {
-            printf("input[i] = %c\n", input[i]);
-            return (true);
-        }    
-        i++;
-    }
-    return (false);
-}
+//     i = 0;
+//     while (input[i])
+//     {
+//         if (input[i] == '"' || input[i] == '\'')
+//         {
+//             printf("input[i] = %c\n", input[i]);
+//             return (true);
+//         }    
+//         i++;
+//     }
+//     return (false);
+// }
