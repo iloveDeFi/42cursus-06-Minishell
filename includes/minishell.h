@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <stdio.h>
 # include "../srcs/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -114,6 +115,9 @@ typedef struct s_env
 	struct s_env *next;
 	struct s_env *prev;
 } t_env;
+
+
+
 
 typedef struct s_mini
 {
@@ -261,7 +265,8 @@ void			ft_print_exported_vars(t_env *env_list);
 
 // PARSING
 t_command		*ft_parser(char * input, t_env *envList);
-bool	ft_parse_tokens(t_command **commands, char **tokens);
+bool			ft_parse_tokens(t_command **commands, t_token **tokens);
+void			ft_free_tokens(t_token **tokens);
 
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
@@ -308,7 +313,7 @@ int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 //t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
-char ** 		ft_tokenize_input_with_strtok(char *input);
+t_token			**ft_tokenize(char *input);
 // type
 void			space_index(t_command *command, char *input);
 int				isdeli(char c, char flag);
@@ -327,11 +332,13 @@ void			ft_putstr_fd(char *s, int fd);
 // GLOBAL
 
 extern int		g_exit_code;
-void			srl_replace_line(const char *str, int i);
+//extern void			srl_replace_line(const char *str, int i);
+void        rl_replace_line(const char *text, int clear_undo);
+
 
 // MAIN
 void	       	ft_exit_shell(t_mini *shell);
-void            ft_found_and_replace_usd(t_command *command, t_env *envList);
+void            ft_found_and_replace_usd(t_token **tokens, t_env *envList);
 char            *ft_replace_usd_to_env(t_env *envList, char *usd);
 void            replace_env_variables_in_command(t_command *command, t_env *envList);
 
@@ -339,16 +346,20 @@ void	        ft_init_termios(void);
 void	        ft_signals_handle_input(int sig);
 void	        ft_signals_handle_execution(int sig);
 void	        ft_signals_init(void (*signals_handle)(int));
-void	        ft_remove_quotes(char *input);
+void	ft_remove_quotes(char *input);
 bool	        ft_check_quotes(char *input);
 
-extern void		rl_replace_line(const char *bob, int test);
+
 
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
+int             ft_tokenize_redirection(char *tokens);
 int 	ft_tokenize_redirection(char *tokens);
 
 int 	ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
-// char	*get_filename(t_command *new, char **tokens, char **tok);
+char	*get_filename(t_command *new, char **tokens, char **tok);
+int check_tab(char **args, int i);
+;
+
 #endif

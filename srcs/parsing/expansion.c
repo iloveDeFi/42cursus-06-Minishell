@@ -1,61 +1,76 @@
 #include "minishell.h"
+static char	*ft_get_env_value(char *name, t_env *envList)
+{
+	t_env	*current;
 
-void	ft_found_and_replace_usd(t_command *command, t_env *envList)
+	current = envList;
+	while (current != NULL)
+	{
+		if (ft_strcmp(current->name, name) == 0)
+			return (ft_strdup(current->value));
+		current = current->next;
+	}
+	return (ft_strdup(""));
+}
+
+static void	manage_in_quote(t_token *token, t_env *envList)
+{
+	char	**splited;
+	int		i;
+	char	*tmp;
+
+	if (token->is_in_quote != '"')
+		return ;
+	splited = ft_split(token->word, ' ');
+	i = 0;
+	free(token->word);
+	token->word = ft_strdup("");
+	while (splited[i])
+	{
+		if (splited[i][0] == '$')
+		{
+			tmp = ft_get_env_value(splited[i]+1, envList);
+			free(splited[i]);
+			splited[i] = tmp;
+
+		}
+		tmp = ft_strjoin_sep(token->word, splited[i], ' ');
+		free(token->word);
+		token->word = tmp;
+		i++;
+	}
+}
+
+void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
 {
 	int	i;
+	char	*tmp;
 
 	i = 0;
-	while (command->args[i] != NULL)
+	while (tokens[i])
 	{
-		if (command->args[i][0] == '$')
+		if (tokens[i]->is_in_quote == '\'' || tokens[i]->is_in_quote == '"')
 		{
-			if (command->args[i][1] == '?')
+			manage_in_quote(tokens[i++], envList);
+			continue;
+		}
+		if (tokens[i]->word[0] == '$')
+		{
+			if (tokens[i]->word[1] == '?')
 			{
-				free(command->args[i]);
-				command->args[i] = ft_itoa(g_exit_code);
+				free(tokens[i]->word);
+				tokens[i]->word = ft_itoa(g_exit_code);
 			}
-			else if (command->args[i][1] != '\0')
-				command->args[i] = ft_replace_usd_to_env(envList, \
-					command->args[i]);
+			else
+			{
+				tmp = ft_get_env_value(tokens[i]->word+1, envList);
+				free(tokens[i]->word);
+				tokens[i]->word = tmp;
+				printf("->expansion: tokens[i]->word = %s\n", tokens[i]->word);
+			}
 		}
 		i++;
 	}
 }
 
-char	*ft_replace_usd_to_env(t_env *envList, char *usd)
-{
-	t_env	*tmp;
 
-	tmp = envList;
-	while (tmp)
-	{
-		if (tmp->name != NULL && strcmp(usd + 1, tmp->name) == 0)
-			break ;
-		tmp = tmp->next;
-	}
-	if (tmp)
-	{
-		free(usd);
-		return (strdup(tmp->value));
-	}
-	else
-	{
-		free(usd);
-		return (strdup("\0"));
-	}
-}
-
-void	replace_env_variables_in_command(t_command *command, t_env *envList)
-{
-	int		i;
-	char	*dollar_sign;
-
-	i = 0;
-	while (command->args[i])
-	{
-		dollar_sign = ft_strchr(command->args[i], '$');
-		if (dollar_sign != NULL)
-			command->args[i] = ft_replace_usd_to_env(envList, command->args[i]);
-		i++;
-	}
-}

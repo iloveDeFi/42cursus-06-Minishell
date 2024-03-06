@@ -1,25 +1,26 @@
 #include "minishell.h"
 
-void	ft_remove_quotes(char *input)
+void ft_remove_quotes(char *input)
 {
-	int	i;
-	int	j;
-	int	len;
+    printf("entering ft_remove_quotes\n");
+    int i;
+    int j;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen(input);
-	while (i < len)
-	{
-		if (input[i] != '"')
-		{
-			input[j++] = input[i];
-            printf("input[j] = %c\n", input[j]);
-		}
-        i++;
-        printf("i = %d\n", i);
-	}
-	input[j] = '\0';
+    i = 0;
+    j = 0;
+    if((ft_strrchr(input, '"') != NULL) || (ft_strchr(input, '\'') != NULL))
+    {
+        while (input[i])
+        {
+            if (input[i] != '"')
+            {
+                input[j] = input[i];
+                j++;
+            }
+            i++;
+        }
+        input[j] = '\0';
+    }
 }
 
 bool	ft_check_quotes(char *input)
@@ -46,19 +47,19 @@ bool	ft_check_quotes(char *input)
 	}
 }
 
-int ft_token_is_a_quotes(char *input)
-{
-    int i;
+// int ft_token_is_a_quotes(char *input)
+// {
+//     int i;
 
-    i = 0;
-    while (input[i])
-    {
-        if (input[i] == '"' || input[i] == '\'')
-        {
-            printf("input[i] = %c\n", input[i]);
-            return (true);
-        }    
-        i++;
-    }
-    return (false);
-}
+//     i = 0;
+//     while (input[i])
+//     {
+//         if (input[i] == '"' || input[i] == '\'')
+//         {
+//             printf("input[i] = %c\n", input[i]);
+//             return (true);
+//         }    
+//         i++;
+//     }
+//     return (false);
+// }

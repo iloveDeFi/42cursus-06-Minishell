@@ -33,7 +33,7 @@ void	ft_check_null_av_shell(t_mini *shell)
 
 void	ft_check_empty_av_shell(t_mini *shell)
 {
-	if (shell->av == NULL || shell->av[0] == '\0')
+	if (shell->av == NULL)
 	{
 		perror("The shell argv is an empty string or a null pointer\n");
 		exit(EXIT_FAILURE);

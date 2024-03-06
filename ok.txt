@@ -1,0 +1,6 @@
+b
+c
+a
+ft_is_builtin
+ft_execute_builtin
+hello
