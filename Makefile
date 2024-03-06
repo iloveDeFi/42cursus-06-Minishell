@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+         #
+#    By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/03/06 03:42:19 by thomas           ###   ########.fr        #
+#    Updated: 2024/03/06 22:44:11 by bbessard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,6 +116,9 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 CC := gcc -g3 -fsanitize=address
 CFLAGS :=-O3 -g -I$(HEADER_DIRECTORY)  #-Wall -Wextra -Werror
 # LIB READLINE AT 42 SCHOOL
+LDFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.10/lib -I $(HOME)/.brew/Cellar/readline/8.2.10/include
+#$(HOME)/.brew/Cellar/readline/8.2.1/include
+#RD_REPLACE = -L /opt/homebrew/Cellar/readline/8.2.1/lib -I /opt/homebrew/Cellar/readline/8.2.1/include
 #LDFLAGS := -L/usr/lib
 #LDFLAGS := -L/usr/lib/libreadline.dylib
 #CPPFLAGS := -I/usr/lib/libreadline.dylib
@@ -123,8 +126,8 @@ CFLAGS :=-O3 -g -I$(HEADER_DIRECTORY)  #-Wall -Wextra -Werror
 ##CPPFLAGS := -I/usr/local/opt/readline/include
 #LDFLAGS := -L/opt/homebrew/opt/readline/lib
 #CPPFLAGS := -I/opt/homebrew/opt/readline/include
-LDFLAGS := -L/usr/local/opt/readline/lib
-CPPFLAGS := -I/usr/local/opt/readline/include
+#LDFLAGS := -L/usr/local/opt/readline/lib
+#CPPFLAGS := -I/usr/local/opt/readline/include
 SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES) $(EXECUTE_FILES)
 OBJS := $(SRCS:.c=.o)
 RM := rm -f
