@@ -57,7 +57,6 @@ void ft_print_commandList(t_commandList *commandList)
     while (current != NULL) 
     {
         printf("Command: %s\n", current->name);
-
         // Print arguments
         i = 0;
         while (i < current->argCount) 
@@ -65,6 +64,8 @@ void ft_print_commandList(t_commandList *commandList)
             printf("Argument %d: %s\n", i, current->args[i]);
             i++;
         }
+       
         current = current->next;
+        
     }
 }

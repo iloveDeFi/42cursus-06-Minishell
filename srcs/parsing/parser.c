@@ -16,6 +16,7 @@ int ft_launch_parsing_and_execution(t_commandList *commandList, char *input, t_e
 	if (ft_tokenize_input_with_strtok(commandList, input) >= 1)
 	{
 		command = commandList->head;
+        ft_print_commandList(commandList);
 		command->number_of_pipes = ft_count_number_of_pipes(input);
 		while (command != NULL)
 		{
