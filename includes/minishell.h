@@ -335,16 +335,17 @@ void	        ft_init_termios(void);
 void	        ft_signals_handle_input(int sig);
 void	        ft_signals_handle_execution(int sig);
 void	        ft_signals_init(void (*signals_handle)(int));
-void	        ft_remove_quotes(char *input);
+void	ft_remove_quotes(char *input);
 bool	        ft_check_quotes(char *input);
 
-extern void		rl_replace_line(const char *bob, int test);
+extern void		rl_replace_line(const char *helllo, int test);
 
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
-int ft_tokenize_redirection(char *tokens);
+int             ft_tokenize_redirection(char *tokens);
 
 int ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
 char	*get_filename(t_command *new, char **tokens, char **tok);
+int check_tab(char **args, int i);
 #endif

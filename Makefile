@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+         #
+#    By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/03/06 03:42:19 by thomas           ###   ########.fr        #
+#    Updated: 2024/03/06 19:39:10 by jbelda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,15 +116,16 @@ INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
 CC := gcc -g3 -fsanitize=address
 CFLAGS :=-O3 -g -I$(HEADER_DIRECTORY)  #-Wall -Wextra -Werror
 # LIB READLINE AT 42 SCHOOL
-#LDFLAGS := -L/usr/lib
+LDFLAGS := -L/usr/lib
+CPPFLAGS := -I/usr/lib/libreadline.dylib
 #LDFLAGS := -L/usr/lib/libreadline.dylib
-#CPPFLAGS := -I/usr/lib/libreadline.dylib
 # LIB READLINE AT HOME WITH BREW
 ##CPPFLAGS := -I/usr/local/opt/readline/include
 #LDFLAGS := -L/opt/homebrew/opt/readline/lib
 #CPPFLAGS := -I/opt/homebrew/opt/readline/include
-LDFLAGS := -L/usr/local/opt/readline/lib
-CPPFLAGS := -I/usr/local/opt/readline/include
+#LDFLAGS := -L/usr/local/opt/readline/lib
+#CPPFLAGS := -I/usr/local/opt/readline/include
+
 SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES) $(EXECUTE_FILES)
 OBJS := $(SRCS:.c=.o)
 RM := rm -f

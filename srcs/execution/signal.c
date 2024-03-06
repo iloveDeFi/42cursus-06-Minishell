@@ -16,7 +16,7 @@ void	ft_signals_handle_input(int sig)
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		g_exit_code = 1;

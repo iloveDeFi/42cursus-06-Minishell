@@ -1,25 +1,25 @@
 #include "minishell.h"
 
-void	ft_remove_quotes(char *input)
+void ft_remove_quotes(char *input)
 {
-	int	i;
-	int	j;
-	int	len;
+    int i;
+    int j;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen(input);
-	while (i < len)
-	{
-		if (input[i] != '"')
-		{
-			input[j++] = input[i];
-            printf("input[j] = %c\n", input[j]);
-		}
-        i++;
-        printf("i = %d\n", i);
-	}
-	input[j] = '\0';
+    i = 0;
+    j = 0;
+    if((ft_strrchr(input, '"') != NULL) || (ft_strchr(input, '\'') != NULL))
+    {
+        while (input[i])
+        {
+            if (input[i] != '"')
+            {
+                input[j] = input[i];
+                j++;
+            }
+            i++;
+        }
+        input[j] = '\0';
+    }
 }
 
 bool	ft_check_quotes(char *input)

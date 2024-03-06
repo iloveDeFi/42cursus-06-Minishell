@@ -35,19 +35,6 @@ static t_command	*ft_create_new_command(char **tokens, int arg_len, int fdwrite,
 	command->next = NULL;
 	command->fdread = fdread;
 	command->fdwrite = fdwrite;
-	// command->redirection_info.filename = NULL;
-	// command->redirection_info.delimiter = NULL;
-	// command->redirection_info.type = NO_REDIRECTION;
-	// printf("-- command->redirection_info.type = NO_REDIRECTION : %d\n", command->redirection_info.type);
-	// printf("arg_len = %d\n", arg_len);
-	// printf("name = %s\n", command->name);
-	// i = 0;
-	// while(command->args[i] != NULL)
-	// {
-	// 	printf("args = %s\n", command->args[i]);
-	// 	i++;
-	// }
-
 	return command;
 }
 
@@ -69,8 +56,8 @@ bool	ft_parse_tokens(t_command **commands, char **tokens)
 		}
 		else if (tokens[tokenIndex + 1] == NULL || ft_strcmp(tokens[tokenIndex + 1], "|") == 0)
 		{
-			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
-			tokens += tokenIndex + 1 + (tokens[tokenIndex + 1] != NULL); // bidouillage, pour skip le pipe
+            ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
+            tokens += tokenIndex + 1 + (tokens[tokenIndex + 1] != NULL); // bidouillage, pour skip le pipe
 			tokenIndex = -1; // -1 so that it becomes 0 after the incrementation
 			fdwrite = 1;
 			fdread= 0;
