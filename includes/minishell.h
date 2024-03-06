@@ -185,9 +185,9 @@ void			ft_free_redirection_info(t_redirection_info *redirection_info);
 void	        ft_exit_shell(t_mini *shell);
 void	        ft_free_split(char **arr);
 // heredoc
-void			ft_exec_heredoc(t_command *command);
+void			ft_exec_heredoc(char *end_of_file, int *fdwrite);
 int				ft_eof_is_in_string(char *here, char *eof);
-int				ft_fin_word(char *here, char *eof, int index);
+int				ft_find_word(char *here, char *eof, int index);
 void 			ft_process_here_doc_redirection(t_command *command);
 int				ft_eof_is_in_string(char *here, char *eof);
 int				ft_find_word(char *here, char *eof, int index);

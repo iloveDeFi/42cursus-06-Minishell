@@ -1,27 +1,26 @@
 #include "minishell.h"
 
-void	ft_exec_heredoc(t_command *command)
-{
-	char	*here;
-	int		heredoc;
+void ft_exec_heredoc(char *end_of_file, int *fdread) {
+    char *here;
+    int heredoc;
 
-	heredoc = open(".heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (!heredoc)
+    heredoc = open(".heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);
+    here = readline(">");
+    
+    while (here && !ft_eof_is_in_string(here, end_of_file)) 
 	{
-		perror("error creating heredoc file");
-		return ;
-	}
-	here = readline(">");
-	while (here && !ft_eof_is_in_string(here, command->end_of_file))
-	{
-		write(heredoc, here, ft_strlen(here));
-		write(heredoc, "\n", 1);
-		free(here);
-		here = readline(">");
-	}
-	close(heredoc);
-	free(here);
-	command->fdread = open(".heredoc.txt", O_RDONLY);
+        write(heredoc, here, ft_strlen(here));
+        write(heredoc, "\n", 1);
+        free(here);
+        rl_replace_line("", 0);
+        rl_redisplay();
+        here = readline(">");
+        add_history(here);
+    }
+
+    close(heredoc);
+    *fdread = open(".heredoc.txt", O_RDONLY);
+    return;
 }
 
 int	ft_eof_is_in_string(char *here, char *eof)

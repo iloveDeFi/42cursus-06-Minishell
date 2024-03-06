@@ -79,13 +79,12 @@ bool	ft_parse_tokens(t_command **commands, char **tokens)
 		else if(ft_strcmp(tokens[tokenIndex + 1], "<<") == 0)
 		{
 			// TO DO : use tokens[tokenIndex + 2]) as EOF
-			printf("tokens[tokenIndex + 2] = %s\n", tokens[tokenIndex + 2]);
-			(*commands)->end_of_file = ft_strdup(tokens[tokenIndex + 2]); // NOPE
+			//	printf("tokens[tokenIndex + 2] = %s\n", tokens[tokenIndex + 2]);
+			// (*commands)->end_of_file = ft_strdup(tokens[tokenIndex + 2]); // NOPE
 			// (*commands)->end_of_file = malloc(sizeof(char) * word_len((*tokens), (*commands)->i));// NOPE
 			// (*commands)->end_of_file = malloc(sizeof(char) * word_len(input, new->i));// NOPE
 			// (*commands)->end_of_file = get_filename((*commands), (*tokens));// NOPE
 			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
-			ft_exec_heredoc(*commands);
 		}
 		tokenIndex++;
 	}
