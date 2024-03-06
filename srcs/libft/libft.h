@@ -6,7 +6,7 @@
 /*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:20:57 by bbessard          #+#    #+#             */
-/*   Updated: 2024/03/05 15:13:25 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/06 18:52:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int				ft_repeat_alpha(char c);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s);
 char			*ft_strjoin(char const	*s1, char const *s2);
+char			*ft_strjoin_sep(char const *s1, char const *s2, char sep);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);

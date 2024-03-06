@@ -42,6 +42,17 @@ static void	add_token(t_token **tokens, int *token_index, char *input, int *star
 	char	in_quote;
 	t_token	*token;
 
+	// move all spaces
+	// while (input[*start] == ' ' && *start < end)
+	// 	{(*start)++;
+	// 	printf("a\n");
+	// 	}
+	if (*start == end)
+	{
+		(*start)++;
+		return ;
+	}
+
 	in_quote = 0;
 	if ((input[*start] == '"' || input[*start] == '\'') && input[*start] == input[end-1])
 	{
@@ -50,7 +61,7 @@ static void	add_token(t_token **tokens, int *token_index, char *input, int *star
 	}
 	// ! TODO if not in quote, replace the $var
 	token = (t_token *)malloc(sizeof(t_token));
-	token->word = ft_substr(input, *start, end - *start - in_quote);
+	token->word = ft_substr(input, *start, end - *start - (in_quote!=0));
 	token->is_in_quote = in_quote;
 	tokens[*token_index] = token;
 	// tokens[*token_index] = ft_substr(input, *start, end - *start);
