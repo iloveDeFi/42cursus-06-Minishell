@@ -87,6 +87,7 @@ typedef struct s_redirection_info
 
 typedef struct s_command
 {
+	int i;
 	char *name;
 	char **args;
 	int argCount;
@@ -98,15 +99,6 @@ typedef struct s_command
 	char *end_of_file;
 	t_redirection_info redirection_info;
 } t_command;
-
-// typedef struct s_token {
-// 	char				*word;
-// 	int					type;
-// 	int					red;
-// 	int					quote;
-// 	struct s_token	*next;
-// 	struct s_token	*previous;
-// } t_token;
 
 typedef struct s_error
 {
@@ -193,6 +185,9 @@ void			ft_free_redirection_info(t_redirection_info *redirection_info);
 void	        ft_exit_shell(t_mini *shell);
 void	        ft_free_split(char **arr);
 // heredoc
+void			ft_exec_heredoc(t_command *command);
+int				ft_eof_is_in_string(char *here, char *eof);
+int				ft_fin_word(char *here, char *eof, int index);
 void 			ft_process_here_doc_redirection(t_command *command);
 int				ft_eof_is_in_string(char *here, char *eof);
 int				ft_find_word(char *here, char *eof, int index);
@@ -315,6 +310,11 @@ int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // token
 char ** 		ft_tokenize_input_with_strtok(char *input);
 // type
+void			space_index(t_command *command, char *input);
+int				isdeli(char c, char flag);
+int				ft_isaspace(char c);
+int				word_len(char *input, int i);
+char			*get_filename(t_command *command, char *input);
 int 			ft_token_is_pipe(char *token, t_command *currentCommand);
 int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);
 // util TO DO CLEAN SI DEJA DANS LA LIBFT
@@ -350,5 +350,5 @@ int 	ft_tokenize_redirection(char *tokens);
 
 int 	ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
-char	*get_filename(t_command *new, char **tokens, char **tok);
+// char	*get_filename(t_command *new, char **tokens, char **tok);
 #endif

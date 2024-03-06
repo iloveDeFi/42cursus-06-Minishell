@@ -35,6 +35,7 @@ static t_command	*ft_create_new_command(char **tokens, int arg_len, int fdwrite,
 	command->next = NULL;
 	command->fdread = fdread;
 	command->fdwrite = fdwrite;
+	command->end_of_file = NULL;
 	// command->redirection_info.filename = NULL;
 	// command->redirection_info.delimiter = NULL;
 	// command->redirection_info.type = NO_REDIRECTION;
@@ -63,7 +64,7 @@ bool	ft_parse_tokens(t_command **commands, char **tokens)
 	while (tokens[tokenIndex] != NULL)
 	{
 		if (ft_is_redirection(tokens[tokenIndex]))
-		{
+		{	
 			if (ft_parse_all_redirection(tokens[tokenIndex], tokens[tokenIndex + 1], &fdread, &fdwrite) == false)
 				return false;
 		}
@@ -77,8 +78,14 @@ bool	ft_parse_tokens(t_command **commands, char **tokens)
 		}
 		else if(ft_strcmp(tokens[tokenIndex + 1], "<<") == 0)
 		{
+			// TO DO : use tokens[tokenIndex + 2]) as EOF
+			printf("tokens[tokenIndex + 2] = %s\n", tokens[tokenIndex + 2]);
+			(*commands)->end_of_file = ft_strdup(tokens[tokenIndex + 2]); // NOPE
+			// (*commands)->end_of_file = malloc(sizeof(char) * word_len((*tokens), (*commands)->i));// NOPE
+			// (*commands)->end_of_file = malloc(sizeof(char) * word_len(input, new->i));// NOPE
+			// (*commands)->end_of_file = get_filename((*commands), (*tokens));// NOPE
 			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
-			ft_process_here_doc_redirection(*commands);
+			ft_exec_heredoc(*commands);
 		}
 		tokenIndex++;
 	}
