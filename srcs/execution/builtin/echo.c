@@ -4,8 +4,6 @@ int	echo(t_command *cmd)
 {
 	int			i;
 	int			suppressnewline;
-	printf("echo working %s\n", cmd->args[1]);
-	return 0;
 
 	i = 1;
 	suppressnewline = 0;

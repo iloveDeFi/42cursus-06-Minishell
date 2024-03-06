@@ -81,8 +81,6 @@ void	ft_execute_external_in_fork(t_command *cmd, char **envp)
 	pid_t	fork_pid;
 	int		exit_code;
 
-	fprintf(stderr, "ft_execute_external_in_fork write:%d read:%d\n", cmd->fdwrite, cmd->fdread);
-
 	fork_pid = fork();
 	if (fork_pid == 0)
 		ft_execute_external_command(cmd, envp);
