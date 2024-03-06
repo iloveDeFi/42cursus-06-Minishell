@@ -311,7 +311,7 @@ int ft_launch_parsing_and_execution(t_mini *shell, char *input, t_env *envList, 
 	//ft_parse_all_redirection(*tokens);
     ft_token_is_a_quotes(input);
 
-    // ft_found_and_replace_usd(first_command, envList); // ! it was making my minishell crash
+    ft_found_and_replace_usd(first_command, envList); // ! it was making my minishell crash
 	if (first_command->next == NULL) // There is only one command (-> need to fork)
 		ft_execute_cmd(first_command, envp, envList);
 	else
