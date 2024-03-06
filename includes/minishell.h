@@ -259,6 +259,10 @@ void			ft_init_new_node_redirection_info(t_command *command);
 // void			ft_init_new_node(t_commandList *commandList, t_command *command, char *token);
 // node
 t_env			*ft_find_envVar(t_env *envList, const char *targetName);
+// sort
+t_env 			*ft_insert_sorted(t_env *head, t_env *new_node);
+t_env 			*ft_sort_list(t_env *head);
+void			ft_print_exported_vars(t_env *env_list);
 
 // PARSING
 t_command		*ft_parser(char * input, t_env *envList);
