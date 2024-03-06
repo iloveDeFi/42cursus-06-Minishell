@@ -23,5 +23,3 @@ t_command *ft_parser(char * input, t_env *envList)
 	ft_found_and_replace_usd(commands, envList);
 	return commands;
 }
-
-
