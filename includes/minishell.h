@@ -215,11 +215,14 @@ void	        ft_process_command(t_command *command, char **envp, t_env *envList)
 t_command       *ft_process_token_as_command(t_command *currentCommand, char *token);
 void            ft_process_token_as_argument(t_command *command, char *token);
 // redirection
-void 			ft_process_input_redirection(t_command *command);
-void 			ft_process_output_redirection(t_command *command);
-void 			ft_process_append_redirection(t_command *command);
-void 			ft_process_here_doc_redirection(t_command *command);
-void 			ft_launch_redirection_execution(t_command *command);
+bool	ft_parse_all_redirection(char *redir, char *filename, int *fdread, int *fdwrite);
+bool	ft_is_redirection(char *token);
+
+// void 			ft_process_input_redirection(t_command *command);
+// void 			ft_process_output_redirection(t_command *command);
+// void 			ft_process_append_redirection(t_command *command);
+// void 			ft_process_here_doc_redirection(t_command *command);
+// void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void            ft_custom_prompt_msg(t_mini *shell);
 void            ft_initialize_environment(t_env **envList, char **env);
@@ -232,6 +235,8 @@ void	        ft_execute_external_command(t_command *cmd, char **env);
 void	        ft_exec_external_code(t_command *command);
 // void	        ft_execute_external_in_fork(t_command *cmd, char **envp);
 // LINKED LIST
+void	ft_command_add_back(t_command **commands, t_command *new_command);
+
 // add
 void			ft_add_to_list(t_env **envlist, t_env *new_node);
 int				ft_add_envVar_to_list(t_env **envlist, t_env *new_node, t_command *command);
@@ -256,8 +261,8 @@ void			ft_init_new_node_redirection_info(t_command *command);
 t_env			*ft_find_envVar(t_env *envList, const char *targetName);
 
 // PARSING
-
-t_command       *ft_parser(char * input, t_env *envList);
+t_command		*ft_parser(char * input, t_env *envList);
+bool	ft_parse_tokens(t_command **commands, char **tokens);
 
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
@@ -298,10 +303,10 @@ int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // quote
 
 // redirection
-t_redirection_info	ft_parse_output_redirection(char *input);
-t_redirection_info 	ft_parse_append_redirection(char *input);
-t_redirection_info 	ft_parse_input_redirection(char *input);
-t_redirection_info 	ft_parse_here_doc_redirection(char *input);
+// t_redirection_info	ft_parse_output_redirection(char *input);
+// t_redirection_info 	ft_parse_append_redirection(char *input);
+// t_redirection_info 	ft_parse_input_redirection(char *input);
+// t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 //t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
 char ** 		ft_tokenize_input_with_strtok(char *input);
