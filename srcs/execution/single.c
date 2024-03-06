@@ -31,10 +31,6 @@ void	ft_execute_external_command(t_command *cmd, char **env)
 	char	**splited_path;
 	int		i;
 
-	// char *argv[2];
-	// argv[0] = "ls";
-	// argv[1] = NULL;
-	// execve("/usr/bin/ls",argv, NULL);
 	if (access(cmd->name, X_OK) == 0)
 		execve(cmd->name, cmd->args, env);
 	splited_path = ft_split_path(env);
@@ -83,7 +79,9 @@ void	ft_exec_external_code(t_command *command)
 void	ft_execute_external_in_fork(t_command *cmd, char **envp)
 {
 	pid_t	fork_pid;
-	int     exit_code;
+	int		exit_code;
+
+	fprintf(stderr, "ft_execute_external_in_fork write:%d read:%d\n", cmd->fdwrite, cmd->fdread);
 
 	fork_pid = fork();
 	if (fork_pid == 0)

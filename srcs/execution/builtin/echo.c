@@ -4,6 +4,8 @@ int	echo(t_command *cmd)
 {
 	int			i;
 	int			suppressnewline;
+	printf("echo working %s\n", cmd->args[1]);
+	return 0;
 
 	i = 1;
 	suppressnewline = 0;
@@ -12,7 +14,7 @@ int	echo(t_command *cmd)
 		write(STDERR_FILENO, "An error occurred: not enough arguments\n", 41);
 		return (1);
 	}
-	if (cmd->args[1] != NULL && strcmp(cmd->args[1], "-n") == 0)
+	if (cmd->args[1] && strcmp(cmd->args[1], "-n") == 0)
 	{
 		suppressnewline = 1;
 		i++;

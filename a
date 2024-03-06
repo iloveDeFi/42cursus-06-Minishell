@@ -1,0 +1,29 @@
+ft_is_builtin
+a
+fichier.txt
+includes
+main.c
+main.o
+Makefile
+minishell
+Minishell.pdf
+p
+srcs
+t
+test
+ft_is_builtin
+-rw-r--r-- 1 thomas thomas 112 Mar  6 03:19 a
+ft_is_builtin
+total 2156
+-rw-r--r-- 1 thomas thomas     172 Mar  6 03:20 a
+-rw-rw-r-- 1 thomas thomas      29 Mar  6 00:52 fichier.txt
+drwxrwxr-x 2 thomas thomas    4096 Mar  6 00:52 includes
+-rw-rw-r-- 1 thomas thomas     448 Mar  6 00:52 main.c
+-rw-rw-r-- 1 thomas thomas  198416 Mar  6 01:18 main.o
+-rw-rw-r-- 1 thomas thomas    4373 Mar  6 00:52 Makefile
+-rwxrwxr-x 1 thomas thomas  400272 Mar  6 03:19 minishell
+-rw-rw-r-- 1 thomas thomas 1568599 Mar  3 23:27 Minishell.pdf
+-rw-r--r-- 1 thomas thomas     120 Mar  6 03:17 p
+drwxrwxr-x 6 thomas thomas    4096 Mar  3 23:27 srcs
+-rw-r--r-- 1 thomas thomas       0 Mar  6 02:11 t
+-rw-r--r-- 1 thomas thomas      35 Mar  6 02:17 test
