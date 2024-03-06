@@ -108,6 +108,12 @@ typedef struct s_command
 // 	struct s_token	*previous;
 // } t_token;
 
+typedef struct t_token
+{
+	char *word;
+	bool is_in_quote;
+} t_token;
+
 typedef struct s_error
 {
 	char *error_name;
@@ -122,6 +128,9 @@ typedef struct s_env
 	struct s_env *next;
 	struct s_env *prev;
 } t_env;
+
+
+
 
 typedef struct s_mini
 {
@@ -266,7 +275,7 @@ void			ft_print_exported_vars(t_env *env_list);
 
 // PARSING
 t_command		*ft_parser(char * input, t_env *envList);
-bool	ft_parse_tokens(t_command **commands, char **tokens);
+bool			ft_parse_tokens(t_command **commands, t_token **tokens);
 
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
@@ -313,7 +322,7 @@ int 			ft_check_if_pipe_in_inputCopy(char *inputCopy);
 // t_redirection_info 	ft_parse_here_doc_redirection(char *input);
 //t_redirection_type 	ft_parse_all_redirection(char *token);
 // token
-char ** 		ft_tokenize_input_with_strtok(char *input);
+t_token			**ft_tokenize(char *input);
 // type
 int 			ft_token_is_pipe(char *token, t_command *currentCommand);
 int 			ft_token_is_redirection(char *token, t_command *currentCommand, int *tokenIndex);
