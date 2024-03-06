@@ -72,7 +72,7 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
     {
         // TO DO: ADD SIGNALS HERE
         ft_custom_prompt_msg(shell);
-        ft_check_empty_av_shell(shell); // TODO remove that when signals are added
+        // ft_check_empty_av_shell(shell); // TODO remove that when signals are added
         // ft_handle_only_spaces(shell);
         //ft_check_empty_av_shell(shell);
         if (shell->av && !ft_is_only_spaces(shell->av))

@@ -346,9 +346,9 @@ extern void		rl_replace_line(const char *bob, int test);
 
 void	exec_cmd(t_command *command, t_env *envList);
 void	ft_exec_external_code(t_command *command);
-int ft_tokenize_redirection(char *tokens);
+int 	ft_tokenize_redirection(char *tokens);
 
-int ft_token_is_a_quotes(char *input);
+int 	ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
 char	*get_filename(t_command *new, char **tokens, char **tok);
 #endif
