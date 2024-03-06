@@ -3,6 +3,8 @@
 void	ft_custom_prompt_msg(t_mini *shell)
 {
 	char	*input;
+	char	*cwd;
+	size_t	alloc_size;
 
 	if (shell->av != NULL)
 	{
@@ -10,7 +12,14 @@ void	ft_custom_prompt_msg(t_mini *shell)
 		shell->av = NULL;
 	}
 	ft_signals_init(ft_signals_handle_input);
-	input = readline("\033[1;35mminishell$ \033[0m");
+	alloc_size = sizeof(*cwd) * MAXPATHLEN + \
+		ft_strlen("\033[1;35m") + ft_strlen("\033[0m") + 3;
+	cwd = malloc(alloc_size);
+	ft_strcpy(cwd, "\033[1;35m");
+	getcwd(cwd + ft_strlen("\033[1;35m"), MAXPATHLEN);
+	ft_strcat(cwd, "\033[0m$ ");
+	input = readline(cwd);
+	free(cwd);
 	ft_signals_init(ft_signals_handle_execution);
 	if (input != NULL)
 	{
