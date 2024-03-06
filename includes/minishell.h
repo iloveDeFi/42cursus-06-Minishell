@@ -195,7 +195,7 @@ void	        ft_free_split(char **arr);
 // heredoc
 void 			ft_process_here_doc_redirection(t_command *command);
 int				ft_eof_is_in_string(char *here, char *eof);
-int				ft_isword(char *here, char *eof, int index);
+int				ft_find_word(char *here, char *eof, int index);
 // multi
 void			ft_handle_exit_status(int exit_status);
 void			ft_launch_command(t_command *command);

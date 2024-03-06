@@ -75,6 +75,11 @@ bool	ft_parse_tokens(t_command **commands, char **tokens)
 			fdwrite = 1;
 			fdread= 0;
 		}
+		else if(ft_strcmp(tokens[tokenIndex + 1], "<<") == 0)
+		{
+			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
+			ft_process_here_doc_redirection(*commands);
+		}
 		tokenIndex++;
 	}
 	return (true);

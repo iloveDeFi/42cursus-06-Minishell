@@ -3,7 +3,7 @@
 void ft_execute_command_with_heredoc(const char *command, const char *heredoc_content) 
 {
 	pid_t child_pid;
-	char *const cmd[];
+	char *const cmd[] = {"/bin/sh", "-c", command, NULL};
     int pipe_fd[2];
     if (pipe(pipe_fd) == -1) {
         perror("Erreur lors de la création du tube");
@@ -18,7 +18,6 @@ void ft_execute_command_with_heredoc(const char *command, const char *heredoc_co
         close(pipe_fd[1]);
         dup2(pipe_fd[0], STDIN_FILENO);
         close(pipe_fd[0]);
-        cmd[] = {"/bin/sh", "-c", command, NULL};
         execve("/bin/sh", cmd, NULL);
         perror("Erreur lors de l'exécution de la commande");
         exit(EXIT_FAILURE);
