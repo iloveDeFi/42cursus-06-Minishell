@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julienbelda <julienbelda@student.42.fr>    +#+  +:+       +#+         #
+#    By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 17:02:03 by bat               #+#    #+#              #
-#    Updated: 2024/03/06 00:18:41 by julienbelda      ###   ########.fr        #
+#    Updated: 2024/03/06 03:42:19 by thomas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,6 +107,7 @@ MAIN_FILE := main.c
 PARSING_FILES := $(wildcard $(SRCS_DIRECTORY)/parsing/*.c)
 EXECUTING_FILES := $(wildcard $(SRCS_DIRECTORY)/execution/*.c)
 BUILTIN_FILES := $(wildcard $(SRCS_DIRECTORY)/execution/builtin/*.c)
+EXECUTE_FILES := $(wildcard $(SRCS_DIRECTORY)/execution/execute/*.c)
 LINKED_LIST_FILES := $(wildcard $(SRCS_DIRECTORY)/linked_list/*.c)
 
 INCLUDES_FILES := $(wildcard $(HEADER_DIRECTORY)/*.h)
@@ -124,7 +125,7 @@ CFLAGS :=-O3 -g -I$(HEADER_DIRECTORY)  #-Wall -Wextra -Werror
 #CPPFLAGS := -I/opt/homebrew/opt/readline/include
 LDFLAGS := -L/usr/local/opt/readline/lib
 CPPFLAGS := -I/usr/local/opt/readline/include
-SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES)
+SRCS := $(MAIN_FILE) $(MINISHELL_FILES) $(PARSING_FILES) $(EXECUTING_FILES) $(BUILTIN_FILES) $(LINKED_LIST_FILES) $(EXECUTE_FILES)
 OBJS := $(SRCS:.c=.o)
 RM := rm -f
 
