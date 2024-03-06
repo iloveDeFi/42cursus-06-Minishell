@@ -12,7 +12,13 @@ t_command *ft_parser(char * input, t_env *envList)
 	// }
 	// ft_remove_quotes(input);
 	tokens = ft_tokenize(input);
-	if (!tokens || !ft_parse_tokens(&commands, tokens))
+	if (!tokens)
+	{
+		// ? TODO something to free?
+		return NULL;
+	}
+	ft_found_and_replace_usd(tokens, envList);
+	if (!ft_parse_tokens(&commands, tokens))
 	{
 		// ? TODO something to free?
 		return NULL;

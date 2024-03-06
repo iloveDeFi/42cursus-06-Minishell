@@ -111,7 +111,7 @@ typedef struct s_command
 typedef struct t_token
 {
 	char *word;
-	bool is_in_quote;
+	char is_in_quote;
 } t_token;
 
 typedef struct s_error
@@ -276,6 +276,7 @@ void			ft_print_exported_vars(t_env *env_list);
 // PARSING
 t_command		*ft_parser(char * input, t_env *envList);
 bool			ft_parse_tokens(t_command **commands, t_token **tokens);
+void			ft_free_tokens(t_token **tokens);
 
 // custom_strtok TO DO CLEAN THIS
 void            ft_print_word(const char *start, const char *end);
@@ -340,7 +341,7 @@ void			srl_replace_line(const char *str, int i);
 
 // MAIN
 void	       	ft_exit_shell(t_mini *shell);
-void            ft_found_and_replace_usd(t_command *command, t_env *envList);
+void            ft_found_and_replace_usd(t_token **tokens, t_env *envList);
 char            *ft_replace_usd_to_env(t_env *envList, char *usd);
 void            replace_env_variables_in_command(t_command *command, t_env *envList);
 

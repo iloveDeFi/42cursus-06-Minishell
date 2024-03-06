@@ -39,19 +39,18 @@ static void	set_is_in_quote(char c, char *in_quote)
 
 static void	add_token(t_token **tokens, int *token_index, char *input, int *start, int end)
 {
-	bool	in_quote;
+	char	in_quote;
 	t_token	*token;
 
-	in_quote = false;
+	in_quote = 0;
 	if ((input[*start] == '"' || input[*start] == '\'') && input[*start] == input[end-1])
 	{
+		in_quote = input[*start];
 		(*start)++;
-		end--;
-		in_quote = true;
 	}
 	// ! TODO if not in quote, replace the $var
 	token = (t_token *)malloc(sizeof(t_token));
-	token->word = ft_substr(input, *start, end - *start);
+	token->word = ft_substr(input, *start, end - *start - in_quote);
 	token->is_in_quote = in_quote;
 	tokens[*token_index] = token;
 	// tokens[*token_index] = ft_substr(input, *start, end - *start);
@@ -187,7 +186,7 @@ bool	ft_parse_tokens(t_command **commands, t_token **tokens)
 			fdwrite = 1;
 			fdread= 0;
 		}
-		else if(ft_strcmp(tokens[tokenIndex + 1]->word, "<<") == 0)
+		else if(ft_strcmp(tokens[tokenIndex + 1]->word, "<<") == 0) // ! TODO do that in ft_parse_all_redirection..?
 		{
 			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
 			ft_process_here_doc_redirection(*commands);
