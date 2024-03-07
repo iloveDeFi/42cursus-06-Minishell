@@ -6,7 +6,7 @@
 /*   By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:57:04 by bat               #+#    #+#             */
-/*   Updated: 2024/03/07 14:59:32 by jbelda           ###   ########.fr       */
+/*   Updated: 2024/03/07 15:37:56 by jbelda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 // 	static char *token;
 // 	char *start;
 // 	const char *d;
-	
+
 // 	token = NULL;
 // 	if (str != NULL)
 // 		token = str;

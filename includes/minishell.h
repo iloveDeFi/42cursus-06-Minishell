@@ -94,7 +94,7 @@ typedef struct s_command
 	struct s_env		*envList;
 	int					fdread;
 	int					fdwrite;
-    int                 i;
+	int					i;
 	char				*end_of_file;
 	t_redirection_info	redirection_info;
 }	t_command;
@@ -132,11 +132,9 @@ typedef struct s_env
 typedef struct s_mini
 {
 	char				*av;
-	// int status;
 	int					fd_history;
 	int					stdin_fd;
 	int					stdout_fd;
-	// struct s_token		*token;
 	struct s_command	*cmd;
 	t_error				*error;
 }	t_mini;
@@ -159,7 +157,6 @@ void			ft_split_string_export_argument(const char *arg, \
 int				ft_is_alpha(char c);
 int				ft_check_variable_definition(char *arg);
 int				ft_check_export_args(t_command *command);
-void			ft_print_exported_vars(t_env *envList);
 int				ft_export(t_env **envlist, t_command *cmd);
 // pwd
 int				pwd(void);
@@ -265,19 +262,15 @@ void			exec_cmd(t_command *command, t_env *envList);
 void			ft_exec_external_code(t_command *command);
 int				ft_tokenize_redirection(char *tokens);
 int				ft_tokenize_redirection(char *tokens);
-
-int				ft_token_is_a_quotes(char *input);
-void			r_left(t_command *new, char *token, char **tokens, char **tok);
-char            *get_filename(t_command *command, char *input);
-int				check_tab(char **args, int i);
+char			*get_filename(t_command *command, char *input);
 
 // GLOBAL
 extern int		g_exit_code;
 
 //EXTERN
 void			rl_replace_line(const char *text, int clear_undo);
-
-char    *ft_remove_leading_spaces(char *input);
-void	ft_exec_heredoc(char *end_of_file, int *fdread);
+char			*ft_remove_leading_spaces(char *input);
+void			ft_exec_heredoc(char *end_of_file, int *fdread);
+bool			ft_isspace(int c);
 
 #endif

@@ -14,12 +14,6 @@ static char	*ft_get_env_value(char *name, t_env *envList)
 	return (ft_strdup(""));
 }
 
-bool	ft_isspace(int c)
-{
-	return ((c == ' ' || c == '\t' || c == '\n' || c == '\r' \
-		|| c == '\f' || c == '\v'));
-}
-
 char	*ft_remove_leading_spaces(char *input)
 {
 	char	*current;
@@ -68,10 +62,26 @@ static void	manage_in_quote(t_token *token, t_env *envList)
 	}
 }
 
+void	replace_environment_variables(t_token *token, t_env *envList)
+{
+	char	*tmp;
+
+	if (token->word[1] == '?')
+	{
+		free(token->word);
+		token->word = ft_itoa(g_exit_code);
+	}
+	else
+	{
+		tmp = ft_get_env_value(token->word + 1, envList);
+		free(token->word);
+		token->word = tmp;
+	}
+}
+
 void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
 {
-	int		i;
-	char	*tmp;
+	int	i;
 
 	i = 0;
 	while (tokens[i])
@@ -83,17 +93,7 @@ void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
 		}
 		if (tokens[i]->word[0] == '$')
 		{
-			if (tokens[i]->word[1] == '?')
-			{
-				free(tokens[i]->word);
-				tokens[i]->word = ft_itoa(g_exit_code);
-			}
-			else
-			{
-				tmp = ft_get_env_value(tokens[i]->word +1, envList);
-				free(tokens[i]->word);
-				tokens[i]->word = tmp;
-			}
+			replace_environment_variables(tokens[i], envList);
 		}
 		i++;
 	}

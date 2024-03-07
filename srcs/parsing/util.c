@@ -21,3 +21,9 @@ bool	ft_is_redirection(char *token)
 	return (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || \
 		ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0);
 }
+
+bool	ft_isspace(int c)
+{
+	return ((c == ' ' || c == '\t' || c == '\n' || c == '\r' \
+		|| c == '\f' || c == '\v'));
+}
