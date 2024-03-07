@@ -94,6 +94,7 @@ typedef struct s_command
 	struct s_env		*envList;
 	int					fdread;
 	int					fdwrite;
+    int                 i;
 	char				*end_of_file;
 	t_redirection_info	redirection_info;
 }	t_command;
@@ -267,7 +268,7 @@ int				ft_tokenize_redirection(char *tokens);
 
 int				ft_token_is_a_quotes(char *input);
 void			r_left(t_command *new, char *token, char **tokens, char **tok);
-char			*get_filename(t_command *new, char **tokens, char **tok);
+char            *get_filename(t_command *command, char *input);
 int				check_tab(char **args, int i);
 
 // GLOBAL
@@ -275,5 +276,9 @@ extern int		g_exit_code;
 
 //EXTERN
 void			rl_replace_line(const char *text, int clear_undo);
+
+char    *ft_remove_leading_spaces(char *input);
+void	ft_exec_heredoc(char *end_of_file, int *fdread);
+static bool ft_parse_heredoc_redirection(char filename, int fdread);
 
 #endif

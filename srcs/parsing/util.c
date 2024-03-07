@@ -15,3 +15,9 @@ char	*ft_strcpy(char *dest, const char *src)
 	dest[i] = '\0';
 	return (dest);
 }
+
+bool	ft_is_redirection(char *token)
+{
+	return (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || \
+		ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0);
+}

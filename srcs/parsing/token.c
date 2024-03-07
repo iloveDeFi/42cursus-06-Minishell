@@ -112,6 +112,24 @@ t_token	**ft_tokenize(char *input)
 	return (tokens);
 }
 
+static void ft_initialize_command_data(t_command *command, \
+	char *name, int arg_len)
+{
+	command->name = ft_strdup(name);
+	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
+	command->argcount = 0;
+}
+
+static void	ft_finalize_command_creation(t_command *command, \
+	int args_index, int fdwrite, int fdread)
+{
+	command->argcount = args_index;
+	command->args[args_index] = NULL;
+	command->next = NULL;
+	command->fdread = fdread;
+	command->fdwrite = fdwrite;
+}
+
 static  t_command *ft_create_new_command(t_token **tokens, \
 	int arg_len, int fdwrite, int fdread)
 {
@@ -138,24 +156,6 @@ static  t_command *ft_create_new_command(t_token **tokens, \
 	}
 	ft_finalize_command_creation(command, args_index, fdwrite, fdread);
 	return (command);
-}
-
-static void ft_initialize_command_data(t_command *command, \
-	char *name, int arg_len)
-{
-	command->name = ft_strdup(name);
-	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
-	command->argcount = 0;
-}
-
-static void	ft_finalize_command_creation(t_command *command, \
-	int args_index, int fdwrite, int fdread)
-{
-	command->argcount = args_index;
-	command->args[args_index] = NULL;
-	command->next = NULL;
-	command->fdread = fdread;
-	command->fdwrite = fdwrite;
 }
 
 bool	ft_parse_tokens(t_command **commands, t_token **tokens)
