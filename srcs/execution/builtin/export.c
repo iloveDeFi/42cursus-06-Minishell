@@ -67,18 +67,6 @@ int	ft_check_export_args(t_command *command)
 	return (0);
 }
 
-// void	ft_print_exported_vars(t_env *envList)
-// {
-// 	t_env	*current;
-
-// 	current = envList;
-// 	while (current != NULL)
-// 	{
-// 		printf("declare -x %s=%s\n", current->name, current->value);
-// 		current = current->next;
-// 	}
-// }
-
 int	ft_export(t_env **envList, t_command *cmd)
 {
 	t_env	*current;

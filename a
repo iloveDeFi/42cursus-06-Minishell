@@ -1,9 +1,0 @@
-ft_is_builtin
-a
-includes
-main.c
-main.o
-Makefile
-minishell
-Minishell.pdf
-srcs

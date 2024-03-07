@@ -103,11 +103,6 @@ t_token	**ft_tokenize(char *input)
 		set_is_in_quote(input[end], &in_quote);
 		if (input[end] == ' ' && in_quote == 0)
 			add_token(tokens, &token_index, input, &start, end);
-		// {
-		// 	tokens[token_index] = ft_substr(input, start, end - start);
-		// 	token_index++;
-		// 	start = end + 1;
-		// }
 		end++;
 	}
 	add_token(tokens, &token_index, input, &start, end);

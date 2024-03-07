@@ -105,6 +105,7 @@ typedef struct t_token
 {
 	char *word;
 	char is_in_quote;
+	int *token_index;
 } t_token;
 
 typedef struct s_error
