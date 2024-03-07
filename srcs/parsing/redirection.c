@@ -49,7 +49,6 @@ static bool	ft_parse_heredoc_redirection(char *filename, int *fdwrite)
 		g_exit_code = 258;
 		return (false);
 	}
-	// TODO: Implement heredoc logic here
 	return (true);
 }
 

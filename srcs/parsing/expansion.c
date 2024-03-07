@@ -72,3 +72,57 @@ void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
 		i++;
 	}
 }
+// void    ft_found_and_replace_usd2(t_token **tokens, t_env *envList)
+// {
+//     int		i;
+// 	char	*tmp;
+
+//     i = 0;
+//     tmp = ft_get_env_value(tokens[i]->word + 1, envList);
+// 	free(tokens[i]->word);
+// 	tokens[i]->word = tmp;
+// 	printf("->expansion: tokens[i]->word = %s\n", tokens[i]->word);
+// }
+
+// void	ft_manage_quotes_and_exit(t_token **tokens, t_env *envList)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (tokens[i])
+// 	{
+// 		if (tokens[i]->is_in_quote == '\'' || tokens[i]->is_in_quote == '"')
+// 			manage_in_quote(tokens[i], envList);
+// 		else if (tokens[i]->word[0] == '$' && tokens[i]->word[1] == '?')
+// 		{
+// 			free(tokens[i]->word);
+// 			tokens[i]->word = ft_itoa(g_exit_code);
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	ft_replace_env_variables(t_token **tokens, t_env *envList)
+// {
+// 	int		i;
+// 	char	*tmp;
+
+// 	i = 0;
+// 	while (tokens[i])
+// 	{
+// 		if (tokens[i]->word[0] == '$' && tokens[i]->word[1] != '?')
+// 		{
+// 			tmp = ft_get_env_value(tokens[i]->word + 1, envList);
+// 			free(tokens[i]->word);
+// 			tokens[i]->word = tmp;
+// 			printf("->expansion: tokens[i]->word = %s\n", tokens[i]->word);
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
+// {
+// 	ft_manage_quotes_and_exit(tokens, envList);
+// 	ft_replace_env_variables(tokens, envList);
+// }

@@ -9,15 +9,12 @@ t_command	*ft_parser(char *input, t_env *envList)
 	tokens = ft_tokenize(input);
 	if (!tokens)
 	{
-		// ? TODO something to free?
 		return (NULL);
 	}
 	ft_found_and_replace_usd(tokens, envList);
 	if (!ft_parse_tokens(&commands, tokens))
 	{
-		// ? TODO something to free?
 		return (NULL);
 	}
-	// ? TODO should the replace usd / quotes be done in the tokenize function instead?
 	return (commands);
 }

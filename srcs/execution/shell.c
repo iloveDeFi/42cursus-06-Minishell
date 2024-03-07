@@ -71,7 +71,6 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 
 	while (1)
 	{
-		// TO DO: ADD SIGNALS HERE
 		ft_custom_prompt_msg(shell);
 		ft_check_empty_av_shell(shell);
 		if (shell->av && !ft_is_only_spaces(shell->av))
@@ -80,7 +79,6 @@ void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 			cmd = ft_parser(shell->av, envList);
 			if (cmd != NULL)
 				ft_execute(cmd, envList, envp);
-			// TODO probably some free to do here
 		}
 		ft_destroy_current_shell(shell);
 	}
