@@ -279,6 +279,5 @@ void			rl_replace_line(const char *text, int clear_undo);
 
 char    *ft_remove_leading_spaces(char *input);
 void	ft_exec_heredoc(char *end_of_file, int *fdread);
-static bool ft_parse_heredoc_redirection(char filename, int fdread);
 
 #endif

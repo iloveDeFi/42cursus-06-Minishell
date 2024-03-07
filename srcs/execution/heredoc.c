@@ -12,9 +12,8 @@ void	ft_exec_heredoc(char *end_of_file, int *fdread)
 		write(heredoc, here, ft_strlen(here));
 		write(heredoc, "\n", 1);
 		free(here);
-		rl_replace_line("", 0);
-		rl_redisplay();
 		here = readline(">");
+        rl_redisplay();
 		add_history(here);
 	}
 	close(heredoc);
