@@ -22,14 +22,5 @@ t_command *ft_parser(char * input, t_env *envList)
 	{
 		return NULL;
 	}
-<<<<<<< HEAD
-	ft_token_is_a_quotes(input);
-	ft_found_and_replace_usd(commands, envList);
-=======
-	// ft_parse_all_redirection(*tokens);
-	// ? TODO should the replace usd / quotes be done in the tokenize function instead?
-	// ft_token_is_a_quotes(input);
-	// ft_found_and_replace_usd(commands, envList);
->>>>>>> main
 	return commands;
 }

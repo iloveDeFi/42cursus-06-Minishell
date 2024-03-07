@@ -159,19 +159,6 @@ static t_command	*ft_create_new_command(t_token **tokens, int arg_len, int fdwri
 	command->fdread = fdread;
 	command->fdwrite = fdwrite;
 	command->end_of_file = NULL;
-	// command->redirection_info.filename = NULL;
-	// command->redirection_info.delimiter = NULL;
-	// command->redirection_info.type = NO_REDIRECTION;
-	// printf("-- command->redirection_info.type = NO_REDIRECTION : %d\n", command->redirection_info.type);
-	// printf("arg_len = %d\n", arg_len);
-	// printf("name = %s\n", command->name);
-	// i = 0;
-	// while(command->args[i] != NULL)
-	// {
-	// 	printf("args = %s\n", command->args[i]);
-	// 	i++;
-	// }
-
 	return command;
 }
 
@@ -186,9 +173,9 @@ bool	ft_parse_tokens(t_command **commands, t_token **tokens)
 	fdread = 1;
 	while (tokens[tokenIndex] != NULL)
 	{
-		if (ft_is_redirection(tokens[tokenIndex]))
+		if (ft_is_redirection(tokens[tokenIndex]->word))
 		{	
-			if (ft_parse_all_redirection(tokens[tokenIndex], tokens[tokenIndex + 1], &fdread, &fdwrite) == false)
+			if (ft_parse_all_redirection(tokens[tokenIndex]->word, tokens[tokenIndex + 1]->word, &fdread, &fdwrite) == false)
 				return false;
 		}
 		else if (tokens[tokenIndex + 1] == NULL || ft_strcmp(tokens[tokenIndex + 1]->word, "|") == 0)
@@ -201,12 +188,6 @@ bool	ft_parse_tokens(t_command **commands, t_token **tokens)
 		}
 		else if(ft_strcmp(tokens[tokenIndex + 1]->word, "<<") == 0) // ! TODO do that in ft_parse_all_redirection..?
 		{
-			// TO DO : use tokens[tokenIndex + 2]) as EOF
-			//	printf("tokens[tokenIndex + 2] = %s\n", tokens[tokenIndex + 2]);
-			// (*commands)->end_of_file = ft_strdup(tokens[tokenIndex + 2]); // NOPE
-			// (*commands)->end_of_file = malloc(sizeof(char) * word_len((*tokens), (*commands)->i));// NOPE
-			// (*commands)->end_of_file = malloc(sizeof(char) * word_len(input, new->i));// NOPE
-			// (*commands)->end_of_file = get_filename((*commands), (*tokens));// NOPE
 			ft_command_add_back(commands, ft_create_new_command(tokens, tokenIndex, fdwrite, fdread));
 		}
 		tokenIndex++;
