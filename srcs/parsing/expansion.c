@@ -18,6 +18,7 @@ static void	manage_in_quote(t_token *token, t_env *envList)
 	char	**splited;
 	int		i;
 	char	*tmp;
+	char 	*tmp_bis;
 
 	if (token->is_in_quote != '"')
 		return ;
@@ -34,9 +35,11 @@ static void	manage_in_quote(t_token *token, t_env *envList)
 			splited[i] = tmp;
 
 		}
+		// tmp = ft_strjoin(token->word, splited[i]);
 		tmp = ft_strjoin_sep(token->word, splited[i], ' ');
 		free(token->word);
-		token->word = tmp;
+		tmp_bis = ft_remove_leading_spaces(tmp);
+		token->word = tmp_bis;
 		i++;
 	}
 }
@@ -73,4 +76,26 @@ void	ft_found_and_replace_usd(t_token **tokens, t_env *envList)
 	}
 }
 
+bool	ft_isspace(int c) 
+{
+    return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+}
+
+char	*ft_remove_leading_spaces(char *input) 
+{
+	char *current;
+	char *result;
+
+    if (input == NULL)
+        return NULL;
+	current = input;
+    while (*current != '\0' && ft_isspace(*current))
+        current++;
+	result = strdup(current);
+    if (result == NULL) {
+        perror("Erreur d'allocation mémoire");
+        exit(EXIT_FAILURE);
+    }
+    return result;
+}
 

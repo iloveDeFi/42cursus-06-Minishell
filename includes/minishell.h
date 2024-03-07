@@ -275,6 +275,8 @@ int          	ft_calculate_new_length(char *cmd, int g_exit_code);
 void            ft_process_char(char *result, int *j, char *command, int *i);
 char            *ft_expand_single_env_var(char *var_name);
 char            *ft_expand_env_variables(char *command);
+bool			ft_isspace(int c);
+char			*ft_remove_leading_spaces(char *input);
 // parser
 int             ft_launch_parsing_and_execution(t_mini *shell, char *input, t_env *envList, char **envp);
 // void			ft_process_the_first_command_as_a_command(t_commandList *commandList, char *token);
