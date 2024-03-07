@@ -28,7 +28,7 @@ void	ft_custom_prompt_msg(t_mini *shell)
 	}
 }
 
-void ft_initialize_environment(t_env **envList, char **env)
+void	ft_initialize_environment(t_env **envList, char **env)
 {
 	int		i;
 	char	**var_array;
@@ -52,42 +52,36 @@ void ft_initialize_environment(t_env **envList, char **env)
 
 void	ft_initialize_minishell(t_mini *shell)
 {
-    if (shell == NULL)
-    {
-        perror("Error initializing mini shell");
-        exit(EXIT_FAILURE);
-    }
-    shell->av = NULL;
-    shell->fd_history = 0;
-    shell->stdin_fd = dup(STDIN_FILENO);
-    shell->stdout_fd = dup(STDOUT_FILENO);
-    shell->error = NULL;
-    shell->cmd = NULL;
+	if (shell == NULL)
+	{
+		perror("Error initializing mini shell");
+		exit(EXIT_FAILURE);
+	}
+	shell->av = NULL;
+	shell->fd_history = 0;
+	shell->stdin_fd = dup(STDIN_FILENO);
+	shell->stdout_fd = dup(STDOUT_FILENO);
+	shell->error = NULL;
+	shell->cmd = NULL;
 }
 
 void	ft_execute_minishell(t_mini *shell, t_env *envList, char **envp)
 {
 	t_command	*cmd;
-    while (1)
-    {
-        // TO DO: ADD SIGNALS HERE
-        ft_custom_prompt_msg(shell);
-        ft_check_empty_av_shell(shell); // TODO remove that when signals are added
-        // ft_handle_only_spaces(shell);
-        //ft_check_empty_av_shell(shell);
-        if (shell->av && !ft_is_only_spaces(shell->av))
-        {
-		    add_history(shell->av);
+
+	while (1)
+	{
+		// TO DO: ADD SIGNALS HERE
+		ft_custom_prompt_msg(shell);
+		ft_check_empty_av_shell(shell);
+		if (shell->av && !ft_is_only_spaces(shell->av))
+		{
+			add_history(shell->av);
 			cmd = ft_parser(shell->av, envList);
 			if (cmd != NULL)
 				ft_execute(cmd, envList, envp);
 			// TODO probably some free to do here
-            // if (ft_launch_parsing_and_execution(shell, shell->av, envList, envp) != 0)
-            // {
-            //     perror("Error executing minishell in ft_execute_minishell\n");
-            //     break;  // Quit the loop if an error occurs during execution
-            // }
-        }
-        ft_destroy_current_shell(shell);
-    }
+		}
+		ft_destroy_current_shell(shell);
+	}
 }

@@ -43,24 +43,22 @@
 
 typedef enum e_token_type
 {
-	PIPE,     // |
-	HEREDOC,  // <<
-	LPR,      // (
-	RPR,      // )
-	AND,      // &&
-	OR,       // ||
-	APPEND,   // >>
-	OUT,      // >
-	IN,       // <
-	NOT,      // string
-	END,      // end of cmd
+	PIPE,
+	HEREDOC,
+	LPR,
+	RPR,
+	AND,
+	OR,
+	APPEND,
+	OUT,
+	IN,
+	NOT,
+	END,
 	COMMAND_TYPE,
 	ARGUMENT_TYPE,
 	OPTION_TYPE,
 	UNKNOWN_TYPE
-} t_token_type;
-
-typedef t_token_type (*TokenChecker)(char *);
+}	t_token_type;
 
 typedef enum e_quote
 {
@@ -68,36 +66,37 @@ typedef enum e_quote
 	SINGLE_QUOTE,
 	DOUBLE_QUOTE,
 	ESCAPED
-} t_quote_type;
+}	t_quote_type;
 
-typedef enum e_redirection_type {
+typedef enum e_redirection_type
+{
 	NO_REDIRECTION = 0,
-	OUTPUT_REDIRECTION,     // '>' or 1
-	APPEND_REDIRECTION,     // '>>' or 2
-	INPUT_REDIRECTION,      // '<' or 3
-	HERE_DOC_REDIRECTION    // '<<' or 4
-} t_redirection_type;
+	OUTPUT_REDIRECTION,
+	APPEND_REDIRECTION,
+	INPUT_REDIRECTION,
+	HERE_DOC_REDIRECTION
+}	t_redirection_type;
 
 typedef struct s_redirection_info
 {
-	char *filename;
-	char *delimiter;
-	t_redirection_type type;
-} t_redirection_info;
+	char				*filename;
+	char				*delimiter;
+	t_redirection_type	type;
+}	t_redirection_info;
 
 typedef struct s_command
 {
-	char *name;
-	char **args;
-	int argCount;
-	char **envp;
-	struct s_command *next;
-	struct s_env *envList;
-	int fdread;
-	int fdwrite;
-	char *end_of_file;
-	t_redirection_info redirection_info;
-} t_command;
+	char				*name;
+	char				**args;
+	int					argcount;
+	char				**envp;
+	struct s_command	*next;
+	struct s_env		*envList;
+	int					fdread;
+	int					fdwrite;
+	char				*end_of_file;
+	t_redirection_info	redirection_info;
+}	t_command;
 
 // typedef struct s_token {
 // 	char				*word;
@@ -110,61 +109,51 @@ typedef struct s_command
 
 typedef struct t_token
 {
-	char *word;
-	char is_in_quote;
-} t_token;
+	char	*word;
+	char	is_in_quote;
+}	t_token;
 
 typedef struct s_error
 {
-	char *error_name;
-	struct s_error *next;
-	struct s_error *prev;
-} t_error;
+	char			*error_name;
+	struct s_error	*next;
+	struct s_error	*prev;
+}	t_error;
 
 typedef struct s_env
 {
-	char *name;
-	char *value;
-	struct s_env *next;
-	struct s_env *prev;
-} t_env;
-
-
-
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
 
 typedef struct s_mini
 {
-	char *av;
+	char				*av;
 	// int status;
-	int fd_history;
-	int stdin_fd;
-	int stdout_fd;
+	int					fd_history;
+	int					stdin_fd;
+	int					stdout_fd;
 	// struct s_token		*token;
 	struct s_command	*cmd;
-	t_error *error;
-} t_mini;
+	t_error				*error;
+}	t_mini;
 
 // BUILT-IN
 
 // cd
 int				cd(t_command *command);
-// void			ft_process_cd_argument(t_command *command, char *arg);
 // echo
-void            ft_handle_argument(char *arg);
-void            ft_handle_space();
-void            ft_echo_args(char **args, int g_exit_code);
-void            print_error_message(char *message);
-//int             echo(char **args, int g_exit_code);
 int				echo(t_command *cmd);
 // env
 int				env(t_env *env_list);
 void			ft_display_envlist(t_env *envList);
 // exit
-int				ft_search_exit_arg_in_envList(t_command *command, t_env *envList);
-int				ft_check_exit_arg_value(char *value);
 void			ft_exit(t_command *command);
 // export_util
-void			ft_split_string_export_argument(const char *arg, char **name, char **value);
+void			ft_split_string_export_argument(const char *arg, \
+	char **name, char **value);
 // export
 int				ft_is_alpha(char c);
 int				ft_check_variable_definition(char *arg);
@@ -175,24 +164,15 @@ int				ft_export(t_env **envlist, t_command *cmd);
 int				pwd(void);
 // unset
 int				ft_unset(t_env **envList, t_command *cmd);
-
 // EXECUTION
 void			ft_execute(t_command *cmd, t_env *envList, char **envp);
 void			ft_execute_cmds(t_command *cmd, char **envp, t_env *envList);
 void			ft_execute_cmd(t_command *cmd, char **envp, t_env *envList);
-
-
-// argument
-char 			**ft_allocate_and_copy_arguments(t_command *command, char **oldArgs, int argCount, char *newArg);
-void		 	ft_copy_existing_arguments(char **newArgs, char **oldArgs, int argCount);
-void 			ft_copy_new_argument(t_command *command, char **newArgs, int argCount, char *newArg);
-void 			ft_add_null_terminator(char **newArgs, int argCount);
-char 			**ft_allocate_and_copy_arguments(t_command *command, char **oldArgs, int argCount, char *newArg);
 // builtin
 int				ft_is_builtin(t_command *cmd);
 int				ft_execute_builtin(t_command *cmd, t_env *envList);
 // error
-bool		    ft_is_only_spaces(const char *str);
+bool			ft_is_only_spaces(const char *str);
 void 			ft_handle_only_spaces(t_mini *shell);
 void 			ft_check_null_av_shell(t_mini *shell);
 void 			ft_check_empty_av_shell(t_mini *shell);
@@ -365,6 +345,5 @@ int 	ft_token_is_a_quotes(char *input);
 void	r_left(t_command *new, char *token, char **tokens, char **tok);
 char	*get_filename(t_command *new, char **tokens, char **tok);
 int check_tab(char **args, int i);
-;
 
 #endif
