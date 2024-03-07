@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 18:52:21 by jbelda            #+#    #+#             */
+/*   Updated: 2024/03/07 18:52:22 by jbelda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_is_alpha(char c)
@@ -104,34 +116,3 @@ int	ft_export(t_env **envList, t_command *cmd)
 	ft_update_or_add_environment_variable(envList, name, value);
 	return (0);
 }
-
-// int	ft_export(t_env **envList, t_command *cmd)
-// {
-// 	t_env	*current;
-// 	t_env	*newvar;
-// 	char	*name;
-// 	char	*value;
-
-// 	if (ft_strcmp(cmd->name, "export") == 0 && cmd->args[1] == NULL)
-// 	{
-// 		ft_print_exported_vars(*envList);
-//         return (0);
-// 	}
-// 	ft_check_variable_definition(cmd->args[1]);
-// 	ft_check_export_args(cmd);
-// 	ft_split_string_export_argument(cmd->args[1], &name, &value);
-// 	newvar = ft_create_node_for_export_argument(name, value);
-// 	current = *envList;
-// 	while (current != NULL)
-// 	{
-// 		if (ft_strcmp(current->name, name) == 0)
-// 		{
-// 			free(current->value);
-// 			current->value = ft_strdup(value);
-// 			return (0);
-// 		}
-// 		current = current->next;
-// 	}
-// 	ft_add_to_list(envList, newvar);
-// 	return (0);
-// }

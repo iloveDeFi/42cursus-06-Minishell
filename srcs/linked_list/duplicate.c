@@ -1,35 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   duplicate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 18:49:58 by jbelda            #+#    #+#             */
+/*   Updated: 2024/03/07 18:49:59 by jbelda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-// char	**ft_env_duplicate(char **envp)
-// {
-// 	int		i;
-// 	char	**copy;
-
-// 	i = 0;
-// 	while (envp[i])
-// 		i++;
-// 	copy = (char **)malloc(sizeof(char *) * (i + 1));
-// 	if (!copy)
-// 		return (NULL);
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		copy[i] = ft_strdup(envp[i]);
-// 		if (!copy[i])
-// 		{
-// 			while (i > 0)
-// 			{
-// 				free(copy[i - 1]);
-// 				i--;
-// 			}
-// 			free(copy);
-// 			return (NULL);
-// 		}
-// 		i++;
-// 	}
-// 	copy[i] = NULL;
-// 	return (copy);
-// }
 
 int	ft_envp_size(char **envp)
 {

@@ -1,4 +1,0 @@
-ft_is_builtin
-a
-b
-c
