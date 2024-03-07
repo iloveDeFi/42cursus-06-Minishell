@@ -36,31 +36,32 @@ static void	set_is_in_quote(char c, char *in_quote)
 	}
 }
 
-static void	add_token(t_token **tokens, int *token_index, char *input, \
-	int *start, int end)
-{
-	char	in_quote;
-	t_token	*token;
 
-	if (*start == end)
-	{
-		(*start)++;
-		return ;
-	}
-	in_quote = 0;
-	if ((input[*start] == '"' || input[*start] == '\'') && \
-		input[*start] == input[end -1])
-	{
-		in_quote = input[*start];
-		(*start)++;
-	}
-	// ! TODO if not in quote, replace the $var
-	token = (t_token *)malloc(sizeof(t_token));
-	token->word = ft_substr(input, *start, end - *start - (in_quote != 0));
-	token->is_in_quote = in_quote;
-	tokens[*token_index] = token;
-	(*token_index)++;
-	*start = end + 1;
+static void    add_token(t_token **tokens, int *token_index, char *input, \
+    int word_index[2])
+{
+    char    in_quote;
+    t_token    *token;
+
+    if (word_index[0] == word_index[1])
+    {
+        (word_index[0])++;
+        return ;
+    }
+    in_quote = 0;
+    if ((input[word_index[0]] == '"' || input[word_index[0]] == '\'') && \
+        input[word_index[0]] == input[word_index[1] -1])
+    {
+        in_quote = input[word_index[0]];
+        (word_index[0])++;
+    }
+    // ! TODO if not in quote, replace the $var
+    token = (t_token *)malloc(sizeof(t_token));
+    token->word = ft_substr(input, word_index[0], word_index[1] - word_index[0] - (in_quote != 0));
+    token->is_in_quote = in_quote;
+    tokens[*token_index] = token;
+    (*token_index)++;
+    word_index[0] = word_index[1] + 1;
 }
 
 void	ft_free_tokens(t_token **tokens)
@@ -77,40 +78,43 @@ void	ft_free_tokens(t_token **tokens)
 	free(tokens);
 }
 
-t_token	**ft_tokenize(char *input)
-{
-	t_token	**tokens;
-	int		token_index;
-	int		start;
-	int		end;
-	char	in_quote;
-	int		i;
+//word_index[0] = start
+//word_index[1] = end
 
-	tokens = (t_token **)malloc(sizeof(t_token *) * (token_count(input) + 1));
-	token_index = 0;
-	start = 0;
-	end = 0;
-	in_quote = 0;
-	while (input[end])
-	{
-		set_is_in_quote(input[end], &in_quote);
-		if (input[end] == ' ' && in_quote == 0)
-			add_token(tokens, &token_index, input, &start, end);
-		end++;
-	}
-	add_token(tokens, &token_index, input, &start, end);
-	tokens[token_index] = NULL;
-	i = 0;
-	while (tokens[i] != NULL)
-		i++;
-	if (in_quote != 0)
-	{
-		ft_putstr_fd("Error: unclosed quote\n", STDERR_FILENO);
-		ft_free_tokens(tokens);
-		return (NULL);
-	}
-	return (tokens);
+t_token    **ft_tokenize(char *input)
+{
+    t_token    **tokens;
+    int        token_index;
+    int     word_index[2];
+    char    in_quote;
+    int        i;
+
+    tokens = (t_token **)malloc(sizeof(t_token *) * (token_count(input) + 1));
+    token_index = 0;
+    word_index[0] = 0;
+    word_index[1] = 0;
+    in_quote = 0;
+    while (input[word_index[1]])
+    {
+        set_is_in_quote(input[word_index[1]], &in_quote);
+        if (input[word_index[1]] == ' ' && in_quote == 0)
+            add_token(tokens, &token_index, input, word_index);
+        word_index[1]++;
+    }
+    add_token(tokens, &token_index, input, word_index);
+    tokens[token_index] = NULL;
+    i = 0;
+    while (tokens[i] != NULL)
+        i++;
+    if (in_quote != 0)
+    {
+        ft_putstr_fd("Error: unclosed quote\n", STDERR_FILENO);
+        ft_free_tokens(tokens);
+        return (NULL);
+    }
+    return (tokens);
 }
+
 
 static void ft_initialize_command_data(t_command *command, \
 	char *name, int arg_len)
