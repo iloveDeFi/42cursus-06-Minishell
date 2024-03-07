@@ -16,24 +16,8 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
-char	*ft_custom_strdup(const char *str)
+bool	ft_is_redirection(char *token)
 {
-	size_t	len;
-	char	*copy;
-
-	len = ft_strlen(str);
-	copy = malloc(len + 1);
-	if (copy == NULL)
-	{
-		perror("CHAOS, error allocating memory");
-		exit(EXIT_FAILURE);
-	}
-	ft_strcpy(copy, str);
-	return (copy);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	while (*s)
-		ft_putchar_fd(*s++, fd);
+	return (ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0 || \
+		ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0);
 }

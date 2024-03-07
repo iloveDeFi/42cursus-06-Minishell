@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_sep.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*   By: jbelda <jbelda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 09:40:53 by bbessard          #+#    #+#             */
-/*   Updated: 2024/03/06 18:53:03 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/07 01:23:55 by jbelda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_strjoin_sep(char const *s1, char const *s2, char sep)
 	size_t	len;
 	size_t	i;
 	size_t	j;
-
 
 	i = 0;
 	len = ft_strlen(s1) + ft_strlen(s2);
@@ -40,4 +39,3 @@ char	*ft_strjoin_sep(char const *s1, char const *s2, char sep)
 	str[i + 1 + j] = '\0';
 	return (str);
 }
-

@@ -15,7 +15,6 @@ static void	ft_execute_external_in_fork(t_command *cmd, char **envp)
 		g_exit_code = 128 + WTERMSIG(exit_code);
 }
 
-
 void	ft_execute_cmd(t_command *cmd, char **envp, t_env *envList)
 {
 	int		original_stdin;

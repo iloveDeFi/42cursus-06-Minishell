@@ -2,7 +2,6 @@
 
 int	ft_is_builtin(t_command *cmd)
 {
-	printf("ft_is_builtin\n");
 	if (!cmd->name)
 	{
 		ft_putstr_fd("command not found\n", 2);
@@ -22,7 +21,6 @@ int	ft_is_builtin(t_command *cmd)
 
 int	ft_execute_builtin(t_command *cmd, t_env *envList)
 {
-    printf("ft_execute_builtin\n");
 	if (ft_strcmp(cmd->name, "cd") == 0)
 		return (cd(cmd));
 	if (ft_strcmp(cmd->name, "exit") == 0)

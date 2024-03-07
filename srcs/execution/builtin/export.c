@@ -12,8 +12,7 @@ int	ft_is_alpha(char c)
 
 int	ft_check_variable_definition(char *arg)
 {
-	printf("ft_check_variable_definition\n");
-    char	*equals;
+	char	*equals;
 	char	*found;
 	int		count;
 
@@ -27,14 +26,13 @@ int	ft_check_variable_definition(char *arg)
 		if (count > 1)
 		{
 			perror("Invalid variable definition. Use only one equal sign\n");
-			exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 		}
 		found++;
 	}
 	if (equals == NULL || equals == arg || *equals == '\0')
 	{
 		printf("equals = %s\n", equals);
-        perror("Invalid variable definition. Use VARIABLE=value format.\n");
+		perror("Invalid variable definition. Use VARIABLE=value format.\n");
 		exit(EXIT_FAILURE);
 	}
 	return (0);
@@ -42,26 +40,25 @@ int	ft_check_variable_definition(char *arg)
 
 int	ft_check_export_args(t_command *command)
 {
-	printf("ft_check_export_args\n");
-    char	*arg;
+	char	*arg;
 	int		i;
 
-	if (command->argCount > 2)
+	if (command->argcount > 2)
 	{
 		perror("Hey, export takes only one argument!\n");
-		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 	}
 	arg = command->args[1];
 	if ((!ft_is_alpha(arg[0])) && arg[0] != '_')
 	{
 		perror("Export variable must start by a letter or _ \n");
-		exit(EXIT_FAILURE); // ! TODO should not exit the minishell
 	}
 	i = 1;
 	while (arg[i] != '\0')
 	{
 		if (!ft_is_alpha(arg[i]) && arg[i] != '_')
-			exit(EXIT_FAILURE); // ! TODO should not exit the minishell
+		{
+			perror("Export variable must contain only letters, digits and _\n");
+		}
 		i++;
 	}
 	return (0);
