@@ -36,203 +36,62 @@ static void	set_is_in_quote(char c, char *in_quote)
 	}
 }
 
-
-static void    add_token(t_token **tokens, int *token_index, char *input, \
-    int word_index[2])
+static void	add_token(t_token **tokens, int *token_index, char *input, \
+	int word_index[2])
 {
-    char    in_quote;
-    t_token    *token;
+	char	in_quote;
+	t_token	*token;
 
-    if (word_index[0] == word_index[1])
-    {
-        (word_index[0])++;
-        return ;
-    }
-    in_quote = 0;
-    if ((input[word_index[0]] == '"' || input[word_index[0]] == '\'') && \
-        input[word_index[0]] == input[word_index[1] -1])
-    {
-        in_quote = input[word_index[0]];
-        (word_index[0])++;
-    }
-    // ! TODO if not in quote, replace the $var
-    token = (t_token *)malloc(sizeof(t_token));
-    token->word = ft_substr(input, word_index[0], word_index[1] - word_index[0] - (in_quote != 0));
-    token->is_in_quote = in_quote;
-    tokens[*token_index] = token;
-    (*token_index)++;
-    word_index[0] = word_index[1] + 1;
-}
-
-void	ft_free_tokens(t_token **tokens)
-{
-	int	i;
-
-	i = 0;
-	while (tokens[i] != NULL)
+	if (word_index[0] == word_index[1])
 	{
-		free(tokens[i]->word);
-		free(tokens[i]);
-		i++;
+		(word_index[0])++;
+		return ;
 	}
-	free(tokens);
+	in_quote = 0;
+	if ((input[word_index[0]] == '"' || input[word_index[0]] == '\'') && \
+		input[word_index[0]] == input[word_index[1] -1])
+	{
+		in_quote = input[word_index[0]];
+		(word_index[0])++;
+	}
+	token = (t_token *)malloc(sizeof(t_token));
+	token->word = ft_substr(input, word_index[0], \
+		word_index[1] - word_index[0] - (in_quote != 0));
+	token->is_in_quote = in_quote;
+	tokens[*token_index] = token;
+	(*token_index)++;
+	word_index[0] = word_index[1] + 1;
 }
 
 //word_index[0] = start
 //word_index[1] = end
+//word_index[2] = i
+//word_index[3] = token_index
 
-t_token    **ft_tokenize(char *input)
+t_token	**ft_tokenize(char *input)
 {
-    t_token    **tokens;
-    int        token_index;
-    int     word_index[2];
-    char    in_quote;
-    int        i;
+	t_token	**tokens;
+	char	in_quote;
+	int		word_index[4];
 
-    tokens = (t_token **)malloc(sizeof(t_token *) * (token_count(input) + 1));
-    token_index = 0;
-    word_index[0] = 0;
-    word_index[1] = 0;
-    in_quote = 0;
-    while (input[word_index[1]])
-    {
-        set_is_in_quote(input[word_index[1]], &in_quote);
-        if (input[word_index[1]] == ' ' && in_quote == 0)
-            add_token(tokens, &token_index, input, word_index);
-        word_index[1]++;
-    }
-    add_token(tokens, &token_index, input, word_index);
-    tokens[token_index] = NULL;
-    i = 0;
-    while (tokens[i] != NULL)
-        i++;
-    if (in_quote != 0)
-    {
-        ft_putstr_fd("Error: unclosed quote\n", STDERR_FILENO);
-        ft_free_tokens(tokens);
-        return (NULL);
-    }
-    return (tokens);
-}
-
-
-static void ft_initialize_command_data(t_command *command, \
-	char *name, int arg_len)
-{
-	command->name = ft_strdup(name);
-	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
-	command->argcount = 0;
-}
-
-static void	ft_finalize_command_creation(t_command *command, \
-	int args_index, int fdwrite, int fdread)
-{
-	command->argcount = args_index;
-	command->args[args_index] = NULL;
-	command->next = NULL;
-	command->fdread = fdread;
-	command->fdwrite = fdwrite;
-}
-
-static  t_command *ft_create_new_command(t_token **tokens, \
-	int arg_len, int fdwrite, int fdread)
-{
-	t_command	*command;
-	int			token_index;
-	int			args_index;
-
-	token_index = 0;
-	args_index = 0;
-	command = (t_command *)malloc(sizeof(t_command));
-	if (ft_is_redirection(tokens[token_index]->word))
-		token_index += 2; // Skip redirection
-	ft_initialize_command_data(command, tokens[token_index]->word, arg_len);
-	while (token_index < arg_len + 1)
+	ft_set_array_to_zero(word_index, 4);
+	tokens = (t_token **)malloc(sizeof(t_token *) * (token_count(input) + 1));
+	in_quote = 0;
+	while (input[word_index[1]])
 	{
-		if (ft_is_redirection(tokens[token_index]->word))
-		{
-			token_index += 2;
-			continue ;
-		}
-		command->args[args_index] = ft_strdup(tokens[token_index]->word);
-		args_index++;
-		token_index++;
+		set_is_in_quote(input[word_index[1]], &in_quote);
+		if (input[word_index[1]] == ' ' && in_quote == 0)
+			add_token(tokens, &word_index[3], input, word_index);
+		word_index[1]++;
 	}
-	ft_finalize_command_creation(command, args_index, fdwrite, fdread);
-	return (command);
-}
-
-bool	ft_parse_tokens(t_command **commands, t_token **tokens)
-{
-	int	tokenindex;
-	int	fdwrite;
-	int	fdread;
-
-	tokenindex = 0;
-	fdwrite = 1;
-	fdread = 1;
-	while (tokens[tokenindex] != NULL)
+	add_token(tokens, &word_index[3], input, word_index);
+	tokens[word_index[3]] = NULL;
+	while (tokens[word_index[2]] != NULL)
+		word_index[2]++;
+	if (in_quote != 0)
 	{
-		if (ft_is_redirection(tokens[tokenindex]->word))
-		{
-			if (ft_parse_all_redirection(tokens[tokenindex]->word, \
-				tokens[tokenindex + 1]->word, &fdread, &fdwrite) == false)
-				return (false);
-		}
-		else if (tokens[tokenindex + 1] == NULL || \
-			ft_strcmp(tokens[tokenindex + 1]->word, "|") == 0)
-		{
-			ft_command_add_back(commands, ft_create_new_command(tokens, \
-				tokenindex, fdwrite, fdread));
-			tokens += tokenindex + 1 + \
-				(tokens[tokenindex + 1] != NULL); // bidouillage, pour skip le pipe
-			tokenindex = -1; // -1 so that it becomes 0 after the incrementation
-			fdwrite = 1;
-			fdread = 0;
-		}
-		else if (ft_strcmp(tokens[tokenindex + 1]->word, "<<") == 0) // ! TODO do that in ft_parse_all_redirection..?
-		{
-			ft_command_add_back(commands, ft_create_new_command(tokens, \
-				tokenindex, fdwrite, fdread));
-		}
-		tokenindex++;
+		ft_error_free_toks(tokens);
+		return (NULL);
 	}
-	return (true);
+	return (tokens);
 }
-
-// static t_command	*ft_create_new_command(t_token **tokens, int arg_len, \
-// 	int fdwrite, int fdread)
-// {
-// 	t_command	*command;
-// 	int			token_index;
-// 	int			args_index;
-
-// 	token_index = 0;
-// 	args_index = 0;
-// 	command = (t_command *)malloc(sizeof(t_command));
-// 	if (ft_is_redirection(tokens[token_index]->word)) // 
-//skip the redirection and the filename (possibility to put those 2 lines in 1) 
-//: token_index += 2*ft_is_redirection(tokens[token_index])
-// 		token_index += 2;
-// 	command->name = ft_strdup(tokens[token_index]->word);
-// 	command->args = (char **)malloc(sizeof(char *) * (arg_len + 2));
-// 	command->argcount = 0;
-// 	while (token_index < arg_len + 1)
-// 	{
-// 		if (ft_is_redirection(tokens[token_index]->word)) 
-// skip the redirection and the filename
-// 		{
-// 			token_index += 2;
-// 			continue ;
-// 		}
-// 		command->args[args_index] = ft_strdup(tokens[token_index]->word);
-// 		args_index++;
-// 		token_index++;
-// 	}
-// 	command->argcount = args_index;
-// 	command->args[args_index] = NULL;
-// 	command->next = NULL;
-// 	command->fdread = fdread;
-// 	command->fdwrite = fdwrite;
-// 	return (command);
-// }

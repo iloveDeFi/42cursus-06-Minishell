@@ -91,7 +91,7 @@ typedef struct s_command
 	int					argcount;
 	char				**envp;
 	struct s_command	*next;
-	struct s_env		*envList;
+	struct s_env		*envlist;
 	int					fdread;
 	int					fdwrite;
 	int					i;
@@ -158,6 +158,8 @@ int				ft_is_alpha(char c);
 int				ft_check_variable_definition(char *arg);
 int				ft_check_export_args(t_command *command);
 int				ft_export(t_env **envlist, t_command *cmd);
+
+void			ft_error_free_toks(t_token **tokens);
 // pwd
 int				pwd(void);
 // unset
@@ -199,11 +201,6 @@ void			ft_process_cd_argument(t_command *currentCommand, char *token);
 bool			ft_parse_all_redirection(char *redir, char *filename, \
 	int *fdread, int *fdwrite);
 bool			ft_is_redirection(char *token);
-// void 			ft_process_input_redirection(t_command *command);
-// void 			ft_process_output_redirection(t_command *command);
-// void 			ft_process_append_redirection(t_command *command);
-// void 			ft_process_here_doc_redirection(t_command *command);
-// void 			ft_launch_redirection_execution(t_command *command);
 // shell
 void			ft_custom_prompt_msg(t_mini *shell);
 void			ft_initialize_environment(t_env **envList, char **env);
@@ -222,8 +219,7 @@ void			ft_execute_external_command(t_command *cmd, char **env);
 void			ft_exec_external_code(t_command *command);
 //void	        ft_execute_external_in_fork(t_command *cmd, char **envp);
 // LINKED LIST
-void			ft_command_add_back(t_command **commands, \
-	t_command *new_command);
+
 // add
 void			ft_add_to_list(t_env **envlist, t_env *new_node);
 // clean
@@ -256,7 +252,6 @@ void			ft_found_and_replace_usd(t_token **tokens, t_env *envList);
 char			*ft_replace_usd_to_env(t_env *envList, char *usd);
 void			replace_env_variables_in_command(t_command *command, \
 	t_env *envList);
-void			ft_remove_quotes(char *input);
 bool			ft_check_quotes(char *input);
 void			exec_cmd(t_command *command, t_env *envList);
 void			ft_exec_external_code(t_command *command);
@@ -272,5 +267,12 @@ void			rl_replace_line(const char *text, int clear_undo);
 char			*ft_remove_leading_spaces(char *input);
 void			ft_exec_heredoc(char *end_of_file, int *fdread);
 bool			ft_isspace(int c);
+void			ft_set_array_to_zero(int *array, int size);
+void			ft_free_tokens(t_token **tokens);
+void			ft_command_add_back(t_command **commands, \
+	t_command *new_command);
+t_token			**ft_tokenize(char *input);
+//static void     set_is_in_quote(char c, char *in_quote);
+void			ft_set_array_to_zero(int *array, int size);
 
 #endif

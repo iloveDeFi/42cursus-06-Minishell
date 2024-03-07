@@ -4,7 +4,6 @@ void	ft_exit(t_command *command)
 {
 	int	exit_status;
 
-	// ft_close(ms); // TODO free all the mallocs
 	if (command->args[1] == NULL)
 		exit_status = g_exit_code;
 	else if (ft_isnumber(command->args[1]))
